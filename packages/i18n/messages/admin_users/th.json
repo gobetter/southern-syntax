@@ -1,0 +1,65 @@
+{
+  "title": "จัดการผู้ใช้",
+  "add_user_button": "เพิ่มผู้ใช้ใหม่",
+  "search_placeholder": "ค้นหาด้วยอีเมล...",
+  "role_filter_placeholder": "กรองตามบทบาท...",
+  "all_roles": "ทุกบทบาท",
+  "status_tabs": {
+    "all": "ทั้งหมด",
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน"
+  },
+  "table": {
+    "header_name": "ชื่อ",
+    "header_email": "อีเมล",
+    "header_role": "บทบาท",
+    "header_status": "สถานะ",
+    "header_actions": "การกระทำ"
+  },
+  "action_bar": {
+    "items_selected": "เลือก {count} รายการ",
+    "change_role_placeholder": "เปลี่ยนบทบาทเป็น...",
+    "actions_button": "การกระทำ",
+    "deactivate_selected": "ปิดใช้งานที่เลือก",
+    "deactivating_button": "กำลังปิดใช้งาน...",
+    "reactivate_selected": "เปิดใช้งานที่เลือก",
+    "reactivating_button": "กำลังเปิดใช้งาน...",
+    "deactivate_dialog": {
+      "title": "ปิดใช้งานผู้ใช้ที่เลือก?",
+      "description": "คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานผู้ใช้ที่เลือกจำนวน {count} คน? พวกเขาจะไม่สามารถล็อกอินได้"
+    },
+    "reactivate_dialog": {
+      "title": "เปิดใช้งานผู้ใช้ที่เลือก?",
+      "description": "คุณแน่ใจหรือไม่ว่าต้องการเปิดใช้งานผู้ใช้ที่เลือกจำนวน {count} คน? พวกเขาจะสามารถกลับมาล็อกอินได้อีกครั้ง"
+    }
+  },
+  "dialog_add": {
+    "title": "เพิ่มผู้ใช้ใหม่",
+    "description": "กรอกข้อมูลด้านล่างเพื่อสร้างบัญชีผู้ใช้ใหม่",
+    "submit_button": "สร้างผู้ใช้",
+    "cancel_button": "ยกเลิก"
+  },
+  "dialog_edit": {
+    "title": "แก้ไขผู้ใช้",
+    "description": "อัปเดตข้อมูลผู้ใช้ด้านล่าง หากไม่ต้องการเปลี่ยนรหัสผ่านให้เว้นว่างไว้",
+    "submit_button": "บันทึกการเปลี่ยนแปลง",
+    "cancel_button": "ยกเลิก"
+  },
+  "dialog_delete": {
+    "title": "ปิดการใช้งานผู้ใช้?",
+    "description": "การกระทำนี้จะทำให้ผู้ใช้ไม่สามารถล็อกอินได้ คุณสามารถเปิดใช้งานบัญชีได้อีกครั้งในภายหลัง ยืนยันการปิดใช้งานผู้ใช้",
+    "confirm_button": "ใช่, ปิดการใช้งาน"
+  },
+  "toasts": {
+    "create_success": "สร้างผู้ใช้สำเร็จ!",
+    "create_error": "ไม่สามารถสร้างผู้ใช้ได้",
+    "update_success": "อัปเดตผู้ใช้สำเร็จ!",
+    "update_error": "ไม่สามารถอัปเดตผู้ใช้ได้",
+    "deactivate_many_success": "ปิดใช้งานผู้ใช้ที่เลือกสำเร็จ!",
+    "deactivate_many_error": "ไม่สามารถปิดใช้งานผู้ใช้ที่เลือกได้",
+    "reactivate_many_success": "เปิดใช้งานผู้ใช้ที่เลือกสำเร็จ!",
+    "reactivate_many_error": "ไม่สามารถเปิดใช้งานผู้ใช้ที่เลือกได้",
+    "change_role_many_success": "เปลี่ยนบทบาทของผู้ใช้ที่เลือกสำเร็จ!",
+    "change_role_many_error": "ไม่สามารถเปลี่ยนบทบาทของผู้ใช้ที่เลือกได้"
+  }
+}

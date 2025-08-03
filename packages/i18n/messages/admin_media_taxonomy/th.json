@@ -1,0 +1,45 @@
+{
+  "title": "การจัดการหมวดหมู่และแท็กสื่อ",
+  "tabs": {
+    "categories": "หมวดหมู่",
+    "tags": "แท็ก"
+  },
+  "categories": {
+    "manage_title": "จัดการหมวดหมู่สื่อ",
+    "add_button": "เพิ่มหมวดหมู่ใหม่",
+    "dialog_add_title": "เพิ่มหมวดหมู่ใหม่",
+    "dialog_edit_title": "แก้ไขหมวดหมู่",
+    "delete_confirm_text": "การกระทำนี้ไม่สามารถย้อนกลับได้ นี่จะเป็นการลบหมวดหมู่"
+  },
+  "tags": {
+    "manage_title": "จัดการแท็กสื่อ",
+    "add_button": "เพิ่มแท็กใหม่",
+    "dialog_add_title": "เพิ่มแท็กใหม่",
+    "dialog_edit_title": "แก้ไขแท็ก",
+    "delete_confirm_text": "การกระทำนี้ไม่สามารถย้อนกลับได้ นี่จะเป็นการลบแท็ก"
+  },
+  "table": {
+    "name": "ชื่อ",
+    "slug": "สลัก (Slug)",
+    "actions": "การกระทำ"
+  },
+  "dialog_shared": {
+    "name_en_label": "ชื่อ (อังกฤษ)",
+    "name_th_label": "ชื่อ (ไทย)",
+    "slug_label": "สลัก (Slug)",
+    "slug_description": "คือชื่อที่เป็นมิตรกับ URL ควรเป็นตัวพิมพ์เล็กทั้งหมดและมีเฉพาะตัวอักษร, ตัวเลข, และขีดกลาง",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "delete_confirm_title": "คุณแน่ใจหรือไม่?",
+    "delete_button": "ลบ",
+    "deleting_button": "กำลังลบ..."
+  },
+  "toasts": {
+    "create_success": "สร้างรายการสำเร็จ",
+    "create_error": "ไม่สามารถสร้างรายการได้",
+    "update_success": "อัปเดตรายการสำเร็จ",
+    "update_error": "ไม่สามารถอัปเดตรายการได้",
+    "delete_success": "ลบรายการสำเร็จ",
+    "delete_error": "ไม่สามารถลบรายการได้"
+  }
+}

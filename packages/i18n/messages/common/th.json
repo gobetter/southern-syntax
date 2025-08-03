@@ -1,0 +1,122 @@
+{
+  "general": {
+    "welcome": "ยินดีต้อนรับ!",
+    "loading": "กำลังโหลด...",
+    "not_available": "ไม่มี",
+    "close": "ปิด"
+  },
+  "language": {
+    "lang_en": "English",
+    "lang_th": "ภาษาไทย",
+    "you_are_visiting_the_website_in_language": "คุณกำลังเยี่ยมชมเว็บไซต์ในภาษา"
+  },
+  "navigation": {
+    "dashboard": "แดชบอร์ด",
+    "product_management": "การจัดการสินค้า",
+    "go_back": "ย้อนกลับ",
+    "page_not_found": "ไม่พบหน้าดังกล่าว",
+    "page_not_found_description": "ขออภัย เราไม่พบหน้าที่คุณกำลังค้นหา",
+    "go_to_homepage": "กลับไปหน้าหลัก"
+  },
+  "user_info": {
+    "title": "ข้อมูลผู้ใช้",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "role": "บทบาท"
+  },
+  "status": {
+    "values": {
+      "active": "ใช้งาน",
+      "inactive": "ไม่ใช้งาน"
+    }
+  },
+  "errors": {
+    "database_error": "ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง",
+    "error_loading_data": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
+    "error_occurred": "เกิดข้อผิดพลาด",
+    "something_went_wrong": "เกิดข้อผิดพลาดบางอย่าง กรุณาลองรีเฟรชหน้าอีกครั้ง",
+    "unknown_error": "เกิดข้อผิดพลาดที่ไม่รู้จัก กรุณาลองใหม่อีกครั้ง"
+  },
+  "error_codes": {
+    "CANNOT_DEACTIVATE_SELF": "คุณไม่สามารถปิดการใช้งานบัญชีของตัวเองได้",
+    "CANNOT_DELETE_SELF": "คุณไม่สามารถลบบัญชีของตัวเองได้",
+    "EMAIL_ALREADY_EXISTS": "อีเมลนี้มีผู้ใช้งานแล้ว",
+    "SLUG_ALREADY_EXISTS": "สลัก (Slug) นี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่ออื่น",
+    "NAME_ALREADY_EXISTS": "ชื่อนี้มีผู้ใช้งานแล้ว",
+    "ROLE_KEY_EXISTS": "Key ของ Role นี้มีอยู่แล้วในระบบ",
+    "CANNOT_EDIT_SYSTEM_ROLE": "ไม่สามารถแก้ไข Role หลักของระบบได้",
+    "CANNOT_DELETE_SYSTEM_ROLE": "ไม่สามารถลบ Role หลักของระบบได้",
+    "CANNOT_CHANGE_OWN_ROLE": "คุณไม่สามารถเปลี่ยน Role ของตัวเองได้",
+    "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE": "คุณไม่มีสิทธิ์เพียงพอในการกำหนดบทบาทนี้",
+    "ROLE_IN_USE": "ไม่สามารถลบ Role นี้ได้ เนื่องจากกำลังถูกใช้งานโดยผู้ใช้อย่างน้อยหนึ่งคน"
+  },
+  "empty_states": {
+    "users": {
+      "initial": {
+        "title": "ยังไม่มีผู้ใช้ในระบบ",
+        "description": "เริ่มต้นโดยการสร้างบัญชีผู้ใช้แรกของคุณ"
+      },
+      "filtered": {
+        "title": "ไม่พบผู้ใช้",
+        "description": "ไม่พบผู้ใช้ที่ตรงกับเงื่อนไขการค้นหาหรือการกรองของคุณ ลองอีกครั้ง"
+      }
+    }
+  },
+  "pagination": {
+    "page_info": "หน้า {page} จาก {totalPages} (ทั้งหมด {totalCount} รายการ)",
+    "rows_per_page": "แถวต่อหน้า",
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป"
+  },
+  "toast": {
+    "success_title": "สำเร็จ",
+    "success_description": "การดำเนินการเสร็จสมบูรณ์แล้ว",
+    "error_title": "ข้อผิดพลาด",
+    "error_description": "เกิดข้อผิดพลาดที่ไม่คาดคิด"
+  },
+  "confirmation_dialog": {
+    "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน",
+    "processing": "กำลังดำเนินการ..."
+  },
+  "form_labels": {
+    "name_en": "ชื่อที่ใช้แสดง (ภาษาอังกฤษ)",
+    "name_th": "ชื่อที่ใช้แสดง (ภาษาไทย)",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "new_password": "รหัสผ่านใหม่",
+    "password_placeholder_unchanged": "เว้นว่างไว้หากไม่ต้องการเปลี่ยนแปลง",
+    "confirm_password": "ยืนยันรหัสผ่าน",
+    "confirm_new_password": "ยืนยันรหัสผ่านใหม่",
+    "role": "บทบาท",
+    "role_placeholder": "เลือกบทบาท...",
+    "status": "สถานะบัญชี",
+    "status_active": "ใช้งาน",
+    "status_inactive": "ไม่ใช้งาน"
+  },
+  "form_errors": {
+    "error_at_least_one_language_required": "กรุณากรอกข้อมูลอย่างน้อย 1 ภาษา",
+    "error_field_is_required_in_default_lang": "กรุณากรอกข้อมูลในภาษาอังกฤษ",
+    "error_invalid_email": "รูปแบบอีเมลไม่ถูกต้อง",
+    "error_role_required": "กรุณาเลือกบทบาท",
+    "error_passwords_do_not_match": "รหัสผ่านไม่ตรงกัน",
+    "error_field_is_required": "กรุณากรอกข้อมูลในช่องนี้",
+    "error_password_min_length": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
+    "error_password_require_lowercase": "รหัสผ่านต้องมีตัวอักษรพิมพ์เล็กอย่างน้อย 1 ตัว",
+    "error_password_require_uppercase": "รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1 ตัว",
+    "error_password_require_number": "รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว",
+    "error_email_already_exists": "อีเมลนี้มีผู้ใช้งานแล้ว",
+    "error_slug_min_length": "สลักต้องมีความยาวอย่างน้อย 2 ตัวอักษร",
+    "error_slug_invalid_chars": "สลักสามารถประกอบด้วยตัวอักษรพิมพ์เล็ก ตัวเลข และขีดกลางเท่านั้น"
+  },
+  "actions": {
+    "edit": "แก้ไข",
+    "delete": "ลบ",
+    "activate": "เปิดใช้งาน",
+    "deactivate": "ปิดการใช้งาน",
+    "view": "ดู",
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน"
+  }
+}

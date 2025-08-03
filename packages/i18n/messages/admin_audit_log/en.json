@@ -1,0 +1,16 @@
+{
+  "title": "Audit Log",
+  "table": {
+    "header_action": "Action",
+    "header_user": "User",
+    "header_entity": "Entity",
+    "header_timestamp": "Timestamp"
+  },
+  "dialog_detail": {
+    "title": "Log Details",
+    "action_by": "Action performed by",
+    "on": "on entity",
+    "details_title": "Details (JSON)",
+    "close_button": "Close"
+  }
+}

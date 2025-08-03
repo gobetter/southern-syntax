@@ -1,0 +1,22 @@
+{
+  "user_management": {
+    "title": "User Management",
+    "description": "View, create, and manage users."
+  },
+  "role_management": {
+    "title": "Role Management",
+    "description": "Define roles and assign permissions."
+  },
+  "media_library": {
+    "title": "Media Library",
+    "description": "Upload, view, and manage all media assets."
+  },
+  "content_management": {
+    "title": "Content Taxonomies",
+    "description": "Manage all media categories and tags."
+  },
+  "audit_log": {
+    "title": "Audit Log",
+    "description": "View system and user activity logs."
+  }
+}

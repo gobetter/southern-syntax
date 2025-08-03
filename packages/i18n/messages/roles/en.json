@@ -1,0 +1,7 @@
+{
+  "SUPERADMIN": "Super Administrator",
+  "ADMIN": "Administrator",
+  "EDITOR": "Editor",
+  "VIEWER": "Viewer",
+  "BASIC_USER": "Basic User"
+}

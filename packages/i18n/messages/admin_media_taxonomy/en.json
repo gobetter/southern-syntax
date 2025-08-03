@@ -1,0 +1,45 @@
+{
+  "title": "Media Taxonomies",
+  "tabs": {
+    "categories": "Categories",
+    "tags": "Tags"
+  },
+  "categories": {
+    "manage_title": "Manage Media Categories",
+    "add_button": "Add New Category",
+    "dialog_add_title": "Add New Category",
+    "dialog_edit_title": "Edit Category",
+    "delete_confirm_text": "This action cannot be undone. This will permanently delete the category"
+  },
+  "tags": {
+    "manage_title": "Manage Media Tags",
+    "add_button": "Add New Tag",
+    "dialog_add_title": "Add New Tag",
+    "dialog_edit_title": "Edit Tag",
+    "delete_confirm_text": "This action cannot be undone. This will permanently delete the tag"
+  },
+  "table": {
+    "name": "Name",
+    "slug": "Slug",
+    "actions": "Actions"
+  },
+  "dialog_shared": {
+    "name_en_label": "Name (EN)",
+    "name_th_label": "Name (TH)",
+    "slug_label": "Slug",
+    "slug_description": "The 'slug' is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete_confirm_title": "Are you sure?",
+    "delete_button": "Delete",
+    "deleting_button": "Deleting..."
+  },
+  "toasts": {
+    "create_success": "Item created successfully.",
+    "create_error": "Failed to create item.",
+    "update_success": "Item updated successfully.",
+    "update_error": "Failed to update item.",
+    "delete_success": "Item deleted successfully.",
+    "delete_error": "Failed to delete item."
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "title": "User Management",
+  "add_user_button": "Add New User",
+  "search_placeholder": "Search by email...",
+  "role_filter_placeholder": "Filter by role...",
+  "all_roles": "All Roles",
+  "status_tabs": {
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "table": {
+    "header_name": "Name",
+    "header_email": "Email",
+    "header_role": "Role",
+    "header_status": "Status",
+    "header_actions": "Actions"
+  },
+  "action_bar": {
+    "items_selected": "{count, plural, =1 {# item selected} other {# items selected}}",
+    "change_role_placeholder": "Change role to...",
+    "actions_button": "Actions",
+    "deactivate_selected": "Deactivate Selected",
+    "deactivating_button": "Deactivating...",
+    "reactivate_selected": "Reactivate Selected",
+    "reactivating_button": "Reactivating...",
+    "deactivate_dialog": {
+      "title": "Deactivate Selected Users?",
+      "description": "Are you sure you want to deactivate {count} selected users? They will not be able to log in."
+    },
+    "reactivate_dialog": {
+      "title": "Reactivate Selected Users?",
+      "description": "Are you sure you want to reactivate {count} selected users? They will be able to log in again."
+    }
+  },
+  "dialog_add": {
+    "title": "Add New User",
+    "description": "Fill in the details below to create a new user account.",
+    "submit_button": "Create User",
+    "cancel_button": "Cancel"
+  },
+  "dialog_edit": {
+    "title": "Edit User",
+    "description": "Update the user's details below. Leave the password field blank to keep it unchanged.",
+    "submit_button": "Save Changes",
+    "cancel_button": "Cancel"
+  },
+  "dialog_delete": {
+    "title": "Deactivate User?",
+    "description": "This will prevent the user from logging in. You can reactivate their account later. Deactivate user",
+    "confirm_button": "Yes, deactivate"
+  },
+  "toasts": {
+    "create_success": "User created successfully!",
+    "create_error": "Failed to create user.",
+    "update_success": "User updated successfully!",
+    "update_error": "Failed to update user.",
+    "deactivate_many_success": "Selected users deactivated successfully!",
+    "deactivate_many_error": "Failed to deactivate selected users.",
+    "reactivate_many_success": "Selected users reactivated successfully!",
+    "reactivate_many_error": "Failed to reactivate selected users.",
+    "change_role_many_success": "Successfully changed roles for selected users!",
+    "change_role_many_error": "Failed to change roles for selected users."
+  }
+}

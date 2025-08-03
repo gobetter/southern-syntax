@@ -1,0 +1,116 @@
+{
+  "title": "คลังสื่อ",
+  "upload_button": "อัปโหลดไฟล์ใหม่",
+  "no_media_found": "ไม่พบรายการสื่อ เริ่มต้นด้วยการอัปโหลดไฟล์ใหม่",
+  "search_placeholder": "ค้นหาด้วยชื่อเรื่องหรือชื่อไฟล์...",
+  "error_occurred": "เกิดข้อผิดพลาด",
+  "something_went_wrong": "เกิดข้อผิดพลาดบางอย่าง กรุณาลองรีเฟรชหน้าอีกครั้ง",
+  "dropdown": {
+    "edit_details": "แก้ไขรายละเอียด",
+    "delete": "ลบ"
+  },
+  "upload_dialog": {
+    "title": "อัปโหลดสื่อใหม่",
+    "description": "เลือกไฟล์จากอุปกรณ์ของคุณเพื่ออัปโหลด ไฟล์จะถูกประมวลผลและบันทึกลงในคลังสื่อ",
+    "file_label": "ไฟล์",
+    "cancel_button": "ยกเลิก",
+    "upload_button": "อัปโหลด",
+    "uploading_button": "กำลังอัปโหลด...",
+    "items_selected": "เลือกแล้ว {count} รายการ",
+    "error": {
+      "duplicate_file": "ไฟล์ \"{filename}\" ถูกอัปโหลดไปแล้ว",
+      "unexpected": "เกิดข้อผิดพลาดขณะอัปโหลดไฟล์ \"{filename}\""
+    },
+    "upload_failed": "ไม่สามารถอัปโหลดไฟล์ต่อไปนี้ได้:",
+    "file_upload_label": "เลือกไฟล์",
+    "unknown_error": "เกิดข้อผิดพลาดที่ไม่รู้จัก กรุณาลองใหม่อีกครั้ง"
+  },
+  "edit_dialog": {
+    "title": "แก้ไขรายละเอียดสื่อ",
+    "description": "อัปเดตรายละเอียดสำหรับสื่อรายการนี้",
+    "title_en": "ชื่อเรื่อง (อังกฤษ)",
+    "title_th": "ชื่อเรื่อง (ไทย)",
+    "alt_text_en": "ข้อความทางเลือก (อังกฤษ)",
+    "alt_text_th": "ข้อความทางเลือก (ไทย)",
+    "caption_en": "คำบรรยายภาพ (อังกฤษ)",
+    "caption_th": "คำบรรยายภาพ (ไทย)",
+    "save_button": "บันทึกการเปลี่ยนแปลง",
+    "saving_button": "กำลังบันทึก...",
+    "cancel_button": "ยกเลิก"
+  },
+  "delete_dialog": {
+    "title": "คุณแน่ใจหรือไม่?",
+    "description": "การกระทำนี้ไม่สามารถย้อนกลับได้ และจะเป็นการลบไฟล์ \"{filename}\" อย่างถาวรทั้งจาก Storage และฐานข้อมูล",
+    "cancel": "ยกเลิก",
+    "confirm": "ใช่, ลบเลย",
+    "deleting": "กำลังลบ..."
+  },
+  "preview_dialog": {
+    "title": "ดูตัวอย่างรูปภาพ",
+    "close_button": "ปิด"
+  },
+  "bulk_edit_dialog": {
+    "title": "แก้ไขกลุ่ม {count} รายการ",
+    "add_tags_label": "เพิ่มแท็ก",
+    "save_changes": "บันทึกการเปลี่ยนแปลง",
+    "cancel": "ยกเลิก"
+  },
+  "action_bar": {
+    "items_selected": "เลือก {count} รายการ",
+    "clear_selection": "ล้างการเลือก",
+    "delete_selected": "ลบรายการที่เลือก",
+    "edit_selected": "แก้ไขรายการที่เลือก",
+    "delete_dialog": {
+      "title": "คุณแน่ใจหรือไม่?",
+      "description": "การกระทำนี้ไม่สามารถย้อนกลับได้ นี่จะเป็นการลบไฟล์ {count} ไฟล์อย่างถาวร",
+      "cancel": "ยกเลิก",
+      "confirm": "ใช่, ลบเลย",
+      "deleting": "กำลังลบ..."
+    }
+  },
+  "details": {
+    "title": "รายละเอียดสื่อ",
+    "information_title": "ข้อมูลไฟล์",
+    "filename": "ชื่อไฟล์",
+    "file_type": "ชนิดไฟล์",
+    "file_size": "ขนาดไฟล์",
+    "uploaded_at": "วันที่อัปโหลด",
+    "metadata_title": "ข้อมูลอภิพันธุ์ (Metadata)",
+    "media_title_en": "ชื่อเรื่อง (อังกฤษ)",
+    "media_title_th": "ชื่อเรื่อง (ไทย)",
+    "alt_text_en": "ข้อความทางเลือก (อังกฤษ)",
+    "alt_text_th": "ข้อความทางเลือก (ไทย)",
+    "caption_en": "คำบรรยายภาพ (อังกฤษ)",
+    "caption_th": "คำบรรยายภาพ (ไทย)",
+    "urls_title": "ลิงก์ URL ของไฟล์",
+    "copy_url_button": "คัดลอก",
+    "taxonomy_title": "การจัดหมวดหมู่",
+    "category": "หมวดหมู่",
+    "tags": "แท็ก",
+    "edit_button": "แก้ไขรายละเอียด"
+  },
+  "filter": {
+    "category_placeholder": "กรองตามหมวดหมู่...",
+    "all_categories": "ทุกหมวดหมู่",
+    "tag_placeholder": "กรองตามแท็ก...",
+    "all_tags": "ทุกแท็ก"
+  },
+  "sorting": {
+    "sort_by": "เรียงตาม",
+    "createdAt": "วันที่",
+    "filename": "ชื่อไฟล์",
+    "fileSize": "ขนาด",
+    "asc": "น้อยไปมาก",
+    "desc": "มากไปน้อย"
+  },
+  "success_messages": {
+    "update_success": "อัปเดตรายละเอียดสื่อเรียบร้อยแล้ว",
+    "delete_many_success": "ลบรายการที่เลือกเรียบร้อยแล้ว",
+    "delete_one_success": "ลบสื่อเรียบร้อยแล้ว",
+    "url_copied": "คัดลอก URL แล้ว!"
+  },
+  "error_messages": {
+    "delete_many_error": "เกิดข้อผิดพลาดในการลบ: {error}",
+    "delete_one_error": "เกิดข้อผิดพลาดในการลบสื่อ: {error}"
+  }
+}

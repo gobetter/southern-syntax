@@ -1,0 +1,380 @@
+// prisma/schema.prisma
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma" // Commented out to use default output path: node_modules/@prisma/client
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- User Model (for Authentication with NextAuth.js) ---
+// This model is the core for managing users in the CMS, extended by NextAuth.js Adapter.
+model User {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  email           String    @unique // Unique email address, used for login
+  emailVerifiedAt DateTime? // Optional: Timestamp when email was verified
+  name            Json? // Optional: User's display name
+  passwordHash    String? // Optional: Hashed password (required for Credentials Provider)
+  image           String? // Optional: URL to user's profile image
+
+  // --- เพิ่มฟิลด์ใหม่ ---
+  isActive          Boolean @default(true) // Added: Indicates if the user account is active/suspended
+  preferredLanguage String? // Added: User's preferred UI language (e.g., "en", "th")
+  // --- สิ้นสุดฟิลด์ใหม่ ---
+
+  // RBAC Relation: User has one optional Role
+  roleId String? // Foreign key to the Role model
+  role   Role?   @relation(fields: [roleId], references: [id])
+
+  accounts Account[] // Relation to Accounts model (for NextAuth.js)
+  sessions Session[] // Relation to Sessions model (for NextAuth.js)
+
+  createdAt DateTime   @default(now()) // Timestamp for record creation
+  updatedAt DateTime   @updatedAt // Timestamp for last update
+  Post      Post[]
+  AuditLog  AuditLog[]
+
+  @@index([roleId]) // Improves lookup performance by roleId
+}
+
+// --- Models required by NextAuth.js (Prisma Adapter) ---
+// These models are managed by NextAuth.js to handle authentication and session data.
+model Account {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  userId            String // Foreign key to the User model
+  type              String // OAuth type (e.g., "oauth", "credentials", "email")
+  provider          String // OAuth provider (e.g., "google", "github")
+  providerAccountId String // Unique ID from the OAuth provider
+  refresh_token     String? @db.Text // OAuth refresh token (can be long)
+  access_token      String? @db.Text // OAuth access token (can be long)
+  expires_at        Int? // Expiration timestamp for the access token
+  token_type        String? // Type of the access token (e.g., "Bearer")
+  scope             String? // Scopes granted by the provider
+  id_token          String? @db.Text // OAuth ID token (can be long)
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId]) // Ensures unique provider account
+  @@index([userId]) // Improves lookup performance by userId
+}
+
+model Session {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  sessionToken String   @unique // Unique token for the session
+  userId       String // Foreign key to the User model
+  expires      DateTime // Session expiration timestamp
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) // Improves lookup performance by userId
+}
+
+model VerificationToken {
+  identifier String   @id // Identifier for verification (e.g., email)
+  token      String   @unique // Unique verification token
+  expires    DateTime // Expiration timestamp for the token
+
+  @@unique([identifier, token]) // Ensures unique identifier-token pair
+}
+
+// --- Models for Role-Based Access Control (RBAC) ---
+// These models define roles, permissions, and their relationships for authorization.
+model Role {
+  id                         String  @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  key                        String  @unique // Technical identifier, e.g., "admin", "editor", "viewer"
+  name                       Json //  เปลี่ยนจาก Stringเป็น Json เพื่อเก็บข้อมูลหลายภาษา
+  nameEnNormalized           String  @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+  description                String? @db.Text // Optional: Description of the role (can be long)
+  isSystem                   Boolean @default(false) // True if this is a system-defined role (should not be deleted/edited via UI)
+  isSelectableOnRegistration Boolean @default(false) // อนุญาตให้ผู้ใช้เลือก Role นี้ตอนลงทะเบียนหรือไม่
+
+  users       User[] // Relation: Users belonging to this role
+  permissions RolePermission[] // Relation: Many-to-many through RolePermission table
+
+  createdAt DateTime @default(now()) // Timestamp for record creation
+  updatedAt DateTime @updatedAt // Timestamp for last update
+}
+
+model Permission {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  key         String  @unique // Technical identifier, e.g., "product:create", "user:read"
+  action      String // Action part of permission (e.g., "create", "read", "update", "delete")
+  resource    String // Resource part of permission (e.g., "product", "post", "user")
+  description String? @db.Text // Optional: Description of the permission (can be long)
+  isSystem    Boolean @default(false) // True if this is a system-defined permission
+
+  roles RolePermission[] // Relation: Many-to-many through RolePermission table
+
+  createdAt DateTime @default(now()) // Timestamp for record creation
+  updatedAt DateTime @updatedAt // Timestamp for last update
+
+  @@unique([action, resource]) // Ensures unique combination of action and resource
+  @@index([action]) // Improves lookup performance by action
+  @@index([resource]) // Improves lookup performance by resource
+  @@index([key]) // Improves lookup performance by permission key
+}
+
+model RolePermission {
+  id           String @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  roleId       String // Foreign key to the Role model
+  permissionId String // Foreign key to the Permission model
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) // Timestamp for record creation.
+  updatedAt DateTime @updatedAt // Timestamp for last update
+
+  @@unique([roleId, permissionId]) // Ensures unique role-permission pair
+}
+
+// --- Models สำหรับการจัดการภาษา (i18n & l10n) ---
+// Language model: สำหรับจัดการรายการภาษาที่รองรับในระบบ (ทั้ง Frontend และ Admin UI)
+model Language {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  code      String   @unique // รหัสภาษา (e.g., "en", "th", "fr")
+  name      String // ชื่อภาษาที่แสดง (e.g., "English", "ภาษาไทย")
+  isDefault Boolean  @default(false) // เป็นภาษา Default หรือไม่
+  isActive  Boolean  @default(true) // เปิดใช้งานหรือไม่ (สำหรับ Frontend/Admin UI)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([code]) // เพิ่ม index เพื่อการค้นหาด้วยรหัสภาษาได้เร็วขึ้น
+}
+
+// --- Core Content Models ---
+// โมเดลหลักสำหรับ Content ประเภทต่างๆ ของ CMS
+// ใช้ `Json` Type สำหรับฟิลด์ที่ต้องการรองรับหลายภาษา (จะถูก Map เป็น JSONB ใน PostgreSQL)
+
+// Product Model: สำหรับจัดการข้อมูลสินค้า
+model Product {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  slug              String  @unique // URL-friendly identifier for the product (e.g., "thai-black-pepper")
+  title             Json // LocalizedString for product title (JSONB: { "en": "...", "th": "..." })
+  titleEnNormalized String  @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+  description       Json? // LocalizedString for product description (JSONB, long text) - Removed @db.Text
+  price             Decimal // ราคาของสินค้า (ใช้ Decimal เพื่อความแม่นยำทางธุรกิจ)
+  stock             Int // จำนวนสินค้าในคลัง
+  isPublished       Boolean @default(false) // สถานะเผยแพร่
+
+  // Featured Image (One-to-One / One-to-Many via relation name)
+  featuredImageId String? // Foreign key to Media model for the main product image
+  featuredImage   Media?  @relation(name: "ProductFeaturedImage", fields: [featuredImageId], references: [id])
+
+  // Relations for Gallery Images (Many-to-Many with Media via ProductImage join table)
+  images ProductImage[] // Gallery images for this product
+
+  // Relations for Categories (Many-to-Many with ProductCategory via implicit join table or explicit in future)
+  categories ProductCategory[] // Categories this product belongs to
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  ProductTag   ProductTag? @relation(fields: [productTagId], references: [id])
+  productTagId String?
+
+  @@index([slug]) // Improves lookup performance by slug
+  @@index([isPublished]) // Improves lookup performance by publish status
+}
+
+// ProductCategory Model: สำหรับจัดการหมวดหมู่สินค้า
+model ProductCategory {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  slug             String            @unique // URL-friendly identifier for the category
+  name             Json // LocalizedString for category name (JSONB)
+  nameEnNormalized String            @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+  description      Json? // LocalizedString for category description (JSONB) - Removed @db.Text
+  parent           ProductCategory?  @relation("ProductCategoryHierarchy", fields: [parentId], references: [id])
+  parentId         String?
+  children         ProductCategory[] @relation("ProductCategoryHierarchy")
+
+  products Product[] // Relation: Products belonging to this category (Many-to-Many)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([parentId]) // Improves lookup for child categories
+}
+
+model ProductTag {
+  id               String @id @default(dbgenerated("gen_random_uuid()"))
+  slug             String @unique
+  name             Json
+  nameEnNormalized String @unique
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+// ProductImage Model: Join table สำหรับความสัมพันธ์ Many-to-Many ระหว่าง Product และ Media (Gallery Images)
+model ProductImage {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  productId String // Foreign key to Product
+  mediaId   String // Foreign key to Media (the image itself)
+  order     Int? // Optional: สำหรับเรียงลำดับรูปภาพ
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  media   Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, mediaId]) // Product หนึ่งมี Media รูปภาพนี้ได้ครั้งเดียว
+}
+
+// Post Model: สำหรับจัดการบทความ/บล็อก
+model Post {
+  id                String @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  slug              String @unique // URL-friendly identifier for the post
+  title             Json // LocalizedString for post title (JSONB)
+  titleEnNormalized String @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+  content           Json // LocalizedString for post content (JSONB, rich text) - Removed @db.Text
+  excerpt           Json? // LocalizedString for post excerpt/summary (JSONB) - Removed @db.Text
+  authorId          String // Foreign key to User model
+  author            User   @relation(fields: [authorId], references: [id])
+
+  isPublished Boolean   @default(false) // สถานะเผยแพร่
+  publishedAt DateTime? // วันที่เผยแพร่จริง
+
+  featuredImageId String?
+  featuredImage   Media?  @relation(name: "PostFeaturedImage", fields: [featuredImageId], references: [id])
+
+  categories PostCategory[] // Relation: Categories this post belongs to (Many-to-Many)
+  tags       PostTag[] // Relation: Many-to-Many through implicit join table or explicit in future)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([authorId])
+}
+
+// PostCategory Model: สำหรับจัดการหมวดหมู่บทความ
+model PostCategory {
+  id               String @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  slug             String @unique
+  name             Json // LocalizedString for category name (JSONB)
+  nameEnNormalized String @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+  description      Json? // LocalizedString for category description (JSONB) - Removed @db.Text
+
+  posts Post[] // Relation: Posts belonging to this category (Many-to-Many)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+// PostTag Model: สำหรับจัดการ Tag บทความ
+model PostTag {
+  id               String @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  slug             String @unique
+  name             Json // LocalizedString for tag name (JSONB)
+  nameEnNormalized String @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+
+  posts Post[] // Relation: Posts associated with this tag (Many-to-Many)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+// Media Model: สำหรับจัดการ Asset รูปภาพและสื่ออื่นๆ
+// เป็น Centralized Media Library สำหรับใช้กับ Content Models อื่นๆ
+model Media {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) // Primary key, auto-generated unique ID (uuid)
+  originalFilename  String  @default("unknown") // ชื่อไฟล์ต้นฉบับ
+  fileHash          String? @unique
+  filename          String
+  title             Json? // ชื่อที่ใช้แสดงผล (รองรับหลายภาษา)
+  titleEnNormalized String? @unique
+  titleSort         String?
+  originalUrl       String // URL ของไฟล์ต้นฉบับใน Cloud Storage
+  mimeType          String // e.g., "image/jpeg", "video/mp4"
+  fileSize          Int // ขนาดไฟล์เป็น bytes
+  altText           Json? // LocalizedString for alt text (JSONB)
+  caption           Json? // LocalizedString for caption (JSONB, long text) - Removed @db.Text
+  variants          Json? // JSONB: Store URLs for different sizes/formats (e.g., { "thumbnail": "url", "medium": "url" })
+  isSystem          Boolean @default(false) // true = system-defined media (e.g. default placeholder image), should not be deleted
+  searchText        String? @db.Text //  ฟิลด์นี้สำหรับเก็บข้อความทั้งหมดเพื่อการค้นหา
+
+  // Reverse Relations (เชื่อมโยงกับ Content Models ที่ใช้ Media นี้)
+  productFeaturedImage Product[]      @relation("ProductFeaturedImage")
+  postFeaturedImage    Post[]         @relation("PostFeaturedImage")
+  productImages        ProductImage[] // Relation: Images used in product galleries
+
+  categories MediaCategory[]
+  tags       MediaTag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([filename])
+  @@index([originalFilename])
+  @@index([isSystem])
+  @@index([titleSort])
+}
+
+model MediaCategory {
+  id               String @id @default(cuid())
+  slug             String @unique
+  name             Json // รองรับชื่อหมวดหมู่หลายภาษา
+  nameEnNormalized String @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+
+  media Media[] // Relation to Media (Many-to-Many)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model MediaTag {
+  id               String @id @default(cuid())
+  slug             String @unique
+  name             Json // รองรับชื่อแท็กหลายภาษา
+  nameEnNormalized String @unique // ไว้ค้นหาชื่อภาษาอังกฤษที่ซ้ำกันแบบไม่สนใจตัวเล็กใหญ่ (insecase-insensitive)
+
+  media Media[] // Relation to Media (Many-to-Many)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+// --- AuditLog Model (พิจารณาในอนาคต) ---
+// Model สำหรับบันทึกกิจกรรมสำคัญในระบบ (User actions, System events)
+// จะ Implement จริงใน Phase ถัดไป (เช่น Phase 3.4 หรือ Phase 5)
+model AuditLog {
+  id     String  @id @default(dbgenerated("gen_random_uuid()")) // Unique ID for the log entry
+  userId String? // Optional: ID of the user who performed the action (can be null if system action)
+  user   User?   @relation(fields: [userId], references: [id]) // Relation to User model
+
+  entityId   String? // Optional: ID of the entity that was affected (e.g., Role ID, Permission ID, User ID, Product ID)
+  entityType String? // Optional: Type of the entity (e.g., "User", "Role", "Permission", "Product", "Post", "Media")
+
+  action    String // What action was performed (e.g., "user_created", "role_updated", "product_deleted", "post_published")
+  details   Json // Detailed payload of the action, including old/new values, IPs, etc.
+  createdAt DateTime @default(now()) // Timestamp of the action
+
+  @@index([userId]) // Index for faster lookup by user
+  @@index([createdAt]) // Index for faster lookup by time
+  @@index([entityType, entityId]) // Optional: For faster lookup by affected entity
+}

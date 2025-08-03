@@ -1,0 +1,122 @@
+{
+  "general": {
+    "welcome": "Welcome!",
+    "loading": "Loading...",
+    "not_available": "N/A",
+    "close": "Close"
+  },
+  "language": {
+    "lang_en": "English",
+    "lang_th": "ภาษาไทย",
+    "you_are_visiting_the_website_in_language": "You are visiting the website in language"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "product_management": "Product Management",
+    "go_back": "Go Back",
+    "page_not_found": "Page Not Found",
+    "page_not_found_description": "Sorry, we couldn't find the page you're looking for.",
+    "go_to_homepage": "Go to Homepage"
+  },
+  "user_info": {
+    "title": "User Information",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role"
+  },
+  "status": {
+    "values": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "errors": {
+    "database_error": "Could not connect to the database. Please try again later.",
+    "error_loading_data": "There was an error loading data.",
+    "error_occurred": "An Error Occurred",
+    "something_went_wrong": "Something went wrong. Please try refreshing the page.",
+    "unknown_error": "An unknown error occurred. Please try again later."
+  },
+  "error_codes": {
+    "CANNOT_DEACTIVATE_SELF": "You cannot deactivate your own account.",
+    "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+    "EMAIL_ALREADY_EXISTS": "This email address is already in use.",
+    "SLUG_ALREADY_EXISTS": "This slug is already in use. Please choose another one.",
+    "NAME_ALREADY_EXISTS": "This name is already in use.",
+    "ROLE_KEY_EXISTS": "This role key already exists.",
+    "CANNOT_EDIT_SYSTEM_ROLE": "System roles cannot be modified.",
+    "CANNOT_DELETE_SYSTEM_ROLE": "System roles cannot be deleted.",
+    "CANNOT_CHANGE_OWN_ROLE": "You cannot change your own role.",
+    "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE": "You do not have sufficient permissions to assign this role.",
+    "ROLE_IN_USE": "This role cannot be deleted because it is currently assigned to one or more users."
+  },
+  "empty_states": {
+    "users": {
+      "initial": {
+        "title": "No Users Yet",
+        "description": "Get started by creating your first user account."
+      },
+      "filtered": {
+        "title": "No Users Found",
+        "description": "Your search or filter criteria did not match any users. Try again."
+      }
+    }
+  },
+  "pagination": {
+    "page_info": "Page {page} of {totalPages} ({totalCount, plural, one {# item} other {# items}})",
+    "rows_per_page": "Rows per page",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "toast": {
+    "success_title": "Success",
+    "success_description": "The operation was completed successfully.",
+    "error_title": "Error",
+    "error_description": "An unexpected error occurred."
+  },
+  "confirmation_dialog": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "processing": "Processing..."
+  },
+  "form_labels": {
+    "name_en": "Display Name (EN)",
+    "name_th": "Display Name (TH)",
+    "email": "Email Address",
+    "password": "Password",
+    "new_password": "New Password",
+    "password_placeholder_unchanged": "Leave blank to keep unchanged",
+    "confirm_password": "Confirm Password",
+    "confirm_new_password": "Confirm New Password",
+    "role": "Role",
+    "role_placeholder": "Select a role...",
+    "status": "Account Status",
+    "status_active": "Active",
+    "status_inactive": "Inactive"
+  },
+  "form_errors": {
+    "error_at_least_one_language_required": "At least one language is required.",
+    "error_field_is_required_in_default_lang": "This field is required in English.",
+    "error_invalid_email": "Invalid email address.",
+    "error_role_required": "Please select a role.",
+    "error_passwords_do_not_match": "Passwords do not match.",
+    "error_field_is_required": "This field is required.",
+    "error_password_min_length": "Password must be at least 8 characters.",
+    "error_password_require_lowercase": "Password must contain at least one lowercase letter.",
+    "error_password_require_uppercase": "Password must contain at least one uppercase letter.",
+    "error_password_require_number": "Password must contain at least one number.",
+    "error_email_already_exists": "This email address is already in use.",
+    "error_slug_min_length": "Slug must be at least 2 characters.",
+    "error_slug_invalid_chars": "Slug can only contain lowercase letters, numbers, and hyphens."
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "view": "View",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

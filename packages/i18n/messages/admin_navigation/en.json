@@ -1,0 +1,10 @@
+{
+  "dashboard": "Dashboard",
+  "users": "Users",
+  "roles": "Roles",
+  "media": "Media",
+  "taxonomies": "Taxonomies",
+  "media_taxonomy": "Taxonomies",
+  "admin": "Admin",
+  "audit_log": "Audit Log"
+}

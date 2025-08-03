@@ -1,0 +1,48 @@
+{
+  "title": "จัดการบทบาทและสิทธิ์",
+  "add_role_button": "เพิ่ม Role ใหม่",
+  "table": {
+    "header_key": "Key",
+    "header_name": "ชื่อที่ใช้แสดง",
+    "header_users": "จำนวนผู้ใช้",
+    "header_permissions": "จำนวนสิทธิ์",
+    "header_actions": "การกระทำ"
+  },
+  "dialog_add": {
+    "title": "เพิ่ม Role ใหม่",
+    "description": "กำหนด Key, ชื่อ, และสิทธิ์สำหรับ Role ใหม่"
+  },
+  "dialog_edit": {
+    "title": "แก้ไข Role",
+    "description": "อัปเดตรายละเอียดและสิทธิ์ของ Role",
+    "system_role_alert": "นี่คือ Role หลักของระบบและไม่สามารถแก้ไขสิทธิ์ได้",
+    "super_admin_alert": "Super Admin มีสิทธิ์ทั้งหมดโดยค่าเริ่มต้นและไม่สามารถแก้ไขได้"
+  },
+  "dialog_delete": {
+    "title": "ลบ Role?",
+    "description": "คุณแน่ใจหรือไม่ว่าต้องการลบ Role นี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
+    "confirm_button": "ใช่, ลบ Role"
+  },
+  "dialog_shared": {
+    "cancel": "ยกเลิก",
+    "save": "บันทึกการเปลี่ยนแปลง",
+    "deleting_button": "กำลังลบ...",
+    "delete_button": "ลบ"
+  },
+  "form": {
+    "key_label": "Key ของ Role",
+    "key_placeholder": "เช่น store-manager",
+    "name_en_label": "ชื่อที่ใช้แสดง (อังกฤษ)",
+    "name_th_label": "ชื่อที่ใช้แสดง (ไทย)",
+    "description_label": "คำอธิบาย",
+    "permissions_label": "สิทธิ์การเข้าถึง"
+  },
+  "toasts": {
+    "create_success": "สร้าง Role สำเร็จ!",
+    "create_error": "ไม่สามารถสร้าง Role ได้",
+    "update_success": "อัปเดต Role สำเร็จ!",
+    "update_error": "ไม่สามารถอัปเดต Role ได้",
+    "delete_success": "ลบ Role สำเร็จ!",
+    "delete_error": "ไม่สามารถลบ Role ได้"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "login": {
+    "title": "Sign In to your account",
+    "button": "Login",
+    "invalid_credentials": "Email or password invalid. Please try again."
+  },
+  "logout": {
+    "button": "Logout"
+  },
+  "register": {
+    "title": "Create a new account",
+    "button": "Register",
+    "failed_to_load_roles": "Failed to load roles. Please try again.",
+    "registration_failed": "Registration failed. Please check your information."
+  },
+  "access_denied": {
+    "title": "Access Denied",
+    "description": "You do not have permission to view this page.",
+    "go_back_button": "Go Back"
+  }
+}

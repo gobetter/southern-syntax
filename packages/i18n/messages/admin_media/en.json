@@ -1,0 +1,116 @@
+{
+  "title": "Media Library",
+  "upload_button": "Upload New File",
+  "no_media_found": "No media items found. Start by uploading a new file.",
+  "search_placeholder": "Search by title or filename...",
+  "error_occurred": "An Error Occurred",
+  "something_went_wrong": "Something went wrong. Please try refreshing the page.",
+  "dropdown": {
+    "edit_details": "Edit Details",
+    "delete": "Delete"
+  },
+  "upload_dialog": {
+    "title": "Upload New Media",
+    "description": "Select a file from your device to upload. It will be processed and saved to the library.",
+    "file_label": "File",
+    "cancel_button": "Cancel",
+    "upload_button": "Upload",
+    "uploading_button": "Uploading...",
+    "items_selected": "{count, plural, =1 {# item selected} other {# items selected}}",
+    "error": {
+      "duplicate_file": "File \"{filename}\" has already been uploaded.",
+      "unexpected": "An unexpected error occurred while uploading \"{filename}\"."
+    },
+    "file_upload_label": "Choose files",
+    "upload_failed": "The following files could not be uploaded:",
+    "unknown_error": "An unknown error occurred. Please try again later."
+  },
+  "edit_dialog": {
+    "title": "Edit Media Details",
+    "description": "Update the details for this media item.",
+    "title_en": "Title (English)",
+    "title_th": "Title (Thai)",
+    "alt_text_en": "Alt Text (English)",
+    "alt_text_th": "Alt Text (Thai)",
+    "caption_en": "Caption (English)",
+    "caption_th": "Caption (Thai)",
+    "save_button": "Save Changes",
+    "saving_button": "Saving...",
+    "cancel_button": "Cancel"
+  },
+  "delete_dialog": {
+    "title": "Are you absolutely sure?",
+    "description": "This action cannot be undone. This will permanently delete the file \"{filename}\" from the storage and the database.",
+    "cancel": "Cancel",
+    "confirm": "Yes, delete it",
+    "deleting": "Deleting..."
+  },
+  "preview_dialog": {
+    "title": "Image Preview",
+    "close_button": "Close"
+  },
+  "bulk_edit_dialog": {
+    "title": "Bulk Edit {count} Items",
+    "add_tags_label": "Add Tags",
+    "save_changes": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "action_bar": {
+    "items_selected": "{count, plural, one {# item} other {# items}} selected",
+    "clear_selection": "Clear selection",
+    "delete_selected": "Delete Selected",
+    "edit_selected": "Edit Selected",
+    "delete_dialog": {
+      "title": "Are you absolutely sure?",
+      "description": "This action cannot be undone. This will permanently delete the {count, plural, one {1 file} other {# files}}.",
+      "cancel": "Cancel",
+      "confirm": "Yes, delete them",
+      "deleting": "Deleting..."
+    }
+  },
+  "details": {
+    "title": "Media Details",
+    "information_title": "Information",
+    "filename": "Filename",
+    "file_type": "File Type",
+    "file_size": "File Size",
+    "uploaded_at": "Uploaded At",
+    "metadata_title": "Metadata",
+    "media_title_en": "Title (EN)",
+    "media_title_th": "Title (TH)",
+    "alt_text_en": "Alt Text (EN)",
+    "alt_text_th": "Alt Text (TH)",
+    "caption_en": "Caption (EN)",
+    "caption_th": "Caption (TH)",
+    "urls_title": "Asset URLs",
+    "copy_url_button": "Copy",
+    "taxonomy_title": "Classification",
+    "category": "Category",
+    "tags": "Tags",
+    "edit_button": "Edit Details"
+  },
+  "filter": {
+    "category_placeholder": "Filter by Category...",
+    "all_categories": "All Categories",
+    "tag_placeholder": "Filter by Tag...",
+    "all_tags": "All Tags"
+  },
+  "sorting": {
+    "sort_by": "Sort by",
+    "createdAt": "Date",
+    "filename": "Filename",
+    "fileSize": "Size",
+    "asc": "asc",
+    "desc": "desc"
+  },
+  "success_messages": {
+    "update_success": "Media details have been updated.",
+    "delete_many_success": "The selected items have been successfully deleted.",
+    "delete_one_success": "The media item has been successfully deleted.",
+    "url_copied": "URL copied to clipboard!"
+  },
+  "error_messages": {
+    "delete_many_error": "Failed to delete items: {error}",
+    "delete_one_error": "Failed to delete media: {error}"
+  }
+}

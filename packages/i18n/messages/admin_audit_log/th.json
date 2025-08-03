@@ -1,0 +1,16 @@
+{
+  "title": "บันทึกการตรวจสอบ",
+  "table": {
+    "header_action": "การกระทำ",
+    "header_user": "ผู้ใช้งาน",
+    "header_entity": "รายการ",
+    "header_timestamp": "เวลา"
+  },
+  "dialog_detail": {
+    "title": "รายละเอียดล็อก",
+    "action_by": "การกระทำโดย",
+    "on": "บนรายการ",
+    "details_title": "รายละเอียด (JSON)",
+    "close_button": "ปิด"
+  }
+}

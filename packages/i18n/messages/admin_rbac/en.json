@@ -1,0 +1,48 @@
+{
+  "title": "Role & Permission Management",
+  "add_role_button": "Add New Role",
+  "table": {
+    "header_key": "Key",
+    "header_name": "Display Name",
+    "header_users": "Users",
+    "header_permissions": "Permissions",
+    "header_actions": "Actions"
+  },
+  "dialog_add": {
+    "title": "Add New Role",
+    "description": "Define the key, name, and permissions for the new role."
+  },
+  "dialog_edit": {
+    "title": "Edit Role",
+    "description": "Update the role's details and permissions.",
+    "system_role_alert": "This is a system role and its permissions cannot be modified.",
+    "super_admin_alert": "Super Admin has all permissions by default and cannot be modified."
+  },
+  "dialog_delete": {
+    "title": "Delete Role?",
+    "description": "Are you sure you want to delete this role? This action cannot be undone.",
+    "confirm_button": "Yes, delete role"
+  },
+  "dialog_shared": {
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "deleting_button": "Deleting...",
+    "delete_button": "Delete"
+  },
+  "form": {
+    "key_label": "Role Key",
+    "key_placeholder": "e.g., store-manager",
+    "name_en_label": "Display Name (EN)",
+    "name_th_label": "Display Name (TH)",
+    "description_label": "Description",
+    "permissions_label": "Permissions"
+  },
+  "toasts": {
+    "create_success": "Role created successfully!",
+    "create_error": "Failed to create role.",
+    "update_success": "Role updated successfully!",
+    "update_error": "Failed to update role.",
+    "delete_success": "Role deleted successfully!",
+    "delete_error": "Failed to delete role."
+  }
+}
