@@ -1,30 +1,25 @@
-# Turborepo starter
+# Southern Syntax Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+This repository hosts the `trang-pepper-website` application alongside a set
+of reusable packages managed with [Turborepo](https://turbo.build/repo). The
+packages can be shared with additional apps in the future.
 
-## Using this example
+## Apps and Packages
 
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `trang-pepper-website`: a [Next.js](https://nextjs.org/) application
+- `@southern-syntax/auth`: authentication helpers
+- `@southern-syntax/db`: Prisma database client
+- `@southern-syntax/i18n`: internationalisation utilities
+- `@southern-syntax/schemas`: common Zod schemas
+- `@southern-syntax/types`: shared TypeScript types
+- `@southern-syntax/ui`: React UI components
+- `@southern-syntax/utils`: general utilities
+- `@southern-syntax/eslint-config-custom`: shared ESLint configuration
+- `@southern-syntax/tsconfig`: base TypeScript configurations
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
+## Utilities
 
 This Turborepo has some additional tools already setup for you:
 
@@ -32,7 +27,7 @@ This Turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
 
-### Build
+## Build
 
 To build all apps and packages, run the following command:
 
@@ -60,7 +55,7 @@ yarn exec turbo build --filter=docs
 pnpm exec turbo build --filter=docs
 ```
 
-### Develop
+## Develop
 
 To develop all apps and packages, run the following command:
 
@@ -88,7 +83,7 @@ yarn exec turbo dev --filter=web
 pnpm exec turbo dev --filter=web
 ```
 
-### Remote Caching
+## Remote Caching
 
 > [!TIP]
 > Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).

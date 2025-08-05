@@ -1,15 +1,14 @@
-// src/services/media-category.ts
-import prisma from '@/lib/prisma';
-import { type MediaCategoryInput } from '@/schemas/media-taxonomy';
-import { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { AUDIT_ACTIONS } from '@/constants/auditActions';
+import prisma from "@southern-syntax/db";
+import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
-import { auditLogService } from './auditLog';
+import { auditLogService } from "./auditLog";
 
 async function getAll() {
   return prisma.mediaCategory.findMany({
-    orderBy: { name: 'desc' },
+    orderBy: { name: "desc" },
   });
 }
 
@@ -23,8 +22,8 @@ async function create(input: MediaCategoryInput, actorId: string) {
   });
   if (existingSlug) {
     throw new TRPCError({
-      code: 'CONFLICT',
-      message: 'SLUG_ALREADY_EXISTS',
+      code: "CONFLICT",
+      message: "SLUG_ALREADY_EXISTS",
     });
   }
 
@@ -33,7 +32,7 @@ async function create(input: MediaCategoryInput, actorId: string) {
       where: { nameEnNormalized },
     });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -41,14 +40,14 @@ async function create(input: MediaCategoryInput, actorId: string) {
     data: {
       name: name as Prisma.JsonObject,
       slug: slug,
-      nameEnNormalized: nameEnNormalized || '',
+      nameEnNormalized: nameEnNormalized || "",
     },
   });
 
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_CATEGORY_CREATED,
-    entityType: 'MEDIA_CATEGORY',
+    entityType: "MEDIA_CATEGORY",
     entityId: newCategory.id,
     details: { newData: newCategory },
   });
@@ -67,7 +66,7 @@ async function update(id: string, input: MediaCategoryInput, actorId: string) {
   });
 
   if (existingSlug) {
-    throw new TRPCError({ code: 'CONFLICT', message: 'SLUG_ALREADY_EXISTS' });
+    throw new TRPCError({ code: "CONFLICT", message: "SLUG_ALREADY_EXISTS" });
   }
 
   if (nameEnNormalized) {
@@ -75,7 +74,7 @@ async function update(id: string, input: MediaCategoryInput, actorId: string) {
       where: { nameEnNormalized, id: { not: id } },
     });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -91,7 +90,7 @@ async function update(id: string, input: MediaCategoryInput, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_CATEGORY_UPDATED,
-    entityType: 'MEDIA_CATEGORY',
+    entityType: "MEDIA_CATEGORY",
     entityId: updatedCategory.id,
     details: { oldData, newData: updatedCategory },
   });
@@ -102,7 +101,7 @@ async function update(id: string, input: MediaCategoryInput, actorId: string) {
 async function deleteCategory(id: string, actorId: string) {
   const oldData = await prisma.mediaCategory.findUnique({ where: { id } });
   if (!oldData) {
-    throw new TRPCError({ code: 'NOT_FOUND', message: 'Category not found' });
+    throw new TRPCError({ code: "NOT_FOUND", message: "Category not found" });
   }
 
   const deletedCategory = await prisma.mediaCategory.delete({ where: { id } });
@@ -110,7 +109,7 @@ async function deleteCategory(id: string, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_CATEGORY_DELETED,
-    entityType: 'MEDIA_CATEGORY',
+    entityType: "MEDIA_CATEGORY",
     entityId: id, // ใช้ id ที่ส่งเข้ามา
     details: { oldData },
   });

@@ -1,25 +1,37 @@
 // src/hooks/useUserManagement.ts
-'use client';
+"use client";
 
-import { useState, useEffect, useMemo, Dispatch, SetStateAction, useRef, RefObject } from 'react';
-import { useSession } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  RefObject,
+} from "react";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-import { UserItem } from '@/types/trpc';
-import { type UserStatusFilter, type UserStatusView, VALID_USER_STATUSES } from '@/types/user';
-import type { TRPCClientErrorLike } from '@trpc/client';
-import type { AppRouter } from '@/server/routers/_app';
-import { trpc } from '@/lib/trpc-client';
-import type { UserSortableField } from '@/types/user';
-import type { SortOrder } from '@/constants/common';
+import { UserItem } from "@/types/trpc";
+import {
+  type UserStatusFilter,
+  type UserStatusView,
+  type UserSortableField,
+  VALID_USER_STATUSES,
+} from "@southern-syntax/types";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
+import { trpc } from "@/lib/trpc-client";
+import type { SortOrder } from "@/constants/common";
 
-import { useSelectionSet } from '@/components/admin/media/MediaGrid/useSelectionSet';
+import { useSelectionSet } from "@/components/admin/media/MediaGrid/useSelectionSet";
 
-import { useUpdateQuery } from './useUpdateQuery';
-import { useDebounce } from './useDebounce';
-import { useToast } from './useToast';
-import { useUpdateUser } from './useUpdateUser';
+import { useUpdateQuery } from "./useUpdateQuery";
+import { useDebounce } from "./useDebounce";
+import { useToast } from "./useToast";
+import { useUpdateUser } from "./useUpdateUser";
 
 interface UseUserManagementReturn {
   // Data and State
@@ -67,8 +79,12 @@ interface UseUserManagementReturn {
 }
 
 // Type Guard
-function isValidStatusFilter(status: string | null): status is UserStatusFilter {
-  return !!status && (VALID_USER_STATUSES as readonly string[]).includes(status);
+function isValidStatusFilter(
+  status: string | null
+): status is UserStatusFilter {
+  return (
+    !!status && (VALID_USER_STATUSES as readonly string[]).includes(status)
+  );
 }
 
 export function useUserManagement(): UseUserManagementReturn {
@@ -79,20 +95,22 @@ export function useUserManagement(): UseUserManagementReturn {
   const updateQuery = useUpdateQuery();
   const utils = trpc.useUtils();
   const toast = useToast();
-  const t_toasts = useTranslations('admin_users.toasts');
+  const t_toasts = useTranslations("admin_users.toasts");
 
   // --- Selection Logic ---
   const { selectedIds, toggleSelection, clearSelection } = useSelectionSet();
 
   // --- URL State ---
-  const page = Number(searchParams.get('page')) || 1;
-  const pageSize = Number(searchParams.get('pageSize')) || 10;
-  const searchQuery = searchParams.get('q') || '';
-  const roleId = searchParams.get('roleId') || undefined;
-  const statusFromUrl = searchParams.get('status');
-  const statusForQuery = isValidStatusFilter(statusFromUrl) ? statusFromUrl : undefined;
-  const sortBy = searchParams.get('sortBy') as UserSortableField | null;
-  const sortOrder = searchParams.get('sortOrder') as SortOrder | null;
+  const page = Number(searchParams.get("page")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const searchQuery = searchParams.get("q") || "";
+  const roleId = searchParams.get("roleId") || undefined;
+  const statusFromUrl = searchParams.get("status");
+  const statusForQuery = isValidStatusFilter(statusFromUrl)
+    ? statusFromUrl
+    : undefined;
+  const sortBy = searchParams.get("sortBy") as UserSortableField | null;
+  const sortOrder = searchParams.get("sortOrder") as SortOrder | null;
 
   // --- Local State ---
   const [inputValue, setInputValue] = useState(searchQuery);
@@ -122,27 +140,30 @@ export function useUserManagement(): UseUserManagementReturn {
   const { updateUser, isLoading: isUpdatingUser } = useUpdateUser();
   const deactivateManyMutation = trpc.user.deactivateMany.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('deactivate_many_success'));
+      toast.success(t_toasts("deactivate_many_success"));
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e) => toast.error(t_toasts('deactivate_many_error', { error: e.message })),
+    onError: (e) =>
+      toast.error(t_toasts("deactivate_many_error", { error: e.message })),
   });
   const reactivateManyMutation = trpc.user.reactivateMany.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('reactivate_many_success'));
+      toast.success(t_toasts("reactivate_many_success"));
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e) => toast.error(t_toasts('reactivate_many_error', { error: e.message })),
+    onError: (e) =>
+      toast.error(t_toasts("reactivate_many_error", { error: e.message })),
   });
   const changeRoleManyMutation = trpc.user.changeRoleMany.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('change_role_many_success'));
+      toast.success(t_toasts("change_role_many_success"));
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e) => toast.error(t_toasts('change_role_many_error', { error: e.message })),
+    onError: (e) =>
+      toast.error(t_toasts("change_role_many_error", { error: e.message })),
   });
 
   // --- Derived State (Memoized) ---
@@ -152,43 +173,46 @@ export function useUserManagement(): UseUserManagementReturn {
 
   const selectedItems = useMemo(
     () => users.filter((user: UserItem) => selectedIds.has(user.id)),
-    [users, selectedIds],
+    [users, selectedIds]
   );
   const canReactivate = useMemo(
     () => selectedItems.some((user: UserItem) => !user.isActive),
-    [selectedItems],
+    [selectedItems]
   );
   const canDeactivate = useMemo(
     () => selectedItems.some((user: UserItem) => user.isActive),
-    [selectedItems],
+    [selectedItems]
   );
 
   const selectableUsers = useMemo(
     () => users.filter((u: UserItem) => u.id !== currentUserId),
-    [users, currentUserId],
+    [users, currentUserId]
   );
 
   const areAllSelected = useMemo(
     () =>
       selectableUsers.length > 0 &&
       selectableUsers.every((user: UserItem) => selectedIds.has(user.id)),
-    [selectableUsers, selectedIds],
+    [selectableUsers, selectedIds]
   );
 
   // --- Handlers ---
   const handleSort = (field: UserSortableField) => {
-    const newSortOrder = sortBy === field && sortOrder === 'asc' ? 'desc' : 'asc';
+    const newSortOrder =
+      sortBy === field && sortOrder === "asc" ? "desc" : "asc";
     updateQuery({ sortBy: field, sortOrder: newSortOrder, page: 1 });
   };
   const handleStatusChange = (status: string) => {
     clearSelection();
-    updateQuery({ status: status === 'all' ? null : status, page: 1 });
+    updateQuery({ status: status === "all" ? null : status, page: 1 });
   };
   const handleToggleSelectAll = () => {
     if (areAllSelected) {
       clearSelection();
     } else {
-      selectableUsers.forEach((user: UserItem) => toggleSelection(user.id, true));
+      selectableUsers.forEach((user: UserItem) =>
+        toggleSelection(user.id, true)
+      );
     }
   };
   const handleDeactivateSelected = () => {
@@ -254,7 +278,7 @@ export function useUserManagement(): UseUserManagementReturn {
     isLoading,
     isError,
     error,
-    status: statusForQuery ?? 'all',
+    status: statusForQuery ?? "all",
     roleId,
     sortBy,
     sortOrder,

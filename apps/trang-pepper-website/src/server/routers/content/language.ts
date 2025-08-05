@@ -2,10 +2,13 @@
 // tRPC Router สำหรับ Language Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลภาษา
 
-import { router, publicProcedure, authorizedProcedure } from '@/server/trpc'; // tRPC core setup
-import { languageInputSchema, languageService } from '@/services/language'; // Language Service และ Zod Schema
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants'; // Constants สำหรับ RBAC
-import { z } from 'zod'; // Zod สำหรับ Validation Input ของ Procedure
+import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import { languageInputSchema, languageService } from "@/services/language"; // Language Service และ Zod Schema
+import {
+  PERMISSION_RESOURCES,
+  PERMISSION_ACTIONS,
+} from "@southern-syntax/auth/constants"; // Constants สำหรับ RBAC
+import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const languageRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลภาษา
@@ -23,14 +26,14 @@ export const languageRouter = router({
 
   // ดึงข้อมูลภาษาด้วย ID
   getById: publicProcedure
-    .input(z.object({ id: z.string().min(1, 'Language ID is required') }))
+    .input(z.object({ id: z.string().min(1, "Language ID is required") }))
     .query(async ({ input }) => {
       return languageService.getLanguageById(input.id);
     }),
 
   // ดึงข้อมูลภาษาด้วย Code
   getByCode: publicProcedure
-    .input(z.object({ code: z.string().min(1, 'Language code is required') }))
+    .input(z.object({ code: z.string().min(1, "Language code is required") }))
     .query(async ({ input }) => {
       return languageService.getLanguageByCode(input.code);
     }),
@@ -39,7 +42,10 @@ export const languageRouter = router({
   // ใช้ authorizedProcedure เพื่อบังคับใช้ RBAC (ต้อง Login และมีสิทธิ์)
 
   // สร้างภาษาใหม่
-  create: authorizedProcedure(PERMISSION_RESOURCES.SETTINGS, PERMISSION_ACTIONS.CREATE)
+  create: authorizedProcedure(
+    PERMISSION_RESOURCES.SETTINGS,
+    PERMISSION_ACTIONS.CREATE
+  )
     .input(languageInputSchema)
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -47,12 +53,15 @@ export const languageRouter = router({
     }),
 
   // อัปเดตข้อมูลภาษา
-  update: authorizedProcedure(PERMISSION_RESOURCES.SETTINGS, PERMISSION_ACTIONS.UPDATE)
+  update: authorizedProcedure(
+    PERMISSION_RESOURCES.SETTINGS,
+    PERMISSION_ACTIONS.UPDATE
+  )
     .input(
       z.object({
-        id: z.string().min(1, 'Language ID is required'),
+        id: z.string().min(1, "Language ID is required"),
         data: languageInputSchema.partial(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -60,8 +69,11 @@ export const languageRouter = router({
     }),
 
   // ลบภาษา
-  delete: authorizedProcedure(PERMISSION_RESOURCES.SETTINGS, PERMISSION_ACTIONS.DELETE)
-    .input(z.object({ id: z.string().min(1, 'Language ID is required') }))
+  delete: authorizedProcedure(
+    PERMISSION_RESOURCES.SETTINGS,
+    PERMISSION_ACTIONS.DELETE
+  )
+    .input(z.object({ id: z.string().min(1, "Language ID is required") }))
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
       return languageService.deleteLanguage(input.id);

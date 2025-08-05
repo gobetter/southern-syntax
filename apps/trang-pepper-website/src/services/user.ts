@@ -1,18 +1,28 @@
 // src/services/user.ts
-import { type Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
+import { type Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
-import prisma from '@/lib/prisma';
-import { hashPassword } from '@/lib/auth';
-import { getUserPermissions, invalidateUserPermissions } from '@/lib/auth/utils';
-import { ROLE_NAMES } from '@/lib/auth/constants';
+import prisma from "@southern-syntax/db";
+import { hashPassword } from "@southern-syntax/auth";
+import {
+  getUserPermissions,
+  invalidateUserPermissions,
+} from "@southern-syntax/auth/utils";
+import { ROLE_NAMES } from "@southern-syntax/auth/constants";
 
-import { type UserCreateOutput, type UserUpdateOutput } from '@/schemas/user';
-import { UserSortableField, UserStatusFilter, VALID_USER_STATUSES } from '@/types/user';
-import { SortOrder } from '@/constants/common';
-import { AUDIT_ACTIONS, type AuditAction } from '@/constants/auditActions';
+import {
+  type UserCreateOutput,
+  type UserUpdateOutput,
+} from "@southern-syntax/schemas/user";
+import {
+  UserSortableField,
+  UserStatusFilter,
+  VALID_USER_STATUSES,
+} from "@southern-syntax/types";
+import { SortOrder } from "@/constants/common";
+import { AUDIT_ACTIONS, type AuditAction } from "@/constants/auditActions";
 
-import { auditLogService } from './auditLog';
+import { auditLogService } from "./auditLog";
 
 /**
  * ดึงผู้ใช้ทั้งหมดพร้อมการแบ่งหน้า, ค้นหา, และเรียงลำดับ
@@ -26,14 +36,21 @@ async function getAllUsers(params: {
   sortOrder?: SortOrder;
   roleId?: string;
 }) {
-  const { page = 1, pageSize = 10, searchQuery, sortBy, sortOrder, roleId } = params;
+  const {
+    page = 1,
+    pageSize = 10,
+    searchQuery,
+    sortBy,
+    sortOrder,
+    roleId,
+  } = params;
   const skip = (page - 1) * pageSize;
 
   const where: Prisma.UserWhereInput = {};
 
   // สร้างเงื่อนไขสำหรับ status
   if (params.status && VALID_USER_STATUSES.includes(params.status)) {
-    where.isActive = params.status === 'active';
+    where.isActive = params.status === "active";
   }
 
   // เพิ่มเงื่อนไขการกรองด้วย roleId
@@ -42,18 +59,18 @@ async function getAllUsers(params: {
   }
 
   if (searchQuery) {
-    where.OR = [{ email: { contains: searchQuery, mode: 'insensitive' } }];
+    where.OR = [{ email: { contains: searchQuery, mode: "insensitive" } }];
   }
 
   // สร้าง logic สำหรับ orderBy
   const orderBy: Prisma.UserOrderByWithRelationInput =
-    sortBy === 'name'
-      ? { name: sortOrder ?? 'asc' }
-      : sortBy === 'role'
-        ? { role: { key: sortOrder ?? 'asc' } } // เรียงตาม key ของ Role
+    sortBy === "name"
+      ? { name: sortOrder ?? "asc" }
+      : sortBy === "role"
+        ? { role: { key: sortOrder ?? "asc" } } // เรียงตาม key ของ Role
         : sortBy
-          ? { [sortBy]: sortOrder ?? 'asc' }
-          : { createdAt: 'desc' };
+          ? { [sortBy]: sortOrder ?? "asc" }
+          : { createdAt: "desc" };
 
   const [users, totalCount] = await prisma.$transaction([
     prisma.user.findMany({
@@ -75,7 +92,9 @@ async function getAllUsers(params: {
 async function createUser(input: UserCreateOutput, actorId: string) {
   // --- ตรวจสอบสิทธิ์ ---
   const actorPermissions = await getUserPermissions(actorId);
-  const targetRole = await prisma.role.findUnique({ where: { id: input.roleId } });
+  const targetRole = await prisma.role.findUnique({
+    where: { id: input.roleId },
+  });
 
   // ตรวจสอบว่า Role ที่จะสร้างเป็น Role ระดับสูงหรือไม่
   // const isAssigningHighLevelRole =
@@ -100,19 +119,24 @@ async function createUser(input: UserCreateOutput, actorId: string) {
   // }
 
   const isAssigningHighLevelRole =
-    targetRole?.key === ROLE_NAMES.SUPERADMIN || targetRole?.key === 'ADMIN';
+    targetRole?.key === ROLE_NAMES.SUPERADMIN || targetRole?.key === "ADMIN";
 
-  if (isAssigningHighLevelRole && !actorPermissions['ADMIN_ACCESS']?.['ASSIGN']) {
+  if (
+    isAssigningHighLevelRole &&
+    !actorPermissions["ADMIN_ACCESS"]?.["ASSIGN"]
+  ) {
     throw new TRPCError({
-      code: 'FORBIDDEN',
-      message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
+      code: "FORBIDDEN",
+      message: "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE",
     });
   }
 
   // --- ตรวจสอบข้อมูล ---
-  const existingUser = await prisma.user.findUnique({ where: { email: input.email } });
+  const existingUser = await prisma.user.findUnique({
+    where: { email: input.email },
+  });
   if (existingUser) {
-    throw new Error('EMAIL_ALREADY_EXISTS');
+    throw new Error("EMAIL_ALREADY_EXISTS");
   }
 
   // --- ดำเนินการ ---
@@ -130,7 +154,7 @@ async function createUser(input: UserCreateOutput, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.USER_CREATED,
-    entityType: 'USER',
+    entityType: "USER",
     entityId: newUser.id,
     details: { newData: newUser },
   });
@@ -143,7 +167,11 @@ async function createUser(input: UserCreateOutput, actorId: string) {
 /**
  * อัปเดตข้อมูลผู้ใช้
  */
-async function updateUser(id: string, input: UserUpdateOutput, actorId: string) {
+async function updateUser(
+  id: string,
+  input: UserUpdateOutput,
+  actorId: string
+) {
   const oldData = await prisma.user.findUnique({ where: { id } });
   const actor = await prisma.user.findUnique({
     where: { id: actorId },
@@ -153,7 +181,10 @@ async function updateUser(id: string, input: UserUpdateOutput, actorId: string) 
   // --- ตรวจสอบสิทธิ์ ---
   // ป้องกันการปิดการใช้งานบัญชีตัวเอง
   if (id === actorId && input.isActive === false) {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_DEACTIVATE_SELF' });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "CANNOT_DEACTIVATE_SELF",
+    });
   }
 
   // ป้องกันการเปลี่ยน Role ของตัวเอง (ยกเว้น Super Admin)
@@ -168,7 +199,10 @@ async function updateUser(id: string, input: UserUpdateOutput, actorId: string) 
     input.roleId !== oldData?.roleId && // เช็คว่า roleId ใหม่ไม่ตรงกับของเก่า
     actor?.role?.key !== ROLE_NAMES.SUPERADMIN
   ) {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_CHANGE_OWN_ROLE' });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "CANNOT_CHANGE_OWN_ROLE",
+    });
   }
 
   // ตรวจสอบสิทธิ์ในการกำหนด Role ระดับสูง
@@ -208,14 +242,19 @@ async function updateUser(id: string, input: UserUpdateOutput, actorId: string) 
   // ตรวจสอบสิทธิ์ในการกำหนด Role ก็ต่อเมื่อมีการ "พยายามจะเปลี่ยน" Role เท่านั้น
   if (input.roleId && input.roleId !== oldData?.roleId) {
     const actorPermissions = await getUserPermissions(actorId);
-    const targetRole = await prisma.role.findUnique({ where: { id: input.roleId } });
+    const targetRole = await prisma.role.findUnique({
+      where: { id: input.roleId },
+    });
     const isAssigningHighLevelRole =
-      targetRole?.key === 'ADMIN' || targetRole?.key === ROLE_NAMES.SUPERADMIN;
+      targetRole?.key === "ADMIN" || targetRole?.key === ROLE_NAMES.SUPERADMIN;
 
-    if (isAssigningHighLevelRole && !actorPermissions['ADMIN_ACCESS']?.['ASSIGN']) {
+    if (
+      isAssigningHighLevelRole &&
+      !actorPermissions["ADMIN_ACCESS"]?.["ASSIGN"]
+    ) {
       throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
+        code: "FORBIDDEN",
+        message: "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE",
       });
     }
   }
@@ -232,14 +271,17 @@ async function updateUser(id: string, input: UserUpdateOutput, actorId: string) 
   if (input.roleId) {
     dataToUpdate.role = { connect: { id: input.roleId } };
   }
-  if (typeof input.isActive === 'boolean') {
+  if (typeof input.isActive === "boolean") {
     dataToUpdate.isActive = input.isActive;
   }
   if (input.password) {
     dataToUpdate.passwordHash = await hashPassword(input.password);
   }
 
-  const updatedUser = await prisma.user.update({ where: { id }, data: dataToUpdate });
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: dataToUpdate,
+  });
 
   // --- บันทึก Log ---
   let action: AuditAction = AUDIT_ACTIONS.USER_UPDATED;
@@ -251,7 +293,7 @@ async function updateUser(id: string, input: UserUpdateOutput, actorId: string) 
   await auditLogService.createLog({
     actorId,
     action,
-    entityType: 'USER',
+    entityType: "USER",
     entityId: updatedUser.id,
     details: { oldData, newData: updatedUser },
   });
@@ -266,7 +308,9 @@ async function deactivateManyUsers(ids: string[], actorId: string) {
   const filteredIds = ids.filter((id) => id !== actorId);
   if (filteredIds.length === 0) return { count: 0 };
 
-  const oldData = await prisma.user.findMany({ where: { id: { in: filteredIds } } });
+  const oldData = await prisma.user.findMany({
+    where: { id: { in: filteredIds } },
+  });
 
   const { count } = await prisma.user.updateMany({
     where: { id: { in: filteredIds } },
@@ -276,7 +320,7 @@ async function deactivateManyUsers(ids: string[], actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.USERS_DEACTIVATED_BULK,
-    entityType: 'USER',
+    entityType: "USER",
     entityId: `bulk-deactivate-${filteredIds.length}-items`,
     details: { deactivatedCount: count, deactivatedUsers: oldData },
   });
@@ -305,7 +349,7 @@ async function reactivateManyUsers(ids: string[], actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.USERS_REACTIVATED_BULK,
-    entityType: 'USER',
+    entityType: "USER",
     entityId: `bulk-reactivate-${ids.length}-items`,
     details: { reactivatedCount: count, reactivatedUsers: oldData },
   });
@@ -324,7 +368,11 @@ async function deleteUser(id: string) {
 }
 
 // ✅ ฟังก์ชันใหม่สำหรับเปลี่ยน Role หลายรายการ
-async function changeManyUsersRole(ids: string[], newRoleId: string, actorId: string) {
+async function changeManyUsersRole(
+  ids: string[],
+  newRoleId: string,
+  actorId: string
+) {
   // ไม่จำเป็นต้องกรอง actorId ออก เพราะ Admin สามารถเปลี่ยน Role ตัวเองได้
   const oldData = await prisma.user.findMany({
     where: { id: { in: ids } },
@@ -343,12 +391,16 @@ async function changeManyUsersRole(ids: string[], newRoleId: string, actorId: st
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.USERS_ROLE_CHANGED_BULK,
-    entityType: 'USER',
+    entityType: "USER",
     entityId: `bulk-role-change-${ids.length}-items`,
     details: {
       changedCount: count,
       newRoleId: newRoleId,
-      changedUsers: oldData.map((u) => ({ id: u.id, email: u.email, oldRole: u.role?.key })),
+      changedUsers: oldData.map((u) => ({
+        id: u.id,
+        email: u.email,
+        oldRole: u.role?.key,
+      })),
     },
   });
 

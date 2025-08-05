@@ -8,16 +8,21 @@ import { AlertCircle } from "lucide-react";
 
 import { useRoleForm } from "@/hooks/useRoleForm";
 import { type Role, type Permission } from "@/hooks/useRoleManager";
-import { PERMISSION_RESOURCES, ROLE_NAMES } from "@/lib/auth/constants";
+import {
+  PERMISSION_RESOURCES,
+  ROLE_NAMES,
+} from "@southern-syntax/auth/constants";
 
 import FormFieldError from "@/components/common/FormFieldError";
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
-import { Textarea } from "@southern-syntax/ui/textarea";
-import { Checkbox } from "@southern-syntax/ui/checkbox";
-import { ScrollArea } from "@southern-syntax/ui/scroll-area";
 import {
+  Button,
+  Input,
+  Label,
+  Textarea,
+  Checkbox,
+  ScrollArea,
+  Alert,
+  AlertDescription,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -25,8 +30,7 @@ import {
   DialogFooter,
   DialogClose,
   DialogDescription,
-} from "@southern-syntax/ui/dialog";
-import { Alert, AlertDescription } from "@southern-syntax/ui/alert";
+} from "@southern-syntax/ui";
 import { cn } from "@southern-syntax/ui/lib/utils";
 
 interface RoleFormDialogProps {

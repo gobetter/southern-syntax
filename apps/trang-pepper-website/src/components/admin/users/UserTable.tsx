@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-react";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import { UserItem } from "@/types/trpc";
-import type { UserSortableField } from "@/types/user";
+import type { UserSortableField } from "@southern-syntax/types";
 
 import { Button } from "@southern-syntax/ui/button";
 import {
@@ -17,8 +17,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@southern-syntax/ui/table";
-import { Checkbox } from "@southern-syntax/ui/checkbox";
+  Checkbox,
+} from "@southern-syntax/ui";
 
 import UserActionsDropdown from "./_components/UserActionsDropdown";
 

@@ -1,4 +1,5 @@
 import "server-only";
+
 import { PrismaClient } from "@prisma/client";
 
 // ตรวจสอบว่า `globalThis` มี `prisma` property หรือไม่

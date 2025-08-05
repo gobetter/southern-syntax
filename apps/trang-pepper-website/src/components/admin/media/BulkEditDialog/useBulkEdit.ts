@@ -1,16 +1,16 @@
 // src/components/admin/media/BulkEditDialog/useBulkEdit.ts
-import { useState, useEffect, useMemo } from 'react';
-import { useLocale } from 'next-intl';
-import { trpc } from '@/lib/trpc-client';
-import { mapToSelectOptions } from '@/lib/select-options';
-import type { LocalizedString } from '@/types/i18n';
-import type { MediaItem } from '@/types/trpc';
+import { useState, useEffect, useMemo } from "react";
+import { useLocale } from "next-intl";
+import { trpc } from "@/lib/trpc-client";
+import { mapToSelectOptions } from "@southern-syntax/utils";
+import type { LocalizedString } from "@southern-syntax/types";
+import type { MediaItem } from "@/types/trpc";
 import {
   getInitialCheckboxStates,
   toggleCheckboxState,
   getChangedCheckboxIdsSafe,
   type CheckboxStates,
-} from './helpers/checkboxUtils';
+} from "./helpers/checkboxUtils";
 
 interface UseBulkEditProps {
   mediaItems: MediaItem[];
@@ -33,7 +33,8 @@ export function useBulkEdit({
   // --- State Management ---
   const [categoryStates, setCategoryStates] = useState<CheckboxStates>({});
   const [tagStates, setTagStates] = useState<CheckboxStates>({});
-  const [initialCategoryStates, setInitialCategoryStates] = useState<CheckboxStates>({});
+  const [initialCategoryStates, setInitialCategoryStates] =
+    useState<CheckboxStates>({});
   const [initialTagStates, setInitialTagStates] = useState<CheckboxStates>({});
 
   // --- Data Fetching ---
@@ -47,8 +48,8 @@ export function useBulkEdit({
   // --- Effects ---
   useEffect(() => {
     if (isOpen && mediaItems.length > 0) {
-      const cats = getInitialCheckboxStates(mediaItems, 'categories');
-      const tgs = getInitialCheckboxStates(mediaItems, 'tags');
+      const cats = getInitialCheckboxStates(mediaItems, "categories");
+      const tgs = getInitialCheckboxStates(mediaItems, "tags");
       setCategoryStates(cats);
       setInitialCategoryStates(cats);
       setTagStates(tgs);
@@ -60,22 +61,32 @@ export function useBulkEdit({
   const handleSave = async () => {
     const { toAdd: addCats, toRemove: removeCats } = getChangedCheckboxIdsSafe(
       initialCategoryStates,
-      categoryStates,
+      categoryStates
     );
     const { toAdd: addTags, toRemove: removeTags } = getChangedCheckboxIdsSafe(
       initialTagStates,
-      tagStates,
+      tagStates
     );
 
     const promises: Promise<unknown>[] = [];
 
     if (addCats.length || removeCats.length) {
       promises.push(
-        updateCategories.mutateAsync({ mediaIds, addIds: addCats, removeIds: removeCats }),
+        updateCategories.mutateAsync({
+          mediaIds,
+          addIds: addCats,
+          removeIds: removeCats,
+        })
       );
     }
     if (addTags.length || removeTags.length) {
-      promises.push(updateTags.mutateAsync({ mediaIds, addIds: addTags, removeIds: removeTags }));
+      promises.push(
+        updateTags.mutateAsync({
+          mediaIds,
+          addIds: addTags,
+          removeIds: removeTags,
+        })
+      );
     }
 
     if (promises.length > 0) {
@@ -101,23 +112,27 @@ export function useBulkEdit({
   const categoryOptions = useMemo(
     () =>
       mapToSelectOptions(
-        categories as Array<{ id: string; name: LocalizedString; slug: string }> | undefined,
+        categories as
+          | Array<{ id: string; name: LocalizedString; slug: string }>
+          | undefined,
         locale,
         (c) => c.name,
-        (c) => c.slug,
+        (c) => c.slug
       ),
-    [categories, locale],
+    [categories, locale]
   );
 
   const tagOptions = useMemo(
     () =>
       mapToSelectOptions(
-        tags as Array<{ id: string; name: LocalizedString; slug: string }> | undefined,
+        tags as
+          | Array<{ id: string; name: LocalizedString; slug: string }>
+          | undefined,
         locale,
         (t) => t.name,
-        (t) => t.slug,
+        (t) => t.slug
       ),
-    [tags, locale],
+    [tags, locale]
   );
 
   // --- Return all values needed by the component ---

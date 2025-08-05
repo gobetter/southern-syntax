@@ -1,7 +1,9 @@
-// src/services/product-category.ts
-import prisma from '@/lib/prisma'; // Import Prisma Client
-export { productCategoryInputSchema } from '@/schemas/product-category';
-import { productCategoryInputSchema, type ProductCategoryInput } from '@/schemas/product-category';
+import prisma from "@southern-syntax/db"; // Import Prisma Client
+import {
+  productCategoryInputSchema,
+  type ProductCategoryInput,
+} from "@southern-syntax/schemas/product-category";
+export { productCategoryInputSchema } from "@southern-syntax/schemas/product-category";
 
 // เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
 // import { can } from '@/lib/auth';
@@ -11,7 +13,7 @@ import { productCategoryInputSchema, type ProductCategoryInput } from '@/schemas
 
 async function createProductCategory(data: ProductCategoryInput) {
   const validated = productCategoryInputSchema.parse(data);
-  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || '';
+  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
   return prisma.productCategory.create({
     data: { ...validated, nameEnNormalized },
   });
@@ -21,7 +23,10 @@ async function getProductCategoryById(id: string) {
   return prisma.productCategory.findUnique({ where: { id } });
 }
 
-async function updateProductCategory(id: string, data: Partial<ProductCategoryInput>) {
+async function updateProductCategory(
+  id: string,
+  data: Partial<ProductCategoryInput>
+) {
   const validated = productCategoryInputSchema.partial().parse(data);
   const nameEnNormalized = validated.name?.en?.trim().toLowerCase();
   return prisma.productCategory.update({
@@ -38,13 +43,13 @@ async function deleteProductCategory(id: string) {
 }
 
 async function getAllProductCategories() {
-  return prisma.productCategory.findMany({ orderBy: { name: 'asc' } });
+  return prisma.productCategory.findMany({ orderBy: { name: "asc" } });
 }
 
 async function getRootProductCategories() {
   return prisma.productCategory.findMany({
     where: { parentId: null },
-    orderBy: { name: 'asc' },
+    orderBy: { name: "asc" },
   });
 }
 

@@ -1,14 +1,13 @@
-// src/services/media-tag.ts
-import prisma from '@/lib/prisma';
-import { type MediaTagInput } from '@/schemas/media-taxonomy';
-import { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { auditLogService } from './auditLog';
-import { AUDIT_ACTIONS } from '@/constants/auditActions';
+import prisma from "@southern-syntax/db";
+import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { auditLogService } from "./auditLog";
+import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
 async function getAll() {
   return prisma.mediaTag.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
   });
 }
 
@@ -19,7 +18,7 @@ async function create(input: MediaTagInput, actorId: string) {
     where: { slug: input.slug },
   });
   if (existingSlug) {
-    throw new TRPCError({ code: 'CONFLICT', message: 'SLUG_ALREADY_EXISTS' });
+    throw new TRPCError({ code: "CONFLICT", message: "SLUG_ALREADY_EXISTS" });
   }
 
   if (nameEnNormalized) {
@@ -27,7 +26,7 @@ async function create(input: MediaTagInput, actorId: string) {
       where: { nameEnNormalized },
     });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -35,14 +34,14 @@ async function create(input: MediaTagInput, actorId: string) {
     data: {
       name: input.name as Prisma.JsonObject,
       slug: input.slug,
-      nameEnNormalized: nameEnNormalized || '',
+      nameEnNormalized: nameEnNormalized || "",
     },
   });
 
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_TAG_CREATED,
-    entityType: 'MEDIA_TAG',
+    entityType: "MEDIA_TAG",
     entityId: newTag.id,
     details: { newData: newTag },
   });
@@ -58,7 +57,7 @@ async function update(id: string, input: MediaTagInput, actorId: string) {
     where: { slug: input.slug, id: { not: id } },
   });
   if (existingSlug) {
-    throw new TRPCError({ code: 'CONFLICT', message: 'SLUG_ALREADY_EXISTS' });
+    throw new TRPCError({ code: "CONFLICT", message: "SLUG_ALREADY_EXISTS" });
   }
 
   if (nameEnNormalized) {
@@ -66,7 +65,7 @@ async function update(id: string, input: MediaTagInput, actorId: string) {
       where: { nameEnNormalized, id: { not: id } },
     });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -82,7 +81,7 @@ async function update(id: string, input: MediaTagInput, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_TAG_UPDATED,
-    entityType: 'MEDIA_TAG',
+    entityType: "MEDIA_TAG",
     entityId: updatedTag.id,
     details: { oldData, newData: updatedTag },
   });
@@ -93,7 +92,7 @@ async function update(id: string, input: MediaTagInput, actorId: string) {
 async function deleteTag(id: string, actorId: string) {
   const oldData = await prisma.mediaTag.findUnique({ where: { id } });
   if (!oldData) {
-    throw new TRPCError({ code: 'NOT_FOUND', message: 'Tag not found' });
+    throw new TRPCError({ code: "NOT_FOUND", message: "Tag not found" });
   }
 
   const deletedTag = await prisma.mediaTag.delete({ where: { id } });
@@ -102,7 +101,7 @@ async function deleteTag(id: string, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_TAG_DELETED,
-    entityType: 'MEDIA_TAG',
+    entityType: "MEDIA_TAG",
     entityId: id,
     details: { oldData },
   });

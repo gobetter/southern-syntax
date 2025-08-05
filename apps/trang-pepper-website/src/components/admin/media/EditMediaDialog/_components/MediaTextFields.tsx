@@ -4,10 +4,8 @@
 import { UseFormRegister } from "react-hook-form";
 import type { useTranslations } from "next-intl";
 
-import type { MediaUpdateFormInput } from "@/schemas/media";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
-import { Textarea } from "@southern-syntax/ui/textarea";
+import type { MediaUpdateFormInput } from "@southern-syntax/schemas/media";
+import { Input, Label, Textarea } from "@southern-syntax/ui";
 
 interface Props {
   register: UseFormRegister<MediaUpdateFormInput>;

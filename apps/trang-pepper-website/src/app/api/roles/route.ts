@@ -1,6 +1,6 @@
 // src/app/api/roles/route.ts
-import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import prisma from "@southern-syntax/db";
 
 export async function GET() {
   try {
@@ -13,15 +13,15 @@ export async function GET() {
         // },
       },
       select: { id: true, name: true, key: true },
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
     });
     return NextResponse.json(roles);
   } catch (error) {
-    console.error('Error fetching selectable roles:', error);
+    console.error("Error fetching selectable roles:", error);
     // ส่งกลับไปเป็น 500 Internal Server Error พร้อมข้อความที่ชัดเจน
     return NextResponse.json(
-      { message: 'Could not fetch roles from the database.' },
-      { status: 500 },
+      { message: "Could not fetch roles from the database." },
+      { status: 500 }
     );
   }
 }

@@ -1,12 +1,11 @@
 // src/components/admin/media/MediaDetailSidebar/TaxonomySection.tsx
 import { useLocale, useTranslations } from "next-intl";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import { type MediaItem } from "@/types/trpc";
-import type { LocalizedString } from "@/types/i18n";
+import type { LocalizedString } from "@southern-syntax/types";
 
-import { Badge } from "@southern-syntax/ui/badge";
-import { Separator } from "@southern-syntax/ui/separator";
+import { Badge, Separator } from "@southern-syntax/ui";
 
 export default function TaxonomySection({ media }: { media: MediaItem }) {
   const t = useTranslations("admin_media.details");

@@ -1,18 +1,18 @@
 // src/hooks/useRoleForm.ts
-'use client';
+"use client";
 
-import { z } from 'zod';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { trpc } from '@/lib/trpc-client';
-import { useToast } from './useToast';
-import { roleSchema } from '@/lib/auth/schemas';
-import type { TRPCClientErrorLike } from '@trpc/client';
-import type { AppRouter } from '@/server/routers/_app';
-import { Role } from './useRoleManager';
-import { useEffect } from 'react';
-import { LocalizedString } from '@/types/i18n';
+import { z } from "zod";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { trpc } from "@/lib/trpc-client";
+import { useToast } from "./useToast";
+import { roleSchema } from "@southern-syntax/auth/schemas";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
+import { Role } from "./useRoleManager";
+import { useEffect } from "react";
+import { LocalizedString } from "@southern-syntax/types";
 
 const roleFormSchema = roleSchema.extend({
   permissionIds: z.array(z.string()),
@@ -28,8 +28,8 @@ interface UseRoleFormProps {
 export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
   const utils = trpc.useUtils();
   const toast = useToast();
-  const t_toasts = useTranslations('admin_rbac.toasts');
-  const t_error_codes = useTranslations('common.error_codes');
+  const t_toasts = useTranslations("admin_rbac.toasts");
+  const t_error_codes = useTranslations("common.error_codes");
 
   const formMethods = useForm<RoleFormInput>({
     resolver: zodResolver(roleFormSchema),
@@ -41,26 +41,33 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
       reset({
         key: editingRole.key,
         name: editingRole.name as LocalizedString,
-        description: editingRole.description || '',
+        description: editingRole.description || "",
         isSystem: editingRole.isSystem,
-        permissionIds: editingRole.permissions.map((p: { permissionId: string }) => p.permissionId),
+        permissionIds: editingRole.permissions.map(
+          (p: { permissionId: string }) => p.permissionId
+        ),
       });
     } else {
-      reset({ key: '', name: { en: '', th: '' }, description: '', permissionIds: [] });
+      reset({
+        key: "",
+        name: { en: "", th: "" },
+        description: "",
+        permissionIds: [],
+      });
     }
   }, [editingRole, reset]);
 
   const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
-    if (error.message === 'ROLE_KEY_EXISTS') {
-      toast.error(t_error_codes('ROLE_KEY_EXISTS'));
+    if (error.message === "ROLE_KEY_EXISTS") {
+      toast.error(t_error_codes("ROLE_KEY_EXISTS"));
     } else {
-      toast.error(t_toasts('create_error'));
+      toast.error(t_toasts("create_error"));
     }
   };
 
   const createMutation = trpc.role.create.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('create_success'));
+      toast.success(t_toasts("create_success"));
       utils.role.getAll.invalidate();
       onSuccess();
     },
@@ -69,7 +76,7 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
 
   const updateMutation = trpc.role.update.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('update_success'));
+      toast.success(t_toasts("update_success"));
       utils.role.getAll.invalidate();
       onSuccess();
     },

@@ -1,14 +1,17 @@
 // src/app/[lang]/admin/layout.tsx
-import { Suspense } from 'react';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import { authOptions, can } from '@/lib/auth';
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from '@/lib/auth/constants';
+import { Suspense } from "react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions, can } from "@southern-syntax/auth";
+import {
+  PERMISSION_ACTIONS,
+  PERMISSION_RESOURCES,
+} from "@southern-syntax/auth/constants";
 
-import AdminSidebar from '@/components/admin/AdminSidebar';
-import Breadcrumbs from '@/components/admin/Breadcrumbs';
-import AccessDenied from '@/components/auth/AccessDenied';
-import Spinner from '@/components/common/Spinner';
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import Breadcrumbs from "@/components/admin/Breadcrumbs";
+import AccessDenied from "@/components/auth/AccessDenied";
+import Spinner from "@/components/common/Spinner";
 
 export default async function AdminLayout({
   children,
@@ -36,7 +39,7 @@ export default async function AdminLayout({
   const hasAccessToAdmin = can(
     session,
     PERMISSION_RESOURCES.ADMIN_DASHBOARD,
-    PERMISSION_ACTIONS.READ,
+    PERMISSION_ACTIONS.READ
   );
 
   // 3. ✅ ถ้าไม่มีสิทธิ์ ให้แสดง AccessDenied โดยตรง ไม่ต้องแสดง Layout

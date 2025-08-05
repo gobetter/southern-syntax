@@ -1,7 +1,7 @@
-import { ZodError } from 'zod';
-import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from "zod";
+import { NextRequest, NextResponse } from "next/server";
 
-import { registerUser } from '@/lib/auth/service';
+import { registerUser } from "@southern-syntax/auth/service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,16 +24,22 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(
-        { message: 'Invalid input', errors: error.flatten() },
-        { status: 400 },
+        { message: "Invalid input", errors: error.flatten() },
+        { status: 400 }
       );
     }
     if (error instanceof Error) {
-      if (error.message === 'EMAIL_ALREADY_EXISTS') {
-        return NextResponse.json({ message: 'EMAIL_ALREADY_EXISTS' }, { status: 409 });
+      if (error.message === "EMAIL_ALREADY_EXISTS") {
+        return NextResponse.json(
+          { message: "EMAIL_ALREADY_EXISTS" },
+          { status: 409 }
+        );
       }
     }
-    console.error('[REGISTER_API_ERROR]', error);
-    return NextResponse.json({ message: 'An internal server error occurred' }, { status: 500 });
+    console.error("[REGISTER_API_ERROR]", error);
+    return NextResponse.json(
+      { message: "An internal server error occurred" },
+      { status: 500 }
+    );
   }
 }

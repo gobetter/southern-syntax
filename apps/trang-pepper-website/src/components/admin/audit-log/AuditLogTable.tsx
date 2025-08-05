@@ -2,16 +2,16 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import {
+  Badge,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@southern-syntax/ui/table";
-import { Badge } from "@southern-syntax/ui/badge";
+} from "@southern-syntax/ui";
 // import type { inferRouterOutputs } from '@trpc/server';
 // import type { AppRouter } from '@/server/routers/_app';
 

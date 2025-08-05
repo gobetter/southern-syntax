@@ -3,8 +3,8 @@
 
 import { useTranslations } from "next-intl";
 
-import { type UserStatusView, USER_STATUS_VIEWS } from "@/types/user";
-import { Tabs, TabsList, TabsTrigger } from "@southern-syntax/ui/tabs";
+import { type UserStatusView, USER_STATUS_VIEWS } from "@southern-syntax/types";
+import { Tabs, TabsList, TabsTrigger } from "@southern-syntax/ui";
 
 interface UserStatusTabsProps {
   currentStatus: UserStatusView;

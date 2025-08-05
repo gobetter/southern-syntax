@@ -6,10 +6,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./lib/utils": "./src/lib/utils.ts",
-    "./button": "./src/ui/button.tsx",
-    "./dialog": "./src/ui/dialog.tsx",
-    "./dropdown-menu": "./src/ui/dropdown-menu.tsx"
+    "./lib/*": "./src/lib/*",
+    "./*": "./src/ui/*"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

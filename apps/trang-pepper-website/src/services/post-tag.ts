@@ -1,7 +1,9 @@
-// src/services/post-tag.ts
-import prisma from '@/lib/prisma'; // Import Prisma Client
-export { postTagInputSchema } from '@/schemas/post-tag';
-import { postTagInputSchema, type PostTagInput } from '@/schemas/post-tag';
+import prisma from "@southern-syntax/db"; // Import Prisma Client
+import {
+  postTagInputSchema,
+  type PostTagInput,
+} from "@southern-syntax/schemas/post-tag";
+export { postTagInputSchema } from "@southern-syntax/schemas/post-tag";
 
 // เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
 // import { can } from '@/lib/auth';
@@ -13,7 +15,7 @@ const postTagUpdateSchema = postTagInputSchema.partial();
 
 async function createPostTag(data: PostTagInput) {
   const validated = postTagInputSchema.parse(data);
-  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || '';
+  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
   return prisma.postTag.create({
     data: { ...validated, nameEnNormalized },
   });
@@ -40,7 +42,7 @@ async function deletePostTag(id: string) {
 }
 
 async function getAllPostTags() {
-  return prisma.postTag.findMany({ orderBy: { name: 'asc' } });
+  return prisma.postTag.findMany({ orderBy: { name: "asc" } });
 }
 
 async function getTagsWithPosts() {
@@ -51,7 +53,7 @@ async function getTagsWithPosts() {
         select: { id: true, slug: true, title: true },
       },
     },
-    orderBy: { name: 'asc' },
+    orderBy: { name: "asc" },
   });
 }
 

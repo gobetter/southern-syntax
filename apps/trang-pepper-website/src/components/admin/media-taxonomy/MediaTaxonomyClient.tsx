@@ -4,17 +4,15 @@
 import { useTranslations } from "next-intl";
 
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@southern-syntax/ui/tabs";
-import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@southern-syntax/ui/card";
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@southern-syntax/ui";
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 
 import { CategoryManager } from "./_components/CategoryManager";
@@ -25,7 +23,7 @@ import {
   mediaCategoryInputSchema,
   MediaTagInput,
   mediaTagInputSchema,
-} from "@/schemas/media-taxonomy";
+} from "@southern-syntax/schemas/media-taxonomy";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCategoryManager } from "@/hooks/useCategoryManager";
 import { useTagManager } from "@/hooks/useTagManager";

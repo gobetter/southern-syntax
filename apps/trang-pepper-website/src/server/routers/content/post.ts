@@ -2,10 +2,13 @@
 // tRPC Router สำหรับ Post Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลบทความ/บล็อก
 
-import { router, publicProcedure, authorizedProcedure } from '@/server/trpc'; // tRPC core setup
-import { postInputSchema, postService } from '@/services/post'; // Post Service และ Zod Schema
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants'; // Constants สำหรับ RBAC
-import { z } from 'zod'; // Zod สำหรับ Validation Input ของ Procedure
+import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import { postInputSchema, postService } from "@/services/post"; // Post Service และ Zod Schema
+import {
+  PERMISSION_RESOURCES,
+  PERMISSION_ACTIONS,
+} from "@southern-syntax/auth/constants"; // Constants สำหรับ RBAC
+import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const postRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลบทความ
@@ -23,7 +26,7 @@ export const postRouter = router({
 
   // ดึงข้อมูลบทความด้วย ID
   getById: publicProcedure
-    .input(z.object({ id: z.string().min(1, 'Post ID is required') }))
+    .input(z.object({ id: z.string().min(1, "Post ID is required") }))
     .query(async ({ input }) => {
       return postService.getPostById(input.id);
     }),
@@ -32,7 +35,10 @@ export const postRouter = router({
   // ใช้ authorizedProcedure เพื่อบังคับใช้ RBAC (ต้อง Login และมีสิทธิ์)
 
   // สร้างบทความใหม่
-  create: authorizedProcedure(PERMISSION_RESOURCES.POST, PERMISSION_ACTIONS.CREATE)
+  create: authorizedProcedure(
+    PERMISSION_RESOURCES.POST,
+    PERMISSION_ACTIONS.CREATE
+  )
     .input(postInputSchema) // ใช้ Zod Schema สำหรับ Validation Input
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -40,9 +46,15 @@ export const postRouter = router({
     }),
 
   // อัปเดตข้อมูลบทความ
-  update: authorizedProcedure(PERMISSION_RESOURCES.POST, PERMISSION_ACTIONS.UPDATE)
+  update: authorizedProcedure(
+    PERMISSION_RESOURCES.POST,
+    PERMISSION_ACTIONS.UPDATE
+  )
     .input(
-      z.object({ id: z.string().min(1, 'Post ID is required'), data: postInputSchema.partial() }),
+      z.object({
+        id: z.string().min(1, "Post ID is required"),
+        data: postInputSchema.partial(),
+      })
     ) // Schema สำหรับ Partial Update
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -50,8 +62,11 @@ export const postRouter = router({
     }),
 
   // ลบบทความ
-  delete: authorizedProcedure(PERMISSION_RESOURCES.POST, PERMISSION_ACTIONS.DELETE)
-    .input(z.object({ id: z.string().min(1, 'Post ID is required') })) // กำหนด Input Schema ด้วย Zod
+  delete: authorizedProcedure(
+    PERMISSION_RESOURCES.POST,
+    PERMISSION_ACTIONS.DELETE
+  )
+    .input(z.object({ id: z.string().min(1, "Post ID is required") })) // กำหนด Input Schema ด้วย Zod
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
       return postService.deletePost(input.id);

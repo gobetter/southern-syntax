@@ -1,4 +1,5 @@
-// packages/auth/options.ts
+import "server-only";
+
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -111,5 +112,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
   },
+
   debug: process.env.NODE_ENV === "development",
 };

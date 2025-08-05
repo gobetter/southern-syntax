@@ -6,8 +6,8 @@ import { type UseFormReturn } from "react-hook-form";
 import { Edit, Trash2 } from "lucide-react";
 
 import { useTagManager } from "@/hooks/useTagManager";
-import { getLocalizedString } from "@/i18n/utils";
-import { type MediaTagInput } from "@/schemas/media-taxonomy";
+import { getLocalizedString } from "@southern-syntax/i18n";
+import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 
 import Spinner from "@/components/common/Spinner";
 import { Button } from "@southern-syntax/ui/button";
@@ -18,8 +18,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@southern-syntax/ui/table";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -28,7 +26,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@southern-syntax/ui/alert-dialog";
+} from "@southern-syntax/ui";
 
 import { TagFormDialog } from "./TagFormDialog";
 

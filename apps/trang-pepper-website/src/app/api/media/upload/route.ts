@@ -1,12 +1,14 @@
 // src/app/api/media/upload/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 
-import { mediaService } from '@/services/media';
-import { authOptions, can } from '@/lib/auth';
-import { handleApiError } from '@/lib/api-error-handler';
-import { parseMultipartFormData } from '@/lib/form-data-parser';
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from '@/lib/auth/constants';
+import { mediaService } from "@/services/media";
+import { authOptions, can } from "@southern-syntax/auth";
+import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
+import {
+  PERMISSION_ACTIONS,
+  PERMISSION_RESOURCES,
+} from "@southern-syntax/auth/constants";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,7 +25,7 @@ export async function POST(req: NextRequest) {
       !session?.user?.id ||
       !can(session, PERMISSION_RESOURCES.MEDIA, PERMISSION_ACTIONS.CREATE)
     ) {
-      return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     }
 
     const actorId = session.user.id;
@@ -32,7 +34,10 @@ export async function POST(req: NextRequest) {
     const file = files.file?.[0]; // เอาไฟล์แรกที่เจอใน field 'file'
 
     if (!file) {
-      return NextResponse.json({ message: 'No file uploaded.' }, { status: 400 });
+      return NextResponse.json(
+        { message: "No file uploaded." },
+        { status: 400 }
+      );
     }
 
     // แปลง JSON string กลับเป็น object (ถ้ามี)
@@ -43,7 +48,7 @@ export async function POST(req: NextRequest) {
     // 👇 อ่านค่า categoryId และ tagIds จาก fields
     const categoryId = fields.categoryId?.[0] || undefined;
     // tagIds จะถูกส่งมาเป็น string ที่คั่นด้วย comma, เราต้อง split มัน
-    const tagIds = fields.tagIds?.[0]?.split(',') || [];
+    const tagIds = fields.tagIds?.[0]?.split(",") || [];
 
     const newMedia = await mediaService.uploadMedia(
       {
@@ -58,7 +63,7 @@ export async function POST(req: NextRequest) {
         categoryId,
         tagIds,
       },
-      actorId,
+      actorId
     );
 
     return NextResponse.json(newMedia, { status: 201 });

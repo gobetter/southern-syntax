@@ -1,7 +1,6 @@
-// src/services/post.ts
-import prisma from '@/lib/prisma'; // Import Prisma Client
-export { postInputSchema } from '@/schemas/post';
-import { postInputSchema, type PostInput } from '@/schemas/post';
+import prisma from "@southern-syntax/db"; // Import Prisma Client
+export { postInputSchema } from "@southern-syntax/schemas/post";
+import { postInputSchema, type PostInput } from "@southern-syntax/schemas/post";
 
 // เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
 // import { can } from '@/lib/auth';
@@ -11,7 +10,7 @@ import { postInputSchema, type PostInput } from '@/schemas/post';
 
 async function createPost(data: PostInput) {
   const validated = postInputSchema.parse(data);
-  const titleEnNormalized = validated.title.en?.trim().toLowerCase() || '';
+  const titleEnNormalized = validated.title.en?.trim().toLowerCase() || "";
   return prisma.post.create({
     data: { ...validated, titleEnNormalized },
   });
@@ -46,7 +45,7 @@ async function deletePost(id: string) {
 
 async function getAllPosts() {
   return prisma.post.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     include: {
       author: { select: { id: true, name: true, email: true } },
     },
@@ -56,7 +55,7 @@ async function getAllPosts() {
 async function getPublishedPosts() {
   return prisma.post.findMany({
     where: { isPublished: true },
-    orderBy: { publishedAt: 'desc' }, // เรียงตามวันที่เผยแพร่
+    orderBy: { publishedAt: "desc" }, // เรียงตามวันที่เผยแพร่
     include: {
       author: { select: { id: true, name: true, email: true } },
     },

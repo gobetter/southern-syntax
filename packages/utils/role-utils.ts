@@ -1,18 +1,25 @@
-// src/lib/role-utils.ts
-// import { getLocalizedString } from '@/i18n/utils';
-import { mapToSelectOptions } from './select-options';
-import type { RoleItem } from '@/types/trpc';
+import { mapToSelectOptions } from "./select-options";
+import type { LocalizedString } from "@southern-syntax/types";
 
 export interface RoleOption {
   id: string;
   label: string;
 }
 
-export function mapRoleOptions(roles: RoleItem[] | undefined, locale: string): RoleOption[] {
+interface RoleLike {
+  id: string;
+  key: string;
+  name: LocalizedString;
+}
+
+export function mapRoleOptions<T extends RoleLike>(
+  roles: T[] | undefined,
+  locale: string
+): RoleOption[] {
   return mapToSelectOptions(
     roles,
     locale,
     (role) => role.name,
-    (role) => role.key,
+    (role) => role.key
   ) as RoleOption[];
 }

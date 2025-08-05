@@ -6,7 +6,7 @@ import { PlusCircle, Search, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { UserItem } from "@/types/trpc";
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 
 // Hooks
 import { useUserManagement } from "@/hooks/useUserManagement";
@@ -18,8 +18,7 @@ import EmptyState from "@/components/common/EmptyState";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
 import { DataTablePagination } from "@/components/common/DataTablePagination";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
+import { Button, Input } from "@southern-syntax/ui";
 
 import UserTable from "./UserTable";
 import AddUserDialog from "./AddUserDialog";

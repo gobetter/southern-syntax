@@ -1,30 +1,34 @@
-// src/hooks/useAddUserForm.ts
-'use client';
+"use client";
 
-import { useEffect, useMemo } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useTranslations, useLocale } from 'next-intl';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useMemo } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useTranslations, useLocale } from "next-intl";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { trpc } from '@/lib/trpc-client';
-import { mapToSelectOptions } from '@/lib/select-options';
-import { userCreateSchema, type UserCreateInput, type UserCreateOutput } from '@/schemas/user';
+import { trpc } from "@/lib/trpc-client";
+import { mapToSelectOptions } from "@southern-syntax/utils";
+import {
+  userCreateSchema,
+  type UserCreateInput,
+  type UserCreateOutput,
+} from "@southern-syntax/schemas/user";
 
-import { useToast } from './useToast';
-import { LocalizedString } from '@/types/i18n';
+import { useToast } from "./useToast";
+import { LocalizedString } from "@southern-syntax/types";
 
 interface UseAddUserFormProps {
   onOpenChange: (isOpen: boolean) => void;
 }
 
 export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
-  const t_toasts = useTranslations('admin_users.toasts');
-  const t_error_codes = useTranslations('common.error_codes');
+  const t_toasts = useTranslations("admin_users.toasts");
+  const t_error_codes = useTranslations("common.error_codes");
   const locale = useLocale();
   const utils = trpc.useUtils();
   const toast = useToast();
 
-  const { data: roles, isLoading: isLoadingRoles } = trpc.role.getForSelection.useQuery();
+  const { data: roles, isLoading: isLoadingRoles } =
+    trpc.role.getForSelection.useQuery();
 
   // --- Form Management ---
   const {
@@ -36,12 +40,12 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
     trigger,
   } = useForm<UserCreateInput>({
     resolver: zodResolver(userCreateSchema),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      name: { en: '', th: '' }, // กำหนดให้ name เป็น object,
-      email: '',
-      password: '',
-      roleId: '',
+      name: { en: "", th: "" }, // กำหนดให้ name เป็น object,
+      email: "",
+      password: "",
+      roleId: "",
       isActive: true,
     },
   });
@@ -51,25 +55,25 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
     // ถ้าผู้ใช้เคยแตะ (touched) ช่อง confirmPassword แล้ว
     if (touchedFields.confirmPassword) {
       // ให้สั่ง re-validate ช่อง confirmPassword ใหม่
-      trigger('confirmPassword');
+      trigger("confirmPassword");
     }
   }, [touchedFields.confirmPassword, trigger]);
 
   const createUserMutation = trpc.user.create.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('create_success'));
+      toast.success(t_toasts("create_success"));
       utils.user.getAll.invalidate();
       onOpenChange(false); // ปิด Dialog
       reset(); // เคลียร์ฟอร์ม
     },
     // Callback
     onError: (error) => {
-      if (error.message === 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE') {
-        toast.error(t_error_codes('INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE'));
-      } else if (error.message === 'EMAIL_ALREADY_EXISTS') {
-        toast.error(t_error_codes('EMAIL_ALREADY_EXISTS'));
+      if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
+        toast.error(t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE"));
+      } else if (error.message === "EMAIL_ALREADY_EXISTS") {
+        toast.error(t_error_codes("EMAIL_ALREADY_EXISTS"));
       } else {
-        toast.error(t_toasts('create_error', { error: error.message }));
+        toast.error(t_toasts("create_error", { error: error.message }));
       }
     },
   });
@@ -82,12 +86,14 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
   const roleOptions = useMemo(
     () =>
       mapToSelectOptions(
-        roles as { name: LocalizedString; id: string; key: string }[] | undefined,
+        roles as
+          | { name: LocalizedString; id: string; key: string }[]
+          | undefined,
         locale,
         (r) => r.name,
-        (r) => r.key,
+        (r) => r.key
       ),
-    [roles, locale],
+    [roles, locale]
   );
 
   return {

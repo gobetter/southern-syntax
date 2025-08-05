@@ -7,12 +7,13 @@ import { useTranslations, useLocale } from "next-intl";
 import { AlertCircle } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { registerSchema, type RegisterInput } from "@/lib/auth/schemas";
+import {
+  registerSchema,
+  type RegisterInput,
+} from "@southern-syntax/auth/schemas";
 
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
+import { Button, Input, Alert, AlertDescription } from "@southern-syntax/ui";
 import FormFieldError from "@/components/common/FormFieldError";
-import { Alert, AlertDescription } from "@southern-syntax/ui/alert";
 
 export default function RegisterForm() {
   const [apiError, setApiError] = useState<string | null>(null);

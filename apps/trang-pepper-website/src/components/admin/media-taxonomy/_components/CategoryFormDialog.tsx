@@ -3,12 +3,10 @@
 
 import { useTranslations } from "next-intl";
 import { useForm, type SubmitHandler, FormProvider } from "react-hook-form";
-import { type MediaCategoryInput } from "@/schemas/media-taxonomy";
+import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
 import FormFieldError from "@/components/common/FormFieldError";
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
+import { Button, Input, Label } from "@southern-syntax/ui";
 import {
   Dialog,
   DialogContent,

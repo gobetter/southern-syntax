@@ -1,9 +1,8 @@
 // src/hooks/useUploadMedia.ts
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 
-import { uploadMediaFile } from '@/lib/upload/uploadMediaFile';
-import { TranslatedUploadError } from '@/lib/errors';
+import { uploadMediaFile, TranslatedUploadError } from "@southern-syntax/utils";
 
 interface UploadErrorItem {
   filename: string;
@@ -13,7 +12,7 @@ interface UploadErrorItem {
 export function useUploadMedia(onSuccess: () => void) {
   const [isUploading, setIsUploading] = useState(false);
   const [errors, setErrors] = useState<UploadErrorItem[]>([]);
-  const t = useTranslations('admin_media.upload_dialog');
+  const t = useTranslations("admin_media.upload_dialog");
 
   const upload = async (files: File[]) => {
     setIsUploading(true);
@@ -36,7 +35,7 @@ export function useUploadMedia(onSuccess: () => void) {
           // จัดการ Error ทั่วไปที่ไม่คาดคิด
           errorItems.push({
             filename: file.name,
-            message: t('unexpected', { filename: file.name }), // ไม่ต้องส่ง context แล้วถ้าไม่ต้องการ
+            message: t("unexpected", { filename: file.name }), // ไม่ต้องส่ง context แล้วถ้าไม่ต้องการ
           });
         }
       }

@@ -1,7 +1,9 @@
-// src/services/product.ts
-import prisma from '@/lib/prisma'; // Import Prisma Client
-export { productInputSchema } from '@/schemas/product';
-import { productInputSchema, type ProductInput } from '@/schemas/product';
+import prisma from "@southern-syntax/db"; // Import Prisma Client
+import {
+  productInputSchema,
+  type ProductInput,
+} from "@southern-syntax/schemas/product";
+export { productInputSchema } from "@southern-syntax/schemas/product";
 
 // เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
 // import { can } from '@/lib/auth';
@@ -11,7 +13,7 @@ import { productInputSchema, type ProductInput } from '@/schemas/product';
 // Service นี้จะรวม Business Logic สำหรับ Product Model
 async function createProduct(data: ProductInput) {
   const validated = productInputSchema.parse(data);
-  const titleEnNormalized = validated.title.en?.trim().toLowerCase() || '';
+  const titleEnNormalized = validated.title.en?.trim().toLowerCase() || "";
   return prisma.product.create({
     data: { ...validated, titleEnNormalized },
   });
@@ -38,13 +40,13 @@ async function deleteProduct(id: string) {
 }
 
 async function getAllProducts() {
-  return prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
+  return prisma.product.findMany({ orderBy: { createdAt: "desc" } });
 }
 
 async function getPublishedProducts() {
   return prisma.product.findMany({
     where: { isPublished: true },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
   });
 }
 

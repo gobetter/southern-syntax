@@ -2,10 +2,16 @@
 // tRPC Router สำหรับ PostCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่บทความ
 
-import { router, publicProcedure, authorizedProcedure } from '@/server/trpc'; // tRPC core setup
-import { postCategoryInputSchema, postCategoryService } from '@/services/post-category'; // PostCategory Service และ Zod Schema
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants'; // Constants สำหรับ RBAC
-import { z } from 'zod'; // Zod สำหรับ Validation Input ของ Procedure
+import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import {
+  postCategoryInputSchema,
+  postCategoryService,
+} from "@/services/post-category"; // PostCategory Service และ Zod Schema
+import {
+  PERMISSION_RESOURCES,
+  PERMISSION_ACTIONS,
+} from "@southern-syntax/auth/constants"; // Constants สำหรับ RBAC
+import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const postCategoryRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลหมวดหมู่บทความ
@@ -23,7 +29,7 @@ export const postCategoryRouter = router({
 
   // ดึงข้อมูลหมวดหมู่บทความด้วย ID
   getById: publicProcedure
-    .input(z.object({ id: z.string().min(1, 'Category ID is required') }))
+    .input(z.object({ id: z.string().min(1, "Category ID is required") }))
     .query(async ({ input }) => {
       return postCategoryService.getPostCategoryById(input.id);
     }),
@@ -32,7 +38,10 @@ export const postCategoryRouter = router({
   // ใช้ authorizedProcedure เพื่อบังคับใช้ RBAC (ต้อง Login และมีสิทธิ์)
 
   // สร้างหมวดหมู่บทความใหม่
-  create: authorizedProcedure(PERMISSION_RESOURCES.POST_CATEGORY, PERMISSION_ACTIONS.CREATE)
+  create: authorizedProcedure(
+    PERMISSION_RESOURCES.POST_CATEGORY,
+    PERMISSION_ACTIONS.CREATE
+  )
     .input(postCategoryInputSchema)
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -40,12 +49,15 @@ export const postCategoryRouter = router({
     }),
 
   // อัปเดตข้อมูลหมวดหมู่บทความ
-  update: authorizedProcedure(PERMISSION_RESOURCES.POST_CATEGORY, PERMISSION_ACTIONS.UPDATE)
+  update: authorizedProcedure(
+    PERMISSION_RESOURCES.POST_CATEGORY,
+    PERMISSION_ACTIONS.UPDATE
+  )
     .input(
       z.object({
-        id: z.string().min(1, 'Category ID is required'),
+        id: z.string().min(1, "Category ID is required"),
         data: postCategoryInputSchema.partial(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -53,8 +65,11 @@ export const postCategoryRouter = router({
     }),
 
   // ลบหมวดหมู่บทความ
-  delete: authorizedProcedure(PERMISSION_RESOURCES.POST_CATEGORY, PERMISSION_ACTIONS.DELETE)
-    .input(z.object({ id: z.string().min(1, 'Category ID is required') }))
+  delete: authorizedProcedure(
+    PERMISSION_RESOURCES.POST_CATEGORY,
+    PERMISSION_ACTIONS.DELETE
+  )
+    .input(z.object({ id: z.string().min(1, "Category ID is required") }))
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
       return postCategoryService.deletePostCategory(input.id);

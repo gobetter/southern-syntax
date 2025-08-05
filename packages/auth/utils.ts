@@ -1,3 +1,5 @@
+import "server-only";
+
 // ไฟล์นี้รวม utilities สำหรับ Authentication (Password Hashing)
 // และ Authorization (RBAC Permission Checker)
 

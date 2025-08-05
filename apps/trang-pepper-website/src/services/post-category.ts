@@ -1,7 +1,10 @@
 // src/services/post-category.ts
-import prisma from '@/lib/prisma';
-export { postCategoryInputSchema } from '@/schemas/post-category';
-import { postCategoryInputSchema, type PostCategoryInput } from '@/schemas/post-category';
+import prisma from "@southern-syntax/db";
+import {
+  postCategoryInputSchema,
+  type PostCategoryInput,
+} from "@southern-syntax/schemas/post-category";
+export { postCategoryInputSchema } from "@southern-syntax/schemas/post-category";
 
 // เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
 // import { can } from '@/lib/auth';
@@ -10,7 +13,7 @@ import { postCategoryInputSchema, type PostCategoryInput } from '@/schemas/post-
 // --- PostCategory Service ---
 async function createPostCategory(data: PostCategoryInput) {
   const validated = postCategoryInputSchema.parse(data);
-  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || '';
+  const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
   return prisma.postCategory.create({
     data: { ...validated, nameEnNormalized },
   });
@@ -20,7 +23,10 @@ async function getPostCategoryById(id: string) {
   return prisma.postCategory.findUnique({ where: { id } });
 }
 
-async function updatePostCategory(id: string, data: Partial<PostCategoryInput>) {
+async function updatePostCategory(
+  id: string,
+  data: Partial<PostCategoryInput>
+) {
   const validated = postCategoryInputSchema.partial().parse(data);
   const nameEnNormalized = validated.name?.en?.trim().toLowerCase();
   return prisma.postCategory.update({
@@ -37,7 +43,7 @@ async function deletePostCategory(id: string) {
 }
 
 async function getAllPostCategories() {
-  return prisma.postCategory.findMany({ orderBy: { name: 'asc' } });
+  return prisma.postCategory.findMany({ orderBy: { name: "asc" } });
 }
 
 async function getCategoriesWithPosts() {
@@ -48,7 +54,7 @@ async function getCategoriesWithPosts() {
         select: { id: true, slug: true, title: true },
       },
     },
-    orderBy: { name: 'asc' },
+    orderBy: { name: "asc" },
   });
 }
 

@@ -1,7 +1,7 @@
 // src/components/admin/media/EditMediaDialog/mediaToFormValues.ts
-import { MediaUpdateFormInput } from '@/schemas/media';
-import { MediaItem } from '@/types/trpc';
-import { LocalizedString } from '@/types/i18n';
+import { MediaUpdateFormInput } from "@southern-syntax/schemas/media";
+import { MediaItem } from "@/types/trpc";
+import { LocalizedString } from "@southern-syntax/types";
 
 export function mediaToFormValues(media: MediaItem): MediaUpdateFormInput {
   return {

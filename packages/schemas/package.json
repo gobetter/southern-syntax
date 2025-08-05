@@ -5,10 +5,7 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "exports": {
-    ".": "./index.ts",
-    "./password": "./password.ts",
-    "./i18n": "./i18n.ts",
-    "./user": "./user.ts"
+    "./*": "./*.ts"
   },
   "dependencies": {
     "zod": "^3.25.64"

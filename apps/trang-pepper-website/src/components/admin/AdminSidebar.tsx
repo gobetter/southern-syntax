@@ -13,9 +13,12 @@ import {
   Shield,
 } from "lucide-react";
 
-import { can } from "@/lib/auth";
+import { can } from "@southern-syntax/auth";
 import { cn } from "@southern-syntax/ui/lib/utils";
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@/lib/auth/constants";
+import {
+  PERMISSION_ACTIONS,
+  PERMISSION_RESOURCES,
+} from "@southern-syntax/auth/constants";
 
 // ✅ 1. จัดลำดับใหม่: นำ path ที่ยาวกว่า (เจาะจงกว่า) ขึ้นก่อน
 const sidebarNavItems = [

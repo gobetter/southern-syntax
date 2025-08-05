@@ -10,36 +10,32 @@ import {
 } from "react-hook-form";
 
 import { useAddUserForm } from "@/hooks/useAddUserForm";
-import { UserCreateInput } from "@/schemas/user";
+import { UserCreateInput } from "@southern-syntax/schemas/user";
 
-import { Switch } from "@southern-syntax/ui/switch";
 import Spinner from "@/components/common/Spinner";
 import FormFieldError from "@/components/common/FormFieldError";
 
 import {
+  Button,
+  Label,
+  Input,
+  Switch,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@southern-syntax/ui/tabs";
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
-import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@southern-syntax/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@southern-syntax/ui/select";
+} from "@southern-syntax/ui";
 
 interface AddUserDialogProps {
   isOpen: boolean;

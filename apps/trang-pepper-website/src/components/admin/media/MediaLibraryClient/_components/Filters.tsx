@@ -4,16 +4,16 @@
 import { useLocale, useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 
-import type { MediaCategory, MediaTag } from "@/types/media-taxonomy";
-import { getLocalizedString } from "@/i18n/utils";
-import { Input } from "@southern-syntax/ui/input";
+import type { MediaCategory, MediaTag } from "@southern-syntax/types";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import {
+  Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@southern-syntax/ui/select";
+} from "@southern-syntax/ui";
 
 export interface FiltersProps {
   search: {

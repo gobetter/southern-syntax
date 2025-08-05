@@ -1,17 +1,17 @@
 // src/services/role.ts
-import prisma from '@/lib/prisma';
-import { type Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
+import prisma from "@southern-syntax/db";
+import { type Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
-import type { RoleInput } from '@/lib/auth/schemas';
-import { AUDIT_ACTIONS } from '@/constants/auditActions';
+import type { RoleInput } from "@southern-syntax/auth/schemas";
+import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
-import { auditLogService } from './auditLog';
-import { invalidatePermissionsByRole } from '@/lib/auth/utils';
+import { auditLogService } from "./auditLog";
+import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
 
 async function getAllRoles() {
   return prisma.role.findMany({
-    orderBy: { createdAt: 'asc' },
+    orderBy: { createdAt: "asc" },
     include: {
       permissions: {
         include: {
@@ -49,24 +49,29 @@ async function getRolesForSelection() {
       name: true,
     },
     orderBy: {
-      createdAt: 'asc',
+      createdAt: "asc",
     },
   });
 }
 
-async function createRole(input: RoleInput & { permissionIds: string[] }, actorId: string) {
+async function createRole(
+  input: RoleInput & { permissionIds: string[] },
+  actorId: string
+) {
   const { name, key, description, isSystem, permissionIds } = input;
   const nameEnNormalized = name.en?.trim().toLowerCase();
 
   const existingKey = await prisma.role.findUnique({ where: { key } });
   if (existingKey) {
-    throw new TRPCError({ code: 'CONFLICT', message: 'ROLE_KEY_EXISTS' });
+    throw new TRPCError({ code: "CONFLICT", message: "ROLE_KEY_EXISTS" });
   }
 
   if (nameEnNormalized) {
-    const existingName = await prisma.role.findUnique({ where: { nameEnNormalized } });
+    const existingName = await prisma.role.findUnique({
+      where: { nameEnNormalized },
+    });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -76,7 +81,7 @@ async function createRole(input: RoleInput & { permissionIds: string[] }, actorI
       name: name as Prisma.JsonObject,
       description,
       isSystem,
-      nameEnNormalized: nameEnNormalized || '', // ต้องมีค่าเสมอ
+      nameEnNormalized: nameEnNormalized || "", // ต้องมีค่าเสมอ
       permissions: {
         create: permissionIds.map((permissionId) => ({
           permission: { connect: { id: permissionId } },
@@ -88,7 +93,7 @@ async function createRole(input: RoleInput & { permissionIds: string[] }, actorI
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.ROLE_CREATED,
-    entityType: 'ROLE',
+    entityType: "ROLE",
     entityId: newRole.id,
     details: { newData: { ...newRole, permissionIds } },
   });
@@ -99,7 +104,7 @@ async function createRole(input: RoleInput & { permissionIds: string[] }, actorI
 async function updateRole(
   id: string,
   input: RoleInput & { permissionIds: string[] },
-  actorId: string,
+  actorId: string
 ) {
   const { name, key, description, permissionIds } = input;
 
@@ -116,14 +121,17 @@ async function updateRole(
   });
 
   if (!oldData) {
-    throw new TRPCError({ code: 'NOT_FOUND', message: 'Role not found' });
+    throw new TRPCError({ code: "NOT_FOUND", message: "Role not found" });
   }
 
   // if (oldData.isSystem) {
   //   throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_EDIT_SYSTEM_ROLE' });
   // }
-  if (oldData.isSystem && actor?.role?.key !== 'SUPERADMIN') {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_EDIT_SYSTEM_ROLE' });
+  if (oldData.isSystem && actor?.role?.key !== "SUPERADMIN") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "CANNOT_EDIT_SYSTEM_ROLE",
+    });
   }
 
   if (nameEnNormalized) {
@@ -131,7 +139,7 @@ async function updateRole(
       where: { nameEnNormalized, id: { not: id } },
     });
     if (existingName) {
-      throw new TRPCError({ code: 'CONFLICT', message: 'NAME_ALREADY_EXISTS' });
+      throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
 
@@ -155,10 +163,13 @@ async function updateRole(
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.ROLE_UPDATED,
-    entityType: 'ROLE',
+    entityType: "ROLE",
     entityId: updatedRole.id,
     details: {
-      oldData: { ...oldData, permissionIds: oldData.permissions.map((p) => p.permissionId) },
+      oldData: {
+        ...oldData,
+        permissionIds: oldData.permissions.map((p) => p.permissionId),
+      },
       newData: { ...updatedRole, permissionIds },
     },
   });
@@ -171,10 +182,13 @@ async function updateRole(
 async function deleteRole(id: string, actorId: string) {
   const oldData = await prisma.role.findUnique({ where: { id } });
   if (!oldData) {
-    throw new TRPCError({ code: 'NOT_FOUND', message: 'Role not found' });
+    throw new TRPCError({ code: "NOT_FOUND", message: "Role not found" });
   }
   if (oldData.isSystem) {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_DELETE_SYSTEM_ROLE' });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "CANNOT_DELETE_SYSTEM_ROLE",
+    });
   }
 
   // ตรวจสอบว่ามีผู้ใช้ผูกอยู่กับ Role นี้หรือไม่
@@ -183,8 +197,8 @@ async function deleteRole(id: string, actorId: string) {
   });
   if (userCount > 0) {
     throw new TRPCError({
-      code: 'CONFLICT',
-      message: 'ROLE_IN_USE',
+      code: "CONFLICT",
+      message: "ROLE_IN_USE",
     });
   }
 
@@ -193,7 +207,7 @@ async function deleteRole(id: string, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.ROLE_DELETED,
-    entityType: 'ROLE',
+    entityType: "ROLE",
     entityId: id,
     details: { oldData },
   });

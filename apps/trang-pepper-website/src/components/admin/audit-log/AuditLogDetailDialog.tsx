@@ -3,7 +3,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import {
   Dialog,
   DialogContent,

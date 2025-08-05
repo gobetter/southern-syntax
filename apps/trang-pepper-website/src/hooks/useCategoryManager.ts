@@ -1,17 +1,17 @@
 // src/hooks/useCategoryManager.ts
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { type SubmitHandler, type UseFormReturn } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
-import { trpc } from '@/lib/trpc-client';
-import { useToast } from '@/hooks/useToast';
-import { type MediaCategoryInput } from '@/schemas/media-taxonomy';
-import type { LocalizedString } from '@/types/i18n';
-import { mapIdSlugName } from '@/lib/mapTaxonomy';
-import { Category } from '@/types/media-taxonomy';
-import type { TRPCClientErrorLike } from '@trpc/client';
-import type { AppRouter } from '@/server/routers/_app';
+import { useState, useMemo } from "react";
+import { type SubmitHandler, type UseFormReturn } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { trpc } from "@/lib/trpc-client";
+import { useToast } from "@/hooks/useToast";
+import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
+import type { LocalizedString } from "@southern-syntax/types";
+import { mapIdSlugName } from "@southern-syntax/utils";
+import { Category } from "@southern-syntax/types";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 
 // Interface สำหรับ Props ของ Hook
 interface UseCategoryManagerProps {
@@ -21,64 +21,71 @@ interface UseCategoryManagerProps {
 export function useCategoryManager({ formMethods }: UseCategoryManagerProps) {
   const utils = trpc.useUtils();
   const toast = useToast();
-  const t_toasts = useTranslations('admin_media_taxonomy.toasts');
-  const t_error_codes = useTranslations('common.error_codes');
+  const t_toasts = useTranslations("admin_media_taxonomy.toasts");
+  const t_error_codes = useTranslations("common.error_codes");
   const { reset } = formMethods;
 
   // --- UI State ---
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [deletingCategory, setDeletingCategory] = useState<Category | null>(null);
+  const [deletingCategory, setDeletingCategory] = useState<Category | null>(
+    null
+  );
 
   // --- tRPC Query and Mutations ---
-  const { data: categoriesData, isLoading } = trpc.mediaCategory.getAll.useQuery();
+  const { data: categoriesData, isLoading } =
+    trpc.mediaCategory.getAll.useQuery();
 
-  const handleMutationSuccess = (toastMessageKey: 'create_success' | 'update_success') => {
+  const handleMutationSuccess = (
+    toastMessageKey: "create_success" | "update_success"
+  ) => {
     toast.success(t_toasts(toastMessageKey));
     utils.mediaCategory.getAll.invalidate();
     setDialogOpen(false);
   };
 
   const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
-    if (error.message === 'SLUG_ALREADY_EXISTS') {
-      toast.error(t_error_codes('SLUG_ALREADY_EXISTS'));
-    } else if (error.message === 'NAME_ALREADY_EXISTS') {
-      toast.error(t_error_codes('NAME_ALREADY_EXISTS'));
+    if (error.message === "SLUG_ALREADY_EXISTS") {
+      toast.error(t_error_codes("SLUG_ALREADY_EXISTS"));
+    } else if (error.message === "NAME_ALREADY_EXISTS") {
+      toast.error(t_error_codes("NAME_ALREADY_EXISTS"));
     } else {
-      toast.error(t_toasts('create_error'));
+      toast.error(t_toasts("create_error"));
     }
   };
 
   const createMutation = trpc.mediaCategory.create.useMutation({
-    onSuccess: () => handleMutationSuccess('create_success'),
+    onSuccess: () => handleMutationSuccess("create_success"),
     onError: handleMutationError,
   });
 
   const updateMutation = trpc.mediaCategory.update.useMutation({
-    onSuccess: () => handleMutationSuccess('update_success'),
+    onSuccess: () => handleMutationSuccess("update_success"),
     onError: handleMutationError,
   });
 
   const deleteMutation = trpc.mediaCategory.delete.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('delete_success'));
+      toast.success(t_toasts("delete_success"));
       utils.mediaCategory.getAll.invalidate();
     },
-    onError: () => toast.error(t_toasts('delete_error')),
+    onError: () => toast.error(t_toasts("delete_error")),
   });
 
   // --- Derived State ---
   const categories = useMemo<Category[]>(
     () =>
       mapIdSlugName(
-        categoriesData as Array<{ id: string; slug: string; name: LocalizedString }> | undefined,
+        categoriesData as
+          | Array<{ id: string; slug: string; name: LocalizedString }>
+          | undefined
       ) as Category[],
-    [categoriesData],
+    [categoriesData]
   );
 
   // --- Event Handlers ---
   const handleAddNew = () => {
-    reset({ name: { en: '', th: '' }, slug: '' });
+    reset({ name: { en: "", th: "" }, slug: "" });
     setEditingCategory(null);
     setDialogOpen(true);
   };
@@ -123,7 +130,9 @@ export function useCategoryManager({ formMethods }: UseCategoryManagerProps) {
     categories,
     isLoading,
     isMutating:
-      formMethods.formState.isSubmitting || createMutation.isPending || updateMutation.isPending,
+      formMethods.formState.isSubmitting ||
+      createMutation.isPending ||
+      updateMutation.isPending,
     isDeleting: deleteMutation.isPending,
     isDialogOpen,
     editingCategory,

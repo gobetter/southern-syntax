@@ -1,9 +1,16 @@
-import { describe, it, expect, beforeEach, vi, type MockInstance } from 'vitest';
-import { type PrismaClient, type Language } from '@prisma/client';
-import { languageService } from '../language';
-import prisma from '@/lib/prisma';
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  vi,
+  type MockInstance,
+} from "vitest";
+import { type PrismaClient, type Language } from "@prisma/client";
+import { languageService } from "../language";
+import prisma from "@southern-syntax/db";
 
-vi.mock('@/lib/prisma', () => {
+vi.mock("@/lib/prisma", () => {
   const mock = {
     language: {
       create: vi.fn(),
@@ -29,23 +36,28 @@ const prismaMock = prisma as unknown as {
 };
 
 const mockLanguage: Language = {
-  id: '1',
-  code: 'en',
-  name: 'English',
+  id: "1",
+  code: "en",
+  name: "English",
   isDefault: false,
   isActive: true,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
 
-describe('languageService', () => {
+describe("languageService", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('createLanguage sets other defaults false when isDefault true', async () => {
+  it("createLanguage sets other defaults false when isDefault true", async () => {
     prismaMock.language.create.mockResolvedValue(mockLanguage);
-    const input = { code: 'en', name: 'English', isDefault: true, isActive: true };
+    const input = {
+      code: "en",
+      name: "English",
+      isDefault: true,
+      isActive: true,
+    };
     const result = await languageService.createLanguage(input);
     expect(prismaMock.language.updateMany).toHaveBeenCalledWith({
       where: { isDefault: true },
@@ -55,28 +67,35 @@ describe('languageService', () => {
     expect(result).toEqual(mockLanguage);
   });
 
-  it('getLanguageById calls findUnique', async () => {
+  it("getLanguageById calls findUnique", async () => {
     prismaMock.language.findUnique.mockResolvedValue(mockLanguage);
-    const result = await languageService.getLanguageById('1');
-    expect(prismaMock.language.findUnique).toHaveBeenCalledWith({ where: { id: '1' } });
+    const result = await languageService.getLanguageById("1");
+    expect(prismaMock.language.findUnique).toHaveBeenCalledWith({
+      where: { id: "1" },
+    });
     expect(result).toEqual(mockLanguage);
   });
 
-  it('updateLanguage updates other defaults when setting default', async () => {
+  it("updateLanguage updates other defaults when setting default", async () => {
     prismaMock.language.update.mockResolvedValue(mockLanguage);
-    const result = await languageService.updateLanguage('1', { isDefault: true });
+    const result = await languageService.updateLanguage("1", {
+      isDefault: true,
+    });
     expect(prismaMock.language.updateMany).toHaveBeenCalledWith({
-      where: { isDefault: true, id: { not: '1' } },
+      where: { isDefault: true, id: { not: "1" } },
       data: { isDefault: false },
     });
     expect(prismaMock.language.update).toHaveBeenCalled();
     expect(result).toEqual(mockLanguage);
   });
 
-  it('deleteLanguage throws if default', async () => {
-    prismaMock.language.findUnique.mockResolvedValue({ ...mockLanguage, isDefault: true });
-    await expect(languageService.deleteLanguage('1')).rejects.toThrow(
-      'Cannot delete default language.',
+  it("deleteLanguage throws if default", async () => {
+    prismaMock.language.findUnique.mockResolvedValue({
+      ...mockLanguage,
+      isDefault: true,
+    });
+    await expect(languageService.deleteLanguage("1")).rejects.toThrow(
+      "Cannot delete default language."
     );
   });
 });

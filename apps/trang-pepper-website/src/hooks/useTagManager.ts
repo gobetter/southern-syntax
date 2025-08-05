@@ -1,17 +1,17 @@
 // src/hooks/useTagManager.ts
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { type SubmitHandler, type UseFormReturn } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
-import { trpc } from '@/lib/trpc-client';
-import { useToast } from '@/hooks/useToast';
-import { type MediaTagInput } from '@/schemas/media-taxonomy';
-import type { LocalizedString } from '@/types/i18n';
-import { mapIdSlugName } from '@/lib/mapTaxonomy';
-import { Tag } from '@/types/media-taxonomy';
-import type { TRPCClientErrorLike } from '@trpc/client';
-import type { AppRouter } from '@/server/routers/_app';
+import { useState, useMemo } from "react";
+import { type SubmitHandler, type UseFormReturn } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { trpc } from "@/lib/trpc-client";
+import { useToast } from "@/hooks/useToast";
+import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
+import type { LocalizedString } from "@southern-syntax/types";
+import { mapIdSlugName } from "@southern-syntax/utils";
+import { Tag } from "@southern-syntax/types";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 
 // Interface สำหรับ Props ของ Hook
 interface UseTagManagerProps {
@@ -21,8 +21,8 @@ interface UseTagManagerProps {
 export function useTagManager({ formMethods }: UseTagManagerProps) {
   const utils = trpc.useUtils();
   const toast = useToast();
-  const t_toasts = useTranslations('admin_media_taxonomy.toasts');
-  const t_error_codes = useTranslations('common.error_codes');
+  const t_toasts = useTranslations("admin_media_taxonomy.toasts");
+  const t_error_codes = useTranslations("common.error_codes");
   const { reset } = formMethods;
 
   // --- UI State ---
@@ -33,52 +33,56 @@ export function useTagManager({ formMethods }: UseTagManagerProps) {
   // --- tRPC Query and Mutations ---
   const { data: tagsData, isLoading } = trpc.mediaTag.getAll.useQuery();
 
-  const handleMutationSuccess = (toastMessageKey: 'create_success' | 'update_success') => {
+  const handleMutationSuccess = (
+    toastMessageKey: "create_success" | "update_success"
+  ) => {
     toast.success(t_toasts(toastMessageKey));
     utils.mediaTag.getAll.invalidate();
     setDialogOpen(false);
   };
 
   const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
-    if (error.message === 'SLUG_ALREADY_EXISTS') {
-      toast.error(t_error_codes('SLUG_ALREADY_EXISTS'));
-    } else if (error.message === 'NAME_ALREADY_EXISTS') {
-      toast.error(t_error_codes('NAME_ALREADY_EXISTS'));
+    if (error.message === "SLUG_ALREADY_EXISTS") {
+      toast.error(t_error_codes("SLUG_ALREADY_EXISTS"));
+    } else if (error.message === "NAME_ALREADY_EXISTS") {
+      toast.error(t_error_codes("NAME_ALREADY_EXISTS"));
     } else {
-      toast.error(t_toasts('create_error'));
+      toast.error(t_toasts("create_error"));
     }
   };
 
   const createMutation = trpc.mediaTag.create.useMutation({
-    onSuccess: () => handleMutationSuccess('create_success'),
+    onSuccess: () => handleMutationSuccess("create_success"),
     onError: handleMutationError,
   });
 
   const updateMutation = trpc.mediaTag.update.useMutation({
-    onSuccess: () => handleMutationSuccess('update_success'),
+    onSuccess: () => handleMutationSuccess("update_success"),
     onError: handleMutationError,
   });
 
   const deleteMutation = trpc.mediaTag.delete.useMutation({
     onSuccess: () => {
-      toast.success(t_toasts('delete_success'));
+      toast.success(t_toasts("delete_success"));
       utils.mediaTag.getAll.invalidate();
     },
-    onError: () => toast.error(t_toasts('delete_error')),
+    onError: () => toast.error(t_toasts("delete_error")),
   });
 
   // --- Derived State ---
   const tags = useMemo<Tag[]>(
     () =>
       mapIdSlugName(
-        tagsData as Array<{ id: string; slug: string; name: LocalizedString }> | undefined,
+        tagsData as
+          | Array<{ id: string; slug: string; name: LocalizedString }>
+          | undefined
       ) as Tag[],
-    [tagsData],
+    [tagsData]
   );
 
   // --- Event Handlers ---
   const handleAddNew = () => {
-    reset({ name: { en: '', th: '' }, slug: '' });
+    reset({ name: { en: "", th: "" }, slug: "" });
     setEditingTag(null);
     setDialogOpen(true);
   };
@@ -123,7 +127,9 @@ export function useTagManager({ formMethods }: UseTagManagerProps) {
     tags,
     isLoading,
     isMutating:
-      formMethods.formState.isSubmitting || createMutation.isPending || updateMutation.isPending,
+      formMethods.formState.isSubmitting ||
+      createMutation.isPending ||
+      updateMutation.isPending,
     isDeleting: deleteMutation.isPending,
     isDialogOpen,
     editingTag,

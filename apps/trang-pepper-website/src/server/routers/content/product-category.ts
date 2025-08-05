@@ -3,10 +3,16 @@
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่สินค้า
 
 // ลบ protectedProcedure ออกจาก import เพราะไม่ได้ใช้โดยตรง
-import { router, publicProcedure, authorizedProcedure } from '@/server/trpc'; // tRPC core setup
-import { productCategoryInputSchema, productCategoryService } from '@/services/product-category'; // ProductCategory Service และ Zod Schema
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants'; // Constants สำหรับ RBAC
-import { z } from 'zod'; // Zod สำหรับ Validation Input ของ Procedure
+import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import {
+  productCategoryInputSchema,
+  productCategoryService,
+} from "@/services/product-category"; // ProductCategory Service และ Zod Schema
+import {
+  PERMISSION_RESOURCES,
+  PERMISSION_ACTIONS,
+} from "@southern-syntax/auth/constants"; // Constants สำหรับ RBAC
+import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const productCategoryRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลหมวดหมู่สินค้า
@@ -29,7 +35,7 @@ export const productCategoryRouter = router({
 
   // ดึงข้อมูลหมวดหมู่สินค้าด้วย ID
   getById: publicProcedure
-    .input(z.object({ id: z.string().min(1, 'Category ID is required') }))
+    .input(z.object({ id: z.string().min(1, "Category ID is required") }))
     .query(async ({ input }) => {
       return productCategoryService.getProductCategoryById(input.id);
     }),
@@ -38,7 +44,10 @@ export const productCategoryRouter = router({
   // ใช้ authorizedProcedure เพื่อบังคับใช้ RBAC (ต้อง Login และมีสิทธิ์)
 
   // สร้างหมวดหมู่สินค้าใหม่
-  create: authorizedProcedure(PERMISSION_RESOURCES.PRODUCT_CATEGORY, PERMISSION_ACTIONS.CREATE)
+  create: authorizedProcedure(
+    PERMISSION_RESOURCES.PRODUCT_CATEGORY,
+    PERMISSION_ACTIONS.CREATE
+  )
     .input(productCategoryInputSchema)
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -46,12 +55,15 @@ export const productCategoryRouter = router({
     }),
 
   // อัปเดตข้อมูลหมวดหมู่สินค้า
-  update: authorizedProcedure(PERMISSION_RESOURCES.PRODUCT_CATEGORY, PERMISSION_ACTIONS.UPDATE)
+  update: authorizedProcedure(
+    PERMISSION_RESOURCES.PRODUCT_CATEGORY,
+    PERMISSION_ACTIONS.UPDATE
+  )
     .input(
       z.object({
-        id: z.string().min(1, 'Category ID is required'),
+        id: z.string().min(1, "Category ID is required"),
         data: productCategoryInputSchema.partial(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
@@ -59,8 +71,11 @@ export const productCategoryRouter = router({
     }),
 
   // ลบหมวดหมู่สินค้า
-  delete: authorizedProcedure(PERMISSION_RESOURCES.PRODUCT_CATEGORY, PERMISSION_ACTIONS.DELETE)
-    .input(z.object({ id: z.string().min(1, 'Category ID is required') }))
+  delete: authorizedProcedure(
+    PERMISSION_RESOURCES.PRODUCT_CATEGORY,
+    PERMISSION_ACTIONS.DELETE
+  )
+    .input(z.object({ id: z.string().min(1, "Category ID is required") }))
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
       return productCategoryService.deleteProductCategory(input.id);

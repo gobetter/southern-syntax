@@ -1,14 +1,18 @@
 // src/app/[lang]/admin/media-taxonomy/page.tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
-import { PERMISSION_RESOURCES } from '@/lib/auth/constants';
+import { PERMISSION_RESOURCES } from "@southern-syntax/auth/constants";
 
-import MediaTaxonomyClient from '@/components/admin/media-taxonomy/MediaTaxonomyClient';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
-import ProtectedPage from '@/components/auth/ProtectedPage';
-import Spinner from '@/components/common/Spinner';
+import MediaTaxonomyClient from "@/components/admin/media-taxonomy/MediaTaxonomyClient";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
+import ProtectedPage from "@/components/auth/ProtectedPage";
+import Spinner from "@/components/common/Spinner";
 
-export default async function MediaTaxonomyPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function MediaTaxonomyPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
   const { lang } = await params;
 
   return (

@@ -4,12 +4,13 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import { type MediaItem } from "@/types/trpc";
 
-import { Button } from "@southern-syntax/ui/button";
-import { Separator } from "@southern-syntax/ui/separator";
+import {} from "@southern-syntax/ui";
 import {
+  Button,
+  Separator,
   Sheet,
   SheetContent,
   SheetHeader,
@@ -17,7 +18,7 @@ import {
   SheetDescription,
   SheetFooter,
   SheetClose,
-} from "@southern-syntax/ui/sheet";
+} from "@southern-syntax/ui";
 
 import InformationSection from "./_components/InformationSection";
 import TaxonomySection from "./_components/TaxonomySection";

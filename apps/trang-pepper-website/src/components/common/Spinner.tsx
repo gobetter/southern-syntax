@@ -1,8 +1,9 @@
-// apps/trang-pepper-website/src/components/common/Spinner.tsx
 "use client";
 
 import React from "react";
 
+// TypeScript handles prop validation; disable react/prop-types rule.
+/* eslint-disable react/prop-types */
 import { cn } from "@southern-syntax/ui";
 
 export default function Spinner({

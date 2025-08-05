@@ -1,11 +1,14 @@
 // src/components/auth/ProtectedPage.tsx
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-import { authOptions, can } from '@/lib/auth';
-import { type PermissionActionType, type PermissionResourceType } from '@/lib/auth/constants';
+import { authOptions, can } from "@southern-syntax/auth";
+import {
+  type PermissionActionType,
+  type PermissionResourceType,
+} from "@southern-syntax/auth/constants";
 
-import AccessDenied from './AccessDenied';
+import AccessDenied from "./AccessDenied";
 
 interface ProtectedPageProps {
   resource: PermissionResourceType;
@@ -17,7 +20,7 @@ interface ProtectedPageProps {
 
 export default async function ProtectedPage({
   resource,
-  action = 'READ', // ถ้าไม่ระบุ action ให้ใช้ 'READ' เป็นค่าเริ่มต้น
+  action = "READ", // ถ้าไม่ระบุ action ให้ใช้ 'READ' เป็นค่าเริ่มต้น
   lang,
   callbackUrl,
   children,

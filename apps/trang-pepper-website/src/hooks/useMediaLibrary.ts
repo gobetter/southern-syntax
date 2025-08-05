@@ -1,33 +1,34 @@
 // src/hooks/useMediaLibrary.ts
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-import { MediaItem } from '@/types/trpc';
-import { trpc } from '@/lib/trpc-client';
-import { useUpdateQuery } from '@/hooks/useUpdateQuery';
-import { useDebounce } from '@/hooks/useDebounce';
-import { mapIdName } from '@/lib/mapTaxonomy';
-import type { LocalizedString } from '@/types/i18n';
-import { MediaSortableField, MEDIA_SORT_OPTIONS } from '@/constants/media';
+import { MediaItem } from "@/types/trpc";
+import { trpc } from "@/lib/trpc-client";
+import { useUpdateQuery } from "@/hooks/useUpdateQuery";
+import { useDebounce } from "@/hooks/useDebounce";
+import { mapIdName } from "@southern-syntax/utils";
+import type { LocalizedString } from "@southern-syntax/types";
+import { MediaSortableField, MEDIA_SORT_OPTIONS } from "@/constants/media";
 // import { SortOrder } from '@/constants/common';
-import type { SortOrder } from '@/constants/common';
-import { MediaCategory, MediaTag } from '@/types/media-taxonomy';
+import type { SortOrder } from "@/constants/common";
+import { MediaCategory, MediaTag } from "@southern-syntax/types";
 
 export function useMediaLibrary() {
   const searchParams = useSearchParams();
   const updateQuery = useUpdateQuery();
   const utils = trpc.useUtils();
-  const t_media = useTranslations('admin_media');
+  const t_media = useTranslations("admin_media");
 
   // --- State from URL ---
-  const page = Number(searchParams.get('page')) || 1;
-  const pageSize = Number(searchParams.get('pageSize')) || 10;
-  const searchQuery = searchParams.get('q') || '';
-  const categoryId = searchParams.get('categoryId') || undefined;
-  const tagId = searchParams.get('tagId') || undefined;
-  const sortBy = (searchParams.get('sortBy') as MediaSortableField) || 'createdAt';
-  const sortOrder = (searchParams.get('sortOrder') as SortOrder) || 'desc';
+  const page = Number(searchParams.get("page")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const searchQuery = searchParams.get("q") || "";
+  const categoryId = searchParams.get("categoryId") || undefined;
+  const tagId = searchParams.get("tagId") || undefined;
+  const sortBy =
+    (searchParams.get("sortBy") as MediaSortableField) || "createdAt";
+  const sortOrder = (searchParams.get("sortOrder") as SortOrder) || "desc";
 
   // --- Local UI State ---
   const [inputValue, setInputValue] = useState(searchQuery);
@@ -35,7 +36,9 @@ export function useMediaLibrary() {
   const [isUploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [editingMedia, setEditingMedia] = useState<MediaItem | null>(null);
   const [viewingMedia, setViewingMedia] = useState<MediaItem | null>(null); // สำหรับ Sidebar
-  const [previewingMedia, setPreviewingMedia] = useState<MediaItem | null>(null); // สำหรับ Preview
+  const [previewingMedia, setPreviewingMedia] = useState<MediaItem | null>(
+    null
+  ); // สำหรับ Preview
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // --- tRPC Queries ---
@@ -62,13 +65,21 @@ export function useMediaLibrary() {
   const totalPages = Math.ceil(totalCount / pageSize);
 
   const categoryOptions = useMemo<MediaCategory[]>(
-    () => mapIdName(categoriesData as Array<{ id: string; name: LocalizedString }> | undefined),
-    [categoriesData],
+    () =>
+      mapIdName(
+        categoriesData as
+          | Array<{ id: string; name: LocalizedString }>
+          | undefined
+      ),
+    [categoriesData]
   );
 
   const tagOptions = useMemo<MediaTag[]>(
-    () => mapIdName(tagsData as Array<{ id: string; name: LocalizedString }> | undefined),
-    [tagsData],
+    () =>
+      mapIdName(
+        tagsData as Array<{ id: string; name: LocalizedString }> | undefined
+      ),
+    [tagsData]
   );
 
   // --- Effects ---
@@ -102,7 +113,7 @@ export function useMediaLibrary() {
         value: option.value,
         label: t_media(option.i18nKey),
       })),
-    [t_media],
+    [t_media]
   );
 
   // --- Return Values ---

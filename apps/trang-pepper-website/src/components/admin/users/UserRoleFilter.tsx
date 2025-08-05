@@ -1,12 +1,13 @@
 // src/components/admin/users/UserRoleFilter.tsx
 "use client";
 
+import { useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 
 import { useUpdateQuery } from "@/hooks/useUpdateQuery";
-import { mapToSelectOptions } from "@/lib/select-options";
-import { LocalizedString } from "@/types/i18n";
+import { mapToSelectOptions } from "@southern-syntax/utils";
+import { LocalizedString } from "@southern-syntax/types";
 
 import {
   Select,
@@ -14,8 +15,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@southern-syntax/ui/select";
-import { useMemo } from "react";
+} from "@southern-syntax/ui";
 
 interface UserRoleFilterProps {
   currentRoleId?: string | null;

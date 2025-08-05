@@ -4,15 +4,13 @@
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 
+import { Card, CardHeader, CardTitle, CardContent } from "@southern-syntax/ui";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@southern-syntax/ui/card";
-import { getLocalizedString } from "@/i18n/utils";
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@/lib/auth/constants";
-import { can } from "@/lib/auth";
+  PERMISSION_ACTIONS,
+  PERMISSION_RESOURCES,
+} from "@southern-syntax/auth/constants";
+import { can } from "@southern-syntax/auth";
 import { useSession } from "next-auth/react";
 
 const dashboardCards = [

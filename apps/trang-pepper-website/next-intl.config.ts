@@ -9,8 +9,8 @@ type Locale = (typeof locales)[number];
 //   return (locales as readonly string[]).includes(locale);
 // }
 
-function isValidLocale(locale: any): locale is Locale {
-  return locales.includes(locale);
+function isValidLocale(locale: string): locale is Locale {
+  return locales.includes(locale as Locale);
 }
 
 export default getRequestConfig(async ({ locale }) => {

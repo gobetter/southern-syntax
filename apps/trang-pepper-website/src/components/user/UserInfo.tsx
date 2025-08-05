@@ -3,14 +3,9 @@
 
 import { useTranslations, useLocale } from "next-intl";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@southern-syntax/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@southern-syntax/ui";
 
 interface UserInfoProps {
   user: {

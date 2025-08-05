@@ -1,11 +1,14 @@
-import { router, authorizedProcedure } from '@/server/trpc';
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
-import { permissionService } from '@/services/permission';
+import { router, authorizedProcedure } from "@/server/trpc";
+import {
+  PERMISSION_RESOURCES,
+  PERMISSION_ACTIONS,
+} from "@southern-syntax/auth/constants";
+import { permissionService } from "@/services/permission";
 
 export const permissionRouter = router({
   getAll: authorizedProcedure(
     PERMISSION_RESOURCES.ROLE, // คนที่มีสิทธิ์จัดการ Role ควรจะเห็น Permission ทั้งหมด
-    PERMISSION_ACTIONS.READ,
+    PERMISSION_ACTIONS.READ
   ).query(async () => {
     return permissionService.getAllPermissions();
   }),

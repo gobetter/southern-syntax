@@ -1,27 +1,29 @@
 // src/services/media.ts
-import { getEnv } from '@/config/env';
-import type { Prisma } from '@prisma/client';
+import { getEnv } from "@/config/env";
+import type { Prisma } from "@prisma/client";
 
 import {
   mediaUpdateFormInputSchema,
   type MediaUpdateFormInput,
   type MediaUploadInput,
-} from '@/schemas/media';
-import { LocalizedString } from '@/types/i18n';
+} from "@southern-syntax/schemas/media";
+import { LocalizedString } from "@southern-syntax/types";
 
-import prisma from '@/lib/prisma';
-import { extractStoragePaths } from '@/lib/media-utils';
-import { sanitizeFilename } from '@/lib/string-utils';
-import { calculateFileHash } from '@/lib/hash-utils';
-import { DuplicateFileError } from '@/lib/errors';
-import { supabase } from '@/lib/supabase-client';
+import prisma from "@southern-syntax/db";
+import {
+  extractStoragePaths,
+  sanitizeFilename,
+  calculateFileHash,
+  DuplicateFileError,
+  supabase,
+} from "@southern-syntax/utils";
 
-import { MediaSortableField } from '@/constants/media';
-import type { SortOrder } from '@/constants/common';
-import { AUDIT_ACTIONS } from '@/constants/auditActions';
+import { MediaSortableField } from "@/constants/media";
+import type { SortOrder } from "@/constants/common";
+import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
-import { auditLogService } from './auditLog';
-import { processImage } from './image-processing';
+import { auditLogService } from "./auditLog";
+import { processImage } from "./image-processing";
 
 const BUCKET_NAME = getEnv().SUPABASE_BUCKET_NAME;
 
@@ -36,10 +38,10 @@ function createSearchText(data: {
     ...Object.values(data.altText || {}),
     ...Object.values(data.caption || {}),
   ];
-  return searchableValues.join(' ');
+  return searchableValues.join(" ");
 }
 
-type MediaRelation = 'categories' | 'tags';
+type MediaRelation = "categories" | "tags";
 
 interface UpdateRelationInput {
   mediaIds: string[];
@@ -49,7 +51,7 @@ interface UpdateRelationInput {
 
 async function updateMediaRelations(
   relation: MediaRelation,
-  { mediaIds, addIds = [], removeIds = [] }: UpdateRelationInput,
+  { mediaIds, addIds = [], removeIds = [] }: UpdateRelationInput
 ) {
   const updatePromises = mediaIds.map((mediaId) =>
     prisma.media.update({
@@ -60,12 +62,16 @@ async function updateMediaRelations(
           disconnect: removeIds.map((id) => ({ id })),
         },
       },
-    }),
+    })
   );
   return prisma.$transaction(updatePromises);
 }
 
-async function setMediaRelations(relation: MediaRelation, mediaIds: string[], ids: string[]) {
+async function setMediaRelations(
+  relation: MediaRelation,
+  mediaIds: string[],
+  ids: string[]
+) {
   const updatePromises = mediaIds.map((mediaId) =>
     prisma.media.update({
       where: { id: mediaId },
@@ -74,7 +80,7 @@ async function setMediaRelations(relation: MediaRelation, mediaIds: string[], id
           set: ids.map((id) => ({ id })),
         },
       },
-    }),
+    })
   );
   return prisma.$transaction(updatePromises);
 }
@@ -90,7 +96,7 @@ async function uploadMedia(
     categoryId?: string;
     tagIds?: string[];
   },
-  actorId: string,
+  actorId: string
 ) {
   const {
     filename,
@@ -107,7 +113,7 @@ async function uploadMedia(
 
   // กรณีใช้ browser + UTF-8 อยู่แล้ว อาจไม่จำเป็นต้อง decode
   // แต่ถ้าใช้กับ Linux CLI หรือ multer จาก Server อาจต้องแน่ใจว่าเป็น UTF-8
-  const decodedFilename = Buffer.from(filename, 'binary').toString('utf-8');
+  const decodedFilename = Buffer.from(filename, "binary").toString("utf-8");
 
   // หรือใช้ sanitizeFilename แล้วแยกส่วน original เก็บไว้ด้วย
   const safeFilename = sanitizeFilename(decodedFilename); // ← จากชื่อไฟล์ต้นฉบับ
@@ -138,24 +144,30 @@ async function uploadMedia(
           upsert: false, // 🔐 ป้องกันเขียนทับ
         });
       if (error) {
-        throw new Error(`Supabase upload failed for ${variant.name}: ${error.message}`);
+        throw new Error(
+          `Supabase upload failed for ${variant.name}: ${error.message}`
+        );
       }
-      const { data: publicUrlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(data.path);
+      const { data: publicUrlData } = supabase.storage
+        .from(BUCKET_NAME)
+        .getPublicUrl(data.path);
       variantUrls[variant.name] = publicUrlData.publicUrl;
-    }),
+    })
   );
 
   // สร้าง searchText
   const searchText = createSearchText({ title, altText, caption });
 
   // ดึงค่า title ภาษาอังกฤษ (หรือภาษาหลักของคุณ) มาเป็นค่าสำหรับ sort
-  const titleSort = (title as LocalizedString)?.['en'] || decodedFilename.replace(/\.[^/.]+$/, '');
+  const titleSort =
+    (title as LocalizedString)?.["en"] ||
+    decodedFilename.replace(/\.[^/.]+$/, "");
 
   const newMedia = await prisma.media.create({
     data: {
       originalFilename: decodedFilename,
       filename: safeFilename,
-      originalUrl: variantUrls['original'],
+      originalUrl: variantUrls["original"],
       mimeType,
       fileSize,
       fileHash,
@@ -166,14 +178,17 @@ async function uploadMedia(
       searchText: searchText, // บันทึก searchText
       titleSort: titleSort,
       categories: categoryId ? { connect: { id: categoryId } } : undefined,
-      tags: tagIds && tagIds.length > 0 ? { connect: tagIds.map((id) => ({ id })) } : undefined,
+      tags:
+        tagIds && tagIds.length > 0
+          ? { connect: tagIds.map((id) => ({ id })) }
+          : undefined,
     },
   });
 
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_UPLOADED,
-    entityType: 'MEDIA',
+    entityType: "MEDIA",
     entityId: newMedia.id,
     details: { newData: newMedia },
   });
@@ -190,7 +205,8 @@ async function getAllMedia(input: {
   sortBy?: MediaSortableField;
   sortOrder?: SortOrder;
 }) {
-  const { searchQuery, page, pageSize, categoryId, tagId, sortBy, sortOrder } = input;
+  const { searchQuery, page, pageSize, categoryId, tagId, sortBy, sortOrder } =
+    input;
 
   // คำนวณค่า skip สำหรับ Prisma
   const skip = (page - 1) * pageSize;
@@ -204,13 +220,13 @@ async function getAllMedia(input: {
       {
         filename: {
           contains: searchQuery,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
       {
         searchText: {
           contains: searchQuery,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
       },
     ];
@@ -225,8 +241,8 @@ async function getAllMedia(input: {
   }
 
   const orderBy: Prisma.MediaOrderByWithRelationInput = sortBy
-    ? { [sortBy]: sortOrder || 'asc' }
-    : { createdAt: 'desc' };
+    ? { [sortBy]: sortOrder || "asc" }
+    : { createdAt: "desc" };
 
   // ใช้ prisma.$transaction เพื่อดึงข้อมูลและนับจำนวนพร้อมกัน
   // การใช้ $transaction จะทำให้การ findMany และ count เกิดขึ้นใน "Database Transaction" เดียวกัน
@@ -254,14 +270,18 @@ async function getAllMedia(input: {
   };
 }
 
-async function updateMedia(id: string, data: MediaUpdateFormInput, actorId: string) {
+async function updateMedia(
+  id: string,
+  data: MediaUpdateFormInput,
+  actorId: string
+) {
   const oldData = await prisma.media.findUnique({ where: { id } });
   const validatedData = mediaUpdateFormInputSchema.parse(data);
   const { title, altText, caption, categoryIds, tagIds } = validatedData;
 
   // สร้าง searchText สำหรับข้อมูลใหม่
   const searchText = createSearchText(validatedData);
-  const titleSort = (title as LocalizedString)?.['en'] || undefined;
+  const titleSort = (title as LocalizedString)?.["en"] || undefined;
 
   const updatedMedia = await prisma.media.update({
     where: { id },
@@ -273,7 +293,9 @@ async function updateMedia(id: string, data: MediaUpdateFormInput, actorId: stri
       titleSort: titleSort, // อัปเดต titleSort ด้วย
       // ใช้ `set` operation เพื่อกำหนดความสัมพันธ์ใหม่ทั้งหมด
       categories: { set: categoryIds ? categoryIds.map((id) => ({ id })) : [] },
-      tags: tagIds ? { set: tagIds.map((tagId) => ({ id: tagId })) } : undefined,
+      tags: tagIds
+        ? { set: tagIds.map((tagId) => ({ id: tagId })) }
+        : undefined,
     },
     include: { categories: true, tags: true },
   });
@@ -281,7 +303,7 @@ async function updateMedia(id: string, data: MediaUpdateFormInput, actorId: stri
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_UPDATED,
-    entityType: 'MEDIA',
+    entityType: "MEDIA",
     entityId: updatedMedia.id,
     details: { oldData, newData: updatedMedia },
   });
@@ -291,12 +313,12 @@ async function updateMedia(id: string, data: MediaUpdateFormInput, actorId: stri
 
 async function deleteMedia(id: string, actorId: string) {
   const oldData = await prisma.media.findUnique({ where: { id } });
-  if (!oldData) throw new Error('Media not found');
-  if (oldData.isSystem) throw new Error('Cannot delete system media.');
+  if (!oldData) throw new Error("Media not found");
+  if (oldData.isSystem) throw new Error("Cannot delete system media.");
 
   const media = await prisma.media.findUnique({ where: { id } });
-  if (!media) throw new Error('Media not found');
-  if (media.isSystem) throw new Error('Cannot delete system media.');
+  if (!media) throw new Error("Media not found");
+  if (media.isSystem) throw new Error("Cannot delete system media.");
 
   if (media.variants) {
     const filePathsToDelete = extractStoragePaths(media.variants, BUCKET_NAME);
@@ -305,7 +327,10 @@ async function deleteMedia(id: string, actorId: string) {
         .from(BUCKET_NAME)
         .remove(filePathsToDelete);
       if (deleteError) {
-        console.error('Failed to delete files from Supabase Storage:', deleteError.message);
+        console.error(
+          "Failed to delete files from Supabase Storage:",
+          deleteError.message
+        );
       }
     }
   }
@@ -315,7 +340,7 @@ async function deleteMedia(id: string, actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_DELETED,
-    entityType: 'MEDIA',
+    entityType: "MEDIA",
     entityId: id,
     details: { oldData },
   });
@@ -356,7 +381,10 @@ async function deleteManyMedia(ids: string[], actorId: string) {
 
     if (deleteError) {
       // ใน Production ควรใช้ Logger ที่ดีกว่านี้
-      console.error('Failed to delete some files from Supabase Storage:', deleteError.message);
+      console.error(
+        "Failed to delete some files from Supabase Storage:",
+        deleteError.message
+      );
       // เราอาจจะเลือกที่จะไม่หยุดการทำงาน และลบข้อมูลใน DB ต่อไป
     }
   }
@@ -376,7 +404,7 @@ async function deleteManyMedia(ids: string[], actorId: string) {
   await auditLogService.createLog({
     actorId,
     action: AUDIT_ACTIONS.MEDIA_DELETED_BULK,
-    entityType: 'MEDIA',
+    entityType: "MEDIA",
     entityId: `bulk-delete-${oldData.length}-items`,
     details: { deletedCount: count, deletedItems: oldData },
   });
@@ -389,11 +417,14 @@ async function updateMediaCategories(input: {
   addIds?: string[];
   removeIds?: string[];
 }) {
-  return updateMediaRelations('categories', input);
+  return updateMediaRelations("categories", input);
 }
 
-async function setMediaCategories(input: { mediaIds: string[]; categoryIds: string[] }) {
-  return setMediaRelations('categories', input.mediaIds, input.categoryIds);
+async function setMediaCategories(input: {
+  mediaIds: string[];
+  categoryIds: string[];
+}) {
+  return setMediaRelations("categories", input.mediaIds, input.categoryIds);
 }
 
 async function updateMediaTags(input: {
@@ -401,11 +432,11 @@ async function updateMediaTags(input: {
   addIds?: string[];
   removeIds?: string[];
 }) {
-  return updateMediaRelations('tags', input);
+  return updateMediaRelations("tags", input);
 }
 
 async function setMediaTags(input: { mediaIds: string[]; tagIds: string[] }) {
-  return setMediaRelations('tags', input.mediaIds, input.tagIds);
+  return setMediaRelations("tags", input.mediaIds, input.tagIds);
 }
 
 export const mediaService = {

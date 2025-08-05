@@ -1,6 +1,6 @@
 // src/services/auditLog.ts
-import prisma from '@/lib/prisma';
-import type { Prisma } from '@prisma/client';
+import prisma from "@southern-syntax/db";
+import type { Prisma } from "@prisma/client";
 
 /**
  * กำหนด Type สำหรับ `details` ใน AuditLog เพื่อให้มีโครงสร้างที่แน่นอน
@@ -38,7 +38,7 @@ async function getAllLogs(params: { page?: number; pageSize?: number }) {
       where,
       take: pageSize,
       skip,
-      orderBy: { createdAt: 'desc' }, // เรียงจากใหม่ไปเก่าเสมอ
+      orderBy: { createdAt: "desc" }, // เรียงจากใหม่ไปเก่าเสมอ
       include: {
         user: {
           // ดึงข้อมูลผู้ที่กระทำมาด้วย
@@ -76,7 +76,7 @@ async function createLog(params: CreateLogParams) {
   } catch (error) {
     // ใน Production จริง อาจจะต้องการระบบ Logging ที่ดีกว่านี้
     // แต่ตอนนี้การ console.error ก็เพียงพอ
-    console.error('Failed to create audit log:', error);
+    console.error("Failed to create audit log:", error);
   }
 }
 

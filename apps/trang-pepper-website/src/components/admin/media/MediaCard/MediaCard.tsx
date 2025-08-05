@@ -2,11 +2,10 @@
 "use client";
 
 import Image from "next/image";
-import { getLocalizedString } from "@/i18n/utils";
-import { parseVariantRecord } from "@/lib/media-utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
+import { parseVariantRecord } from "@southern-syntax/utils";
 import { type MediaItem } from "@/types/trpc";
-import { Card, CardContent, CardFooter } from "@southern-syntax/ui/card";
-import { Checkbox } from "@southern-syntax/ui/checkbox";
+import { Card, CardContent, CardFooter, Checkbox } from "@southern-syntax/ui";
 import MediaDropdown from "./_components/MediaDropdown";
 
 interface MediaCardProps {

@@ -1,7 +1,9 @@
-// src/services/language.ts
-import prisma from '@/lib/prisma';
-import { languageInputSchema, type LanguageInput } from '@/schemas/language';
-export { languageInputSchema } from '@/schemas/language';
+import prisma from "@southern-syntax/db";
+import {
+  languageInputSchema,
+  type LanguageInput,
+} from "@southern-syntax/schemas/language";
+export { languageInputSchema } from "@southern-syntax/schemas/language";
 // import type { Prisma } from '@prisma/client';
 
 // const languageUpdateSchema = languageInputSchema.partial();
@@ -41,7 +43,10 @@ async function updateLanguage(id: string, data: Partial<LanguageInput>) {
       data: { isDefault: false },
     });
   }
-  const updatedLanguage = await prisma.language.update({ where: { id }, data: validatedData });
+  const updatedLanguage = await prisma.language.update({
+    where: { id },
+    data: validatedData,
+  });
   return updatedLanguage;
 }
 
@@ -51,21 +56,21 @@ async function deleteLanguage(id: string) {
   //   throw new Error('FORBIDDEN');
   // }
   const language = await prisma.language.findUnique({ where: { id } });
-  if (!language) throw new Error('Language not found');
-  if (language.isDefault) throw new Error('Cannot delete default language.');
+  if (!language) throw new Error("Language not found");
+  if (language.isDefault) throw new Error("Cannot delete default language.");
 
-  return prisma.language.findMany({ orderBy: { name: 'asc' } });
+  return prisma.language.findMany({ orderBy: { name: "asc" } });
 }
 
 async function getAllLanguages() {
-  return prisma.language.findMany({ orderBy: { name: 'asc' } });
+  return prisma.language.findMany({ orderBy: { name: "asc" } });
 }
 
 // ดึงภาษาที่เปิดใช้งาน (สำหรับ Frontend Public Site)
 async function getActiveLanguages() {
   return prisma.language.findMany({
     where: { isActive: true },
-    orderBy: { name: 'asc' },
+    orderBy: { name: "asc" },
   });
 }
 

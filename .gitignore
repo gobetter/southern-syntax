@@ -5,6 +5,9 @@ node_modules
 .pnp
 .pnp.js
 
+# NPM lockfile (use pnpm-lock.yaml instead)
+package-lock.json
+
 # Local env files
 .env
 .env.local

@@ -1,10 +1,13 @@
 // src/server/trpc.ts
-import { initTRPC, TRPCError } from '@trpc/server';
-import { getServerSession } from 'next-auth'; // สำหรับดึง Session ใน context
-import { authOptions, can } from '@/lib/auth'; // authOptions และ can function
+import { initTRPC, TRPCError } from "@trpc/server";
+import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
+import { authOptions, can } from "@southern-syntax/auth"; // authOptions และ can function
 
-import prisma from '@/lib/prisma'; // Prisma Client instance
-import { PermissionActionType, PermissionResourceType } from '@/lib/auth/constants'; // นำเข้า Type ที่ถูกต้อง
+import prisma from "@southern-syntax/db"; // Prisma Client instance
+import {
+  PermissionActionType,
+  PermissionResourceType,
+} from "@southern-syntax/auth/constants"; // นำเข้า Type ที่ถูกต้อง
 
 // สร้าง Context สำหรับ tRPC
 // Context จะมีข้อมูลที่เข้าถึงได้ในทุก tRPC procedure (เช่น session, prisma client)
@@ -31,7 +34,7 @@ export const protectedProcedure = t.procedure.use(
     // ตรวจสอบว่ามี session และ user ใน session หรือไม่
     if (!ctx.session || !ctx.session.user) {
       // ถ้าไม่มี session, โยน Error Unauthorized
-      throw new TRPCError({ code: 'UNAUTHORIZED' });
+      throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     // ถ้ามี session, ส่ง session นั้นต่อไปใน context ของ procedure ถัดไป
     return next({
@@ -39,14 +42,14 @@ export const protectedProcedure = t.procedure.use(
         session: ctx.session,
       },
     });
-  }),
+  })
 );
 
 // authorizedProcedure: สำหรับ API ที่ต้อง Login แล้วและมีสิทธิ์ตามที่กำหนด
 // แก้ไข Type ของ resource และ action ให้เป็น Type ที่ถูกต้องจาก constants
 export const authorizedProcedure = (
   resource: PermissionResourceType,
-  action: PermissionActionType,
+  action: PermissionActionType
 ) => {
   return protectedProcedure.use(
     t.middleware(async ({ ctx, next }) => {
@@ -56,10 +59,10 @@ export const authorizedProcedure = (
 
       // ถ้าไม่มีสิทธิ์, โยน Error Forbidden
       if (!hasPermission) {
-        throw new TRPCError({ code: 'FORBIDDEN' });
+        throw new TRPCError({ code: "FORBIDDEN" });
       }
       // ถ้ามีสิทธิ์, ดำเนินการต่อ
       return next();
-    }),
+    })
   );
 };

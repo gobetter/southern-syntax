@@ -4,7 +4,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useSession } from "next-auth/react";
 
-import { getLocalizedString } from "@/i18n/utils";
+import { getLocalizedString } from "@southern-syntax/i18n";
 import {
   Table,
   TableBody,
@@ -12,10 +12,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@southern-syntax/ui/table";
+} from "@southern-syntax/ui";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@/server/routers/_app";
-import { ROLE_NAMES } from "@/lib/auth/constants";
+import { ROLE_NAMES } from "@southern-syntax/auth/constants";
 
 import RoleActionsDropdown from "./_components/RoleActionsDropdown";
 

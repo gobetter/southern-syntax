@@ -4,12 +4,12 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions, can } from "@/lib/auth";
+import { authOptions, can } from "@southern-syntax/auth";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
   ROLE_NAMES,
-} from "@/lib/auth/constants";
+} from "@southern-syntax/auth/constants";
 
 import AuditLogClient from "@/components/admin/audit-log/AuditLogClient";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

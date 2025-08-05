@@ -1,17 +1,20 @@
-// src/lib/form-data-parser.ts
-import Busboy from 'busboy';
-import { type File } from '@/types/media';
+import Busboy from "busboy";
+import { type File } from "@southern-syntax/types";
 
 interface ParsedFormData {
   fields: Record<string, string>;
   files: Record<string, File[]>;
 }
 
-export async function parseMultipartFormData(req: Request): Promise<ParsedFormData> {
+export async function parseMultipartFormData(
+  req: Request
+): Promise<ParsedFormData> {
   return new Promise((resolve, reject) => {
-    const contentType = req.headers.get('content-type');
-    if (!contentType || !contentType.includes('multipart/form-data')) {
-      return reject(new Error('Invalid content-type. Expected multipart/form-data.'));
+    const contentType = req.headers.get("content-type");
+    if (!contentType || !contentType.includes("multipart/form-data")) {
+      return reject(
+        new Error("Invalid content-type. Expected multipart/form-data.")
+      );
     }
 
     // แปลง Headers object ของ Request ให้เป็น plain object
@@ -27,16 +30,16 @@ export async function parseMultipartFormData(req: Request): Promise<ParsedFormDa
     const files: Record<string, File[]> = {};
     const filePromises: Promise<void>[] = [];
 
-    busboy.on('field', (name, val) => {
+    busboy.on("field", (name, val) => {
       fields[name] = val;
     });
 
-    busboy.on('file', (name, fileStream, info) => {
+    busboy.on("file", (name, fileStream, info) => {
       const { filename, encoding, mimeType } = info;
       const chunks: Buffer[] = [];
       const filePromise = new Promise<void>((resolveFile, rejectFile) => {
-        fileStream.on('data', (chunk) => chunks.push(chunk));
-        fileStream.on('end', () => {
+        fileStream.on("data", (chunk) => chunks.push(chunk));
+        fileStream.on("end", () => {
           if (!files[name]) {
             files[name] = [];
           }
@@ -48,12 +51,12 @@ export async function parseMultipartFormData(req: Request): Promise<ParsedFormDa
           });
           resolveFile();
         });
-        fileStream.on('error', rejectFile);
+        fileStream.on("error", rejectFile);
       });
       filePromises.push(filePromise);
     });
 
-    busboy.on('finish', async () => {
+    busboy.on("finish", async () => {
       try {
         await Promise.all(filePromises);
         resolve({ fields, files });
@@ -62,7 +65,7 @@ export async function parseMultipartFormData(req: Request): Promise<ParsedFormDa
       }
     });
 
-    busboy.on('error', (err) => reject(err));
+    busboy.on("error", (err) => reject(err));
 
     // ใช้ async iterator ของ request body ซึ่งเป็นวิธีที่ทันสมัยและปลอดภัย
     async function pipeToBusboy() {

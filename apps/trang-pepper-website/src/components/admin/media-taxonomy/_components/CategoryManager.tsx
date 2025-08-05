@@ -6,8 +6,8 @@ import { type UseFormReturn } from "react-hook-form";
 import { Edit, Trash2 } from "lucide-react";
 
 import { useCategoryManager } from "@/hooks/useCategoryManager";
-import { getLocalizedString } from "@/i18n/utils";
-import { type MediaCategoryInput } from "@/schemas/media-taxonomy";
+import { getLocalizedString } from "@southern-syntax/i18n";
+import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
 import Spinner from "@/components/common/Spinner";
 import { Button } from "@southern-syntax/ui/button";
@@ -18,8 +18,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@southern-syntax/ui/table";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -28,7 +26,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@southern-syntax/ui/alert-dialog";
+} from "@southern-syntax/ui";
 
 import { CategoryFormDialog } from "./CategoryFormDialog";
 
