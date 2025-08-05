@@ -1,0 +1,21 @@
+{
+  "name": "@southern-syntax/schemas",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./password": "./password.ts",
+    "./i18n": "./i18n.ts",
+    "./user": "./user.ts"
+  },
+  "dependencies": {
+    "zod": "^3.25.64"
+  },
+  "devDependencies": {
+    "@southern-syntax/i18n": "workspace:*",
+    "@southern-syntax/tsconfig": "workspace:*",
+    "typescript": "^5"
+  }
+}

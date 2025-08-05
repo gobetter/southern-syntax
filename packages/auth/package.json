@@ -1,0 +1,26 @@
+{
+  "name": "@southern-syntax/auth",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
+    "@southern-syntax/db": "workspace:*",
+    "bcryptjs": "^3.0.2",
+    "next-auth": "4.24.11",
+    "server-only": "^0.0.1",
+    "zod": "^3.25.64"
+  },
+  "devDependencies": {
+    "@southern-syntax/eslint-config-custom": "workspace:*",
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@southern-syntax/types": "workspace:*",
+    "@types/bcryptjs": "^3.0.0",
+    "next": "14.2.5",
+    "typescript": "^5.5.4"
+  }
+}

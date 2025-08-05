@@ -2,7 +2,17 @@
   "name": "@southern-syntax/i18n",
   "version": "0.0.0",
   "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
   "exports": {
-    "./*": "./messages/*"
+    ".": "./index.ts",
+    "./constants": "./constants.ts",
+    "./messages/common/en.json": "./messages/common/en.json"
+  },
+  "dependencies": {
+    "next-intl": "^4.1.0"
+  },
+  "devDependencies": {
+    "@southern-syntax/tsconfig": "workspace:*"
   }
 }
