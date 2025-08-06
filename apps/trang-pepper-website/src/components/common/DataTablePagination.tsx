@@ -13,18 +13,16 @@ import {
 import { useUpdateQuery } from "@/hooks/useUpdateQuery";
 
 import {
+  Button,
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "@southern-syntax/ui/pagination";
-import { Button } from "@southern-syntax/ui/button";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@southern-syntax/ui/select";
+} from "@southern-syntax/ui";
 
 interface DataTablePaginationProps {
   page: number;

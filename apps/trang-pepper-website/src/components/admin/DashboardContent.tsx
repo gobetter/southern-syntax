@@ -9,8 +9,8 @@ import { getLocalizedString } from "@southern-syntax/i18n";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
-import { can } from "@southern-syntax/auth";
+} from "@southern-syntax/auth";
+import { can } from "@southern-syntax/auth/server";
 import { useSession } from "next-auth/react";
 
 const dashboardCards = [

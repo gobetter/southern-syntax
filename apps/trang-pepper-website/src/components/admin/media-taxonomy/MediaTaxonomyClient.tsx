@@ -27,7 +27,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCategoryManager } from "@/hooks/useCategoryManager";
 import { useTagManager } from "@/hooks/useTagManager";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import { PlusCircle } from "lucide-react";
 
 export default function MediaTaxonomyClient() {

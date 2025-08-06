@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import type { PrismaClient, Product, Prisma } from "@prisma/client";
+import { PrismaClient, Product, Prisma } from "@prisma/client";
 import type { Session } from "next-auth";
 
 vi.mock("@southern-syntax/auth", () => ({
@@ -12,16 +12,18 @@ import { productRouter } from "../content/product";
 import { productService } from "@/services/product";
 
 const mockProduct: Product = {
-  id: "1",
-  slug: "p",
-  title: { en: "p" },
+  id: "p1",
+  slug: "test-product",
+  title: { en: "Test Product" },
   description: {},
-  price: 1 as unknown as Prisma.Decimal,
-  stock: 1,
+  price: new Prisma.Decimal(100),
+  stock: 10,
   isPublished: false,
   featuredImageId: null,
   createdAt: new Date(),
   updatedAt: new Date(),
+  titleEnNormalized: "test product",
+  productTagId: null,
 };
 
 describe("productRouter", () => {
@@ -46,7 +48,16 @@ describe("productRouter", () => {
     const spy = vi
       .spyOn(productService, "createProduct")
       .mockResolvedValue(mockProduct);
-    const session: Session = { user: { id: "u1" }, expires: "" };
+    const session: Session = {
+      user: {
+        id: "u1",
+        name: "Test User",
+        email: "test@test.com",
+        role: "ADMIN",
+        permissions: {}, // ใส่ข้อมูล permission จำลองถ้าจำเป็น
+      },
+      expires: "some-date",
+    };
     const caller = productRouter.createCaller({
       session,
       prisma: {} as unknown as PrismaClient,

@@ -10,7 +10,8 @@
     "./messages/common/en.json": "./messages/common/en.json"
   },
   "dependencies": {
-    "next-intl": "^4.1.0"
+    "next-intl": "^4.1.0",
+    "@southern-syntax/config": "workspace:*"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*"

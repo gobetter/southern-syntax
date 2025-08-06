@@ -5,17 +5,17 @@ import { useTranslations } from "next-intl";
 
 import type { MediaItem } from "@/types/trpc";
 
-import { Label } from "@southern-syntax/ui/label";
 import Spinner from "@/components/common/Spinner";
-import { Button } from "@southern-syntax/ui/button";
 import {
+  Button,
+  Label,
   Dialog,
   DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@southern-syntax/ui/dialog";
+} from "@southern-syntax/ui";
 
 import CheckboxGroupWithStates from "./_components/CheckboxGroupWithStates";
 import { useBulkEdit } from "./useBulkEdit";

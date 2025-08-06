@@ -1,14 +1,9 @@
-// src/services/post-category.ts
 import prisma from "@southern-syntax/db";
 import {
   postCategoryInputSchema,
   type PostCategoryInput,
 } from "@southern-syntax/schemas/post-category";
 export { postCategoryInputSchema } from "@southern-syntax/schemas/post-category";
-
-// เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
-// import { can } from '@/lib/auth';
-// import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
 
 // --- PostCategory Service ---
 async function createPostCategory(data: PostCategoryInput) {

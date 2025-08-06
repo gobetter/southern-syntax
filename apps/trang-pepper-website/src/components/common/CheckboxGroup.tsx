@@ -1,9 +1,7 @@
-// src/components/admin/media/CheckboxGroup.tsx
 "use client";
 
 import React from "react";
-import { Label } from "@southern-syntax/ui/label";
-import { Checkbox } from "@southern-syntax/ui/checkbox";
+import { Label, Checkbox } from "@southern-syntax/ui";
 
 interface CheckboxGroupProps {
   options: { id: string; label: string }[];
@@ -29,7 +27,7 @@ export function CheckboxGroup({
           <Checkbox
             id={`${namePrefix}-${id}`}
             checked={selectedSet.has(id)}
-            onCheckedChange={(checked) => {
+            onCheckedChange={(checked: boolean | "indeterminate") => {
               const newSet = new Set(selectedSet);
               if (checked) {
                 newSet.add(id);

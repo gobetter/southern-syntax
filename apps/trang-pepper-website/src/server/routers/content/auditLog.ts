@@ -5,7 +5,7 @@ import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
   ROLE_NAMES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 import { auditLogService } from "@/services/auditLog";
 import { TRPCError } from "@trpc/server";
 

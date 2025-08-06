@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@southern-syntax/auth";
+import { authOptions } from "@southern-syntax/auth/server";
 
 const handler = NextAuth(authOptions);
 

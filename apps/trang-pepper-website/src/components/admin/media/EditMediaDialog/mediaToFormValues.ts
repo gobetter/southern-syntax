@@ -2,10 +2,11 @@
 import { MediaUpdateFormInput } from "@southern-syntax/schemas/media";
 import { MediaItem } from "@/types/trpc";
 import { LocalizedString } from "@southern-syntax/types";
+import { toLocalizedString } from "@southern-syntax/utils";
 
 export function mediaToFormValues(media: MediaItem): MediaUpdateFormInput {
   return {
-    title: (media.title as LocalizedString) || {},
+    title: toLocalizedString(media.title),
     altText: (media.altText as LocalizedString) || {},
     caption: (media.caption as LocalizedString) || {},
     categoryIds: media.categories.map((cat: { id: string }) => cat.id),

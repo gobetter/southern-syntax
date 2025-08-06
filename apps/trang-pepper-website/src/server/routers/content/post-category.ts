@@ -10,7 +10,7 @@ import {
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
-} from "@southern-syntax/auth/constants"; // Constants สำหรับ RBAC
+} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const postCategoryRouter = router({

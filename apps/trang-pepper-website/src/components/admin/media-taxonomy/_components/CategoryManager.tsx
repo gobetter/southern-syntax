@@ -10,7 +10,7 @@ import { getLocalizedString } from "@southern-syntax/i18n";
 import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
 import Spinner from "@/components/common/Spinner";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import {
   Table,
   TableBody,

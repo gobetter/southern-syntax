@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 
 interface ThemeToggleProps {
   initialTheme: string | null;

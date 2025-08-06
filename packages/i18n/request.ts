@@ -1,5 +1,5 @@
 import { getRequestConfig } from "next-intl/server";
-import { locales, defaultLocale } from "./constants";
+import { locales, defaultLocale } from "@southern-syntax/config";
 
 export default getRequestConfig(async ({ locale }) => {
   // ใช้ .find() เพื่อหา locale ที่ตรงกัน, ถ้าไม่เจอให้ใช้ defaultLocale

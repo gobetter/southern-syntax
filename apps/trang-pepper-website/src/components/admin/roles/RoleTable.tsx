@@ -15,7 +15,7 @@ import {
 } from "@southern-syntax/ui";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@/server/routers/_app";
-import { ROLE_NAMES } from "@southern-syntax/auth/constants";
+import { ROLE_NAMES } from "@southern-syntax/auth";
 
 import RoleActionsDropdown from "./_components/RoleActionsDropdown";
 

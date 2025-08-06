@@ -1,13 +1,13 @@
-// src/components/admin/users/_components/UserActionBar.tsx
 "use client";
 
+import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Trash2, X, CheckCircle2, MoreVertical } from "lucide-react";
 
 import { trpc } from "@/lib/trpc-client";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import {
   Select,
   SelectContent,
@@ -19,8 +19,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@southern-syntax/ui";
-import {} from "@southern-syntax/ui/dropdown-menu";
-import { useMemo } from "react";
 import { LocalizedString } from "@southern-syntax/types";
 
 interface UserActionBarProps {

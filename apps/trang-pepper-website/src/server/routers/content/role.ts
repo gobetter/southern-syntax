@@ -5,9 +5,9 @@ import { router, authorizedProcedure } from "@/server/trpc";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 import { roleService } from "@/services/role";
-import { roleSchema } from "@southern-syntax/auth/schemas";
+import { roleSchema } from "@southern-syntax/auth";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 
 export const roleRouter = router({

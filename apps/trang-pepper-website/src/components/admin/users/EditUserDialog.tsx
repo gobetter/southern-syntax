@@ -9,31 +9,27 @@ import { UserItem } from "@/types/trpc";
 import { useEditUserForm } from "@/hooks/useEditUserForm";
 
 import {
+  Button,
+  Input,
+  Label,
+  Switch,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@southern-syntax/ui/tabs";
-import { Switch } from "@southern-syntax/ui/switch";
-import Spinner from "@/components/common/Spinner";
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@southern-syntax/ui/dialog";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@southern-syntax/ui/select";
+} from "@southern-syntax/ui";
+import Spinner from "@/components/common/Spinner";
 import FormFieldError from "@/components/common/FormFieldError";
 
 interface EditUserDialogProps {

@@ -5,13 +5,13 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { type MediaItem } from "@/types/trpc";
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@southern-syntax/ui/dialog";
-import { Button } from "@southern-syntax/ui/button";
+} from "@southern-syntax/ui";
 
 interface ImagePreviewDialogProps {
   media: MediaItem | null;

@@ -25,7 +25,7 @@ pnpm dlx shadcn@latest init
 - **✔ Created 1 file: \- src/lib/utils.ts**
 - **Success\! Project initialization completed. You may now add components.**
 
-โดยปกติ shadcn/ui จะตรวจพบการตั้งค่าที่มีอยู่แล้ว เช่น TypeScript, Global CSS file (src/app/globals.css), Tailwind config (tailwind.config.ts), Import aliases (@/components, @southern-syntax/ui/lib/utils), และการใช้ React Server Components (จาก App Router) จึงไม่จำเป็นต้องถามคำถามเหล่านี้ซ้ำอีกครั้ง
+โดยปกติ shadcn/ui จะตรวจพบการตั้งค่าที่มีอยู่แล้ว เช่น TypeScript, Global CSS file (src/app/globals.css), Tailwind config (tailwind.config.ts), Import aliases (@/components, @southern-syntax/ui), และการใช้ React Server Components (จาก App Router) จึงไม่จำเป็นต้องถามคำถามเหล่านี้ซ้ำอีกครั้ง
 
 ## **การเพิ่ม Components**
 

@@ -7,8 +7,7 @@
 */
 
 import { z } from "zod";
-// import { locales } from "../../next-intl.config";
-import { locales } from "@southern-syntax/i18n/constants";
+import { locales } from "@southern-syntax/config";
 
 // Schema พื้นฐาน: object ที่มี key เป็นภาษาที่เรารองรับ และ value เป็น string
 export const LocalizedStringSchema = z

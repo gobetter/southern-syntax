@@ -5,8 +5,8 @@ vi.mock("@southern-syntax/db", () => ({
   default: {},
 }));
 
+import { can } from "@southern-syntax/auth/server";
 import {
-  can,
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
   ROLE_NAMES,

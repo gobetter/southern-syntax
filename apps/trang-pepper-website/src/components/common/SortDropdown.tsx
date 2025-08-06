@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 
 import type { SortOrder } from "@/constants/common";
 
-import { Button } from "@southern-syntax/ui/button";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@southern-syntax/ui/dropdown-menu";
+} from "@southern-syntax/ui";
 
 export interface SortOption<T extends string> {
   value: T;

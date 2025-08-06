@@ -4,7 +4,7 @@ import { idParamSchema } from "@southern-syntax/schemas/common";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 import { mediaCategoryService } from "@/services/media-category";
 import { mediaCategoryInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 

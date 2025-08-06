@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, User, Role } from "@prisma/client";
 import { mockDeep, mockReset } from "vitest-mock-extended";
-import { ROLE_NAMES } from "@southern-syntax/auth/constants";
-import { type RoleInput } from "@southern-syntax/auth/schemas";
+import { ROLE_NAMES } from "@southern-syntax/auth";
+import { type RoleInput } from "@southern-syntax/auth";
 
 // --- Type Definitions for Mocks ---
 // สร้าง Type ที่สมบูรณ์สำหรับ Mock ของเรา

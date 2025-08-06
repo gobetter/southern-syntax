@@ -2,7 +2,7 @@
 import { useLocale, useTranslations } from "next-intl";
 
 import { type MediaItem } from "@/types/trpc";
-import { Separator } from "@southern-syntax/ui/separator";
+import { Separator } from "@southern-syntax/ui";
 
 export default function InformationSection({ media }: { media: MediaItem }) {
   const t = useTranslations("admin_media.details");

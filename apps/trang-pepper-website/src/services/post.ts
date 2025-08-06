@@ -2,10 +2,6 @@ import prisma from "@southern-syntax/db"; // Import Prisma Client
 export { postInputSchema } from "@southern-syntax/schemas/post";
 import { postInputSchema, type PostInput } from "@southern-syntax/schemas/post";
 
-// เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
-// import { can } from '@/lib/auth';
-// import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
-
 // --- Post Service ---
 
 async function createPost(data: PostInput) {

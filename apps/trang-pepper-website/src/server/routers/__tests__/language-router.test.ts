@@ -42,7 +42,16 @@ describe("languageRouter", () => {
     const spy = vi
       .spyOn(languageService, "createLanguage")
       .mockResolvedValue(mockLanguage);
-    const session: Session = { user: { id: "u1" }, expires: "" };
+    const session: Session = {
+      user: {
+        id: "u1",
+        name: "Test User",
+        email: "test@test.com",
+        role: "ADMIN",
+        permissions: {}, // ใส่ข้อมูล permission จำลองถ้าจำเป็น
+      },
+      expires: "some-date",
+    };
     const caller = languageRouter.createCaller({
       session,
       prisma: {} as unknown as PrismaClient,

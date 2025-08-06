@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TriangleAlert } from "lucide-react";
 
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 
 export default function AccessDenied() {
   const router = useRouter();

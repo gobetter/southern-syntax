@@ -2,11 +2,11 @@
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions, can } from "@southern-syntax/auth";
+import { authOptions, can } from "@southern-syntax/auth/server";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import Breadcrumbs from "@/components/admin/Breadcrumbs";

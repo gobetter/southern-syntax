@@ -8,10 +8,7 @@ import { AlertCircle } from "lucide-react";
 
 import { useRoleForm } from "@/hooks/useRoleForm";
 import { type Role, type Permission } from "@/hooks/useRoleManager";
-import {
-  PERMISSION_RESOURCES,
-  ROLE_NAMES,
-} from "@southern-syntax/auth/constants";
+import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/auth";
 
 import FormFieldError from "@/components/common/FormFieldError";
 import {
@@ -31,7 +28,7 @@ import {
   DialogClose,
   DialogDescription,
 } from "@southern-syntax/ui";
-import { cn } from "@southern-syntax/ui/lib/utils";
+import { cn } from "@southern-syntax/ui";
 
 interface RoleFormDialogProps {
   isOpen: boolean;

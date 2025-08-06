@@ -1,7 +1,7 @@
 // src/app/[lang]/admin/roles/page.tsx
 import { Suspense } from "react";
 
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth/constants";
+import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
 import ProtectedPage from "@/components/auth/ProtectedPage";
 import RoleManagerClient from "@/components/admin/roles/RoleManagerClient";

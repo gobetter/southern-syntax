@@ -5,10 +5,6 @@ import {
 } from "@southern-syntax/schemas/post-tag";
 export { postTagInputSchema } from "@southern-syntax/schemas/post-tag";
 
-// เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
-// import { can } from '@/lib/auth';
-// import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
-
 // --- PostTag Service ---
 
 const postTagUpdateSchema = postTagInputSchema.partial();

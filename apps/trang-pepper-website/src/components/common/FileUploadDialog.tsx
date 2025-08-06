@@ -11,18 +11,18 @@ import {
 } from "react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@southern-syntax/ui/button";
-import { Input } from "@southern-syntax/ui/input";
-import { Label } from "@southern-syntax/ui/label";
-import Spinner from "@/components/common/Spinner";
 import {
+  Button,
+  Input,
+  Label,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@southern-syntax/ui/dialog";
+} from "@southern-syntax/ui";
+import Spinner from "@/components/common/Spinner";
 
 // Define a generic error type
 export interface FileUploadError {

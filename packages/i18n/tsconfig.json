@@ -1,8 +1,10 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@southern-syntax/*": ["../*"]
+    },
     "resolveJsonModule": true
   },
   "include": ["**/*.ts", "**/*.d.ts"],

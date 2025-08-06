@@ -5,15 +5,14 @@ import { useTranslations, useLocale } from "next-intl";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@southern-syntax/ui/dialog"; // Assuming barrel exports
-
-import { Button } from "@southern-syntax/ui/button";
+} from "@southern-syntax/ui"; // Assuming barrel exports
 
 // import { AuditLogItem } from './AuditLogTable';
 import { AuditLogItem } from "@/types/trpc";

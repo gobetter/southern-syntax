@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
 } from "@southern-syntax/ui";
 
-import { locales } from "@southern-syntax/i18n";
+import { locales } from "@southern-syntax/config";
 
 const localeFlagMap: Record<string, string> = {
   en: "🇺🇸",

@@ -1,10 +1,11 @@
 import { z } from "zod";
 
 import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "./constants";
-import { passwordPolicySchema } from "@southern-syntax/schemas/password";
-import { LocalizedStringSchema } from "@southern-syntax/schemas/i18n";
-
-import { defaultLocale } from "@southern-syntax/i18n";
+import {
+  passwordPolicySchema,
+  LocalizedStringSchema,
+} from "@southern-syntax/schemas";
+import { defaultLocale } from "@southern-syntax/config";
 
 const requiredInDefaultLang = "error_field_is_required_in_default_lang";
 

@@ -9,6 +9,7 @@
       "@southern-syntax/i18n": ["../../packages/i18n"],
       "@southern-syntax/schemas": ["../../packages/schemas"],
       "@southern-syntax/types": ["../../packages/types"],
+      "@southern-syntax/config": ["../../packages/config"],
       "@southern-syntax/ui": ["../../packages/ui"],
       "@southern-syntax/utils": ["../../packages/utils"]
     }

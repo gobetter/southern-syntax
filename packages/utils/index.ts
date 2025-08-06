@@ -9,4 +9,5 @@ export * from "./select-options";
 export * from "./string-utils";
 export * from "./supabase-client";
 export * from "./upload/uploadMediaFile";
+export * from "./type-guards";
 export * from "./validationUtils";

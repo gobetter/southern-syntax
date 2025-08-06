@@ -2,11 +2,11 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions, can } from "@southern-syntax/auth";
+import { authOptions, can } from "@southern-syntax/auth/server";
 import {
   type PermissionActionType,
   type PermissionResourceType,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 
 import AccessDenied from "./AccessDenied";
 

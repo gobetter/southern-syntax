@@ -2,8 +2,10 @@
   "name": "southern-syntax",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "db:generate": "pnpm --filter @southern-syntax/db db:generate",
+    "postinstall": "pnpm db:generate",
+    "build": "pnpm db:generate && turbo run build",
+    "dev": "pnpm db:generate && turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { locales } from "@southern-syntax/i18n";
+import { locales } from "@southern-syntax/config";
 
 type Locale = (typeof locales)[number];
 

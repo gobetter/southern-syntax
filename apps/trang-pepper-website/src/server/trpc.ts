@@ -1,13 +1,13 @@
 // src/server/trpc.ts
 import { initTRPC, TRPCError } from "@trpc/server";
 import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
-import { authOptions, can } from "@southern-syntax/auth"; // authOptions และ can function
+import { authOptions, can } from "@southern-syntax/auth/server"; // authOptions และ can function
 
 import prisma from "@southern-syntax/db"; // Prisma Client instance
 import {
   PermissionActionType,
   PermissionResourceType,
-} from "@southern-syntax/auth/constants"; // นำเข้า Type ที่ถูกต้อง
+} from "@southern-syntax/auth"; // นำเข้า Type ที่ถูกต้อง
 
 // สร้าง Context สำหรับ tRPC
 // Context จะมีข้อมูลที่เข้าถึงได้ในทุก tRPC procedure (เช่น session, prisma client)

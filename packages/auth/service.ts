@@ -9,7 +9,7 @@ import {
 import { verifyPassword, hashPassword } from "./utils";
 
 import prisma from "@southern-syntax/db";
-import { defaultLocale } from "@southern-syntax/i18n";
+import { defaultLocale } from "@southern-syntax/config";
 
 /**
  * Authenticates a user based on provided credentials.

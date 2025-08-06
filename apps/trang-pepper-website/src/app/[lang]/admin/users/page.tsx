@@ -1,7 +1,7 @@
 // src/app/[lang]/admin/users/page.tsx
 import { Suspense } from "react";
 
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth/constants";
+import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
 import UserManagementClient from "@/components/admin/users/UserManagementClient";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

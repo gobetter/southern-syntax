@@ -2,6 +2,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+
+import { cn } from "@southern-syntax/ui";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,8 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@southern-syntax/ui/alert-dialog";
-import { cn } from "@southern-syntax/ui/lib/utils";
+} from "@southern-syntax/ui";
 
 interface ConfirmationDialogProps {
   open: boolean;

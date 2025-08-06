@@ -31,6 +31,7 @@
     "@southern-syntax/i18n": "workspace:*",
     "@southern-syntax/schemas": "workspace:*",
     "@southern-syntax/types": "workspace:*",
+    "@southern-syntax/config": "workspace:*",
     "@southern-syntax/ui": "workspace:*",
     "@supabase/supabase-js": "^2.50.0",
     "@tanstack/react-query": "^5.80.7",
@@ -52,6 +53,7 @@
     "zod": "^3.25.64"
   },
   "devDependencies": {
+    "@prisma/client": "^5.22.0",
     "@southern-syntax/eslint-config-custom": "workspace:*",
     "@southern-syntax/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.1.11",
@@ -68,10 +70,11 @@
     "eslint": "^9",
     "jsdom": "^24.0.0",
     "postcss": "^8.5.6",
+    "sonner": "^2.0.7",
     "tailwindcss": "^4.1.11",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
-    "typescript": "^5",
+    "typescript": "^5.8.3",
     "vite": "^7.0.0",
     "vitest": "^1.3.1",
     "vitest-mock-extended": "^3.1.0"

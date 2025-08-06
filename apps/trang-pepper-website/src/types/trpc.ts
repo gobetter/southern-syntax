@@ -1,6 +1,6 @@
 import { type inferRouterOutputs } from "@trpc/server";
 import { type AppRouter } from "@/server/routers/_app";
-import { LocalizedString } from "./i18n";
+import { type LocalizedString } from "@southern-syntax/types";
 
 /**
  * Type กลางสำหรับ tRPC outputs ทั้งหมด

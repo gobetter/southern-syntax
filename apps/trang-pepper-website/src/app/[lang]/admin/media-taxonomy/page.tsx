@@ -1,7 +1,7 @@
 // src/app/[lang]/admin/media-taxonomy/page.tsx
 import { Suspense } from "react";
 
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth/constants";
+import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
 import MediaTaxonomyClient from "@/components/admin/media-taxonomy/MediaTaxonomyClient";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

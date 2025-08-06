@@ -5,7 +5,7 @@ import { router, authorizedProcedure } from "@/server/trpc";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 import { userService } from "@/services/user";
 import {
   userCreateSchema,

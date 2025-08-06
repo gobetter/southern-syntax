@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Edit, Trash2 } from "lucide-react";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 
 interface MediaActionBarProps {
   selectedCount: number;

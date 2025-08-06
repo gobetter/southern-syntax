@@ -8,7 +8,7 @@ import { useMediaLibrary } from "@/hooks/useMediaLibrary";
 
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import Spinner from "@/components/common/Spinner";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import { DataTablePagination } from "@/components/common/DataTablePagination";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
 

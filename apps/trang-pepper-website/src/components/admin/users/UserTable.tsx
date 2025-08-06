@@ -9,7 +9,7 @@ import { getLocalizedString } from "@southern-syntax/i18n";
 import { UserItem } from "@/types/trpc";
 import type { UserSortableField } from "@southern-syntax/types";
 
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import {
   Table,
   TableBody,

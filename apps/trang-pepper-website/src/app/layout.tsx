@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 
 import TRPCProvider from "@/lib/trpc-provider";
-// import { authOptions } from "@southern-syntax/auth";
 import { authOptions } from "@southern-syntax/auth/server";
 import { Toaster } from "@southern-syntax/ui";
 

@@ -8,12 +8,12 @@
     "db:push": "prisma db push"
   },
   "dependencies": {
-    "@prisma/client": "^5.14.0",
+    "@prisma/client": "^5.22.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@types/node": "^24.1.0",
-    "prisma": "^5.14.0",
+    "prisma": "^5.22.0",
     "typescript": "^5.8.3"
   }
 }

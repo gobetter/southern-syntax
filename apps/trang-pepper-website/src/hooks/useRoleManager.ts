@@ -6,7 +6,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
-import { roleSchema } from "@southern-syntax/auth/schemas";
+import { roleSchema } from "@southern-syntax/auth";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import type { inferRouterOutputs } from "@trpc/server";

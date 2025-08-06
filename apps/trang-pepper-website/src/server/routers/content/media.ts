@@ -4,7 +4,7 @@ import { router, authorizedProcedure } from "@/server/trpc";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 import { mediaService } from "@/services/media";
 import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
 import { MEDIA_SORTABLE_FIELDS } from "@/constants/media";

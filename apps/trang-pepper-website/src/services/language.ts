@@ -4,13 +4,6 @@ import {
   type LanguageInput,
 } from "@southern-syntax/schemas/language";
 export { languageInputSchema } from "@southern-syntax/schemas/language";
-// import type { Prisma } from '@prisma/client';
-
-// const languageUpdateSchema = languageInputSchema.partial();
-
-// เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
-// import { can } from '@/lib/auth';
-// import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
 
 // --- Language Service ---
 async function createLanguage(data: LanguageInput) {

@@ -3,7 +3,7 @@ import prisma from "@southern-syntax/db";
 import { type Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
-import type { RoleInput } from "@southern-syntax/auth/schemas";
+import type { RoleInput } from "@southern-syntax/auth";
 import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
 import { auditLogService } from "./auditLog";

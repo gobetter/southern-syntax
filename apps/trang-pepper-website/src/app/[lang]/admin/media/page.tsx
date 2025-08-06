@@ -1,7 +1,7 @@
 // src/app/[lang]/admin/media/page.tsx
 import { Suspense } from "react";
 
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth/constants";
+import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
 import MediaLibraryClient from "@/components/admin/media/MediaLibraryClient";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronRight } from "lucide-react";
 
-import { cn } from "@southern-syntax/ui/lib/utils";
+import { cn } from "@southern-syntax/ui";
 
 export default function Breadcrumbs() {
   const t = useTranslations("admin_navigation");

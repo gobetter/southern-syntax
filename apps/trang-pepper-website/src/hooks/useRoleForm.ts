@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 import { useToast } from "./useToast";
-import { roleSchema } from "@southern-syntax/auth/schemas";
+import { roleSchema } from "@southern-syntax/auth";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import { Role } from "./useRoleManager";

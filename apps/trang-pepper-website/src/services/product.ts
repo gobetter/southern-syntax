@@ -5,10 +5,6 @@ import {
 } from "@southern-syntax/schemas/product";
 export { productInputSchema } from "@southern-syntax/schemas/product";
 
-// เมื่อ Implement RBAC (Role-Based Access Control) เต็มรูปแบบ จะต้อง Import สิ่งเหล่านี้:
-// import { can } from '@/lib/auth';
-// import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
-
 // --- Product Service ---
 // Service นี้จะรวม Business Logic สำหรับ Product Model
 async function createProduct(data: ProductInput) {

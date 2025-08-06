@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { mediaService } from "@/services/media";
-import { authOptions, can } from "@southern-syntax/auth";
+import { authOptions, can } from "@southern-syntax/auth/server";
 import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/auth";
 
 export async function POST(req: NextRequest) {
   try {

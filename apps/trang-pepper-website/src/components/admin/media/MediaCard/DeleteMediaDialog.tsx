@@ -12,7 +12,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@southern-syntax/ui/alert-dialog";
+} from "@southern-syntax/ui";
 
 interface DeleteMediaDialogProps {
   open: boolean;

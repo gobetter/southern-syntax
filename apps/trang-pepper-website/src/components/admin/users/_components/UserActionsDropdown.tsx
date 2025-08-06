@@ -4,13 +4,13 @@
 import { Edit, MoreVertical, Trash2, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@southern-syntax/ui/button";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@southern-syntax/ui/dropdown-menu";
+} from "@southern-syntax/ui";
 
 interface UserActionsDropdownProps {
   onEdit: () => void;

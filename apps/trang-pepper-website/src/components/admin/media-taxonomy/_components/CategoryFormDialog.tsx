@@ -6,15 +6,17 @@ import { useForm, type SubmitHandler, FormProvider } from "react-hook-form";
 import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
 import FormFieldError from "@/components/common/FormFieldError";
-import { Button, Input, Label } from "@southern-syntax/ui";
 import {
+  Button,
+  Input,
+  Label,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@southern-syntax/ui/dialog";
+} from "@southern-syntax/ui";
 
 interface CategoryFormDialogProps {
   isOpen: boolean;

@@ -1,9 +1,8 @@
 // src/components/admin/media/BulkEditDialog/CheckboxGroupWithStates.tsx
 "use client";
 
-import { cn } from "@southern-syntax/ui/lib/utils";
-import { Checkbox } from "@southern-syntax/ui/checkbox";
-import { Label } from "@southern-syntax/ui/label";
+import { cn } from "@southern-syntax/ui";
+import { Label, Checkbox } from "@southern-syntax/ui";
 import type { CheckboxStates } from "../helpers/checkboxUtils";
 
 interface Option {

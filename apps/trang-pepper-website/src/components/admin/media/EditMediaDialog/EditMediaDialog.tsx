@@ -5,20 +5,20 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
-import { cn } from "@southern-syntax/ui/lib/utils";
+import { cn } from "@southern-syntax/ui";
 import { MediaItem } from "@/types/trpc";
 
-import { Button } from "@southern-syntax/ui/button";
-import { Label } from "@southern-syntax/ui/label";
 import { CheckboxGroup } from "@/components/common/CheckboxGroup";
 import {
+  Button,
+  Label,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@southern-syntax/ui/dialog";
+} from "@southern-syntax/ui";
 
 import { MediaTextFields } from "./_components/MediaTextFields";
 import { useEditMediaForm } from "./useEditMediaForm";

@@ -5,7 +5,7 @@ import {
   type NextRequestWithAuth,
   type NextMiddlewareWithAuth,
 } from "next-auth/middleware";
-import { locales, defaultLocale } from "@southern-syntax/i18n";
+import { locales, defaultLocale } from "@southern-syntax/config";
 
 // 1. สร้าง i18n middleware ขึ้นมา
 const intlMiddleware = createIntlMiddleware({

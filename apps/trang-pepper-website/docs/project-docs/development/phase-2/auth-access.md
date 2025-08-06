@@ -211,7 +211,7 @@ NextAuth.js จะ redirect ไปยัง `/api/auth/signin` โดยอั�
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { Button } from "@southern-syntax/ui/button"; // ใช้ Shadcn UI Button
+import { Button } from "@southern-syntax/ui"; // ใช้ Shadcn UI Button
 import { Input } from "@southern-syntax/ui/input"; // คุณอาจจะต้องเพิ่ม Input Component ของ Shadcn UI ก่อน: pnpm dlx shadcn@latest add input
 
 export default function SignInPage() {

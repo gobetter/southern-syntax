@@ -6,7 +6,7 @@ import { Role, useRoleManager } from "@/hooks/useRoleManager";
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
 import RoleTable from "./RoleTable";
-import { Button } from "@southern-syntax/ui/button";
+import { Button } from "@southern-syntax/ui";
 import { PlusCircle } from "lucide-react";
 import RoleFormDialog from "./RoleFormDialog";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
