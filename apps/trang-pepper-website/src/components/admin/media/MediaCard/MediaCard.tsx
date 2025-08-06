@@ -1,10 +1,9 @@
-// src/components/admin/media/MediaCard.tsx
 "use client";
 
 import Image from "next/image";
 import { getLocalizedString } from "@southern-syntax/i18n";
 import { parseVariantRecord } from "@southern-syntax/utils";
-import { type MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 import { Card, CardContent, CardFooter, Checkbox } from "@southern-syntax/ui";
 import MediaDropdown from "./_components/MediaDropdown";
 

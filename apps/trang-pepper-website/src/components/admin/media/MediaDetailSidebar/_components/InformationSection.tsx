@@ -1,7 +1,6 @@
-// src/components/admin/media/MediaDetailSidebar/InformationSection.tsx
 import { useLocale, useTranslations } from "next-intl";
 
-import { type MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 import { Separator } from "@southern-syntax/ui";
 
 export default function InformationSection({ media }: { media: MediaItem }) {

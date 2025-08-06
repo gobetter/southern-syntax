@@ -24,7 +24,7 @@ export const roleFormSchema = roleSchema.extend({
 export type RoleFormOutput = z.infer<typeof roleFormSchema>;
 export type RoleFormInput = z.input<typeof roleFormSchema>;
 
-export function useRoleManager() {
+export function useRoleManager(): any {
   const utils = trpc.useUtils();
   const toast = useToast();
   const t_toasts = useTranslations("admin_rbac.toasts");

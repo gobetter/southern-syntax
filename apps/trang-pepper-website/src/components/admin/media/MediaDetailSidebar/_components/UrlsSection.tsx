@@ -1,9 +1,8 @@
-// src/components/admin/media/MediaDetailSidebar/UrlsSection.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
 
-import { type MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@southern-syntax/ui";
 

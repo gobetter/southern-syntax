@@ -14,7 +14,7 @@ import { MediaSortableField, MEDIA_SORT_OPTIONS } from "@/constants/media";
 import type { SortOrder } from "@/constants/common";
 import { MediaCategory, MediaTag } from "@southern-syntax/types";
 
-export function useMediaLibrary() {
+export function useMediaLibrary(): any {
   const searchParams = useSearchParams();
   const updateQuery = useUpdateQuery();
   const utils = trpc.useUtils();
@@ -60,7 +60,7 @@ export function useMediaLibrary() {
   });
 
   // --- Memoized Derived State ---
-  const mediaItems = mediaResult?.data;
+  const mediaItems = mediaResult?.data as MediaItem[] | undefined;
   const totalCount = mediaResult?.totalCount || 0;
   const totalPages = Math.ceil(totalCount / pageSize);
 

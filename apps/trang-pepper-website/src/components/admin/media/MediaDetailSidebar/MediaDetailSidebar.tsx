@@ -1,11 +1,10 @@
-// src/components/admin/media/MediaDetailSidebar.tsx
 "use client";
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
-import { type MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 import {} from "@southern-syntax/ui";
 import {
@@ -41,9 +40,7 @@ export default function MediaDetailSidebar({
 
   if (!media) return null;
 
-  const thumbnail =
-    (media.variants as Record<string, string>)?.["original"] ||
-    media.originalUrl;
+  const thumbnail = media.variants?.["original"] || media.originalUrl;
 
   return (
     <Sheet open={!!media} onOpenChange={onOpenChange}>

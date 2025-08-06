@@ -1,9 +1,8 @@
-// src/components/admin/media/ImagePreviewDialog.tsx
 "use client";
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { type MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 import {
   Button,
   Dialog,
@@ -30,8 +29,7 @@ export default function ImagePreviewDialog({
     return null;
   }
 
-  const previewUrl =
-    (media.variants as Record<string, string>)?.["medium"] || media.originalUrl;
+  const previewUrl = media.variants?.["medium"] || media.originalUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
