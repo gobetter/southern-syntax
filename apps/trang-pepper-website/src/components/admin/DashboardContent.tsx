@@ -10,7 +10,7 @@ import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
-import { can } from "@southern-syntax/auth/server";
+import { can } from "@southern-syntax/auth";
 import { useSession } from "next-auth/react";
 
 const dashboardCards = [

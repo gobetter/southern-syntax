@@ -1,5 +1,4 @@
 export * from "./forms";
-export * from "./i18n";
 export * from "./media-taxonomy";
 export * from "./media";
 export * from "./user";

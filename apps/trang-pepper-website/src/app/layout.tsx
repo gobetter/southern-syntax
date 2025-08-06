@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 
 import TRPCProvider from "@/lib/trpc-provider";
-import { authOptions } from "@southern-syntax/auth/server";
+import { authOptions } from "@southern-syntax/auth";
 import { Toaster } from "@southern-syntax/ui";
 
 import SuspenseErrorBoundary from "@/components/common/SuspenseErrorBoundary";

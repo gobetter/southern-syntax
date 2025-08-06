@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import prisma from "@southern-syntax/db";
-import { authOptions, can, hashPassword } from "@southern-syntax/auth/server";
+import { authOptions, can, hashPassword } from "@southern-syntax/auth";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,

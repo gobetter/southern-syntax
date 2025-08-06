@@ -336,13 +336,16 @@ importers:
 
   packages/schemas:
     dependencies:
+      '@southern-syntax/config':
+        specifier: workspace:*
+        version: link:../config
+      '@southern-syntax/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       zod:
         specifier: ^3.25.64
         version: 3.25.76
     devDependencies:
-      '@southern-syntax/i18n':
-        specifier: workspace:*
-        version: link:../i18n
       '@southern-syntax/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -449,6 +452,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@southern-syntax/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@supabase/supabase-js':
         specifier: ^2.50.0
         version: 2.53.0
@@ -462,9 +468,6 @@ importers:
         specifier: ^3.25.64
         version: 3.25.76
     devDependencies:
-      '@southern-syntax/i18n':
-        specifier: workspace:*
-        version: link:../i18n
       '@southern-syntax/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

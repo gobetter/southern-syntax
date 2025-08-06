@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions } from "@southern-syntax/auth/server";
+import { authOptions } from "@southern-syntax/auth";
 import DashboardContent from "@/components/admin/DashboardContent";
 import UserInfo from "@/components/user/UserInfo";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

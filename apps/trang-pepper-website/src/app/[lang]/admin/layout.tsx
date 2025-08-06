@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions, can } from "@southern-syntax/auth/server";
+import { authOptions, can } from "@southern-syntax/auth";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,

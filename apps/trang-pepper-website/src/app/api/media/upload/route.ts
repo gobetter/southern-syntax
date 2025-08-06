@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { mediaService } from "@/services/media";
-import { authOptions, can } from "@southern-syntax/auth/server";
+import { authOptions, can } from "@southern-syntax/auth";
 import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
 import {
   PERMISSION_ACTIONS,

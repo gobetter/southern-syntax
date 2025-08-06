@@ -13,7 +13,7 @@ import {
   Shield,
 } from "lucide-react";
 
-import { can } from "@southern-syntax/auth/server";
+import { can } from "@southern-syntax/auth";
 import { cn } from "@southern-syntax/ui";
 import {
   PERMISSION_ACTIONS,

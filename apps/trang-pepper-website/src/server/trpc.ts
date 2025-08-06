@@ -1,7 +1,7 @@
 // src/server/trpc.ts
 import { initTRPC, TRPCError } from "@trpc/server";
 import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
-import { authOptions, can } from "@southern-syntax/auth/server"; // authOptions และ can function
+import { authOptions, can } from "@southern-syntax/auth"; // authOptions และ can function
 
 import prisma from "@southern-syntax/db"; // Prisma Client instance
 import {
