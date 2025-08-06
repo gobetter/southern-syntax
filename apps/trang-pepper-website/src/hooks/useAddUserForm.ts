@@ -59,7 +59,8 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
     }
   }, [touchedFields.confirmPassword, trigger]);
 
-  const createUserMutation = trpc.user.create.useMutation({
+  // const createUserMutation = trpc.user.create.useMutation({
+  const createUserMutation = (trpc.user.create as any).useMutation({
     onSuccess: () => {
       toast.success(t_toasts("create_success"));
       utils.user.getAll.invalidate();
@@ -67,7 +68,8 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
       reset(); // เคลียร์ฟอร์ม
     },
     // Callback
-    onError: (error) => {
+    // onError: (error) => {
+    onError: (error: any) => {
       if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
         toast.error(t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE"));
       } else if (error.message === "EMAIL_ALREADY_EXISTS") {

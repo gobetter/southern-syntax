@@ -76,9 +76,11 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
     }
   }, [touchedFields.confirmPassword, trigger]);
 
-  const updateUserMutation = trpc.user.update.useMutation({
+  // const updateUserMutation = trpc.user.update.useMutation({
+  const updateUserMutation = (trpc.user.update as any).useMutation({
     // onSuccess จะได้รับ `updatedUser` ที่ server ส่งกลับมา
-    onSuccess: async (updatedUser) => {
+    // onSuccess: async (updatedUser) => {
+    onSuccess: async (updatedUser: any) => {
       toast.success(t_toasts("update_success"));
       utils.user.getAll.invalidate();
 
@@ -94,16 +96,24 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
       //   });
       // }
 
+      // if (currentSession?.user?.id === updatedUser.id) {
+      //   await updateSession({
+      //     ...currentSession,
+      //     user: { ...currentSession.user, name: updatedUser.name },
+      //   });
+      // }
+
       if (currentSession?.user?.id === updatedUser.id) {
         await updateSession({
-          ...currentSession,
-          user: { ...currentSession.user, name: updatedUser.name },
+          ...currentSession!,
+          user: { ...currentSession!.user, name: updatedUser.name },
         });
       }
 
       onSuccess();
     },
-    onError: (error) => {
+    // onError: (error) => {
+    onError: (error: any) => {
       // toast.error(t_toasts('update_error', { error: error.message }));
       if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
         toast.error(t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE"));

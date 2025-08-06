@@ -16,13 +16,15 @@ export function useUpdateUser({ onSuccess }: UseUpdateUserProps = {}) {
   const utils = trpc.useUtils();
   const toast = useToast();
 
-  const updateUserMutation = trpc.user.update.useMutation({
+  // const updateUserMutation = trpc.user.update.useMutation({
+  const updateUserMutation = (trpc.user.update as any).useMutation({
     onSuccess: () => {
       toast.success(t_toasts("update_success"));
       utils.user.getAll.invalidate();
       onSuccess?.();
     },
-    onError: (error) => {
+    // onError: (error) => {
+    onError: (error: any) => {
       // ตรวจสอบ error message ที่เรากำหนดเองจาก service
       if (error.message === "CANNOT_DEACTIVATE_SELF") {
         toast.error(t_errors("CANNOT_DEACTIVATE_SELF"));

@@ -1,4 +1,3 @@
-// src/components/admin/users/UserManagementClient.tsx
 "use client";
 
 import { useState } from "react";
@@ -133,7 +132,7 @@ export default function UserManagementClient() {
   if (isError) {
     return (
       <ErrorDisplay
-        message={error?.message ?? t_common("errors.unknown_error")}
+        message={(error as any)?.message ?? t_common("errors.unknown_error")}
       />
     );
   }

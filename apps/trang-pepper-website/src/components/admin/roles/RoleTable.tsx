@@ -13,14 +13,19 @@ import {
   TableHeader,
   TableRow,
 } from "@southern-syntax/ui";
-import type { inferRouterOutputs } from "@trpc/server";
-import type { AppRouter } from "@/server/routers/_app";
+// import type { inferRouterOutputs } from "@trpc/server";
+// import type { AppRouter } from "@/server/routers/_app";
 import { ROLE_NAMES } from "@southern-syntax/auth";
+
+// Pull the output type directly from the getAll procedure to keep types light
+import type { inferProcedureOutput } from "@trpc/server";
+import type { AppRouter } from "@/server/routers/_app";
 
 import RoleActionsDropdown from "./_components/RoleActionsDropdown";
 
-type RouterOutputs = inferRouterOutputs<AppRouter>;
-type RoleItem = RouterOutputs["role"]["getAll"][number];
+// type RouterOutputs = inferRouterOutputs<AppRouter>;
+// type RoleItem = RouterOutputs["role"]["getAll"][number];
+type RoleItem = inferProcedureOutput<AppRouter["role"]["getAll"]>[number];
 
 interface RoleTableProps {
   roles: RoleItem[];

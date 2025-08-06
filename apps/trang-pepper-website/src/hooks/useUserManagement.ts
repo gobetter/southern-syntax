@@ -21,8 +21,8 @@ import {
   type UserSortableField,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
-import type { TRPCClientErrorLike } from "@trpc/client";
-import type { AppRouter } from "@/server/routers/_app";
+// import type { TRPCClientErrorLike } from "@trpc/client";
+// import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import type { SortOrder } from "@/constants/common";
 
@@ -42,7 +42,8 @@ interface UseUserManagementReturn {
   pageSize: number;
   isLoading: boolean;
   isError: boolean;
-  error: TRPCClientErrorLike<AppRouter> | null;
+  // error: TRPCClientErrorLike<AppRouter> | null;
+  error: unknown;
   status: UserStatusView;
   roleId: string | undefined;
   sortBy: UserSortableField | null;
@@ -167,7 +168,11 @@ export function useUserManagement(): UseUserManagementReturn {
   });
 
   // --- Derived State (Memoized) ---
-  const users = useMemo(() => result?.data ?? [], [result]);
+  // const users = useMemo(() => result?.data ?? [], [result]);
+  const users = useMemo(
+    () => (result?.data as UserItem[] | undefined) ?? [],
+    [result]
+  );
   const totalCount = result?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / pageSize);
 

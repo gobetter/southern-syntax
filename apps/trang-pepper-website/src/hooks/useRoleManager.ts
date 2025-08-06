@@ -7,15 +7,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 import { roleSchema } from "@southern-syntax/auth";
-import type { TRPCClientErrorLike } from "@trpc/client";
+// import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-import type { inferRouterOutputs } from "@trpc/server";
+// import type { inferRouterOutputs } from "@trpc/server";
+import type { inferProcedureOutput } from "@trpc/server";
 import { LocalizedString } from "@southern-syntax/types";
 import { useToast } from "./useToast";
 
-type RouterOutputs = inferRouterOutputs<AppRouter>;
-export type Role = RouterOutputs["role"]["getAll"][number];
-export type Permission = RouterOutputs["permission"]["getAll"][number];
+// type RouterOutputs = inferRouterOutputs<AppRouter>;
+// export type Role = RouterOutputs["role"]["getAll"][number];
+// export type Permission = RouterOutputs["permission"]["getAll"][number];
+// Infer outputs for specific procedures to avoid heavy instantiation
+export type Role = inferProcedureOutput<AppRouter["role"]["getAll"]>[number];
+export type Permission = inferProcedureOutput<
+  AppRouter["permission"]["getAll"]
+>[number];
 
 // 1. ✅ Export schema และ types ที่นี่
 export const roleFormSchema = roleSchema.extend({
@@ -48,7 +54,8 @@ export function useRoleManager(): any {
   const { data: permissions, isLoading: isLoadingPermissions } =
     trpc.permission.getAll.useQuery();
 
-  const handleCreateError = (error: TRPCClientErrorLike<AppRouter>) => {
+  // const handleCreateError = (error: TRPCClientErrorLike<AppRouter>) => {
+  const handleCreateError = (error: any) => {
     if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
     } else {
@@ -56,7 +63,8 @@ export function useRoleManager(): any {
     }
   };
 
-  const handleUpdateError = (error: TRPCClientErrorLike<AppRouter>) => {
+  // const handleUpdateError = (error: TRPCClientErrorLike<AppRouter>) => {
+  const handleUpdateError = (error: any) => {
     if (error.message === "CANNOT_EDIT_SYSTEM_ROLE") {
       toast.error(t_error_codes("CANNOT_EDIT_SYSTEM_ROLE"));
     } else if (error.message === "ROLE_KEY_EXISTS") {
@@ -84,12 +92,15 @@ export function useRoleManager(): any {
     onError: handleUpdateError,
   });
 
-  const deleteMutation = trpc.role.delete.useMutation({
+  // const deleteMutation = trpc.role.delete.useMutation({
+  // Casting to any here avoids TypeScript's deep instantiation issue
+  const deleteMutation = (trpc.role.delete as any).useMutation({
     onSuccess: () => {
       toast.success(t_toasts("delete_success"));
       utils.role.getAll.invalidate();
     },
-    onError: (error) => {
+    // onError: (error) => {
+    onError: (error: any) => {
       if (error.message === "CANNOT_DELETE_SYSTEM_ROLE") {
         toast.error(t_error_codes("CANNOT_DELETE_SYSTEM_ROLE"));
       } else {
