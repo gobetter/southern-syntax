@@ -3,7 +3,7 @@ import { type Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 import prisma from "@southern-syntax/db";
-import { hashPassword } from "@southern-syntax/auth";
+import { hashPassword } from "@southern-syntax/auth/server";
 import {
   getUserPermissions,
   invalidateUserPermissions,

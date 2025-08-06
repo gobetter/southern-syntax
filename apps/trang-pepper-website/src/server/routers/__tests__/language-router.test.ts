@@ -2,10 +2,16 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, Language } from "@prisma/client";
 import type { Session } from "next-auth";
 
-vi.mock("@southern-syntax/auth", () => ({
+vi.mock("@southern-syntax/auth/server", () => ({
   authOptions: {},
-  can: vi.fn().mockResolvedValue(true),
 }));
+vi.mock("@southern-syntax/auth", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...(actual as object),
+    can: vi.fn().mockReturnValue(true),
+  };
+});
 vi.mock("@southern-syntax/db", () => ({ default: {} }));
 
 import { languageRouter } from "../content/language";

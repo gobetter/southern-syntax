@@ -2,6 +2,7 @@ export * from "./forms";
 export * from "./media-taxonomy";
 export * from "./media";
 export * from "./user";
+export type { LocalizedString } from "./i18n";
 
 export interface FormErrors {
   error_field_is_required: string;

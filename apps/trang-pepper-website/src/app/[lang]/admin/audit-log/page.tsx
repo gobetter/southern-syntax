@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions, can } from "@southern-syntax/auth";
+import { authOptions } from "@southern-syntax/auth/server";
 import {
+  can,
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
   ROLE_NAMES,

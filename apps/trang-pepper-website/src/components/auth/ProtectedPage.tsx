@@ -2,8 +2,9 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions, can } from "@southern-syntax/auth";
+import { authOptions } from "@southern-syntax/auth/server";
 import {
+  can,
   type PermissionActionType,
   type PermissionResourceType,
 } from "@southern-syntax/auth";

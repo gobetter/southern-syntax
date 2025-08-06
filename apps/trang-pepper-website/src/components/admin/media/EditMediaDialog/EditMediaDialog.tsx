@@ -1,4 +1,3 @@
-// src/components/admin/media/EditMediaDialog.tsx
 "use client";
 
 import Image from "next/image";
@@ -50,8 +49,8 @@ export default function EditMediaDialog({
   if (!media) return null;
 
   const thumbnailUrl =
-    (media.variants as Record<string, string>)?.["thumbnail"] ||
-    media.originalUrl;
+    // (media.variants as Record<string, string>)?.["thumbnail"] || media.originalUrl;
+    (media as any)?.variants?.["thumbnail"] || media.originalUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

@@ -1,10 +1,9 @@
-// src/app/[lang]/dashboard/page.tsx
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions } from "@southern-syntax/auth";
+import { authOptions } from "@southern-syntax/auth/server";
 import DashboardContent from "@/components/admin/DashboardContent";
 import UserInfo from "@/components/user/UserInfo";
 import ErrorBoundary from "@/components/common/ErrorBoundary";

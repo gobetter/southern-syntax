@@ -1,4 +1,4 @@
-import "server-only";
+// import "server-only";
 
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";

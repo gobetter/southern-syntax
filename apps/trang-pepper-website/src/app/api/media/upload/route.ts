@@ -1,25 +1,18 @@
-// src/app/api/media/upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { mediaService } from "@/services/media";
-import { authOptions, can } from "@southern-syntax/auth";
-import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
+import { authOptions } from "@southern-syntax/auth/server";
 import {
+  can,
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
+import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
 
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    // if (
-    //   !session ||
-    //   !session.user ||
-    //   !(await can(session, PERMISSION_RESOURCES.MEDIA, PERMISSION_ACTIONS.CREATE))
-    // ) {
-    //   return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
-    // }
 
     if (
       !session?.user?.id ||

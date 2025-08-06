@@ -1,10 +1,10 @@
-// src/app/api/admin/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import prisma from "@southern-syntax/db";
-import { authOptions, can, hashPassword } from "@southern-syntax/auth";
+import { authOptions, hashPassword } from "@southern-syntax/auth/server";
 import {
+  can,
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
