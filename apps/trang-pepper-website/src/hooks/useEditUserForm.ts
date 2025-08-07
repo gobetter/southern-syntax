@@ -7,21 +7,19 @@ import { useTranslations, useLocale } from "next-intl";
 import { useSession } from "next-auth/react";
 import type { Session } from "next-auth";
 
-import { trpc } from "@/lib/trpc-client";
-import { useToast } from "@southern-syntax/hooks";
 import {
   userUpdateSchema,
   type UserUpdateInput,
   type UserUpdateOutput,
 } from "@southern-syntax/schemas/user";
-// import { UserItem } from "@/types/trpc";
+import { useToast } from "@southern-syntax/hooks";
+import { mapToSelectOptions } from "@southern-syntax/utils";
+import type { LocalizedString } from "@southern-syntax/types";
+
 import type { UserItem } from "@/types/user";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-// import { mapRoleOptions } from '@/lib/role-utils';
-import { mapToSelectOptions } from "@southern-syntax/utils";
-// import type { RoleItem } from '@/types/trpc';
-import type { LocalizedString } from "@southern-syntax/types";
+import { trpc } from "@/lib/trpc-client";
 
 // Helper function: แปลงข้อมูล User ที่ได้จาก DB ให้อยู่ในรูปแบบที่ฟอร์มต้องการ
 function userToFormValues(user: UserItem): UserUpdateInput {
@@ -79,61 +77,10 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
     }
   }, [touchedFields.confirmPassword, trigger]);
 
-  // const updateUserMutation = trpc.user.update.useMutation({
-  // const updateUserMutation = (trpc.user.update as any).useMutation({
-  // const updateUserMutation = (trpc.user.update.useMutation as any)({
-  //   // onSuccess จะได้รับ `updatedUser` ที่ server ส่งกลับมา
-  //   // onSuccess: async (updatedUser) => {
-  //   onSuccess: async (updatedUser: any) => {
-  //     toast.success(t_toasts("update_success"));
-  //     utils.user.getAll.invalidate();
-
-  //     // ตรวจสอบว่าผู้ใช้ที่กำลังแก้ไขคือคนเดียวกับที่ล็อกอินอยู่หรือไม่
-  //     // if (currentSession?.user?.id === updatedUser.id) {
-  //     //   // ถ้าใช่, ให้ทำการอัปเดต session โดยส่งข้อมูลใหม่เข้าไปโดยตรง
-  //     //   await updateSession({
-  //     //     ...currentSession!,
-  //     //     user: {
-  //     //       ...currentSession!.user,
-  //     //       name: updatedUser.name, // อัปเดตแค่ชื่อ (หรือฟิลด์อื่นๆ ที่ต้องการ)
-  //     //     },
-  //     //   });
-  //     // }
-
-  //     // if (currentSession?.user?.id === updatedUser.id) {
-  //     //   await updateSession({
-  //     //     ...currentSession,
-  //     //     user: { ...currentSession.user, name: updatedUser.name },
-  //     //   });
-  //     // }
-
-  //     if (currentSession?.user?.id === updatedUser.id) {
-  //       await updateSession({
-  //         ...currentSession!,
-  //         user: { ...currentSession!.user, name: updatedUser.name },
-  //       });
-  //     }
-
-  //     onSuccess();
-  //   },
-  //   // onError: (error) => {
-  //   onError: (error: any) => {
-  //     // toast.error(t_toasts('update_error', { error: error.message }));
-  //     if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
-  //       toast.error(t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE"));
-  //     } else if (error.message === "CANNOT_CHANGE_OWN_ROLE") {
-  //       toast.error(t_error_codes("CANNOT_CHANGE_OWN_ROLE"));
-  //     } else {
-  //       toast.error(t_toasts("update_error", { error: error.message }));
-  //     }
-  //   },
-  // });
-  // const updateUserMutation = trpc.user.update.useMutation() as any;
   const updateUserMutation = trpc.user.update.useMutation();
 
   const onSubmit: SubmitHandler<UserUpdateOutput> = (data) => {
     if (!user) return;
-    // updateUserMutation.mutate({ id: user.id, data });
     updateUserMutation.mutate(
       { id: user.id, data },
       {
@@ -149,27 +96,10 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
                 name: (updatedUser as unknown as UserItem).name,
               },
             } as Session);
-
-            // const sessionData = currentSession as Record<string, unknown>;
-            // const sessionData = currentSession as unknown as Record<
-            //   string,
-            //   unknown
-            // >;
-
-            //   ...currentSession!,
-            //   user: { ...currentSession!.user!, name: updatedUser.name },
-            // });
-            //   ...sessionData,
-            //   user: {
-            //     ...(sessionData.user as Record<string, unknown>),
-            //     name: updatedUser.name,
-            //   },
-            // } as typeof currentSession);
           }
 
           onSuccess();
         },
-        // onError: (error: any) => {
         onError: (error: TRPCClientErrorLike<AppRouter>) => {
           if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
             toast.error(
@@ -184,11 +114,6 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
       }
     );
   };
-
-  // const roleOptions = useMemo(
-  //   () => mapRoleOptions(roles as RoleItem[] | undefined, locale),
-  //   [roles, locale],
-  // );
 
   const roleOptions = useMemo(
     () =>

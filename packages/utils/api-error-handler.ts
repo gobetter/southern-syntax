@@ -1,7 +1,5 @@
-// src/lib/api-error-handler.ts
-// import { NextResponse } from 'next/server';
 import { ZodError } from "zod";
-// Import Error ตัวแม่เข้ามา
+
 import { TranslatedUploadError } from "./errors";
 
 // Helper function to create JSON responses without relying on Next.js

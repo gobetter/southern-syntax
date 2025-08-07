@@ -1,8 +1,8 @@
-// src/components/common/ErrorBoundary.tsx
-'use client';
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+"use client";
 
-import { ErrorFallbackUI } from './ErrorFallbackUI';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+
+import { ErrorFallbackUI } from "./ErrorFallbackUI";
 
 interface ErrorBoundaryProps {
   fallback?: ReactNode;
@@ -13,7 +13,10 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export default class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
@@ -24,7 +27,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
   }
 
   render() {

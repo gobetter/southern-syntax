@@ -1,8 +1,9 @@
-import { router, authorizedProcedure } from "@/server/trpc";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
+
+import { router, authorizedProcedure } from "@/server/trpc";
 import { permissionService } from "@/services/permission";
 
 export const permissionRouter = router({

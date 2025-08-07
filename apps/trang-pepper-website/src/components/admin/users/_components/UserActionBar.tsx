@@ -5,10 +5,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { Trash2, X, CheckCircle2, MoreVertical } from "lucide-react";
 
 import { trpc } from "@/lib/trpc-client";
-import { mapToSelectOptions } from "@southern-syntax/utils";
 
-import { Button } from "@southern-syntax/ui";
+import { mapToSelectOptions } from "@southern-syntax/utils";
+import { LocalizedString } from "@southern-syntax/types";
 import {
+  Button,
   Select,
   SelectContent,
   SelectItem,
@@ -19,7 +20,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@southern-syntax/ui";
-import { LocalizedString } from "@southern-syntax/types";
 
 interface UserActionBarProps {
   selectedCount: number;
@@ -48,7 +48,6 @@ export default function UserActionBar({
 }: UserActionBarProps) {
   const t = useTranslations("admin_users.action_bar");
   const locale = useLocale();
-  // const { data: roles } = trpc.role.getAll.useQuery(); // ดึงข้อมูล Role มาใช้
   const { data: roles } = trpc.role.getForSelection.useQuery();
 
   const roleOptions = useMemo(

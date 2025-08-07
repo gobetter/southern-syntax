@@ -6,13 +6,13 @@ import { useTranslations, useLocale } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { trpc } from "@/lib/trpc-client";
+
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import {
   userCreateSchema,
   type UserCreateInput,
   type UserCreateOutput,
 } from "@southern-syntax/schemas/user";
-
 import { useToast } from "@southern-syntax/hooks";
 import { LocalizedString } from "@southern-syntax/types";
 
@@ -59,32 +59,10 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
     }
   }, [touchedFields.confirmPassword, trigger]);
 
-  // const createUserMutation = trpc.user.create.useMutation({
-  // const createUserMutation = (trpc.user.create as any).useMutation({
-  //   onSuccess: () => {
-  //     toast.success(t_toasts("create_success"));
-  //     utils.user.getAll.invalidate();
-  //     onOpenChange(false); // ปิด Dialog
-  //     reset(); // เคลียร์ฟอร์ม
-  //   },
-  //   // Callback
-  //   // onError: (error) => {
-  //   onError: (error: any) => {
-  //     if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
-  //       toast.error(t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE"));
-  //     } else if (error.message === "EMAIL_ALREADY_EXISTS") {
-  //       toast.error(t_error_codes("EMAIL_ALREADY_EXISTS"));
-  //     } else {
-  //       toast.error(t_toasts("create_error", { error: error.message }));
-  //     }
-  //   },
-  //   // });
-  // }) as any;
   const createUserMutation = trpc.user.create.useMutation();
 
   // onSubmit จะรับข้อมูลที่ผ่านการ Validate แล้วโดย zodResolver
   const onSubmit: SubmitHandler<UserCreateOutput> = (data) => {
-    // createUserMutation.mutate(data);
     createUserMutation.mutate(data, {
       onSuccess: () => {
         toast.success(t_toasts("create_success"));
@@ -124,7 +102,7 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
     errors,
     reset,
     onSubmit,
-    roleOptions, // ส่ง roleOptions ที่แปลงแล้วออกไป
+    roleOptions,
     isLoading: createUserMutation.isPending || isLoadingRoles,
   };
 }

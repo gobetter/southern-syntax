@@ -4,28 +4,29 @@ import { useState } from "react";
 import { PlusCircle, Search, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-// import { UserItem } from "@/types/trpc";
 import type { UserItem } from "@/types/user";
+
 import { getLocalizedString } from "@southern-syntax/i18n";
 
 // Hooks
 import { useUserManagement } from "@/hooks/useUserManagement";
 
 // UI Components
+import { Button, Input } from "@southern-syntax/ui";
+
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import Spinner from "@/components/common/Spinner";
 import EmptyState from "@/components/common/EmptyState";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
 import { DataTablePagination } from "@/components/common/DataTablePagination";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
-import { Button, Input } from "@southern-syntax/ui";
 
 import UserTable from "./UserTable";
 import AddUserDialog from "./AddUserDialog";
 import EditUserDialog from "./EditUserDialog";
-import UserActionBar from "./_components/UserActionBar";
 import UserStatusTabs from "./UserStatusTabs";
 import UserRoleFilter from "./UserRoleFilter";
+import UserActionBar from "./_components/UserActionBar";
 
 export default function UserManagementClient() {
   // --- Translation ----
@@ -133,8 +134,6 @@ export default function UserManagementClient() {
   if (isError) {
     return (
       <ErrorDisplay
-        // message={(error as any)?.message ?? t_common("errors.unknown_error")}
-        // message={error?.message ?? t_common("errors.unknown_error")}
         message={
           error instanceof Error
             ? error.message

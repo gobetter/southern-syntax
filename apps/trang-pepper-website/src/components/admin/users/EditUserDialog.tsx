@@ -1,13 +1,8 @@
-// src/components/admin/users/EditUserDialog.tsx
 "use client";
 
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Controller, useWatch } from "react-hook-form";
-
-// import { UserItem } from "@/types/trpc";
-import type { UserItem } from "@/types/user";
-import { useEditUserForm } from "@/hooks/useEditUserForm";
 
 import {
   Button,
@@ -30,6 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@southern-syntax/ui";
+
+import type { UserItem } from "@/types/user";
+import { useEditUserForm } from "@/hooks/useEditUserForm";
 import Spinner from "@/components/common/Spinner";
 import FormFieldError from "@/components/common/FormFieldError";
 

@@ -1,5 +1,5 @@
-// src/app/api/roles/route.ts
 import { NextResponse } from "next/server";
+
 import prisma from "@southern-syntax/db";
 
 export async function GET() {

@@ -20,7 +20,6 @@ import {
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth/constants";
 
-// ✅ 1. จัดลำดับใหม่: นำ path ที่ยาวกว่า (เจาะจงกว่า) ขึ้นก่อน
 const sidebarNavItems = [
   {
     titleKey: "dashboard",
@@ -70,7 +69,7 @@ export default function AdminSidebar() {
     <aside className="bg-background hidden w-64 flex-col border-r p-4 md:flex">
       <nav className="flex flex-col space-y-2">
         {sidebarNavItems.map((item) => {
-          // ✅ 6. ตรวจสอบสิทธิ์ก่อน Render เมนู
+          // ตรวจสอบสิทธิ์ก่อน Render เมนู
           const hasAccess = can(
             session,
             item.resource,

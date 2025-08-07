@@ -1,4 +1,3 @@
-// apps/trang-pepper-website/src/app/[lang]/admin/audit-log/page.tsx
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";

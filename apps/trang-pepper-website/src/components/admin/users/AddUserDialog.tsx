@@ -1,4 +1,3 @@
-// src/components/admin/users/AddUserDialog.tsx
 "use client";
 
 import { useState } from "react";
@@ -9,11 +8,7 @@ import {
   type FieldErrors,
 } from "react-hook-form";
 
-import { useAddUserForm } from "@/hooks/useAddUserForm";
 import { UserCreateInput } from "@southern-syntax/schemas/user";
-
-import Spinner from "@/components/common/Spinner";
-import FormFieldError from "@/components/common/FormFieldError";
 
 import {
   Button,
@@ -36,6 +31,10 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@southern-syntax/ui";
+
+import Spinner from "@/components/common/Spinner";
+import { useAddUserForm } from "@/hooks/useAddUserForm";
+import FormFieldError from "@/components/common/FormFieldError";
 
 interface AddUserDialogProps {
   isOpen: boolean;

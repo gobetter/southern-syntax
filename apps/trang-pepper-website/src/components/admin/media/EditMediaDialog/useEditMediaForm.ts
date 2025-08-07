@@ -1,19 +1,21 @@
-// src/components/admin/media/EditMediaDialog/useEditMediaForm.ts
 import { useEffect, useMemo } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
+
 import { trpc } from "@/lib/trpc-client";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
+import type { MediaItem } from "@/types/trpc";
+
 import {
   mediaUpdateFormInputSchema,
   type MediaUpdateFormInput,
 } from "@southern-syntax/schemas/media";
-import type { TRPCClientErrorLike } from "@trpc/client";
-import type { AppRouter } from "@/server/routers/_app";
-import { useToast } from "@southern-syntax/hooks";
-import type { MediaItem } from "@/types/trpc";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapToSelectOptions } from "@southern-syntax/utils";
+import { useToast } from "@southern-syntax/hooks";
+
 import { mediaToFormValues } from "./mediaToFormValues";
 
 interface UseEditMediaFormProps {
@@ -97,52 +99,6 @@ export function useEditMediaForm({
       ),
     [tags, locale]
   );
-
-  /*
-  const categoryOptions = useMemo(
-    () =>
-      mapToSelectOptions(
-        categories as { name: LocalizedString; id: string; slug: string }[] | undefined,
-        locale,
-        (c) => c.name,
-        (c) => c.slug,
-      ),
-    [categories, locale],
-  );
-
-  const tagOptions = useMemo(
-    () =>
-      mapToSelectOptions(
-        tags as { name: LocalizedString; id: string; slug: string }[] | undefined,
-        locale,
-        (t) => t.name,
-        (t) => t.slug,
-      ),
-    [tags, locale],
-  );
-  */
-
-  /*
-  const categoryOptions = useMemo(() => {
-    return (
-      (categories as { name: LocalizedString; id: string; slug: string }[] | undefined)?.map(
-        (cat) => ({
-          id: cat.id,
-          label: getLocalizedString(cat.name, locale) || cat.slug,
-        }),
-      ) ?? []
-    );
-  }, [categories, locale]);
-
-  const tagOptions = useMemo(() => {
-    return (
-      (tags as { name: LocalizedString; id: string; slug: string }[] | undefined)?.map((tag) => ({
-        id: tag.id,
-        label: getLocalizedString(tag.name, locale) || tag.slug,
-      })) ?? []
-    );
-  }, [tags, locale]);
-  */
 
   return {
     register,

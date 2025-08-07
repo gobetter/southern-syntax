@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 async function exportData() {
-  console.log('Fetching data from the database...');
+  console.log("Fetching data from the database...");
 
   // 1. ดึงข้อมูล MediaCategory ทั้งหมด
   const categories = await prisma.mediaCategory.findMany({
@@ -22,17 +23,20 @@ async function exportData() {
     },
   });
 
-  console.log('\n// --- Copy the code below into your prisma/seed.ts file ---');
+  console.log("\n// --- Copy the code below into your prisma/seed.ts file ---");
 
   // 3. พิมพ์โค้ดสำหรับ Categories ออกมา
-  console.log('\n// --- Media Categories ---');
-  console.log('const initialCategories =', JSON.stringify(categories, null, 2) + ';');
+  console.log("\n// --- Media Categories ---");
+  console.log(
+    "const initialCategories =",
+    JSON.stringify(categories, null, 2) + ";"
+  );
 
   // 4. พิมพ์โค้ดสำหรับ Tags ออกมา
-  console.log('\n// --- Media Tags ---');
-  console.log('const initialTags =', JSON.stringify(tags, null, 2) + ';');
+  console.log("\n// --- Media Tags ---");
+  console.log("const initialTags =", JSON.stringify(tags, null, 2) + ";");
 
-  console.log('\n// ----------------------------------------------------');
+  console.log("\n// ----------------------------------------------------");
 }
 
 exportData()

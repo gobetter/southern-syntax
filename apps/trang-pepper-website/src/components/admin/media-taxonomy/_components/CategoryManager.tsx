@@ -1,15 +1,12 @@
-// src/app/[lang]/admin/media-taxonomy/_components/CategoryManager.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
 import { type UseFormReturn } from "react-hook-form";
 import { Edit, Trash2 } from "lucide-react";
 
-import { useCategoryManager } from "@/hooks/useCategoryManager";
 import { getLocalizedString } from "@southern-syntax/i18n";
 import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
-import Spinner from "@/components/common/Spinner";
 import { Button } from "@southern-syntax/ui";
 import {
   Table,
@@ -27,6 +24,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@southern-syntax/ui";
+
+import { useCategoryManager } from "@/hooks/useCategoryManager";
+import Spinner from "@/components/common/Spinner";
 
 import { CategoryFormDialog } from "./CategoryFormDialog";
 

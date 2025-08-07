@@ -1,9 +1,12 @@
-// src/app/[lang]/auth/layout.tsx
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     // *** ห้าม Render <html> หรือ <body> ที่นี่ ***
     <div className="bg-background flex min-h-screen items-center justify-center">

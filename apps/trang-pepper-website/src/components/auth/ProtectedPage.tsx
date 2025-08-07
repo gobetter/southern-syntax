@@ -1,4 +1,3 @@
-// src/components/auth/ProtectedPage.tsx
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

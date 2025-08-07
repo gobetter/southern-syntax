@@ -1,11 +1,10 @@
-// src/components/admin/media/MediaGrid/MediaGridContent.tsx
-'use client';
+"use client";
 
-import { useLocale } from 'next-intl';
+import { useLocale } from "next-intl";
 
-import { MediaItem } from '@/types/trpc';
+import { MediaItem } from "@/types/trpc";
 
-import MediaCard from '../../MediaCard';
+import MediaCard from "../../MediaCard";
 
 interface MediaGridContentProps {
   mediaItems: MediaItem[];

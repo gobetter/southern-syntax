@@ -1,4 +1,3 @@
-// src/components/auth/AccessDenied.tsx
 "use client";
 
 import { useRouter } from "next/navigation";

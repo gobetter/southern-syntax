@@ -1,4 +1,3 @@
-// src/server/trpc.ts
 import { initTRPC, TRPCError } from "@trpc/server";
 import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
 import { authOptions } from "@southern-syntax/auth/server"; // server-side auth options

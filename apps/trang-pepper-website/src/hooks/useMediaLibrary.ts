@@ -10,18 +10,17 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { MediaItem } from "@/types/trpc";
-import { trpc } from "@/lib/trpc-client";
-// import { useUpdateQuery } from "@/hooks/useUpdateQuery";
-// import { useDebounce } from "@/hooks/useDebounce";
 import { useUpdateQuery, useDebounce } from "@southern-syntax/hooks";
 import { mapIdName } from "@southern-syntax/utils";
+import { MediaCategory, MediaTag } from "@southern-syntax/types";
 import type { LocalizedString } from "@southern-syntax/types";
+import type { AppRouter } from "@/server/routers/_app";
+
+import { MediaItem } from "@/types/trpc";
+import { trpc } from "@/lib/trpc-client";
 import { MediaSortableField, MEDIA_SORT_OPTIONS } from "@/constants/media";
 import type { SortOrder } from "@/constants/common";
 import type { TRPCClientErrorLike } from "@trpc/client";
-import type { AppRouter } from "@/server/routers/_app";
-import { MediaCategory, MediaTag } from "@southern-syntax/types";
 
 interface UseMediaLibraryReturn {
   page: number;

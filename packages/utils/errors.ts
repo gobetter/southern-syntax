@@ -1,4 +1,3 @@
-// src/lib/errors.ts
 // Error Class สำหรับข้อผิดพลาดจากการอัปโหลดที่แปลภาษาได้
 export class TranslatedUploadError extends Error {
   public readonly messageKey: string;
@@ -6,7 +5,7 @@ export class TranslatedUploadError extends Error {
 
   constructor(messageKey: string, context?: Record<string, string | number>) {
     super(messageKey);
-    this.name = 'TranslatedUploadError';
+    this.name = "TranslatedUploadError";
     this.messageKey = messageKey;
     this.context = context;
   }
@@ -18,7 +17,7 @@ export class DuplicateFileError extends TranslatedUploadError {
   constructor(context?: Record<string, string | number>) {
     // เรียก constructor ของแม่ (TranslatedUploadError)
     // โดยส่ง messageKey ที่ตายตัวคือ 'error.duplicate_file' กลับขึ้นไป
-    super('error.duplicate_file', context);
-    this.name = 'DuplicateFileError';
+    super("error.duplicate_file", context);
+    this.name = "DuplicateFileError";
   }
 }

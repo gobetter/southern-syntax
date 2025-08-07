@@ -15,7 +15,6 @@ vi.mock("@southern-syntax/auth", async (importOriginal) => {
 vi.mock("@southern-syntax/db", () => ({ default: {} }));
 
 import { languageRouter } from "../content/language";
-// import { languageService } from "@/services/language";
 import { languageService } from "@southern-syntax/services";
 
 const mockLanguage: Language = {

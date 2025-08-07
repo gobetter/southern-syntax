@@ -1,4 +1,3 @@
-// src/server/routers/content/product.ts
 import { router, publicProcedure, authorizedProcedure } from "@/server/trpc";
 import { productInputSchema, productService } from "@/services/product"; // Import Product Service
 import {

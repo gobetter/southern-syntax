@@ -1,4 +1,3 @@
-// src/server/routers/content/post-tag.ts
 // tRPC Router สำหรับ PostTag Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลแท็กบทความ
 

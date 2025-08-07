@@ -1,14 +1,15 @@
-// src/components/admin/media/MediaGrid/MediaGridWrapper.tsx
 "use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { TRPCClientErrorLike } from "@trpc/client";
+
+import { useToast } from "@southern-syntax/hooks";
 
 import { MediaItem } from "@/types/trpc";
 import { AppRouter } from "@/server/routers/_app";
-import { TRPCClientErrorLike } from "@trpc/client";
-import { useToast } from "@southern-syntax/hooks";
 import { trpc } from "@/lib/trpc-client";
+
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 
 import MediaActionBar from "../MediaActionBar";

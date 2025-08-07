@@ -1,9 +1,12 @@
-import prisma from "@southern-syntax/db";
-import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { auditLogService } from "./auditLog";
+
+import prisma from "@southern-syntax/db";
+import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
+
 import { AUDIT_ACTIONS } from "@/constants/auditActions";
+
+import { auditLogService } from "./auditLog";
 
 async function getAll() {
   return prisma.mediaTag.findMany({

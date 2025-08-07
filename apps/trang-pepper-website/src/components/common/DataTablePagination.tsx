@@ -1,4 +1,3 @@
-// src/components/common/DataTablePagination.tsx
 "use client";
 
 import { useEffect, useMemo } from "react";
@@ -11,7 +10,6 @@ import {
 } from "lucide-react";
 
 import { useUpdateQuery } from "@southern-syntax/hooks";
-
 import {
   Button,
   Pagination,

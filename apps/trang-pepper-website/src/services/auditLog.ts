@@ -1,5 +1,5 @@
-// src/services/auditLog.ts
 import prisma from "@southern-syntax/db";
+
 import type { Prisma } from "@prisma/client";
 
 /**

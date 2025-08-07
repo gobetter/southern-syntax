@@ -1,10 +1,12 @@
-// src/components/admin/media/BulkEditDialog/useBulkEdit.ts
 import { useState, useEffect, useMemo } from "react";
 import { useLocale } from "next-intl";
-import { trpc } from "@/lib/trpc-client";
+
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
+
 import type { MediaItem } from "@/types/trpc";
+import { trpc } from "@/lib/trpc-client";
+
 import {
   getInitialCheckboxStates,
   toggleCheckboxState,

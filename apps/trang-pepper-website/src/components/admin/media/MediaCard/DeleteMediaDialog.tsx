@@ -1,4 +1,3 @@
-// src/components/admin/media/MediaCard/DeleteMediaDialog.tsx
 "use client";
 
 import { useTranslations } from "next-intl";

@@ -1,4 +1,3 @@
-// src/components/admin/users/UserTable.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -6,10 +5,7 @@ import { useLocale } from "next-intl";
 import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-react";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
-// import { UserItem } from "@/types/trpc";
-import type { UserItem } from "@/types/user";
 import type { UserSortableField } from "@southern-syntax/types";
-
 import { Button } from "@southern-syntax/ui";
 import {
   Table,
@@ -20,6 +16,8 @@ import {
   TableRow,
   Checkbox,
 } from "@southern-syntax/ui";
+
+import type { UserItem } from "@/types/user";
 
 import UserActionsDropdown from "./_components/UserActionsDropdown";
 

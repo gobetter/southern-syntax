@@ -1,19 +1,19 @@
-// src/hooks/useTagManager.ts
 "use client";
 
 import { useState, useMemo } from "react";
 import { type SubmitHandler, type UseFormReturn } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { trpc } from "@/lib/trpc-client";
+
 import { useToast } from "@southern-syntax/hooks";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapIdSlugName } from "@southern-syntax/utils";
 import { Tag } from "@southern-syntax/types";
+
+import { trpc } from "@/lib/trpc-client";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 
-// Interface สำหรับ Props ของ Hook
 interface UseTagManagerProps {
   formMethods: UseFormReturn<MediaTagInput>;
 }

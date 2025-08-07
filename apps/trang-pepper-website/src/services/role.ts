@@ -1,13 +1,13 @@
-// src/services/role.ts
-import prisma from "@southern-syntax/db";
 import { type Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
+import prisma from "@southern-syntax/db";
 import type { RoleInput } from "@southern-syntax/auth";
+import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
+
 import { AUDIT_ACTIONS } from "@/constants/auditActions";
 
 import { auditLogService } from "./auditLog";
-import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
 
 async function getAllRoles() {
   return prisma.role.findMany({
@@ -124,9 +124,6 @@ async function updateRole(
     throw new TRPCError({ code: "NOT_FOUND", message: "Role not found" });
   }
 
-  // if (oldData.isSystem) {
-  //   throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_EDIT_SYSTEM_ROLE' });
-  // }
   if (oldData.isSystem && actor?.role?.key !== "SUPERADMIN") {
     throw new TRPCError({
       code: "FORBIDDEN",

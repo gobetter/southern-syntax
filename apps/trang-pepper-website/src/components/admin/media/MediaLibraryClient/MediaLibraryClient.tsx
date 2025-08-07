@@ -1,16 +1,18 @@
-// src/components/admin/media/MediaLibraryClient/MediaLibraryClient.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
 import { Upload } from "lucide-react";
 
+import { Button } from "@southern-syntax/ui";
+
 import { useMediaLibrary } from "@/hooks/useMediaLibrary";
 
 import AdminPageHeader from "@/components/admin/AdminPageHeader";
 import Spinner from "@/components/common/Spinner";
-import { Button } from "@southern-syntax/ui";
 import { DataTablePagination } from "@/components/common/DataTablePagination";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
+
+import SortDropdown from "../../../common/SortDropdown";
 
 import UploadDialog from "../UploadDialog";
 import MediaGrid from "../MediaGrid/";
@@ -18,7 +20,6 @@ import EditMediaDialog from "../EditMediaDialog/";
 import MediaDetailSidebar from "../MediaDetailSidebar";
 import ImagePreviewDialog from "../ImagePreviewDialog";
 
-import SortDropdown from "../../../common/SortDropdown";
 import Filters from "./_components/Filters";
 
 export default function MediaLibraryClient() {

@@ -1,8 +1,8 @@
-// src/components/admin/DashboardContent.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@southern-syntax/ui";
 import { getLocalizedString } from "@southern-syntax/i18n";
@@ -11,7 +11,6 @@ import {
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
 import { can } from "@southern-syntax/auth";
-import { useSession } from "next-auth/react";
 
 const dashboardCards = [
   {
@@ -22,8 +21,8 @@ const dashboardCards = [
   },
   {
     href: "/admin/roles",
-    titleKey: "role_management.title", // เพิ่มคีย์ใหม่
-    descriptionKey: "role_management.description", // เพิ่มคีย์ใหม่
+    titleKey: "role_management.title",
+    descriptionKey: "role_management.description",
     resource: PERMISSION_RESOURCES.ROLE,
   },
   {
@@ -63,7 +62,7 @@ export default function DashboardContent() {
     <div className="space-y-4">
       <p className="text-muted-foreground text-lg">{fullWelcomeMessage}</p>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* ✅ 4. ใช้ .map() และ can() เพื่อสร้าง Card แบบไดนามิก */}
+        {/* ใช้ .map() และ can() เพื่อสร้าง Card แบบไดนามิก */}
         {dashboardCards.map((card) => {
           const hasAccess = can(
             session,

@@ -1,2 +1,1 @@
-// src/components/admin/media/MediaDetailSidebar/index.ts
-export { default } from './MediaDetailSidebar';
+export { default } from "./MediaDetailSidebar";

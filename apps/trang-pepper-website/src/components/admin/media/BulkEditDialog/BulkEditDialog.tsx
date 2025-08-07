@@ -1,11 +1,9 @@
-// src/components/admin/media/BulkEditDialog/BulkEditDialog.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
 
 import type { MediaItem } from "@/types/trpc";
 
-import Spinner from "@/components/common/Spinner";
 import {
   Button,
   Label,
@@ -17,8 +15,10 @@ import {
   DialogTitle,
 } from "@southern-syntax/ui";
 
-import CheckboxGroupWithStates from "./_components/CheckboxGroupWithStates";
+import Spinner from "@/components/common/Spinner";
+
 import { useBulkEdit } from "./useBulkEdit";
+import CheckboxGroupWithStates from "./_components/CheckboxGroupWithStates";
 
 interface Props {
   mediaIds: string[];

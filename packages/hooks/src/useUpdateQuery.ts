@@ -1,8 +1,7 @@
-// src/hooks/useUpdateQuery.ts
-'use client';
+"use client";
 
-import { useCallback } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function useUpdateQuery() {
   const pathname = usePathname();
@@ -14,7 +13,7 @@ export function useUpdateQuery() {
       const query = new URLSearchParams(searchParams.toString());
 
       for (const [key, value] of Object.entries(params)) {
-        if (value === null || value === '') {
+        if (value === null || value === "") {
           query.delete(key);
         } else {
           query.set(key, String(value));
@@ -23,6 +22,6 @@ export function useUpdateQuery() {
 
       router.push(`${pathname}?${query.toString()}`);
     },
-    [pathname, router, searchParams],
+    [pathname, router, searchParams]
   );
 }

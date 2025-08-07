@@ -1,4 +1,3 @@
-// src/app/[lang]/admin/media-taxonomy/page.tsx
 import { Suspense } from "react";
 
 import { PERMISSION_RESOURCES } from "@southern-syntax/auth";

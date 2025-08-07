@@ -1,4 +1,3 @@
-// src/components/user/UserInfo.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";

@@ -1,11 +1,8 @@
-// src/components/admin/media/MediaLibraryClient/Filters.tsx
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 
-import type { MediaCategory, MediaTag } from "@southern-syntax/types";
-import { getLocalizedString } from "@southern-syntax/i18n";
 import {
   Input,
   Select,
@@ -14,6 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@southern-syntax/ui";
+import type { MediaCategory, MediaTag } from "@southern-syntax/types";
+import { getLocalizedString } from "@southern-syntax/i18n";
 
 export interface FiltersProps {
   search: {

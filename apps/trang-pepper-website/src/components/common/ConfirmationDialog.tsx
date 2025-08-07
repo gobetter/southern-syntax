@@ -1,4 +1,3 @@
-// src/components/common/ConfirmationDialog.tsx
 "use client";
 
 import { useTranslations } from "next-intl";

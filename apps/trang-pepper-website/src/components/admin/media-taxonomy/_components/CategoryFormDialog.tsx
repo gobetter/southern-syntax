@@ -1,11 +1,9 @@
-// src/app/[lang]/admin/media-taxonomy/_components/CategoryFormDialog.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
 import { useForm, type SubmitHandler, FormProvider } from "react-hook-form";
-import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 
-import FormFieldError from "@/components/common/FormFieldError";
+import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 import {
   Button,
   Input,
@@ -17,6 +15,8 @@ import {
   DialogFooter,
   DialogClose,
 } from "@southern-syntax/ui";
+
+import FormFieldError from "@/components/common/FormFieldError";
 
 interface CategoryFormDialogProps {
   isOpen: boolean;

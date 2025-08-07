@@ -1,25 +1,23 @@
-// src/components/admin/audit-log/AuditLogClient.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { trpc } from '@/lib/trpc-client';
-import { useSearchParams } from 'next/navigation';
+import { useState } from "react";
+import { trpc } from "@/lib/trpc-client";
+import { useSearchParams } from "next/navigation";
 
-import Spinner from '@/components/common/Spinner';
-import ErrorDisplay from '@/components/common/ErrorDisplay';
-import { DataTablePagination } from '@/components/common/DataTablePagination';
+import type { AuditLogItem } from "@/types/trpc";
 
-import AuditLogTable from './AuditLogTable';
-import AuditLogDetailDialog from './AuditLogDetailDialog';
-// import { AuditLogItem } from './AuditLogTable';
-import type { AuditLogItem } from '@/types/trpc';
+import Spinner from "@/components/common/Spinner";
+import ErrorDisplay from "@/components/common/ErrorDisplay";
+import { DataTablePagination } from "@/components/common/DataTablePagination";
+
+import AuditLogTable from "./AuditLogTable";
+import AuditLogDetailDialog from "./AuditLogDetailDialog";
 
 export default function AuditLogClient() {
   const searchParams = useSearchParams();
 
-  // (ในอนาคต เราจะสร้าง useAuditLog hook เพื่อจัดการ State ที่นี่)
-  const page = Number(searchParams.get('page')) || 1;
-  const pageSize = Number(searchParams.get('pageSize')) || 25;
+  const page = Number(searchParams.get("page")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 25;
 
   const [viewingLog, setViewingLog] = useState<AuditLogItem | null>(null);
 
@@ -45,7 +43,6 @@ export default function AuditLogClient() {
     return <ErrorDisplay message={error.message} />;
   }
 
-  // const logs = result?.data ?? [];
   // Cast the returned data to the simplified interface
   const logs = (result?.data ?? []) as unknown as AuditLogItem[];
   const totalCount = result?.totalCount ?? 0;
@@ -54,7 +51,11 @@ export default function AuditLogClient() {
     <div className="space-y-4">
       <AuditLogTable logs={logs} onViewDetails={setViewingLog} />
 
-      <DataTablePagination page={page} pageSize={pageSize} totalCount={totalCount} />
+      <DataTablePagination
+        page={page}
+        pageSize={pageSize}
+        totalCount={totalCount}
+      />
 
       <AuditLogDetailDialog
         log={viewingLog}

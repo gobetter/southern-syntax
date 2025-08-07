@@ -1,12 +1,11 @@
-// src/app/[lang]/admin/users/page.tsx
 import { Suspense } from "react";
 
 import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
 import UserManagementClient from "@/components/admin/users/UserManagementClient";
+import ProtectedPage from "@/components/auth/ProtectedPage";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 import Spinner from "@/components/common/Spinner";
-import ProtectedPage from "@/components/auth/ProtectedPage";
 
 export default async function UserManagementPage({
   params,

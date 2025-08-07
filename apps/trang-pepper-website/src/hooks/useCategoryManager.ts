@@ -1,4 +1,3 @@
-// src/hooks/useCategoryManager.ts
 "use client";
 
 import { useState, useMemo } from "react";

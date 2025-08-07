@@ -1,4 +1,3 @@
-// src/server/routers/content/product-category.ts
 // tRPC Router สำหรับ ProductCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่สินค้า
 

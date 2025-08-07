@@ -13,8 +13,8 @@ import {
   credentialsSchema,
   type CredentialsInput,
 } from "@southern-syntax/auth";
-
 import { Alert, AlertDescription, Button, Input } from "@southern-syntax/ui";
+
 import FormFieldError from "@/components/common/FormFieldError";
 
 export default function SignInForm() {
@@ -41,7 +41,7 @@ export default function SignInForm() {
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: false, // เราจะจัดการ redirect เอง
+      redirect: false,
     });
 
     if (result?.error) {

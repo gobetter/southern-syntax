@@ -1,12 +1,13 @@
-// src/server/routers/content/media.ts
 import { z } from "zod";
-import { router, authorizedProcedure } from "@/server/trpc";
+
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
-import { mediaService } from "@/services/media";
 import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
+
+import { router, authorizedProcedure } from "@/server/trpc";
+import { mediaService } from "@/services/media";
 import { MEDIA_SORTABLE_FIELDS } from "@/constants/media";
 import { SORT_ORDERS } from "@/constants/common";
 

@@ -1,4 +1,3 @@
-// src/services/media.ts
 import { getEnv } from "@/config/env";
 import type { Prisma } from "@prisma/client";
 
@@ -8,7 +7,6 @@ import {
   type MediaUploadInput,
 } from "@southern-syntax/schemas/media";
 import { LocalizedString } from "@southern-syntax/types";
-
 import prisma from "@southern-syntax/db";
 import {
   extractStoragePaths,
@@ -118,12 +116,12 @@ async function uploadMedia(
   // หรือใช้ sanitizeFilename แล้วแยกส่วน original เก็บไว้ด้วย
   const safeFilename = sanitizeFilename(decodedFilename); // ← จากชื่อไฟล์ต้นฉบับ
 
-  const fileHash = calculateFileHash(buffer); // ✅ คำนวณ hash
+  const fileHash = calculateFileHash(buffer); // คำนวณ hash
 
   // ตรวจสอบว่ามีไฟล์ซ้ำหรือไม่
   const existing = await prisma.media.findUnique({ where: { fileHash } });
   if (existing) {
-    // ✅ โยน Error เหมือนเดิม แต่ตอนนี้เราส่ง context เข้าไปได้ด้วย
+    // โยน Error เหมือนเดิม แต่ตอนนี้เราส่ง context เข้าไปได้ด้วย
     // สมมติว่า `originalFilename` คือชื่อไฟล์จาก input
     throw new DuplicateFileError({ filename });
   }
@@ -390,12 +388,6 @@ async function deleteManyMedia(ids: string[], actorId: string) {
   }
 
   // สั่งลบข้อมูลทั้งหมดจาก Database ในครั้งเดียว
-  // const { count } = await prisma.media.deleteMany({
-  //   where: {
-  //     id: { in: mediaItemsToDelete.map((item) => item.id) },
-  //   },
-  // });
-
   const { count } = await prisma.media.deleteMany({
     where: { id: { in: oldData.map((item) => item.id) } },
   });

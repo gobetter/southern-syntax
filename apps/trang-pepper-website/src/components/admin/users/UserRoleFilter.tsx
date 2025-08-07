@@ -1,4 +1,3 @@
-// src/components/admin/users/UserRoleFilter.tsx
 "use client";
 
 import { useMemo } from "react";
@@ -8,7 +7,6 @@ import { trpc } from "@/lib/trpc-client";
 import { useUpdateQuery } from "@southern-syntax/hooks";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import { LocalizedString } from "@southern-syntax/types";
-
 import {
   Select,
   SelectContent,
@@ -27,7 +25,6 @@ export default function UserRoleFilter({ currentRoleId }: UserRoleFilterProps) {
   const updateQuery = useUpdateQuery();
 
   // ดึงข้อมูล Role ทั้งหมดมาเพื่อสร้างเป็นตัวเลือก
-  // const { data: roles } = trpc.role.getAll.useQuery();
   const { data: roles } = trpc.role.getForSelection.useQuery();
   const roleOptions = useMemo(
     () =>

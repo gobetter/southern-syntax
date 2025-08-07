@@ -1,4 +1,3 @@
-// src/server/routers/content/user.ts
 import { z } from "zod";
 
 import { router, authorizedProcedure } from "@/server/trpc";
@@ -6,7 +5,6 @@ import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
-import { userService } from "@/services/user";
 import {
   userCreateSchema,
   userUpdateSchema,
@@ -15,6 +13,8 @@ import {
   USER_SORTABLE_FIELDS,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
+
+import { userService } from "@/services/user";
 import { SORT_ORDERS } from "@/constants/common";
 
 export const userRouter = router({
@@ -77,36 +77,6 @@ export const userRouter = router({
       }
       return userService.updateUser(input.id, dataToUpdate, actorId);
     }),
-
-  /**
-   * ❌ เลิกใช้ฟังก์ชันนี้ แล้วเปลี่ยนไปใช้การ update สถานะ (Soft Delete) แทน
-   * ลบผู้ใช้
-   */
-  // delete: authorizedProcedure(PERMISSION_RESOURCES.USER, PERMISSION_ACTIONS.DELETE)
-  //   .input(
-  //     z.object({
-  //       id: z.string(),
-  //     }),
-  //   )
-  //   .mutation(async ({ input, ctx }) => {
-  //     const actorId = ctx.session.user.id;
-  //     return userService.deleteUser(input.id, actorId);
-  //   }),
-
-  /**
-   * ❌ เลิกใช้ฟังก์ชันนี้ แล้วเปลี่ยนไปใช้การ update สถานะ (Soft Delete) แทน
-   * ลบผู้ใช้หลายคน
-   */
-  // deleteMany: authorizedProcedure(PERMISSION_RESOURCES.USER, PERMISSION_ACTIONS.DELETE)
-  //   .input(
-  //     z.object({
-  //       ids: z.array(z.string()).min(1),
-  //     }),
-  //   )
-  //   .mutation(async ({ input, ctx }) => {
-  //     const actorId = ctx.session.user.id;
-  //     return userService.deleteManyUsers(input.ids, actorId);
-  //   }),
 
   // Bulk Deactivate
   deactivateMany: authorizedProcedure(

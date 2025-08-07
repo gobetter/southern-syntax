@@ -1,4 +1,3 @@
-// src/components/admin/audit-log/AuditLogTable.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
@@ -12,12 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@southern-syntax/ui";
-// import type { inferRouterOutputs } from '@trpc/server';
-// import type { AppRouter } from '@/server/routers/_app';
 
-// // สร้าง Type สำหรับ Log Item โดยเฉพาะ
-// type RouterOutputs = inferRouterOutputs<AppRouter>;
-// export type AuditLogItem = RouterOutputs['auditLog']['getAll']['data'][number];
 import type { AuditLogItem } from "@/types/trpc";
 
 interface AuditLogTableProps {

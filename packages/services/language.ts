@@ -44,10 +44,6 @@ async function updateLanguage(id: string, data: Partial<LanguageInput>) {
 }
 
 async function deleteLanguage(id: string) {
-  // ใน Application จริง จะมีการตรวจสอบสิทธิ์ RBAC ที่นี่
-  // if (!await can(ctx.session, PERMISSION_RESOURCES.LANGUAGE, PERMISSION_ACTIONS.DELETE)) {
-  //   throw new Error('FORBIDDEN');
-  // }
   const language = await prisma.language.findUnique({ where: { id } });
   if (!language) throw new Error("Language not found");
   if (language.isDefault) throw new Error("Cannot delete default language.");

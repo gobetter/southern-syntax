@@ -1,13 +1,14 @@
-// src/server/routers/content/auditLog.ts
 import { z } from "zod";
-import { router, authorizedProcedure } from "@/server/trpc";
+
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
   ROLE_NAMES,
 } from "@southern-syntax/auth";
+
 import { auditLogService } from "@/services/auditLog";
 import { TRPCError } from "@trpc/server";
+import { router, authorizedProcedure } from "@/server/trpc";
 
 export const auditLogRouter = router({
   getAll: authorizedProcedure(

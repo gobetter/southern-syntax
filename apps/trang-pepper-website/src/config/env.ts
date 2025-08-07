@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string().url(),
@@ -8,6 +8,4 @@ const envSchema = z.object({
   SUPABASE_BUCKET_NAME: z.string().min(1),
 });
 
-// export const env = envSchema.parse(process.env);
-// export type Env = z.infer<typeof envSchema>;
 export const getEnv = () => envSchema.parse(process.env);

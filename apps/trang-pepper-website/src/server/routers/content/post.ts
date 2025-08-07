@@ -1,4 +1,3 @@
-// src/server/routers/content/post.ts
 // tRPC Router สำหรับ Post Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลบทความ/บล็อก
 

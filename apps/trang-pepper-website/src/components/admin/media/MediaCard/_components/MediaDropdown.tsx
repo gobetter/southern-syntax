@@ -1,4 +1,3 @@
-// src/components/admin/media/MediaCard/MediaDropdown.tsx
 "use client";
 
 import { Edit, MoreVertical, Trash2 } from "lucide-react";

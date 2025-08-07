@@ -1,4 +1,3 @@
-// src/components/common/FileUploadDialog.tsx
 "use client";
 
 import {
@@ -90,13 +89,6 @@ export default function FileUploadDialog({
     if (selectedFiles.length === 0) return;
     await onUpload(selectedFiles);
   };
-
-  // const handleClose = () => {
-  //   setSelectedFiles([]);
-  //   clearErrors(); // Use the provided function
-  //   if (fileInputRef.current) fileInputRef.current.value = '';
-  //   onOpenChange(false);
-  // };
 
   const handleClose = () => {
     onOpenChange(false);

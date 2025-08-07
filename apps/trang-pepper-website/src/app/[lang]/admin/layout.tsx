@@ -1,4 +1,3 @@
-// src/app/[lang]/admin/layout.tsx
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -60,27 +59,3 @@ export default async function AdminLayout({
     </div>
   );
 }
-
-// export default async function AdminLayout({ children, params }: AdminLayoutProps) {
-//   const session = await getServerSession(authOptions);
-
-//   if (!session?.user) {
-//     const callbackUrl = `/admin`;
-//     return redirect(`/${params.lang}/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
-//   }
-
-//   const userRole = session.user.role;
-
-//   // เราจะใช้เงื่อนไขเดิมของคุณไปก่อน เพื่อให้เห็นผลที่ตรงกัน
-//   const originalIsAuthorized = userRole === ROLE_NAMES.SUPERADMIN || userRole === ROLE_NAMES.ADMIN;
-
-//   if (!originalIsAuthorized) {
-//     return <AccessDenied />;
-//   }
-
-//   return (
-//     <div>
-//       <main className="p-4 md:p-6">{children}</main>
-//     </div>
-//   );
-// }

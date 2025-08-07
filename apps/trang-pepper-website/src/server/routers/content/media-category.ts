@@ -1,12 +1,13 @@
-// src/server/routers/content/media-category.ts
-import { router, authorizedProcedure } from "@/server/trpc";
 import { idParamSchema } from "@southern-syntax/schemas/common";
+
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
-import { mediaCategoryService } from "@/services/media-category";
 import { mediaCategoryInputSchema } from "@southern-syntax/schemas/media-taxonomy";
+
+import { mediaCategoryService } from "@/services/media-category";
+import { router, authorizedProcedure } from "@/server/trpc";
 
 export const mediaCategoryRouter = router({
   getAll: authorizedProcedure(

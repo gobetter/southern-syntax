@@ -1,12 +1,12 @@
-// src/server/routers/content/media-tag.ts
-import { router, authorizedProcedure } from "@/server/trpc";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
-import { mediaTagService } from "@/services/media-tag";
 import { mediaTagInputSchema } from "@southern-syntax/schemas/media-taxonomy";
+
+import { router, authorizedProcedure } from "@/server/trpc";
+import { mediaTagService } from "@/services/media-tag";
 
 export const mediaTagRouter = router({
   getAll: authorizedProcedure(

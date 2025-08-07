@@ -1,15 +1,12 @@
-// src/app/[lang]/admin/media-taxonomy/_components/TagManager.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
 import { type UseFormReturn } from "react-hook-form";
 import { Edit, Trash2 } from "lucide-react";
 
-import { useTagManager } from "@/hooks/useTagManager";
 import { getLocalizedString } from "@southern-syntax/i18n";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 
-import Spinner from "@/components/common/Spinner";
 import { Button } from "@southern-syntax/ui";
 import {
   Table,
@@ -27,6 +24,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@southern-syntax/ui";
+
+import { useTagManager } from "@/hooks/useTagManager";
+import Spinner from "@/components/common/Spinner";
 
 import { TagFormDialog } from "./TagFormDialog";
 

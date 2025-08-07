@@ -1,5 +1,5 @@
-import { ZodError } from "zod";
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { registerUser } from "@southern-syntax/auth/service";
 

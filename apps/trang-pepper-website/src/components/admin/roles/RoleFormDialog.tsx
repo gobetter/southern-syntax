@@ -5,12 +5,11 @@ import { FormProvider, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { AlertCircle } from "lucide-react";
 
-import { useRoleForm } from "@/hooks/useRoleForm";
-// import { type Role, type Permission } from "@/hooks/useRoleManager";
-import type { Role, Permission } from "@/types/role";
 import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/auth";
 
-import FormFieldError from "@/components/common/FormFieldError";
+import { useRoleForm } from "@/hooks/useRoleForm";
+import type { Role, Permission } from "@/types/role";
+
 import {
   Button,
   Input,
@@ -29,6 +28,8 @@ import {
   DialogDescription,
 } from "@southern-syntax/ui";
 import { cn } from "@southern-syntax/ui";
+
+import FormFieldError from "@/components/common/FormFieldError";
 
 interface RoleFormDialogProps {
   isOpen: boolean;
@@ -68,12 +69,7 @@ export default function RoleFormDialog({
     {} as Record<string, Permission[]>
   );
 
-  // (Optional) จัดลำดับกลุ่มเพื่อให้ CRUD อยู่ก่อน
   const actionOrder = ["CREATE", "READ", "UPDATE", "DELETE"];
-
-  // const sortedGroupedPermissions = Object.entries(groupedPermissions).sort(
-  //   ([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b)
-  // );
   const sortedGroupedPermissions: [string, Permission[]][] = Object.entries(
     groupedPermissions
   ).sort(([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b));
@@ -85,7 +81,6 @@ export default function RoleFormDialog({
     // เพิ่ม Resource อื่นๆ ที่ต้องการสงวนไว้ในอนาคตที่นี่
   ];
 
-  // const isEditingSuperAdminRole = editingRole?.key === ROLE_NAMES.SUPERADMIN;
   const isEditingSuperAdmin = editingRole?.key === ROLE_NAMES.SUPERADMIN;
   const isSystemRole = editingRole?.isSystem ?? false;
   const currentUserIsSuperAdmin = session?.user?.role === ROLE_NAMES.SUPERADMIN;
@@ -194,11 +189,7 @@ export default function RoleFormDialog({
                                   <Checkbox
                                     id={perm.id}
                                     // ถ้ากำลังแก้ Super Admin ให้ติ๊กถูกและ disable เสมอ
-                                    // checked={
-                                    //   isEditingSuperAdmin ? true : field.value?.includes(perm.id)
-                                    // }
                                     checked={field.value?.includes(perm.id)}
-                                    // disabled={isEditingSuperAdmin}
                                     disabled={SUPERADMIN_ONLY_RESOURCES.includes(
                                       perm.resource
                                     )}
@@ -250,7 +241,6 @@ export default function RoleFormDialog({
               </DialogClose>
 
               {/*  ซ่อนปุ่ม Save ถ้ากำลังแก้ Super Admin  */}
-              {/* {!isFormDisabled && !isEditingSuperAdmin && ( */}
               {!isFormDisabled && (
                 <Button type="submit" disabled={isLoading}>
                   {isLoading

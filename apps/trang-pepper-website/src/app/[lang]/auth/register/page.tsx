@@ -1,10 +1,9 @@
-// src/app/[lang]/auth/register/page.tsx
-
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import RegisterForm from "@/components/auth/RegisterForm";
 import { authOptions } from "@southern-syntax/auth/server";
+
+import RegisterForm from "@/components/auth/RegisterForm";
 
 export default async function RegisterPage({
   params,

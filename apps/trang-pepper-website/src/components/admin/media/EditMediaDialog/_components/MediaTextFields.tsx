@@ -1,4 +1,3 @@
-// src/components/admin/media/EditMediaDialog/MediaTextFields.tsx
 "use client";
 
 import { UseFormRegister } from "react-hook-form";
@@ -11,11 +10,6 @@ interface Props {
   register: UseFormRegister<MediaUpdateFormInput>;
   t: ReturnType<typeof useTranslations>;
 }
-
-// interface Props {
-//   register: UseFormRegister<MediaUpdateFormInput>;
-//   t: ReturnType<typeof useTranslations>;
-// }
 
 export function MediaTextFields({ register, t }: Props) {
   return (

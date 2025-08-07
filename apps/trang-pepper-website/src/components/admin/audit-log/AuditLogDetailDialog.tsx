@@ -1,7 +1,8 @@
-// src/components/admin/audit-log/AuditLogDetailDialog.tsx
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
+
+import { AuditLogItem } from "@/types/trpc";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 import {
@@ -12,10 +13,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@southern-syntax/ui"; // Assuming barrel exports
-
-// import { AuditLogItem } from './AuditLogTable';
-import { AuditLogItem } from "@/types/trpc";
+} from "@southern-syntax/ui";
 
 interface AuditLogDetailDialogProps {
   log: AuditLogItem | null;

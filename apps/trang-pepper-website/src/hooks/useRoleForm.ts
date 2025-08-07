@@ -1,21 +1,21 @@
-// src/hooks/useRoleForm.ts
 "use client";
 
 import { useEffect } from "react";
 import { z } from "zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
-import { trpc } from "@/lib/trpc-client";
 import { roleSchema } from "@southern-syntax/auth";
 import { LocalizedString } from "@southern-syntax/types";
-import type { AppRouter } from "@/server/routers/_app";
 import { useToast } from "@southern-syntax/hooks";
-import { Role } from "@/types/role";
 
-const roleFormSchema = roleSchema.extend({
+import { trpc } from "@/lib/trpc-client";
+import { Role } from "@/types/role";
+import type { AppRouter } from "@/server/routers/_app";
+
+export const roleFormSchema = roleSchema.extend({
   permissionIds: z.array(z.string()),
 });
 export type RoleFormOutput = z.infer<typeof roleFormSchema>;

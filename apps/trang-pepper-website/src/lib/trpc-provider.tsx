@@ -1,11 +1,10 @@
-// src/lib/trpc-provider.tsx
-'use client'; // ต้องเป็น Client Component
+"use client";
 
-import { ReactNode, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client'; // สำหรับการเชื่อมต่อ HTTP
+import { ReactNode, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink } from "@trpc/client"; // สำหรับการเชื่อมต่อ HTTP
 
-import { trpc } from './trpc-client';
+import { trpc } from "./trpc-client";
 
 interface TRPCProviderProps {
   children: ReactNode;
@@ -23,7 +22,7 @@ export default function TRPCProvider({ children }: TRPCProviderProps) {
             refetchOnWindowFocus: false, // ไม่ต้อง refetch เมื่อกลับมาที่หน้าต่าง
           },
         },
-      }),
+      })
   );
 
   // สร้าง tRPC Client
@@ -32,10 +31,10 @@ export default function TRPCProvider({ children }: TRPCProviderProps) {
       // Links: กำหนดวิธีการสื่อสารของ tRPC
       links: [
         httpBatchLink({
-          url: '/api/trpc', // URL ของ tRPC API Endpoint
+          url: "/api/trpc", // URL ของ tRPC API Endpoint
         }),
       ],
-    }),
+    })
   );
 
   return (

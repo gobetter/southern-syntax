@@ -1,9 +1,8 @@
-// src/components/admin/media/UploadDialog.tsx
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import FileUploadDialog from '@/components/common/FileUploadDialog'; // Import the new generic dialog
-import { useUploadMedia } from '@/hooks/useUploadMedia';
+import { useTranslations } from "next-intl";
+import FileUploadDialog from "@/components/common/FileUploadDialog";
+import { useUploadMedia } from "@/hooks/useUploadMedia";
 
 interface UploadDialogProps {
   isOpen: boolean;
@@ -11,8 +10,12 @@ interface UploadDialogProps {
   onUploadSuccess: () => void;
 }
 
-export default function UploadDialog({ isOpen, onOpenChange, onUploadSuccess }: UploadDialogProps) {
-  const t = useTranslations('admin_media.upload_dialog');
+export default function UploadDialog({
+  isOpen,
+  onOpenChange,
+  onUploadSuccess,
+}: UploadDialogProps) {
+  const t = useTranslations("admin_media.upload_dialog");
 
   // The hook remains here, providing the specific logic for MEDIA uploads.
   const { upload, isUploading, errors, clearError } = useUploadMedia(() => {
@@ -28,7 +31,7 @@ export default function UploadDialog({ isOpen, onOpenChange, onUploadSuccess }: 
       isUploading={isUploading}
       errors={errors}
       clearErrors={clearError}
-      dialogTitle={t('title')} // Provide the specific title
+      dialogTitle={t("title")} // Provide the specific title
     />
   );
 }

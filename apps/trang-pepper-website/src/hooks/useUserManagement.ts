@@ -13,24 +13,21 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import type { UserItem } from "@/types/user";
 import {
   type UserStatusFilter,
   type UserStatusView,
   type UserSortableField,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
+import { useUpdateQuery, useDebounce, useToast } from "@southern-syntax/hooks";
+
+import { trpc } from "@/lib/trpc-client";
+import type { UserItem } from "@/types/user";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-import { trpc } from "@/lib/trpc-client";
 import type { SortOrder } from "@/constants/common";
-
 import { useSelectionSet } from "@/components/admin/media/MediaGrid/useSelectionSet";
 
-// import { useUpdateQuery } from "./useUpdateQuery";
-// import { useDebounce } from "./useDebounce";
-// import { useToast } from "./useToast";
-import { useUpdateQuery, useDebounce, useToast } from "@southern-syntax/hooks";
 import { useUpdateUser } from "./useUpdateUser";
 
 interface UseUserManagementReturn {
@@ -42,10 +39,6 @@ interface UseUserManagementReturn {
   pageSize: number;
   isLoading: boolean;
   isError: boolean;
-  // error: TRPCClientErrorLike<AppRouter> | null;
-  // error: unknown;
-  // error: { message: string } | null;
-  // error: TRPCClientErrorLike<any> | null;
   error: TRPCClientErrorLike<AppRouter> | null;
   status: UserStatusView;
   roleId: string | undefined;
@@ -121,18 +114,6 @@ export function useUserManagement(): UseUserManagementReturn {
   const debouncedSearchQuery = useDebounce(inputValue, 500);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Type Guard
-  // function isValidStatusFilter(status: string | null): status is UserStatusFilter {
-  //   return !!status && (VALID_USER_STATUSES as readonly string[]).includes(status);
-  // }
-
-  // --- tRPC Queries and Mutations ---
-  // const {
-  //   data: result,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = trpc.user.getAll.useQuery({
   const userQuery = trpc.user.getAll.useQuery({
     page,
     pageSize,
@@ -151,7 +132,6 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    // onError: (e: any) =>
     onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("deactivate_many_error", { error: e.message })),
   });
@@ -161,7 +141,6 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    // onError: (e: any) =>
     onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("reactivate_many_error", { error: e.message })),
   });
@@ -171,22 +150,11 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    // onError: (e: any) =>
     onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("change_role_many_error", { error: e.message })),
   });
 
   // --- Derived State (Memoized) ---
-  // const users = useMemo(() => result?.data ?? [], [result]);
-  // const users = useMemo(
-  //   () => (result?.data as UserItem[] | undefined) ?? [],
-  //   [result]
-  // );
-  // const users: UserItem[] = useMemo(
-  //   () => (result?.data ?? []) as unknown as UserItem[],
-  //   [result]
-  // );
-  // const users = useMemo(() => (result?.data as UserItem[]) ?? [], [result]);
   const users: UserItem[] = useMemo(
     () => (result?.data as unknown as UserItem[]) ?? [],
     [result]
@@ -195,23 +163,19 @@ export function useUserManagement(): UseUserManagementReturn {
   const totalPages = Math.ceil(totalCount / pageSize);
 
   const selectedItems = useMemo(
-    // () => users.filter((user: UserItem) => selectedIds.has(user.id)),
     () => users.filter((user) => selectedIds.has(user.id)),
     [users, selectedIds]
   );
   const canReactivate = useMemo(
-    // () => selectedItems.some((user: UserItem) => !user.isActive),
     () => selectedItems.some((user) => !user.isActive),
     [selectedItems]
   );
   const canDeactivate = useMemo(
-    // () => selectedItems.some((user: UserItem) => user.isActive),
     () => selectedItems.some((user) => user.isActive),
     [selectedItems]
   );
 
   const selectableUsers = useMemo(
-    // () => users.filter((u: UserItem) => u.id !== currentUserId),
     () => users.filter((u) => u.id !== currentUserId),
     [users, currentUserId]
   );
@@ -219,7 +183,6 @@ export function useUserManagement(): UseUserManagementReturn {
   const areAllSelected = useMemo(
     () =>
       selectableUsers.length > 0 &&
-      // selectableUsers.every((user: UserItem) => selectedIds.has(user.id)),
       selectableUsers.every((user) => selectedIds.has(user.id)),
     [selectableUsers, selectedIds]
   );
@@ -238,9 +201,6 @@ export function useUserManagement(): UseUserManagementReturn {
     if (areAllSelected) {
       clearSelection();
     } else {
-      // selectableUsers.forEach((user: UserItem) =>
-      //   toggleSelection(user.id, true)
-      // );
       selectableUsers.forEach((user) => toggleSelection(user.id, true));
     }
   };
@@ -307,7 +267,6 @@ export function useUserManagement(): UseUserManagementReturn {
     isLoading,
     isError,
     error,
-    // error: error as { message: string } | null,
     status: statusForQuery ?? "all",
     roleId,
     sortBy,

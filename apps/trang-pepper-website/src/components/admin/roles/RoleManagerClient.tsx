@@ -1,18 +1,22 @@
-// src/components/admin/roles/RoleManagerClient.tsx
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { PlusCircle } from "lucide-react";
+
+import { Button } from "@southern-syntax/ui";
+
 import { useRoleManager } from "@/hooks/useRoleManager";
 import { Role } from "@/types/role";
+
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
-import RoleTable from "./RoleTable";
-import { Button } from "@southern-syntax/ui";
-import { PlusCircle } from "lucide-react";
-import RoleFormDialog from "./RoleFormDialog";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
-import { useState } from "react";
+
 import AdminPageHeader from "../AdminPageHeader";
+
+import RoleFormDialog from "./RoleFormDialog";
+import RoleTable from "./RoleTable";
 
 export default function RoleManagerClient() {
   const t = useTranslations("admin_rbac");
@@ -31,21 +35,16 @@ export default function RoleManagerClient() {
     isError,
     error,
     isDeleting,
-    // deletingRole,
-    // setDeletingRole,
-    // handleDeleteRequest,
     handleDeleteConfirm,
   } = useRoleManager();
 
   const handleAddNew = () => {
     setEditingRole(null);
-    // setDialogOpen(true);
     setFormOpen(true);
   };
 
   const handleEdit = (role: Role) => {
     setEditingRole(role);
-    // setDialogOpen(true);
     setFormOpen(true);
   };
 

@@ -1,10 +1,7 @@
-// src/schemas/user.ts
 import { z } from "zod";
 
 import { LocalizedStringSchema } from "./i18n";
 import { passwordPolicySchema } from "./password";
-// import { LocalizedStringSchema } from "./i18n.js";
-// import { passwordPolicySchema } from "./password.js";
 
 const requiredInDefaultLang = "error_field_is_required_in_default_lang";
 
@@ -51,7 +48,6 @@ export type UserCreateInput = z.input<typeof userCreateSchema>;
 // ทุก field เป็น optional เพราะ Admin อาจจะต้องการแก้แค่บางอย่าง
 export const userUpdateSchema = z
   .object({
-    // name: LocalizedStringSchema.optional(),
     name: LocalizedStringSchema.optional(),
     email: z.string().email("error_invalid_email").optional(),
     password: z

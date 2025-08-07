@@ -1,7 +1,6 @@
-// src/components/common/ThemeProvider.tsx
-'use client';
+"use client";
 
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export function ThemeProvider({
   children,
@@ -13,7 +12,7 @@ export function ThemeProvider({
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme={theme ?? 'system'}
+      defaultTheme={theme ?? "system"}
       enableSystem
       disableTransitionOnChange
     >

@@ -1,4 +1,3 @@
-// src/server/routers/content/post-category.ts
 // tRPC Router สำหรับ PostCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่บทความ
 

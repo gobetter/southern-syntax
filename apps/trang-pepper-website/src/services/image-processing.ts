@@ -1,5 +1,4 @@
-// src/services/image-processing.ts
-import sharp from 'sharp';
+import sharp from "sharp";
 
 // เพิ่ม `name` เข้าไปใน Interface เพื่อการระบุตัวตน
 interface ImageVariantConfig {
@@ -12,7 +11,7 @@ interface ImageVariantConfig {
 
 // สร้าง Type สำหรับผลลัพธ์ที่ชัดเจน
 export interface ProcessedImageVariant {
-  name: ImageVariantConfig['name'] | 'original';
+  name: ImageVariantConfig["name"] | "original";
   buffer: Buffer;
   filename: string;
   mimeType: string;
@@ -20,9 +19,9 @@ export interface ProcessedImageVariant {
 
 // กำหนดค่า config ของ variants
 const IMAGE_VARIANTS: readonly ImageVariantConfig[] = [
-  { name: 'thumbnail', width: 200, height: 200, fit: 'cover', format: 'webp' },
-  { name: 'medium', width: 800, fit: 'inside', format: 'webp' },
-  { name: 'large', width: 1280, fit: 'inside', format: 'webp' },
+  { name: "thumbnail", width: 200, height: 200, fit: "cover", format: "webp" },
+  { name: "medium", width: 800, fit: "inside", format: "webp" },
+  { name: "large", width: 1280, fit: "inside", format: "webp" },
 ];
 
 /**
@@ -33,11 +32,11 @@ const IMAGE_VARIANTS: readonly ImageVariantConfig[] = [
  */
 export async function processImage(
   imageBuffer: Buffer,
-  originalFilename: string,
+  originalFilename: string
 ): Promise<ProcessedImageVariant[]> {
   const processedImages: ProcessedImageVariant[] = [];
-  const filenameWithoutExt = originalFilename.split('.').slice(0, -1).join('.');
-  const originalMimeType = `image/${originalFilename.split('.').pop()?.toLowerCase() || 'jpeg'}`;
+  const filenameWithoutExt = originalFilename.split(".").slice(0, -1).join(".");
+  const originalMimeType = `image/${originalFilename.split(".").pop()?.toLowerCase() || "jpeg"}`;
 
   // ประมวลผลแต่ละ Variant
   for (const variant of IMAGE_VARIANTS) {
@@ -61,7 +60,7 @@ export async function processImage(
 
   // เพิ่มไฟล์ต้นฉบับเข้าไปในรายการด้วย
   processedImages.push({
-    name: 'original',
+    name: "original",
     buffer: imageBuffer,
     filename: originalFilename,
     mimeType: originalMimeType,

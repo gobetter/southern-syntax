@@ -1,5 +1,4 @@
-// src/components/admin/media/MediaGrid/useSelectionSet.ts
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 export function useSelectionSet() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());

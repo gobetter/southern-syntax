@@ -1,4 +1,3 @@
-// src/schemas/product.ts
 import { z } from "zod";
 import type { LocalizedString } from "@southern-syntax/types";
 

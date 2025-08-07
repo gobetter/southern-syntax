@@ -1,5 +1,5 @@
-// src/app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
+
 import { authenticateUser } from "@southern-syntax/auth/service";
 
 export async function POST(req: NextRequest) {

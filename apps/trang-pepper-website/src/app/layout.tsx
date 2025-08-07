@@ -1,12 +1,11 @@
-// apps/trang-pepper-website/src/app/layout.tsx
-
 import React from "react";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 
-import TRPCProvider from "@/lib/trpc-provider";
 import { authOptions } from "@southern-syntax/auth/server";
 import { Toaster } from "@southern-syntax/ui";
+
+import TRPCProvider from "@/lib/trpc-provider";
 
 import SuspenseErrorBoundary from "@/components/common/SuspenseErrorBoundary";
 import { ThemeProvider } from "@/components/common/ThemeProvider";

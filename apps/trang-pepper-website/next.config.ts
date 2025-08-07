@@ -1,4 +1,3 @@
-// apps/trang-pepper-website/next.config.ts
 import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
 

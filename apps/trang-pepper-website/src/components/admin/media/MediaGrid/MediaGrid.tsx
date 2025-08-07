@@ -1,9 +1,8 @@
-// src/components/admin/media/MediaGrid/MediaGrid.tsx
-'use client';
+"use client";
 
-import { MediaItem } from '@/types/trpc';
+import { MediaItem } from "@/types/trpc";
 
-import MediaGridWrapper from './MediaGridWrapper';
+import MediaGridWrapper from "./MediaGridWrapper";
 
 interface MediaGridProps {
   mediaItems: MediaItem[];

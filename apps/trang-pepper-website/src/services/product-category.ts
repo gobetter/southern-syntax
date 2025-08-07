@@ -1,4 +1,4 @@
-import prisma from "@southern-syntax/db"; // Import Prisma Client
+import prisma from "@southern-syntax/db";
 import {
   productCategoryInputSchema,
   type ProductCategoryInput,

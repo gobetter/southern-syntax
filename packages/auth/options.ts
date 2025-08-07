@@ -1,9 +1,8 @@
-// import "server-only";
-
+import type { Adapter } from "next-auth/adapters";
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import type { Adapter } from "next-auth/adapters";
 
 import prisma from "@southern-syntax/db";
 
@@ -79,16 +78,6 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role.key;
         token.permissions = permissions;
       }
-
-      // // เพิ่ม Logic สำหรับจัดการการอัปเดต Session
-      // // ส่วนนี้จะทำงานเมื่อเราเรียกใช้ update() จากฝั่ง Client
-      // if (trigger === 'update' && session) {
-      //   // นำข้อมูลใหม่ที่ส่งมาจาก Client (ซึ่งอยู่ใน `session` parameter)
-      //   // มาเขียนทับข้อมูลใน token
-      //   token.name = session.user.name;
-      //   // คุณสามารถอัปเดตข้อมูลอื่นๆ ได้ที่นี่ในอนาคต เช่น role
-      //   // token.role = session.user.role;
-      // }
 
       // เมื่อมีการ update session
       if (trigger === "update" && session?.user) {

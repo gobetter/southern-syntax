@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
-import { mediaService } from "@/services/media";
 import { authOptions } from "@southern-syntax/auth/server";
 import {
   can,
@@ -9,6 +8,8 @@ import {
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
 import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
+
+import { mediaService } from "@/services/media";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,15 +1,11 @@
-// src/services/user.ts
 import { type Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
-import prisma from "@southern-syntax/db";
 import { hashPassword } from "@southern-syntax/auth/server";
 import {
   getUserPermissions,
   invalidateUserPermissions,
 } from "@southern-syntax/auth/utils";
-import { ROLE_NAMES } from "@southern-syntax/auth";
-
 import {
   type UserCreateOutput,
   type UserUpdateOutput,
@@ -19,6 +15,9 @@ import {
   UserStatusFilter,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
+import { ROLE_NAMES } from "@southern-syntax/auth";
+import prisma from "@southern-syntax/db";
+
 import { SortOrder } from "@/constants/common";
 import { AUDIT_ACTIONS, type AuditAction } from "@/constants/auditActions";
 
@@ -97,27 +96,6 @@ async function createUser(input: UserCreateOutput, actorId: string) {
   });
 
   // ตรวจสอบว่า Role ที่จะสร้างเป็น Role ระดับสูงหรือไม่
-  // const isAssigningHighLevelRole =
-  //   targetRole?.key === 'ADMIN' || targetRole?.key === ROLE_NAMES.SUPERADMIN;
-
-  // if (isAssigningHighLevelRole && !actorPermissions['ADMIN_ACCESS']?.['ASSIGN']) {
-  //   throw new TRPCError({
-  //     code: 'FORBIDDEN',
-  //     message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
-  //   });
-  // }
-
-  // เปลี่ยนเงื่อนไข: ตรวจสอบจาก "Permission" แทน "ชื่อ Role"
-  // if (
-  //   isAssigningHighLevelRole &&
-  //   !actorPermissions[PERMISSION_RESOURCES.ADMIN_ACCESS]?.[PERMISSION_ACTIONS.ASSIGN]
-  // ) {
-  //   throw new TRPCError({
-  //     code: 'FORBIDDEN',
-  //     message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
-  //   });
-  // }
-
   const isAssigningHighLevelRole =
     targetRole?.key === ROLE_NAMES.SUPERADMIN || targetRole?.key === "ADMIN";
 
@@ -188,10 +166,6 @@ async function updateUser(
   }
 
   // ป้องกันการเปลี่ยน Role ของตัวเอง (ยกเว้น Super Admin)
-  // if (id === actorId && input.roleId && actor?.role?.key !== ROLE_NAMES.SUPERADMIN) {
-  //   throw new TRPCError({ code: 'FORBIDDEN', message: 'CANNOT_CHANGE_OWN_ROLE' });
-  // }
-
   // ตรวจสอบก็ต่อเมื่อมีการ "พยายามจะเปลี่ยน" Role ของตัวเองจริงๆ
   if (
     id === actorId &&
@@ -204,40 +178,6 @@ async function updateUser(
       message: "CANNOT_CHANGE_OWN_ROLE",
     });
   }
-
-  // ตรวจสอบสิทธิ์ในการกำหนด Role ระดับสูง
-  // if (input.roleId) {
-  //   const actorPermissions = await getUserPermissions(actorId);
-  //   const targetRole = await prisma.role.findUnique({ where: { id: input.roleId } });
-  //   const isAssigningHighLevelRole =
-  //     targetRole?.key === 'ADMIN' || targetRole?.key === ROLE_NAMES.SUPERADMIN;
-
-  //   if (
-  //     isAssigningHighLevelRole &&
-  //     !actorPermissions[PERMISSION_RESOURCES.ADMIN_ACCESS]?.[PERMISSION_ACTIONS.ASSIGN]
-  //   ) {
-  //     throw new TRPCError({
-  //       code: 'FORBIDDEN',
-  //       message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
-  //     });
-  //   }
-  // }
-
-  // if (input.roleId) {
-  //   const actorPermissions = await getUserPermissions(actorId);
-  //   const targetRole = await prisma.role.findUnique({ where: { id: input.roleId } });
-
-  //   // แก้ไข Logic การตรวจสอบ Role ระดับสูงที่นี่ด้วย
-  //   const isAssigningHighLevelRole =
-  //     targetRole?.key === ROLE_NAMES.SUPERADMIN || targetRole?.key === 'ADMIN';
-
-  //   if (isAssigningHighLevelRole && !actorPermissions['ADMIN_ACCESS']?.['ASSIGN']) {
-  //     throw new TRPCError({
-  //       code: 'FORBIDDEN',
-  //       message: 'INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE',
-  //     });
-  //   }
-  // }
 
   // ตรวจสอบสิทธิ์ในการกำหนด Role ก็ต่อเมื่อมีการ "พยายามจะเปลี่ยน" Role เท่านั้น
   if (input.roleId && input.roleId !== oldData?.roleId) {
@@ -330,7 +270,7 @@ async function deactivateManyUsers(ids: string[], actorId: string) {
   return { count };
 }
 
-// ✅ ฟังก์ชันใหม่สำหรับเปิดใช้งานหลายรายการ
+// ฟังก์ชันใหม่สำหรับเปิดใช้งานหลายรายการ
 async function reactivateManyUsers(ids: string[], actorId: string) {
   // ไม่จำเป็นต้องกรอง actorId ออก เพราะ Admin สามารถเปิดใช้งานบัญชีตัวเองได้ (ถ้าเผลอไปปิด)
   const oldData = await prisma.user.findMany({
@@ -367,7 +307,7 @@ async function deleteUser(id: string) {
   return prisma.user.delete({ where: { id } });
 }
 
-// ✅ ฟังก์ชันใหม่สำหรับเปลี่ยน Role หลายรายการ
+// ฟังก์ชันใหม่สำหรับเปลี่ยน Role หลายรายการ
 async function changeManyUsersRole(
   ids: string[],
   newRoleId: string,

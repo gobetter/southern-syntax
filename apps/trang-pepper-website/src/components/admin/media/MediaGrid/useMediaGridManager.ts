@@ -1,10 +1,13 @@
 import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { AppRouter } from "@/server/routers/_app";
+
 import { useToast } from "@southern-syntax/hooks";
+
+import { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import { TRPCClientErrorLike } from "@trpc/client";
 import { MediaItem } from "@/types/trpc";
+
 import { useSelectionSet } from "./useSelectionSet";
 
 // รับ mediaItems เข้ามาเพื่อใช้หา selectedItems
@@ -14,14 +17,12 @@ export function useMediaGridManager(mediaItems: MediaItem[]) {
   const utils = trpc.useUtils();
   const toast = useToast();
 
-  // 1. ย้าย Logic ทั้งหมดมาไว้ที่นี่
   const { selectedIds, toggleSelection, clearSelection } = useSelectionSet();
   const [isBulkEditing, setBulkEditing] = useState(false);
 
-  // const selectedItems = mediaItems.filter((item) => selectedIds.has(item.id));
   const selectedItems = useMemo(
     () => mediaItems.filter((item) => selectedIds.has(item.id)),
-    [mediaItems, selectedIds] // ระบุ dependencies ให้ถูกต้อง
+    [mediaItems, selectedIds]
   );
 
   const deleteManyMutation = trpc.media.deleteMany.useMutation({
@@ -45,7 +46,6 @@ export function useMediaGridManager(mediaItems: MediaItem[]) {
     clearSelection();
   };
 
-  // 2. ส่งคืน State และ Functions ทั้งหมดที่ Component ต้องใช้
   return {
     // Selection state
     selectedIds,

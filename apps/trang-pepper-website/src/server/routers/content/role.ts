@@ -1,14 +1,14 @@
-// src/server/routers/content/role.ts
 import { z } from "zod";
 
-import { router, authorizedProcedure } from "@/server/trpc";
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
-import { roleService } from "@/services/role";
 import { roleSchema } from "@southern-syntax/auth";
 import { idParamSchema } from "@southern-syntax/schemas/common";
+
+import { router, authorizedProcedure } from "@/server/trpc";
+import { roleService } from "@/services/role";
 
 export const roleRouter = router({
   getAll: authorizedProcedure(

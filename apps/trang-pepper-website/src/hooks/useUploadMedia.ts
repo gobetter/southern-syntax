@@ -1,4 +1,3 @@
-// src/hooks/useUploadMedia.ts
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
@@ -35,7 +34,7 @@ export function useUploadMedia(onSuccess: () => void) {
           // จัดการ Error ทั่วไปที่ไม่คาดคิด
           errorItems.push({
             filename: file.name,
-            message: t("unexpected", { filename: file.name }), // ไม่ต้องส่ง context แล้วถ้าไม่ต้องการ
+            message: t("unexpected", { filename: file.name }),
           });
         }
       }

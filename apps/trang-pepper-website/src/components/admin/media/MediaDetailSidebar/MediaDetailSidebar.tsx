@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { getLocalizedString } from "@southern-syntax/i18n";
 import type { MediaItem } from "@/types/trpc";
 
-import {} from "@southern-syntax/ui";
 import {
   Button,
   Separator,

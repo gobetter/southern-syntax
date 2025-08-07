@@ -1,7 +1,9 @@
-// src/components/admin/media-taxonomy/MediaTaxonomyClient.tsx
 "use client";
 
+import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { PlusCircle } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Card,
@@ -13,22 +15,20 @@ import {
   TabsList,
   TabsTrigger,
 } from "@southern-syntax/ui";
-import AdminPageHeader from "@/components/admin/AdminPageHeader";
-
-import { CategoryManager } from "./_components/CategoryManager";
-import { TagManager } from "./_components/TagManager";
-import { useForm } from "react-hook-form";
 import {
   MediaCategoryInput,
   mediaCategoryInputSchema,
   MediaTagInput,
   mediaTagInputSchema,
 } from "@southern-syntax/schemas/media-taxonomy";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@southern-syntax/ui";
+
 import { useCategoryManager } from "@/hooks/useCategoryManager";
 import { useTagManager } from "@/hooks/useTagManager";
-import { Button } from "@southern-syntax/ui";
-import { PlusCircle } from "lucide-react";
+import AdminPageHeader from "@/components/admin/AdminPageHeader";
+
+import { CategoryManager } from "./_components/CategoryManager";
+import { TagManager } from "./_components/TagManager";
 
 export default function MediaTaxonomyClient() {
   const t = useTranslations("admin_media_taxonomy");
@@ -57,14 +57,12 @@ export default function MediaTaxonomyClient() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>{t("categories.manage_title")}</CardTitle>
-                {/* ✅ 3. สร้าง Action Button ที่นี่โดยใช้ handler จาก hook */}
                 <Button onClick={categoryManager.handleAddNew}>
                   <PlusCircle className="mr-2 h-4 w-4" />
                   {t("categories.add_button")}
                 </Button>
               </CardHeader>
               <CardContent>
-                {/* ✅ 4. ส่ง props ที่จำเป็นลงไปให้ CategoryManager */}
                 <CategoryManager
                   manager={categoryManager}
                   formMethods={categoryForm}

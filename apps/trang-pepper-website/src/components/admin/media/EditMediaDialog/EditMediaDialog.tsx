@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
-import { cn } from "@southern-syntax/ui";
 import type { MediaItem } from "@/types/trpc";
 
+import { cn } from "@southern-syntax/ui";
 import { CheckboxGroup } from "@/components/common/CheckboxGroup";
 import {
   Button,
@@ -48,10 +48,7 @@ export default function EditMediaDialog({
 
   if (!media) return null;
 
-  const thumbnailUrl =
-    // (media.variants as Record<string, string>)?.["thumbnail"] || media.originalUrl;
-    // (media as any)?.variants?.["thumbnail"] || media.originalUrl;
-    media.variants?.["thumbnail"] || media.originalUrl;
+  const thumbnailUrl = media.variants?.["thumbnail"] || media.originalUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

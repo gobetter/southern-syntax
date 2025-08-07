@@ -1,9 +1,7 @@
-// src/server/routers/content/language.ts
 // tRPC Router สำหรับ Language Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลภาษา
 
 import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
-// import { languageInputSchema, languageService } from "@/services/language"; // Language Service และ Zod Schema
 import {
   languageInputSchema,
   languageService,

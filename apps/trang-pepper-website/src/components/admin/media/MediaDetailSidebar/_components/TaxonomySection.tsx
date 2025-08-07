@@ -16,7 +16,6 @@ export default function TaxonomySection({ media }: { media: MediaItem }) {
       <div>
         <p className="text-muted-foreground mb-2">{t("category")}</p>
         {media.categories.length > 0 ? (
-          // media.categories.map((cat: { id: string; name: unknown }) => (
           media.categories.map((cat: MediaItem["categories"][number]) => (
             <Badge key={cat.id} variant="secondary">
               {getLocalizedString(cat.name as LocalizedString, locale)}
@@ -30,7 +29,6 @@ export default function TaxonomySection({ media }: { media: MediaItem }) {
         <p className="text-muted-foreground mb-2">{t("tags")}</p>
         <div className="flex flex-wrap gap-2">
           {media.tags.length > 0 ? (
-            // media.tags.map((tag: { id: string; name: unknown }) => (
             media.tags.map((tag: MediaItem["tags"][number]) => (
               <Badge key={tag.id} variant="secondary">
                 {getLocalizedString(tag.name as LocalizedString, locale)}

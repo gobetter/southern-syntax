@@ -1,16 +1,14 @@
-// src/components/admin/media/BulkEditDialog/CheckboxGroupWithStates.tsx
 "use client";
 
 import { cn } from "@southern-syntax/ui";
 import { Label, Checkbox } from "@southern-syntax/ui";
+
 import type { CheckboxStates } from "../helpers/checkboxUtils";
 
 interface Option {
   id: string;
   label: string;
 }
-
-// export type CheckboxStates = Record<string, 'checked' | 'indeterminate' | 'unchecked'>;
 
 interface CheckboxGroupWithStatesProps {
   namePrefix: string;

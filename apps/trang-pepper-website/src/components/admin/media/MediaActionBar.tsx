@@ -6,7 +6,7 @@ import { Button } from "@southern-syntax/ui";
 
 interface MediaActionBarProps {
   selectedCount: number;
-  onDeleteRequest: () => void; // ✅ เปลี่ยนชื่อ Prop เพื่อความชัดเจน
+  onDeleteRequest: () => void;
   onClearSelection: () => void;
   onEditSelected: () => void;
   isDeleting: boolean;
@@ -14,10 +14,10 @@ interface MediaActionBarProps {
 
 export default function MediaActionBar({
   selectedCount,
-  onDeleteRequest, // ✅ ใช้งาน Prop ใหม่
+  onDeleteRequest,
   onClearSelection,
   onEditSelected,
-  isDeleting, // isDeleting ยังคงต้องรับมาเพื่อ disable ปุ่ม
+  isDeleting,
 }: MediaActionBarProps) {
   const t = useTranslations("admin_media.action_bar");
 

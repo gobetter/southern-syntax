@@ -1,7 +1,6 @@
 import { MediaUpdateFormInput } from "@southern-syntax/schemas/media";
-import type { MediaItem } from "@/types/trpc";
-// import { LocalizedString } from "@southern-syntax/types";
 import { toLocalizedString } from "@southern-syntax/utils";
+import type { MediaItem } from "@/types/trpc";
 
 export function mediaToFormValues(media: MediaItem): MediaUpdateFormInput {
   return {

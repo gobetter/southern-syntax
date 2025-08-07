@@ -1,5 +1,5 @@
-// src/schemas/post-tag.ts
 import { z } from "zod";
+
 import type { LocalizedString } from "@southern-syntax/types";
 
 export const postTagInputSchema = z.object({

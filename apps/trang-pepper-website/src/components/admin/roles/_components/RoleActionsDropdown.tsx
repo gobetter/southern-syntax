@@ -1,4 +1,3 @@
-// src/components/admin/roles/_components/RoleActionsDropdown.tsx
 "use client";
 
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
@@ -28,9 +27,6 @@ export default function RoleActionsDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {/* <Button variant="ghost" size="icon" className="h-8 w-8">
-          <MoreVertical className="h-4 w-4" />
-        </Button> */}
         <Button
           variant="ghost"
           size="icon"

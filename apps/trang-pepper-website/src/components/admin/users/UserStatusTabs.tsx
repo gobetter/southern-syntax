@@ -1,4 +1,3 @@
-// src/components/admin/users/UserStatusTabs.tsx
 "use client";
 
 import { useTranslations } from "next-intl";

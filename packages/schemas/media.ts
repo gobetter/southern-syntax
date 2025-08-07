@@ -1,4 +1,3 @@
-// src/schemas/media.ts
 import { z } from "zod";
 import { LocalizedStringSchema } from "./i18n";
 
