@@ -12,7 +12,6 @@ const handler = (req: Request) =>
     createContext: createTRPCContext, // ฟังก์ชันสำหรับสร้าง context
     // onError: สำหรับ Production Logging และ Debugging ใน Development
     onError:
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
       process.env.NODE_ENV === "development"
         ? ({ path, error }) => {
             // ใน Development, แสดง Error บน Console

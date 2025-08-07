@@ -13,7 +13,7 @@ import {
   type UserCreateOutput,
 } from "@southern-syntax/schemas/user";
 
-import { useToast } from "./useToast";
+import { useToast } from "@southern-syntax/hooks";
 import { LocalizedString } from "@southern-syntax/types";
 
 interface UseAddUserFormProps {

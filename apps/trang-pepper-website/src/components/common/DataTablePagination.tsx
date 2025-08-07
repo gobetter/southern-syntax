@@ -10,7 +10,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
-import { useUpdateQuery } from "@/hooks/useUpdateQuery";
+import { useUpdateQuery } from "@southern-syntax/hooks";
 
 import {
   Button,

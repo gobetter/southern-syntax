@@ -3,8 +3,10 @@
 import { useTranslations } from "next-intl";
 
 import { trpc } from "@/lib/trpc-client";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@southern-syntax/hooks";
 import type { UserUpdateOutput } from "@southern-syntax/schemas/user";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 
 interface UseUpdateUserProps {
   onSuccess?: () => void;
@@ -46,7 +48,8 @@ export function useUpdateUser({ onSuccess }: UseUpdateUserProps = {}) {
           utils.user.getAll.invalidate();
           onSuccess?.();
         },
-        onError: (error) => {
+        // onError: (error) => {
+        onError: (error: TRPCClientErrorLike<AppRouter>) => {
           if (error.message === "CANNOT_DEACTIVATE_SELF") {
             toast.error(t_errors("CANNOT_DEACTIVATE_SELF"));
           } else {

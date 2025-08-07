@@ -3,7 +3,11 @@
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลภาษา
 
 import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
-import { languageInputSchema, languageService } from "@/services/language"; // Language Service และ Zod Schema
+// import { languageInputSchema, languageService } from "@/services/language"; // Language Service และ Zod Schema
+import {
+  languageInputSchema,
+  languageService,
+} from "@southern-syntax/services"; // Language Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,

@@ -7,7 +7,8 @@ import {
   type MockInstance,
 } from "vitest";
 import { type PrismaClient, type Language } from "@prisma/client";
-import { languageService } from "../language";
+// import { languageService } from "../language";
+import { languageService } from "@southern-syntax/services";
 import prisma from "@southern-syntax/db";
 
 vi.mock("@/lib/prisma", () => {

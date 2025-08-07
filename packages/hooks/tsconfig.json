@@ -7,6 +7,7 @@
       "@southern-syntax/*": ["../*"]
     }
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
+  // "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

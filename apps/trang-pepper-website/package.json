@@ -33,6 +33,8 @@
     "@southern-syntax/types": "workspace:*",
     "@southern-syntax/config": "workspace:*",
     "@southern-syntax/ui": "workspace:*",
+    "@southern-syntax/hooks": "workspace:*",
+    "@southern-syntax/services": "workspace:*",
     "@supabase/supabase-js": "^2.50.0",
     "@tanstack/react-query": "^5.80.7",
     "@trpc/client": "^11.4.1",

@@ -1,23 +1,24 @@
 "use client";
 
 import { z } from "zod";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { useTranslations } from "next-intl";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import {
+  useForm,
+  type SubmitHandler,
+  type UseFormReturn,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 
 import { roleSchema } from "@southern-syntax/auth";
-// import type { AppRouter } from "@/server/routers/_app";
 // import type { inferRouterOutputs } from "@trpc/server";
 // import type { inferProcedureOutput } from "@trpc/server";
-// import { LocalizedString } from "@southern-syntax/types";
 import type { LocalizedString } from "@southern-syntax/types";
-import type { Role } from "@/types/role";
-
-import { useToast } from "./useToast";
-// export type { Role, Permission } from "@/types/role";
+import { useToast } from "@southern-syntax/hooks";
+import type { Role, Permission } from "@/types/role";
 
 // type RouterOutputs = inferRouterOutputs<AppRouter>;
 // export type Role = RouterOutputs["role"]["getAll"][number];
@@ -58,7 +59,29 @@ export const roleFormSchema = roleSchema.extend({
 export type RoleFormOutput = z.infer<typeof roleFormSchema>;
 export type RoleFormInput = z.input<typeof roleFormSchema>;
 
-export function useRoleManager(): any {
+// export function useRoleManager(): any {
+interface UseRoleManagerReturn {
+  roles: Role[];
+  permissions: Permission[];
+  isLoading: boolean;
+  isError: boolean;
+  error: TRPCClientErrorLike<AppRouter> | null;
+  isMutating: boolean;
+  isDeleting: boolean;
+  isDialogOpen: boolean;
+  editingRole: Role | null;
+  deletingRole: Role | null;
+  onSubmit: SubmitHandler<RoleFormOutput>;
+  handleAddNew: () => void;
+  handleEdit: (role: Role) => void;
+  handleDeleteRequest: (role: Role) => void;
+  handleDeleteConfirm: () => void;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
+  setDeletingRole: Dispatch<SetStateAction<Role | null>>;
+  formMethods: UseFormReturn<RoleFormInput>;
+}
+
+export function useRoleManager(): UseRoleManagerReturn {
   const utils = trpc.useUtils();
   const toast = useToast();
   const t_toasts = useTranslations("admin_rbac.toasts");
@@ -85,25 +108,35 @@ export function useRoleManager(): any {
   const roleQuery = trpc.role.getAll.useQuery();
   const permissionQuery = trpc.permission.getAll.useQuery();
 
-  const {
-    data: roles,
-    isLoading: isLoadingRoles,
-    isError,
-    error,
-  } = roleQuery as any;
+  // const {
+  //   data: roles,
+  //   isLoading: isLoadingRoles,
+  //   isError,
+  //   error,
+  // } = roleQuery as any;
 
-  // const roles: Role[] = (roleData ?? []) as unknown as Role[];
+  // // const roles: Role[] = (roleData ?? []) as unknown as Role[];
 
-  const { data: permissions, isLoading: isLoadingPermissions } =
-    // trpc.permission.getAll.useQuery();
-    permissionQuery as any;
+  // const { data: permissions, isLoading: isLoadingPermissions } =
+  //   // trpc.permission.getAll.useQuery();
+  //   permissionQuery as any;
+
+  const roles = roleQuery.data as Role[] | undefined;
+  // const roles = (roleQuery.data ?? []) as Role[];
+  const isLoadingRoles = roleQuery.isLoading;
+  const isError = roleQuery.isError;
+  // const error = roleQuery.error as TRPCClientErrorLike<AppRouter> | null;
+  const error: TRPCClientErrorLike<AppRouter> | null = roleQuery.error ?? null;
 
   // const permissions: Permission[] = (permissionData ??
   //   []) as unknown as Permission[];
+  const permissions = permissionQuery.data as Permission[] | undefined;
+  const isLoadingPermissions = permissionQuery.isLoading;
 
   // const handleCreateError = (error: TRPCClientErrorLike<AppRouter>) => {
   // const handleCreateError = (error: any) => {
-  const handleCreateError = (error: TRPCClientErrorLike<any>) => {
+  // const handleCreateError = (error: TRPCClientErrorLike<any>) => {
+  const handleCreateError = (error: TRPCClientErrorLike<AppRouter>) => {
     if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
     } else {
@@ -113,7 +146,8 @@ export function useRoleManager(): any {
 
   // const handleUpdateError = (error: TRPCClientErrorLike<AppRouter>) => {
   // const handleUpdateError = (error: any) => {
-  const handleUpdateError = (error: TRPCClientErrorLike<any>) => {
+  // const handleUpdateError = (error: TRPCClientErrorLike<any>) => {
+  const handleUpdateError = (error: TRPCClientErrorLike<AppRouter>) => {
     if (error.message === "CANNOT_EDIT_SYSTEM_ROLE") {
       toast.error(t_error_codes("CANNOT_EDIT_SYSTEM_ROLE"));
     } else if (error.message === "ROLE_KEY_EXISTS") {

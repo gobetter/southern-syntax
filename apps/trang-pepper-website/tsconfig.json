@@ -11,7 +11,9 @@
       "@southern-syntax/types": ["../../packages/types"],
       "@southern-syntax/config": ["../../packages/config"],
       "@southern-syntax/ui": ["../../packages/ui"],
-      "@southern-syntax/utils": ["../../packages/utils"]
+      "@southern-syntax/utils": ["../../packages/utils"],
+      "@southern-syntax/hooks": ["../../packages/hooks"],
+      "@southern-syntax/services": ["../../packages/services"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -5,9 +5,10 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations, useLocale } from "next-intl";
 import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 
 import { trpc } from "@/lib/trpc-client";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@southern-syntax/hooks";
 import {
   userUpdateSchema,
   type UserUpdateInput,
@@ -15,6 +16,8 @@ import {
 } from "@southern-syntax/schemas/user";
 // import { UserItem } from "@/types/trpc";
 import type { UserItem } from "@/types/user";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 // import { mapRoleOptions } from '@/lib/role-utils';
 import { mapToSelectOptions } from "@southern-syntax/utils";
 // import type { RoleItem } from '@/types/trpc';
@@ -125,7 +128,8 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
   //     }
   //   },
   // });
-  const updateUserMutation = trpc.user.update.useMutation() as any;
+  // const updateUserMutation = trpc.user.update.useMutation() as any;
+  const updateUserMutation = trpc.user.update.useMutation();
 
   const onSubmit: SubmitHandler<UserUpdateOutput> = (data) => {
     if (!user) return;
@@ -133,20 +137,40 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
     updateUserMutation.mutate(
       { id: user.id, data },
       {
-        onSuccess: async (updatedUser: any) => {
+        onSuccess: async (updatedUser) => {
           toast.success(t_toasts("update_success"));
           utils.user.getAll.invalidate();
 
           if (currentSession?.user?.id === updatedUser.id) {
             await updateSession({
-              ...currentSession!,
-              user: { ...currentSession!.user!, name: updatedUser.name },
-            });
+              ...(currentSession as unknown as Record<string, unknown>),
+              user: {
+                ...(currentSession.user as unknown as Record<string, unknown>),
+                name: (updatedUser as unknown as UserItem).name,
+              },
+            } as Session);
+
+            // const sessionData = currentSession as Record<string, unknown>;
+            // const sessionData = currentSession as unknown as Record<
+            //   string,
+            //   unknown
+            // >;
+
+            //   ...currentSession!,
+            //   user: { ...currentSession!.user!, name: updatedUser.name },
+            // });
+            //   ...sessionData,
+            //   user: {
+            //     ...(sessionData.user as Record<string, unknown>),
+            //     name: updatedUser.name,
+            //   },
+            // } as typeof currentSession);
           }
 
           onSuccess();
         },
-        onError: (error: any) => {
+        // onError: (error: any) => {
+        onError: (error: TRPCClientErrorLike<AppRouter>) => {
           if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {
             toast.error(
               t_error_codes("INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE")

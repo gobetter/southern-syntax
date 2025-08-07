@@ -11,10 +11,9 @@ import type { TRPCClientErrorLike } from "@trpc/client";
 import { trpc } from "@/lib/trpc-client";
 import { roleSchema } from "@southern-syntax/auth";
 import { LocalizedString } from "@southern-syntax/types";
-// import type { AppRouter } from "@/server/routers/_app";
-// import { Role } from "./useRoleManager";
-import type { Role } from "@/types/role";
-import { useToast } from "./useToast";
+import type { AppRouter } from "@/server/routers/_app";
+import { useToast } from "@southern-syntax/hooks";
+import { Role } from "@/types/role";
 
 const roleFormSchema = roleSchema.extend({
   permissionIds: z.array(z.string()),
@@ -59,8 +58,7 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
     }
   }, [editingRole, reset]);
 
-  // const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
-  const handleMutationError = (error: TRPCClientErrorLike<any>) => {
+  const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
     if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
     } else {

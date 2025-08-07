@@ -133,7 +133,13 @@ export default function UserManagementClient() {
   if (isError) {
     return (
       <ErrorDisplay
-        message={(error as any)?.message ?? t_common("errors.unknown_error")}
+        // message={(error as any)?.message ?? t_common("errors.unknown_error")}
+        // message={error?.message ?? t_common("errors.unknown_error")}
+        message={
+          error instanceof Error
+            ? error.message
+            : t_common("errors.unknown_error")
+        }
       />
     );
   }

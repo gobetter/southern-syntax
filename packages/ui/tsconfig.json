@@ -1,5 +1,6 @@
 {
-  "extends": "../tsconfig/react-library.json",
+  // "extends": "../tsconfig/react-library.json",
+  "extends": "@southern-syntax/tsconfig/base.json",
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,4 +1,3 @@
-// src/hooks/useUserManagement.ts
 "use client";
 
 import {
@@ -14,7 +13,6 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-// import { UserItem } from "@/types/trpc";
 import type { UserItem } from "@/types/user";
 import {
   type UserStatusFilter,
@@ -23,15 +21,16 @@ import {
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
 import type { TRPCClientErrorLike } from "@trpc/client";
-// import type { AppRouter } from "@/server/routers/_app";
+import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import type { SortOrder } from "@/constants/common";
 
 import { useSelectionSet } from "@/components/admin/media/MediaGrid/useSelectionSet";
 
-import { useUpdateQuery } from "./useUpdateQuery";
-import { useDebounce } from "./useDebounce";
-import { useToast } from "./useToast";
+// import { useUpdateQuery } from "./useUpdateQuery";
+// import { useDebounce } from "./useDebounce";
+// import { useToast } from "./useToast";
+import { useUpdateQuery, useDebounce, useToast } from "@southern-syntax/hooks";
 import { useUpdateUser } from "./useUpdateUser";
 
 interface UseUserManagementReturn {
@@ -46,7 +45,8 @@ interface UseUserManagementReturn {
   // error: TRPCClientErrorLike<AppRouter> | null;
   // error: unknown;
   // error: { message: string } | null;
-  error: TRPCClientErrorLike<any> | null;
+  // error: TRPCClientErrorLike<any> | null;
+  error: TRPCClientErrorLike<AppRouter> | null;
   status: UserStatusView;
   roleId: string | undefined;
   sortBy: UserSortableField | null;
@@ -141,7 +141,8 @@ export function useUserManagement(): UseUserManagementReturn {
     sortBy: sortBy ?? undefined,
     sortOrder: sortOrder ?? undefined,
     roleId,
-  }) as any;
+  });
+
   const { data: result, isLoading, isError, error } = userQuery;
   const { updateUser, isLoading: isUpdatingUser } = useUpdateUser();
   const deactivateManyMutation = trpc.user.deactivateMany.useMutation({
@@ -150,7 +151,8 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e: any) =>
+    // onError: (e: any) =>
+    onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("deactivate_many_error", { error: e.message })),
   });
   const reactivateManyMutation = trpc.user.reactivateMany.useMutation({
@@ -159,7 +161,8 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e: any) =>
+    // onError: (e: any) =>
+    onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("reactivate_many_error", { error: e.message })),
   });
   const changeRoleManyMutation = trpc.user.changeRoleMany.useMutation({
@@ -168,7 +171,8 @@ export function useUserManagement(): UseUserManagementReturn {
       utils.user.getAll.invalidate();
       clearSelection();
     },
-    onError: (e: any) =>
+    // onError: (e: any) =>
+    onError: (e: TRPCClientErrorLike<AppRouter>) =>
       toast.error(t_toasts("change_role_many_error", { error: e.message })),
   });
 

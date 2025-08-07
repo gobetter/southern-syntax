@@ -1,20 +1,60 @@
-// src/hooks/useMediaLibrary.ts
-import { useState, useEffect, useRef, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  type Dispatch,
+  type SetStateAction,
+  type RefObject,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { MediaItem } from "@/types/trpc";
 import { trpc } from "@/lib/trpc-client";
-import { useUpdateQuery } from "@/hooks/useUpdateQuery";
-import { useDebounce } from "@/hooks/useDebounce";
+// import { useUpdateQuery } from "@/hooks/useUpdateQuery";
+// import { useDebounce } from "@/hooks/useDebounce";
+import { useUpdateQuery, useDebounce } from "@southern-syntax/hooks";
 import { mapIdName } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
 import { MediaSortableField, MEDIA_SORT_OPTIONS } from "@/constants/media";
-// import { SortOrder } from '@/constants/common';
 import type { SortOrder } from "@/constants/common";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { AppRouter } from "@/server/routers/_app";
 import { MediaCategory, MediaTag } from "@southern-syntax/types";
 
-export function useMediaLibrary(): any {
+interface UseMediaLibraryReturn {
+  page: number;
+  pageSize: number;
+  sortBy: MediaSortableField;
+  sortOrder: SortOrder;
+  categoryId?: string;
+  tagId?: string;
+  isLoading: boolean;
+  isError: boolean;
+  error: TRPCClientErrorLike<AppRouter> | null;
+  mediaItems?: MediaItem[];
+  totalCount: number;
+  categoryOptions: MediaCategory[];
+  tagOptions: MediaTag[];
+  editingMedia: MediaItem | null;
+  viewingMedia: MediaItem | null;
+  isUploadDialogOpen: boolean;
+  inputValue: string;
+  searchInputRef: RefObject<HTMLInputElement | null>;
+  updateQuery: (params: Record<string, string | number | null>) => void;
+  setInputValue: Dispatch<SetStateAction<string>>;
+  setUploadDialogOpen: Dispatch<SetStateAction<boolean>>;
+  setEditingMedia: Dispatch<SetStateAction<MediaItem | null>>;
+  setViewingMedia: Dispatch<SetStateAction<MediaItem | null>>;
+  previewingMedia: MediaItem | null;
+  setPreviewingMedia: Dispatch<SetStateAction<MediaItem | null>>;
+  handleEditRequest: (media: MediaItem | null) => void;
+  handleUploadSuccess: () => void;
+  mediaSortOptions: { value: MediaSortableField; label: string }[];
+}
+
+export function useMediaLibrary(): UseMediaLibraryReturn {
   const searchParams = useSearchParams();
   const updateQuery = useUpdateQuery();
   const utils = trpc.useUtils();

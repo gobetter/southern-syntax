@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import type { MediaItem } from "@/types/trpc";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@southern-syntax/hooks";
 import { Button } from "@southern-syntax/ui";
 
 export default function UrlsSection({ media }: { media: MediaItem }) {

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 
-import { useUpdateQuery } from "@/hooks/useUpdateQuery";
+import { useUpdateQuery } from "@southern-syntax/hooks";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import { LocalizedString } from "@southern-syntax/types";
 

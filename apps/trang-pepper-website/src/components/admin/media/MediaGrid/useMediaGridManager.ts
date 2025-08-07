@@ -1,16 +1,16 @@
-import { useState, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-import { AppRouter } from '@/server/routers/_app';
-import { useToast } from '@/hooks/useToast';
-import { trpc } from '@/lib/trpc-client';
-import { TRPCClientErrorLike } from '@trpc/client';
-import { MediaItem } from '@/types/trpc';
-import { useSelectionSet } from './useSelectionSet';
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import { AppRouter } from "@/server/routers/_app";
+import { useToast } from "@southern-syntax/hooks";
+import { trpc } from "@/lib/trpc-client";
+import { TRPCClientErrorLike } from "@trpc/client";
+import { MediaItem } from "@/types/trpc";
+import { useSelectionSet } from "./useSelectionSet";
 
 // รับ mediaItems เข้ามาเพื่อใช้หา selectedItems
 export function useMediaGridManager(mediaItems: MediaItem[]) {
-  const t_success = useTranslations('admin_media.success_messages');
-  const t_error = useTranslations('admin_media.error_messages');
+  const t_success = useTranslations("admin_media.success_messages");
+  const t_error = useTranslations("admin_media.error_messages");
   const utils = trpc.useUtils();
   const toast = useToast();
 
@@ -21,17 +21,17 @@ export function useMediaGridManager(mediaItems: MediaItem[]) {
   // const selectedItems = mediaItems.filter((item) => selectedIds.has(item.id));
   const selectedItems = useMemo(
     () => mediaItems.filter((item) => selectedIds.has(item.id)),
-    [mediaItems, selectedIds], // ระบุ dependencies ให้ถูกต้อง
+    [mediaItems, selectedIds] // ระบุ dependencies ให้ถูกต้อง
   );
 
   const deleteManyMutation = trpc.media.deleteMany.useMutation({
     onSuccess: () => {
-      toast.success(t_success('delete_many_success'));
+      toast.success(t_success("delete_many_success"));
       utils.media.getAll.invalidate();
       clearSelection();
     },
     onError: (error: TRPCClientErrorLike<AppRouter>) => {
-      toast.error(t_error('delete_many_error', { error: error.message }));
+      toast.error(t_error("delete_many_error", { error: error.message }));
     },
   });
 

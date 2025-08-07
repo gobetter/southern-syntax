@@ -10,7 +10,7 @@ import {
 } from "@southern-syntax/schemas/media";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@southern-syntax/hooks";
 import type { MediaItem } from "@/types/trpc";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapToSelectOptions } from "@southern-syntax/utils";
