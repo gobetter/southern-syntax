@@ -12,7 +12,8 @@ function jsonResponse(body: unknown, init: ResponseInit) {
   });
 }
 
-export function handleApiError(error: unknown) {
+// export function handleApiError(error: unknown) {
+export function handleApiError(error: unknown): Response {
   console.error("[API Error]", error);
 
   if (error instanceof ZodError) {

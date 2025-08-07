@@ -6,7 +6,8 @@ import { useLocale } from "next-intl";
 import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-react";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
-import { UserItem } from "@/types/trpc";
+// import { UserItem } from "@/types/trpc";
+import type { UserItem } from "@/types/user";
 import type { UserSortableField } from "@southern-syntax/types";
 
 import { Button } from "@southern-syntax/ui";

@@ -2,7 +2,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Role, useRoleManager } from "@/hooks/useRoleManager";
+import { useRoleManager } from "@/hooks/useRoleManager";
+import { Role } from "@/types/role";
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
 import RoleTable from "./RoleTable";

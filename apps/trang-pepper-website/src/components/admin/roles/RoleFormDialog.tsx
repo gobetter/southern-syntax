@@ -1,4 +1,3 @@
-// src/components/admin/roles/RoleFormDialog.tsx
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -7,7 +6,8 @@ import { useSession } from "next-auth/react";
 import { AlertCircle } from "lucide-react";
 
 import { useRoleForm } from "@/hooks/useRoleForm";
-import { type Role, type Permission } from "@/hooks/useRoleManager";
+// import { type Role, type Permission } from "@/hooks/useRoleManager";
+import type { Role, Permission } from "@/types/role";
 import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/auth";
 
 import FormFieldError from "@/components/common/FormFieldError";
@@ -70,9 +70,13 @@ export default function RoleFormDialog({
 
   // (Optional) จัดลำดับกลุ่มเพื่อให้ CRUD อยู่ก่อน
   const actionOrder = ["CREATE", "READ", "UPDATE", "DELETE"];
-  const sortedGroupedPermissions = Object.entries(groupedPermissions).sort(
-    ([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b)
-  );
+
+  // const sortedGroupedPermissions = Object.entries(groupedPermissions).sort(
+  //   ([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b)
+  // );
+  const sortedGroupedPermissions: [string, Permission[]][] = Object.entries(
+    groupedPermissions
+  ).sort(([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b));
 
   // สร้าง Array ของ Resource ที่สงวนไว้สำหรับ Super Admin
   const SUPERADMIN_ONLY_RESOURCES: string[] = [

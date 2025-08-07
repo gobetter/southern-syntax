@@ -1,18 +1,20 @@
 // src/hooks/useRoleForm.ts
 "use client";
 
+import { useEffect } from "react";
 import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { trpc } from "@/lib/trpc-client";
-import { useToast } from "./useToast";
-import { roleSchema } from "@southern-syntax/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { TRPCClientErrorLike } from "@trpc/client";
-import type { AppRouter } from "@/server/routers/_app";
-import { Role } from "./useRoleManager";
-import { useEffect } from "react";
+
+import { trpc } from "@/lib/trpc-client";
+import { roleSchema } from "@southern-syntax/auth";
 import { LocalizedString } from "@southern-syntax/types";
+// import type { AppRouter } from "@/server/routers/_app";
+// import { Role } from "./useRoleManager";
+import type { Role } from "@/types/role";
+import { useToast } from "./useToast";
 
 const roleFormSchema = roleSchema.extend({
   permissionIds: z.array(z.string()),
@@ -57,7 +59,8 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
     }
   }, [editingRole, reset]);
 
-  const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
+  // const handleMutationError = (error: TRPCClientErrorLike<AppRouter>) => {
+  const handleMutationError = (error: TRPCClientErrorLike<any>) => {
     if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
     } else {

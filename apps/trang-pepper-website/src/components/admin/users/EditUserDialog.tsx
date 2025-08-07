@@ -5,7 +5,8 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Controller, useWatch } from "react-hook-form";
 
-import { UserItem } from "@/types/trpc";
+// import { UserItem } from "@/types/trpc";
+import type { UserItem } from "@/types/user";
 import { useEditUserForm } from "@/hooks/useEditUserForm";
 
 import {

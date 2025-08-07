@@ -16,21 +16,26 @@ import {
 // import type { inferRouterOutputs } from "@trpc/server";
 // import type { AppRouter } from "@/server/routers/_app";
 import { ROLE_NAMES } from "@southern-syntax/auth";
+// import type { Role } from "@/hooks/useRoleManager";
+import type { Role } from "@/types/role";
 
 // Pull the output type directly from the getAll procedure to keep types light
-import type { inferProcedureOutput } from "@trpc/server";
-import type { AppRouter } from "@/server/routers/_app";
+// import type { inferProcedureOutput } from "@trpc/server";
+// import type { AppRouter } from "@/server/routers/_app";
 
 import RoleActionsDropdown from "./_components/RoleActionsDropdown";
 
 // type RouterOutputs = inferRouterOutputs<AppRouter>;
 // type RoleItem = RouterOutputs["role"]["getAll"][number];
-type RoleItem = inferProcedureOutput<AppRouter["role"]["getAll"]>[number];
+// type RoleItem = inferProcedureOutput<AppRouter["role"]["getAll"]>[number];
 
 interface RoleTableProps {
-  roles: RoleItem[];
-  onEdit: (role: RoleItem) => void;
-  onDelete: (role: RoleItem) => void;
+  // roles: RoleItem[];
+  // onEdit: (role: RoleItem) => void;
+  // onDelete: (role: RoleItem) => void;
+  roles: Role[];
+  onEdit: (role: Role) => void;
+  onDelete: (role: Role) => void;
 }
 
 export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {

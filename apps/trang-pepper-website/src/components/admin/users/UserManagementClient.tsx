@@ -4,7 +4,8 @@ import { useState } from "react";
 import { PlusCircle, Search, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { UserItem } from "@/types/trpc";
+// import { UserItem } from "@/types/trpc";
+import type { UserItem } from "@/types/user";
 import { getLocalizedString } from "@southern-syntax/i18n";
 
 // Hooks

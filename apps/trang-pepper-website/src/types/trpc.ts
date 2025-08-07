@@ -6,22 +6,22 @@ import { type LocalizedString } from "@southern-syntax/types";
 // export type RouterOutputs = inferRouterOutputs<AppRouter>;
 // export type UserItem = RouterOutputs["user"]["getAll"]["data"][number];
 // Simplified representations of tRPC outputs to keep types lightweight
-export interface UserItem {
-  id: string;
-  email: string;
-  name: LocalizedString | null;
-  isActive: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-  role: {
-    id: string;
-    key: string;
-    name: LocalizedString | null;
-    description?: string | null;
-    isSystem?: boolean;
-    isSelectableOnRegistration?: boolean;
-  } | null;
-}
+// export interface UserItem {
+//   id: string;
+//   email: string;
+//   name: LocalizedString | null;
+//   isActive: boolean;
+//   createdAt?: string;
+//   updatedAt?: string;
+//   role: {
+//     id: string;
+//     key: string;
+//     name: LocalizedString | null;
+//     description?: string | null;
+//     isSystem?: boolean;
+//     isSelectableOnRegistration?: boolean;
+//   } | null;
+// }
 export interface MediaItem {
   id: string;
   filename: string;
