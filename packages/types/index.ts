@@ -1,3 +1,5 @@
+export * from "./audit-log";
+export * from "./common";
 export * from "./forms";
 export * from "./media-taxonomy";
 export * from "./media";
@@ -14,5 +16,5 @@ export interface FormErrors {
 
 export interface CommonMessages {
   form_errors: FormErrors;
-  // เพิ่ม key อื่นๆ ใน common/en.json ที่นี่
+  actions: Record<string, string>;
 }

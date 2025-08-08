@@ -12,16 +12,17 @@ import {
   TableRow,
 } from "@southern-syntax/ui";
 
-import type { AuditLogItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { AuditLogItem } from "@/types/trpc";
 
 interface AuditLogTableProps {
   logs: AuditLogItem[];
-  onViewDetails: (log: AuditLogItem) => void;
+  onViewDetailsAction: (log: AuditLogItem) => void;
 }
 
 export default function AuditLogTable({
   logs,
-  onViewDetails,
+  onViewDetailsAction,
 }: AuditLogTableProps) {
   const t = useTranslations("admin_audit_log.table");
   const locale = useLocale();
@@ -57,7 +58,7 @@ export default function AuditLogTable({
           {logs.map((log) => (
             <TableRow
               key={log.id}
-              onClick={() => onViewDetails(log)}
+              onClick={() => onViewDetailsAction(log)}
               className="hover:bg-muted/50 cursor-pointer"
             >
               <TableCell>

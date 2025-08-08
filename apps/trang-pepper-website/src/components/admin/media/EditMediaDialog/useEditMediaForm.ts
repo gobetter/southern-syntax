@@ -6,7 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import {
   mediaUpdateFormInputSchema,

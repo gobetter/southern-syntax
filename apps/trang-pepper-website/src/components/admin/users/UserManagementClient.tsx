@@ -223,8 +223,8 @@ export default function UserManagementClient() {
 
         <ConfirmationDialog
           open={!!deactivatingUser}
-          onOpenChange={() => setDeactivatingUser(null)}
-          onConfirm={handleDeactivateSingleConfirm}
+          onOpenChangeAction={() => setDeactivatingUser(null)}
+          onConfirmAction={handleDeactivateSingleConfirm}
           isLoading={isUpdatingUser}
           title={t("dialog_delete.title")}
           description={
@@ -244,8 +244,8 @@ export default function UserManagementClient() {
 
         <ConfirmationDialog
           open={isBulkDeactivateConfirmOpen}
-          onOpenChange={setBulkDeactivateConfirmOpen}
-          onConfirm={handleBulkDeactivateConfirm}
+          onOpenChangeAction={setBulkDeactivateConfirmOpen}
+          onConfirmAction={handleBulkDeactivateConfirm}
           isLoading={isDeactivatingMany}
           title={t("action_bar.deactivate_dialog.title")}
           description={t("action_bar.deactivate_dialog.description", {
@@ -256,8 +256,8 @@ export default function UserManagementClient() {
 
         <ConfirmationDialog
           open={isBulkReactivateConfirmOpen}
-          onOpenChange={setBulkReactivateConfirmOpen}
-          onConfirm={handleBulkReactivateConfirm}
+          onOpenChangeAction={setBulkReactivateConfirmOpen}
+          onConfirmAction={handleBulkReactivateConfirm}
           isLoading={isReactivatingMany}
           title={t("action_bar.reactivate_dialog.title")}
           description={t("action_bar.reactivate_dialog.description", {

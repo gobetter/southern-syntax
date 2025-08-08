@@ -6,32 +6,32 @@ import { useUploadMedia } from "@/hooks/useUploadMedia";
 
 interface UploadDialogProps {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  onUploadSuccess: () => void;
+  onOpenChangeAction: (open: boolean) => void;
+  onUploadSuccessAction: () => void;
 }
 
 export default function UploadDialog({
   isOpen,
-  onOpenChange,
-  onUploadSuccess,
+  onOpenChangeAction,
+  onUploadSuccessAction,
 }: UploadDialogProps) {
   const t = useTranslations("admin_media.upload_dialog");
 
   // The hook remains here, providing the specific logic for MEDIA uploads.
   const { upload, isUploading, errors, clearError } = useUploadMedia(() => {
-    onUploadSuccess();
-    onOpenChange(false); // Let the success callback handle closing
+    onUploadSuccessAction();
+    onOpenChangeAction(false); // Let the success callback handle closing
   });
 
   return (
     <FileUploadDialog
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      onUpload={upload} // Pass the specific upload function from the hook
+      onOpenChangeAction={onOpenChangeAction}
+      onUploadAction={upload}
       isUploading={isUploading}
       errors={errors}
-      clearErrors={clearError}
-      dialogTitle={t("title")} // Provide the specific title
+      clearErrorsAction={clearError}
+      dialogTitle={t("title")}
     />
   );
 }

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 import { parseVariantRecord } from "@southern-syntax/utils";
@@ -14,22 +15,22 @@ interface MediaCardProps {
   media: MediaItem;
   locale: string;
   isSelected: boolean;
-  onSelectionChange: (id: string, selected: boolean) => void;
-  onEdit: () => void;
-  onPreview: () => void;
-  onViewDetails: () => void;
-  onDelete: () => void;
+  onSelectionChangeAction: (id: string, selected: boolean) => void;
+  onEditAction: () => void;
+  onPreviewAction: () => void;
+  onViewDetailsAction: () => void;
+  onDeleteAction: () => void;
 }
 
 export default function MediaCard({
   media,
   locale,
   isSelected,
-  onSelectionChange,
-  onEdit,
-  onPreview,
-  onViewDetails,
-  onDelete,
+  onSelectionChangeAction,
+  onEditAction,
+  onPreviewAction,
+  onViewDetailsAction,
+  onDeleteAction,
 }: MediaCardProps) {
   const variants = parseVariantRecord(media.variants);
   const thumbnailUrl = variants?.["thumbnail"] || media.originalUrl;
@@ -38,7 +39,7 @@ export default function MediaCard({
     <Card className="group relative overflow-hidden">
       <CardContent
         className="p-0"
-        onClick={onPreview}
+        onClick={onPreviewAction}
         style={{ cursor: "pointer" }}
       >
         <div className="relative aspect-square w-full">
@@ -56,7 +57,7 @@ export default function MediaCard({
 
       <CardFooter
         className="flex cursor-pointer items-center justify-between bg-white p-2 dark:bg-gray-900"
-        onClick={onViewDetails}
+        onClick={onViewDetailsAction}
       >
         <p
           className="truncate text-xs font-medium"
@@ -69,14 +70,19 @@ export default function MediaCard({
       <div className="absolute top-2 left-2 z-10">
         <Checkbox
           checked={isSelected}
-          onCheckedChange={(checked) => onSelectionChange(media.id, !!checked)}
+          onCheckedChange={(checked) =>
+            onSelectionChangeAction(media.id, !!checked)
+          }
           className="text-primary-600 focus:ring-primary-500 h-5 w-5 rounded border-gray-300 bg-white/80"
         />
       </div>
 
       <div className="absolute top-2 right-2 z-10 opacity-0 transition-opacity group-hover:opacity-100">
         {/* ส่ง onDelete ที่ได้รับมาไปให้ Dropdown */}
-        <MediaDropdown onEdit={onEdit} onDelete={onDelete} />
+        <MediaDropdown
+          onEditAction={onEditAction}
+          onDeleteAction={onDeleteAction}
+        />
       </div>
     </Card>
   );

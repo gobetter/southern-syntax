@@ -15,23 +15,23 @@ import {
 
 interface DeleteMediaDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
   filename: string;
-  onConfirm: () => void;
+  onConfirmAction: () => void;
   isLoading: boolean;
 }
 
 export default function DeleteMediaDialog({
   open,
-  onOpenChange,
+  onOpenChangeAction,
   filename,
-  onConfirm,
+  onConfirmAction,
   isLoading,
 }: DeleteMediaDialogProps) {
   const t = useTranslations("admin_media.delete_dialog");
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={onOpenChangeAction}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("title")}</AlertDialogTitle>
@@ -42,7 +42,7 @@ export default function DeleteMediaDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
-            onClick={onConfirm}
+            onClick={onConfirmAction}
             disabled={isLoading}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >

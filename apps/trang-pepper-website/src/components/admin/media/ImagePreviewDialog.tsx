@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import {
   Button,
@@ -16,13 +17,13 @@ import {
 interface ImagePreviewDialogProps {
   media: MediaItem | null;
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export default function ImagePreviewDialog({
   media,
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
 }: ImagePreviewDialogProps) {
   const t = useTranslations("admin_media.preview_dialog");
 
@@ -33,7 +34,7 @@ export default function ImagePreviewDialog({
   const previewUrl = media.variants?.["medium"] || media.originalUrl;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChangeAction}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
@@ -50,7 +51,7 @@ export default function ImagePreviewDialog({
           />
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChangeAction(false)}>
             {t("close_button")}
           </Button>
         </DialogFooter>

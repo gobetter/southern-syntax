@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import { cn } from "@southern-syntax/ui";
 import { CheckboxGroup } from "@/components/common/CheckboxGroup";
@@ -25,13 +26,13 @@ import { useEditMediaForm } from "./useEditMediaForm";
 interface EditMediaDialogProps {
   media: MediaItem | null;
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export default function EditMediaDialog({
   media,
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
 }: EditMediaDialogProps) {
   const t = useTranslations("admin_media.edit_dialog");
   const t_filter = useTranslations("admin_media.filter");
@@ -44,14 +45,14 @@ export default function EditMediaDialog({
     onSubmit,
     categoryOptions,
     tagOptions,
-  } = useEditMediaForm({ media, isOpen, onOpenChange });
+  } = useEditMediaForm({ media, isOpen, onOpenChange: onOpenChangeAction });
 
   if (!media) return null;
 
   const thumbnailUrl = media.variants?.["thumbnail"] || media.originalUrl;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChangeAction}>
       <DialogContent
         className={cn("sm:max-w-lg", isSubmitting && "cursor-wait")}
       >
@@ -72,7 +73,7 @@ export default function EditMediaDialog({
               />
             </div>
 
-            <MediaTextFields register={register} t={t} />
+            <MediaTextFields registerAction={register} t={t} />
 
             <div className="space-y-1.5">
               <Label>{t_filter("category_placeholder")}</Label>
@@ -112,7 +113,7 @@ export default function EditMediaDialog({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => onOpenChange(false)}
+            onClick={() => onOpenChangeAction(false)}
           >
             {t("cancel_button")}
           </Button>

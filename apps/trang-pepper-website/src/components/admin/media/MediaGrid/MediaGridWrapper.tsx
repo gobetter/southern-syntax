@@ -5,8 +5,9 @@ import { useTranslations } from "next-intl";
 import { TRPCClientErrorLike } from "@trpc/client";
 
 import { useToast } from "@southern-syntax/hooks";
-
+// import type { MediaItem } from "@southern-syntax/types";
 import { MediaItem } from "@/types/trpc";
+
 import { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 
@@ -20,16 +21,16 @@ import MediaGridContent from "./_components/MediaGridContent";
 
 interface MediaGridWrapperProps {
   mediaItems: MediaItem[];
-  onEdit: (media: MediaItem) => void;
-  onViewDetails: (media: MediaItem) => void;
-  onPreview: (media: MediaItem) => void;
+  onEditAction: (media: MediaItem) => void;
+  onViewDetailsAction: (media: MediaItem) => void;
+  onPreviewAction: (media: MediaItem) => void;
 }
 
 export default function MediaGridWrapper({
   mediaItems,
-  onEdit,
-  onViewDetails,
-  onPreview,
+  onEditAction,
+  onViewDetailsAction,
+  onPreviewAction,
 }: MediaGridWrapperProps) {
   const t_actionBarDialog = useTranslations(
     "admin_media.action_bar.delete_dialog"
@@ -82,9 +83,9 @@ export default function MediaGridWrapper({
       {selectedIds.size > 0 && (
         <MediaActionBar
           selectedCount={selectedIds.size}
-          onDeleteRequest={() => setBulkDeleteConfirmOpen(true)}
-          onClearSelection={clearSelection}
-          onEditSelected={() => setBulkEditing(true)}
+          onDeleteRequestAction={() => setBulkDeleteConfirmOpen(true)}
+          onClearSelectionAction={clearSelection}
+          onEditSelectedAction={() => setBulkEditing(true)}
           isDeleting={isBulkDeleting}
         />
       )}
@@ -92,32 +93,32 @@ export default function MediaGridWrapper({
       <MediaGridContent
         mediaItems={mediaItems}
         selectedIds={selectedIds}
-        onEdit={onEdit}
-        onViewDetails={onViewDetails}
-        onPreview={onPreview}
-        onToggleSelect={toggleSelection}
+        onEditAction={onEditAction}
+        onViewDetailsAction={onViewDetailsAction}
+        onPreviewAction={onPreviewAction}
+        onToggleSelectAction={toggleSelection}
         // ✅ MediaGridWrapper คือ "ผู้สร้าง" และ "ส่งต่อ" ฟังก์ชัน setDeletingMedia
-        // ให้กับ Prop ที่ชื่อ onDeleteRequest ของ MediaGridContent
-        onDeleteRequest={setDeletingMedia}
+        // ให้กับ Prop ที่ชื่อ onDeleteRequestAction ของ MediaGridContent
+        onDeleteRequestAction={setDeletingMedia}
       />
 
       <BulkEditDialog
         isOpen={isBulkEditing}
-        onOpenChange={setBulkEditing}
+        onOpenChangeAction={setBulkEditing}
         mediaIds={Array.from(selectedIds)}
         mediaItems={selectedItems}
-        onSuccess={handleBulkEditSuccess}
+        onSuccessAction={handleBulkEditSuccess}
       />
 
       {/* Dialog สำหรับลบหลายรายการ (Bulk Delete) */}
       <ConfirmationDialog
         open={isBulkDeleteConfirmOpen}
-        onOpenChange={setBulkDeleteConfirmOpen}
+        onOpenChangeAction={setBulkDeleteConfirmOpen}
         title={t_actionBarDialog("title")}
         description={t_actionBarDialog("description", {
           count: selectedIds.size,
         })}
-        onConfirm={handleDeleteSelected}
+        onConfirmAction={handleDeleteSelected}
         isLoading={isBulkDeleting}
         variant="destructive"
       />
@@ -125,12 +126,12 @@ export default function MediaGridWrapper({
       {/* Dialog สำหรับลบไฟล์เดียว (Single Delete) */}
       <ConfirmationDialog
         open={!!deletingMedia}
-        onOpenChange={(open) => !open && setDeletingMedia(null)}
+        onOpenChangeAction={(open) => !open && setDeletingMedia(null)}
         title={t_cardDialog("title")}
         description={t_cardDialog("description", {
           filename: deletingMedia?.filename ?? "",
         })}
-        onConfirm={handleConfirmDeleteOne}
+        onConfirmAction={handleConfirmDeleteOne}
         isLoading={deleteOneMutation.isPending}
         variant="destructive"
       />

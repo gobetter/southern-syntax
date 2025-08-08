@@ -4,7 +4,8 @@ import { useLocale } from "next-intl";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
 
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 import { trpc } from "@/lib/trpc-client";
 
 import {

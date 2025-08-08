@@ -90,12 +90,12 @@ export default function MediaLibraryClient() {
         tagId={tagId}
         categoryOptions={categoryOptions}
         tagOptions={tagOptions}
-        onUpdateQuery={updateQuery}
+        onUpdateQueryAction={updateQuery}
       />
       <SortDropdown
         sortBy={sortBy}
         sortOrder={sortOrder}
-        onUpdateQuery={updateQuery}
+        onUpdateQueryAction={updateQuery}
         sortOptions={mediaSortOptions}
       />
     </div>
@@ -118,9 +118,9 @@ export default function MediaLibraryClient() {
           <div className="space-y-4">
             <MediaGrid
               mediaItems={mediaItems}
-              onEdit={setEditingMedia}
-              onViewDetails={setViewingMedia}
-              onPreview={setPreviewingMedia}
+              onEditAction={setEditingMedia}
+              onViewDetailsAction={setViewingMedia}
+              onPreviewAction={setPreviewingMedia}
             />
             <DataTablePagination
               page={page}
@@ -138,26 +138,26 @@ export default function MediaLibraryClient() {
 
       <UploadDialog
         isOpen={isUploadDialogOpen}
-        onOpenChange={setUploadDialogOpen}
-        onUploadSuccess={handleUploadSuccess}
+        onOpenChangeAction={setUploadDialogOpen}
+        onUploadSuccessAction={handleUploadSuccess}
       />
 
       <EditMediaDialog
         isOpen={!!editingMedia}
-        onOpenChange={(isOpen) => !isOpen && setEditingMedia(null)}
+        onOpenChangeAction={(isOpen) => !isOpen && setEditingMedia(null)}
         media={editingMedia}
       />
 
       <MediaDetailSidebar
         media={viewingMedia}
-        onOpenChange={(isOpen) => !isOpen && setViewingMedia(null)}
-        onEdit={() => handleEditRequest(viewingMedia)}
+        onOpenChangeAction={(isOpen) => !isOpen && setViewingMedia(null)}
+        onEditAction={() => handleEditRequest(viewingMedia)}
       />
 
       <ImagePreviewDialog
         media={previewingMedia}
         isOpen={!!previewingMedia}
-        onOpenChange={() => setPreviewingMedia(null)}
+        onOpenChangeAction={() => setPreviewingMedia(null)}
       />
     </>
   );

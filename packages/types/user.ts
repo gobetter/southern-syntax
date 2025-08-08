@@ -1,7 +1,3 @@
-// ค่าคงที่สำหรับลำดับการจัดเรียงทั่วไป
-export const SORT_ORDERS = ["asc", "desc"] as const;
-export type SortOrder = (typeof SORT_ORDERS)[number];
-
 // สร้างค่าคงที่เป็น readonly tuple โดยใช้ `as const`
 export const VALID_USER_STATUSES = ["active", "inactive"] as const;
 export const USER_SORTABLE_FIELDS = [

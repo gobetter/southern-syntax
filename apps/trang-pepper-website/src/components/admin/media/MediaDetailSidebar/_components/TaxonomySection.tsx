@@ -1,7 +1,8 @@
 import { useLocale, useTranslations } from "next-intl";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 import type { LocalizedString } from "@southern-syntax/types";
 
 import { Badge, Separator } from "@southern-syntax/ui";

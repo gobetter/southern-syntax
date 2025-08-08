@@ -117,6 +117,7 @@
     "view": "View",
     "save": "Save",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "try_again": "Try Again"
   }
 }

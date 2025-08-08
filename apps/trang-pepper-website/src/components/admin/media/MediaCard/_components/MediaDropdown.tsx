@@ -12,11 +12,11 @@ import {
 } from "@southern-syntax/ui";
 
 export default function MediaDropdown({
-  onEdit,
-  onDelete,
+  onEditAction,
+  onDeleteAction,
 }: {
-  onEdit: () => void;
-  onDelete: () => void;
+  onEditAction: () => void;
+  onDeleteAction: () => void;
 }) {
   const t_dropdown = useTranslations("admin_media.dropdown");
 
@@ -28,7 +28,7 @@ export default function MediaDropdown({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onSelect={onEdit}>
+        <DropdownMenuItem onSelect={onEditAction}>
           <Edit className="mr-2 h-4 w-4" />
           {t_dropdown("edit_details")}
         </DropdownMenuItem>
@@ -36,7 +36,7 @@ export default function MediaDropdown({
           className="text-red-600 focus:text-red-600"
           onSelect={() => {
             // e.preventDefault();
-            onDelete();
+            onDeleteAction();
           }}
         >
           <Trash2 className="mr-2 h-4 w-4" />

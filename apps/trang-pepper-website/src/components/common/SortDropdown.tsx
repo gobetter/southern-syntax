@@ -20,14 +20,16 @@ export interface SortOption<T extends string> {
 interface SortDropdownProps<T extends string> {
   sortBy: T;
   sortOrder: SortOrder;
-  onUpdateQuery: (updates: Record<string, string | number | null>) => void;
+  onUpdateQueryAction: (
+    updates: Record<string, string | number | null>
+  ) => void;
   sortOptions: SortOption<T>[]; // รับ Array ของ object ที่จะใช้สร้างเมนู
 }
 
 export default function SortDropdown<T extends string>({
   sortBy,
   sortOrder,
-  onUpdateQuery,
+  onUpdateQueryAction,
   sortOptions,
 }: SortDropdownProps<T>) {
   const t = useTranslations("admin_media.sorting");
@@ -51,7 +53,7 @@ export default function SortDropdown<T extends string>({
             <DropdownMenuItem
               key={option.value}
               onClick={() =>
-                onUpdateQuery({
+                onUpdateQueryAction({
                   sortBy: option.value,
                   sortOrder:
                     sortBy === option.value && sortOrder === "desc"

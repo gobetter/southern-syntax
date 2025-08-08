@@ -32,21 +32,21 @@ export interface FileUploadError {
 // Props for the generic component
 interface FileUploadDialogProps {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  onUpload: (files: File[]) => Promise<void>; // Generic upload function
+  onOpenChangeAction: (open: boolean) => void;
+  onUploadAction: (files: File[]) => Promise<void>; // Generic upload function
   isUploading: boolean;
   errors: FileUploadError[];
-  clearErrors: () => void;
-  dialogTitle: string; // Allow custom title
+  clearErrorsAction: () => void;
+  dialogTitle: string;
 }
 
 export default function FileUploadDialog({
   isOpen,
-  onOpenChange,
-  onUpload,
+  onOpenChangeAction,
+  onUploadAction,
   isUploading,
   errors,
-  clearErrors,
+  clearErrorsAction,
   dialogTitle,
 }: FileUploadDialogProps) {
   const t = useTranslations("admin_media.upload_dialog");
@@ -55,17 +55,17 @@ export default function FileUploadDialog({
 
   const resetFormState = useCallback(() => {
     setSelectedFiles([]);
-    clearErrors();
+    clearErrorsAction();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-  }, [clearErrors]);
+  }, [clearErrorsAction]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setSelectedFiles(Array.from(event.target.files));
       if (errors.length > 0) {
-        clearErrors(); // Clear previous errors when new files are selected
+        clearErrorsAction();
       }
     }
   };
@@ -87,11 +87,11 @@ export default function FileUploadDialog({
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (selectedFiles.length === 0) return;
-    await onUpload(selectedFiles);
+    await onUploadAction(selectedFiles);
   };
 
   const handleClose = () => {
-    onOpenChange(false);
+    onOpenChangeAction(false);
   };
 
   return (

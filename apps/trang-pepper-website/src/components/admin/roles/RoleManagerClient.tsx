@@ -86,8 +86,8 @@ export default function RoleManagerClient() {
 
       <ConfirmationDialog
         open={!!deletingRole}
-        onOpenChange={() => setDeletingRole(null)}
-        onConfirm={handleDeleteConfirm}
+        onOpenChangeAction={() => setDeletingRole(null)}
+        onConfirmAction={handleDeleteConfirm}
         isLoading={isDeleting}
         title={t("dialog_delete.title")}
         description={t("dialog_delete.description")}

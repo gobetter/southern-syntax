@@ -14,14 +14,14 @@ interface CheckboxGroupWithStatesProps {
   namePrefix: string;
   options: Option[];
   states: CheckboxStates;
-  onChange: (id: string) => void;
+  onChangeAction: (id: string) => void;
 }
 
 export default function CheckboxGroupWithStates({
   namePrefix,
   options,
   states,
-  onChange,
+  onChangeAction,
 }: CheckboxGroupWithStatesProps) {
   return (
     <div className="max-h-40 space-y-2 overflow-y-auto rounded-md border p-3">
@@ -30,7 +30,7 @@ export default function CheckboxGroupWithStates({
           <Checkbox
             id={`${namePrefix}-${id}`}
             checked={states[id] === "checked"}
-            onCheckedChange={() => onChange(id)}
+            onCheckedChange={() => onChangeAction(id)}
           />
           <Label
             htmlFor={`${namePrefix}-${id}`}

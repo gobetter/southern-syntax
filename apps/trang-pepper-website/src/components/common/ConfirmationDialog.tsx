@@ -16,20 +16,20 @@ import {
 
 interface ConfirmationDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
   title: string;
   description: React.ReactNode;
-  onConfirm: () => void;
+  onConfirmAction: () => void;
   isLoading?: boolean;
   variant?: "default" | "destructive";
 }
 
 export default function ConfirmationDialog({
   open,
-  onOpenChange,
+  onOpenChangeAction,
   title,
   description,
-  onConfirm,
+  onConfirmAction,
   isLoading = false,
   variant = "default",
 }: ConfirmationDialogProps) {
@@ -41,7 +41,7 @@ export default function ConfirmationDialog({
   });
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={onOpenChangeAction}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -52,7 +52,7 @@ export default function ConfirmationDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
-            onClick={onConfirm}
+            onClick={onConfirmAction}
             disabled={isLoading}
             className={actionClasses}
           >

@@ -24,7 +24,9 @@ export interface FiltersProps {
   tagId: string | undefined;
   categoryOptions: MediaCategory[];
   tagOptions: MediaTag[];
-  onUpdateQuery: (updates: Record<string, string | number | null>) => void;
+  onUpdateQueryAction: (
+    updates: Record<string, string | number | null>
+  ) => void;
 }
 
 export default function Filters({
@@ -33,7 +35,7 @@ export default function Filters({
   tagId,
   categoryOptions,
   tagOptions,
-  onUpdateQuery,
+  onUpdateQueryAction,
 }: FiltersProps) {
   const t = useTranslations("admin_media");
   const locale = useLocale();
@@ -44,7 +46,10 @@ export default function Filters({
       <Select
         value={categoryId || "all"}
         onValueChange={(val) =>
-          onUpdateQuery({ categoryId: val === "all" ? null : val, page: 1 })
+          onUpdateQueryAction({
+            categoryId: val === "all" ? null : val,
+            page: 1,
+          })
         }
       >
         <SelectTrigger className="w-[180px]">
@@ -64,7 +69,7 @@ export default function Filters({
       <Select
         value={tagId || "all"}
         onValueChange={(val) =>
-          onUpdateQuery({ tagId: val === "all" ? null : val, page: 1 })
+          onUpdateQueryAction({ tagId: val === "all" ? null : val, page: 1 })
         }
       >
         <SelectTrigger className="w-[180px]">

@@ -2,7 +2,8 @@
 
 import { useTranslations } from "next-intl";
 
-import type { MediaItem } from "@/types/trpc";
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import {
   Button,
@@ -24,16 +25,16 @@ interface Props {
   mediaIds: string[];
   mediaItems: MediaItem[];
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: () => void;
+  onOpenChangeAction: (open: boolean) => void;
+  onSuccessAction: () => void;
 }
 
 export default function BulkEditDialog({
   mediaIds,
   mediaItems,
   isOpen,
-  onOpenChange,
-  onSuccess,
+  onOpenChangeAction,
+  onSuccessAction,
 }: Props) {
   const t = useTranslations("admin_media.bulk_edit_dialog");
   const t_filter = useTranslations("admin_media.filter");
@@ -51,12 +52,12 @@ export default function BulkEditDialog({
     mediaItems,
     mediaIds,
     isOpen,
-    onSuccess,
-    onClose: () => onOpenChange(false),
+    onSuccess: onSuccessAction,
+    onClose: () => onOpenChangeAction(false),
   });
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChangeAction}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("title", { count: mediaIds.length })}</DialogTitle>
@@ -69,7 +70,7 @@ export default function BulkEditDialog({
               namePrefix="bulk-cat"
               options={categoryOptions}
               states={categoryStates}
-              onChange={handleCategoryChange}
+              onChangeAction={handleCategoryChange}
             />
           </div>
 
@@ -79,7 +80,7 @@ export default function BulkEditDialog({
               namePrefix="bulk-tag"
               options={tagOptions}
               states={tagStates}
-              onChange={handleTagChange}
+              onChangeAction={handleTagChange}
             />
           </div>
         </div>

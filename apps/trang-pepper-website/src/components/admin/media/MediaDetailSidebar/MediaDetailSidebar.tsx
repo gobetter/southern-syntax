@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
-import type { MediaItem } from "@/types/trpc";
+
+// import type { MediaItem } from "@southern-syntax/types";
+import { MediaItem } from "@/types/trpc";
 
 import {
   Button,
@@ -24,14 +26,14 @@ import UrlsSection from "./_components/UrlsSection";
 
 interface MediaDetailSidebarProps {
   media: MediaItem | null;
-  onOpenChange: (open: boolean) => void;
-  onEdit: () => void;
+  onOpenChangeAction: (open: boolean) => void;
+  onEditAction: () => void;
 }
 
 export default function MediaDetailSidebar({
   media,
-  onOpenChange,
-  onEdit,
+  onOpenChangeAction,
+  onEditAction,
 }: MediaDetailSidebarProps) {
   const t = useTranslations("admin_media.details");
   const common_t = useTranslations("common");
@@ -42,7 +44,7 @@ export default function MediaDetailSidebar({
   const thumbnail = media.variants?.["original"] || media.originalUrl;
 
   return (
-    <Sheet open={!!media} onOpenChange={onOpenChange}>
+    <Sheet open={!!media} onOpenChange={onOpenChangeAction}>
       <SheetContent className="flex w-full flex-col p-6 sm:max-w-lg">
         <SheetHeader>
           <SheetTitle>
@@ -78,7 +80,7 @@ export default function MediaDetailSidebar({
             type="button"
             variant="secondary"
             className="w-full"
-            onClick={onEdit}
+            onClick={onEditAction}
           >
             {t("edit_button")}
           </Button>

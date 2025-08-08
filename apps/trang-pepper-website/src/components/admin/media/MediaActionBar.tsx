@@ -2,21 +2,22 @@
 
 import { useTranslations } from "next-intl";
 import { Edit, Trash2 } from "lucide-react";
+
 import { Button } from "@southern-syntax/ui";
 
 interface MediaActionBarProps {
   selectedCount: number;
-  onDeleteRequest: () => void;
-  onClearSelection: () => void;
-  onEditSelected: () => void;
+  onDeleteRequestAction: () => void;
+  onClearSelectionAction: () => void;
+  onEditSelectedAction: () => void;
   isDeleting: boolean;
 }
 
 export default function MediaActionBar({
   selectedCount,
-  onDeleteRequest,
-  onClearSelection,
-  onEditSelected,
+  onDeleteRequestAction,
+  onClearSelectionAction,
+  onEditSelectedAction,
   isDeleting,
 }: MediaActionBarProps) {
   const t = useTranslations("admin_media.action_bar");
@@ -27,13 +28,13 @@ export default function MediaActionBar({
         <p className="text-sm font-semibold">
           {t("items_selected", { count: selectedCount })}
         </p>
-        <Button variant="outline" size="sm" onClick={onClearSelection}>
+        <Button variant="outline" size="sm" onClick={onClearSelectionAction}>
           {t("clear_selection")}
         </Button>
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" onClick={onEditSelected}>
+        <Button variant="outline" size="sm" onClick={onEditSelectedAction}>
           <Edit className="mr-2 h-4 w-4" />
           {t("edit_selected")}
         </Button>
@@ -42,7 +43,7 @@ export default function MediaActionBar({
         <Button
           variant="destructive"
           size="sm"
-          onClick={onDeleteRequest}
+          onClick={onDeleteRequestAction}
           disabled={isDeleting}
         >
           <Trash2 className="mr-2 h-4 w-4" />

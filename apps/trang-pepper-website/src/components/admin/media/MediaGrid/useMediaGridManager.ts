@@ -6,6 +6,7 @@ import { useToast } from "@southern-syntax/hooks";
 import { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import { TRPCClientErrorLike } from "@trpc/client";
+// import type { MediaItem } from "@southern-syntax/types";
 import { MediaItem } from "@/types/trpc";
 
 import { useSelectionSet } from "./useSelectionSet";

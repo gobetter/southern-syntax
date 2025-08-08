@@ -1,7 +1,15 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
-  "globalEnv": ["NODE_ENV"],
+  "globalEnv": [
+    "NODE_ENV",
+    "SUPERADMIN_EMAIL",
+    "SUPERADMIN_PASSWORD",
+    "SUPERADMIN_NAME_EN",
+    "SUPERADMIN_NAME_TH",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

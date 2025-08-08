@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "@southern-syntax/*": ["../*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": ["**/*.ts", "**/*.d.ts"],
   "exclude": ["node_modules"]

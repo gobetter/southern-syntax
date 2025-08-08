@@ -2,6 +2,7 @@
 
 import { useLocale } from "next-intl";
 
+// import type { MediaItem } from "@southern-syntax/types";
 import { MediaItem } from "@/types/trpc";
 
 import MediaCard from "../../MediaCard";
@@ -9,21 +10,21 @@ import MediaCard from "../../MediaCard";
 interface MediaGridContentProps {
   mediaItems: MediaItem[];
   selectedIds: Set<string>;
-  onEdit: (media: MediaItem) => void;
-  onViewDetails: (media: MediaItem) => void;
-  onPreview: (media: MediaItem) => void;
-  onToggleSelect: (id: string, selected: boolean) => void;
-  onDeleteRequest: (media: MediaItem) => void;
+  onEditAction: (media: MediaItem) => void;
+  onViewDetailsAction: (media: MediaItem) => void;
+  onPreviewAction: (media: MediaItem) => void;
+  onToggleSelectAction: (id: string, selected: boolean) => void;
+  onDeleteRequestAction: (media: MediaItem) => void;
 }
 
 export default function MediaGridContent({
   mediaItems,
   selectedIds,
-  onEdit,
-  onViewDetails,
-  onPreview,
-  onToggleSelect,
-  onDeleteRequest,
+  onEditAction,
+  onViewDetailsAction,
+  onPreviewAction,
+  onToggleSelectAction,
+  onDeleteRequestAction,
 }: MediaGridContentProps) {
   const locale = useLocale();
 
@@ -35,11 +36,11 @@ export default function MediaGridContent({
           media={media}
           locale={locale}
           isSelected={selectedIds.has(media.id)}
-          onEdit={() => onEdit(media)}
-          onViewDetails={() => onViewDetails(media)}
-          onPreview={() => onPreview(media)}
-          onSelectionChange={onToggleSelect}
-          onDelete={() => onDeleteRequest(media)}
+          onEditAction={() => onEditAction(media)}
+          onViewDetailsAction={() => onViewDetailsAction(media)}
+          onPreviewAction={() => onPreviewAction(media)}
+          onSelectionChangeAction={onToggleSelectAction}
+          onDeleteAction={() => onDeleteRequestAction(media)}
         />
       ))}
     </div>

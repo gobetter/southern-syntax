@@ -4,7 +4,8 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc-client";
 import { useSearchParams } from "next/navigation";
 
-import type { AuditLogItem } from "@/types/trpc";
+// import type { AuditLogItem } from "@southern-syntax/types";
+import { AuditLogItem } from "@/types/trpc";
 
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
@@ -49,7 +50,7 @@ export default function AuditLogClient() {
 
   return (
     <div className="space-y-4">
-      <AuditLogTable logs={logs} onViewDetails={setViewingLog} />
+      <AuditLogTable logs={logs} onViewDetailsAction={setViewingLog} />
 
       <DataTablePagination
         page={page}
@@ -60,7 +61,7 @@ export default function AuditLogClient() {
       <AuditLogDetailDialog
         log={viewingLog}
         isOpen={!!viewingLog}
-        onOpenChange={() => setViewingLog(null)}
+        onOpenChangeAction={() => setViewingLog(null)}
       />
     </div>
   );

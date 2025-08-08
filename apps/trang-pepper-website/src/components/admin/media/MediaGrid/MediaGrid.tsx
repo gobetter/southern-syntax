@@ -1,14 +1,15 @@
 "use client";
 
+// import type { MediaItem } from "@southern-syntax/types";
 import { MediaItem } from "@/types/trpc";
 
 import MediaGridWrapper from "./MediaGridWrapper";
 
 interface MediaGridProps {
   mediaItems: MediaItem[];
-  onEdit: (media: MediaItem) => void;
-  onViewDetails: (media: MediaItem) => void;
-  onPreview: (media: MediaItem) => void;
+  onEditAction: (media: MediaItem) => void;
+  onViewDetailsAction: (media: MediaItem) => void;
+  onPreviewAction: (media: MediaItem) => void;
 }
 
 export default function MediaGrid(props: MediaGridProps) {

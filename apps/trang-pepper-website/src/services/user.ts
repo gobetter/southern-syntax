@@ -18,7 +18,7 @@ import {
 import { ROLE_NAMES } from "@southern-syntax/auth";
 import prisma from "@southern-syntax/db";
 
-import { SortOrder } from "@/constants/common";
+import type { SortOrder } from "@/constants/common";
 import { AUDIT_ACTIONS, type AuditAction } from "@/constants/auditActions";
 
 import { auditLogService } from "./auditLog";

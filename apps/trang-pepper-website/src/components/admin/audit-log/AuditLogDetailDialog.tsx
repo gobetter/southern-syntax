@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 
+// import type { AuditLogItem } from "@/types/trpc";
 import { AuditLogItem } from "@/types/trpc";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
@@ -18,13 +19,13 @@ import {
 interface AuditLogDetailDialogProps {
   log: AuditLogItem | null;
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export default function AuditLogDetailDialog({
   log,
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
 }: AuditLogDetailDialogProps) {
   const t = useTranslations("admin_audit_log.dialog_detail");
   const locale = useLocale();
@@ -34,7 +35,7 @@ export default function AuditLogDetailDialog({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChangeAction}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
@@ -57,7 +58,7 @@ export default function AuditLogDetailDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChangeAction(false)}>
             {t("close_button")}
           </Button>
         </DialogFooter>
