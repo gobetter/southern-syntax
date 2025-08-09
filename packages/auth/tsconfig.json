@@ -6,6 +6,6 @@
       "@southern-syntax/*": ["../*"]
     }
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
+  "include": ["**/*.ts", "next-auth.d.ts"],
   "exclude": ["node_modules"]
 }

@@ -420,6 +420,9 @@ importers:
         specifier: workspace:*
         version: link:../config
     devDependencies:
+      '@southern-syntax/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^24.2.0
         version: 24.2.1
