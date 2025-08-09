@@ -8,7 +8,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@southern-syntax/ui";
 
 interface UserInfoProps {
   user: {
-    name?: { [key: string]: string } | null;
+    // name?: { [key: string]: string } | null;
+    name?: { [key: string]: string } | string | null;
     email?: string | null;
     role?: string | null;
   };

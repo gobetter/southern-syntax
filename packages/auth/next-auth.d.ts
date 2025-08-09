@@ -31,6 +31,13 @@ declare module "next-auth" {
   }
 }
 
+declare module "next-auth/adapters" {
+  interface AdapterUser extends DefaultUser {
+    role?: { key: string } | null;
+    name: LocalizedString | string | null;
+  }
+}
+
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT extends DefaultJWT {

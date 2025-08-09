@@ -31,7 +31,8 @@ export default async function AuditLogPage({
   // เพิ่ม "ด่านตรวจสอบสิทธิ์" ที่เฉพาะเจาะจงสำหรับหน้านี้
   // เราจะใช้ can() และตรวจสอบ Role โดยตรงเพื่อให้แน่ใจ
   const hasAccess =
-    session.user.role === ROLE_NAMES.SUPERADMIN &&
+    // session.user.role === ROLE_NAMES.SUPERADMIN &&
+    session?.user.role === ROLE_NAMES.SUPERADMIN &&
     can(session, PERMISSION_RESOURCES.AUDIT_LOG, PERMISSION_ACTIONS.READ);
 
   if (!hasAccess) {
