@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
@@ -14,6 +19,7 @@
   "devDependencies": {
     "@types/node": "^24.1.0",
     "prisma": "^5.22.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@southern-syntax/tsconfig": "workspace:*"
   }
 }

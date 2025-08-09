@@ -40,3 +40,5 @@ declare module "next-auth/jwt" {
     permissions: UserPermissions;
   }
 }
+
+export {};
