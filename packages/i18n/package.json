@@ -9,9 +9,13 @@
     "./constants": "./constants.ts",
     "./messages/common/en.json": "./messages/common/en.json"
   },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
   "dependencies": {
-    "next-intl": "^4.1.0",
-    "@southern-syntax/config": "workspace:*"
+    "@southern-syntax/config": "workspace:*",
+    "next-intl": "^4.1.0"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*"

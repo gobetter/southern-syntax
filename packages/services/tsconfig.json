@@ -1,10 +1,10 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@southern-syntax/*": ["../*"]
-    },
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@southern-syntax/*": ["../*"]
+    // },
     "types": ["node"]
   },
   "include": ["**/*.ts", "**/*.d.ts"],

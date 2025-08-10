@@ -15,7 +15,17 @@ import { defaultLocale } from "@southern-syntax/config";
  * @param credentials The user's login credentials (email, password).
  * @returns The user object if authentication is successful, null otherwise.
  */
-export async function authenticateUser(credentials: CredentialsInput) {
+// export async function authenticateUser(credentials: CredentialsInput) {
+interface AuthenticatedUser {
+  id: string;
+  name: unknown;
+  email: string;
+  role?: string | null;
+}
+
+export async function authenticateUser(
+  credentials: CredentialsInput
+): Promise<AuthenticatedUser | null> {
   // 1. ตรวจสอบข้อมูล Credentials ด้วย Zod (Runtime Validation)
   const validatedCredentials = credentialsSchema.safeParse(credentials);
 
@@ -82,7 +92,8 @@ export async function authenticateUser(credentials: CredentialsInput) {
  * Registers a new user with hashed password.
  * ใช้การตรวจสอบข้อมูลด้วย Zod และจัดการ Error พื้นฐานให้ Route Handler
  */
-export async function registerUser(input: RegisterInput) {
+// export async function registerUser(input: RegisterInput) {
+export async function registerUser(input: RegisterInput): Promise<any> {
   const data = registerSchema.parse(input);
 
   const existing = await prisma.user.findUnique({

@@ -7,6 +7,10 @@
   "exports": {
     ".": "./index.ts"
   },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
   "dependencies": {
     "busboy": "^1.6.0",
     "slugify": "^1.6.6",

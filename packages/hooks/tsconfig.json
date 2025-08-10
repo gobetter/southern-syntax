@@ -1,11 +1,11 @@
 {
   "extends": "@southern-syntax/tsconfig/react-library.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@southern-syntax/*": ["../*"]
-    }
-  },
+  // "compilerOptions": {
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "@southern-syntax/*": ["../*"]
+  //   }
+  // },
   "include": ["src"],
   "exclude": ["node_modules"]
 }

@@ -10,6 +10,10 @@
     "inlineSources": false,
     "isolatedModules": true,
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@southern-syntax/*": ["../*"]
+    },
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,

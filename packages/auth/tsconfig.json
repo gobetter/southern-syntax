@@ -1,11 +1,11 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@southern-syntax/*": ["../*"]
-    }
-  },
+  // "compilerOptions": {
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "@southern-syntax/*": ["../*"]
+  //   }
+  // },
   "include": ["**/*.ts", "next-auth.d.ts"],
   "exclude": ["node_modules"]
 }

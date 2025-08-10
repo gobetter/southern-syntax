@@ -1,12 +1,12 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@southern-syntax/*": ["../*"]
-    },
-    "resolveJsonModule": true
-  },
+  // "compilerOptions": {
+  //   "baseUrl": ".",
+  //   "paths": {
+  //     "@southern-syntax/*": ["../*"]
+  //   },
+  //   "resolveJsonModule": true
+  // },
   "include": ["**/*.ts", "**/*.d.ts"],
   "exclude": ["node_modules"]
 }
