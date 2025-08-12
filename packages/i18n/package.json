@@ -18,6 +18,7 @@
     "next-intl": "^4.1.0"
   },
   "devDependencies": {
+  "@types/node": "^24.2.1",
     "@southern-syntax/tsconfig": "workspace:*"
   }
 }

@@ -1,4 +1,4 @@
-import type { LocalizedString } from "@southern-syntax/types";
+import type { LocalizedString } from "./i18n";
 
 export interface Permission {
   id: string;

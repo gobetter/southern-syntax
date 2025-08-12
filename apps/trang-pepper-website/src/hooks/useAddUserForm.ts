@@ -17,10 +17,10 @@ import { useToast } from "@southern-syntax/hooks";
 import { LocalizedString } from "@southern-syntax/types";
 
 interface UseAddUserFormProps {
-  onOpenChange: (isOpen: boolean) => void;
+  onOpenChangeAction: (isOpen: boolean) => void;
 }
 
-export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
+export function useAddUserForm({ onOpenChangeAction }: UseAddUserFormProps) {
   const t_toasts = useTranslations("admin_users.toasts");
   const t_error_codes = useTranslations("common.error_codes");
   const locale = useLocale();
@@ -67,7 +67,7 @@ export function useAddUserForm({ onOpenChange }: UseAddUserFormProps) {
       onSuccess: () => {
         toast.success(t_toasts("create_success"));
         utils.user.getAll.invalidate();
-        onOpenChange(false); // ปิด Dialog
+        onOpenChangeAction(false); // ปิด Dialog
         reset(); // เคลียร์ฟอร์ม
       },
       onError: (error) => {

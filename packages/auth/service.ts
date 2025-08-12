@@ -8,6 +8,7 @@ import { verifyPassword, hashPassword } from "./utils";
 
 import prisma from "@southern-syntax/db";
 import { defaultLocale } from "@southern-syntax/config";
+import type { AuthenticatedUser } from "@southern-syntax/types";
 
 /**
  * Authenticates a user based on provided credentials.
@@ -15,13 +16,6 @@ import { defaultLocale } from "@southern-syntax/config";
  * @param credentials The user's login credentials (email, password).
  * @returns The user object if authentication is successful, null otherwise.
  */
-// export async function authenticateUser(credentials: CredentialsInput) {
-interface AuthenticatedUser {
-  id: string;
-  name: unknown;
-  email: string;
-  role?: string | null;
-}
 
 export async function authenticateUser(
   credentials: CredentialsInput
@@ -92,7 +86,6 @@ export async function authenticateUser(
  * Registers a new user with hashed password.
  * ใช้การตรวจสอบข้อมูลด้วย Zod และจัดการ Error พื้นฐานให้ Route Handler
  */
-// export async function registerUser(input: RegisterInput) {
 export async function registerUser(input: RegisterInput): Promise<any> {
   const data = registerSchema.parse(input);
 

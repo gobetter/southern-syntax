@@ -4,6 +4,8 @@ export * from "./forms";
 export * from "./media-taxonomy";
 export * from "./media";
 export * from "./user";
+export * from "./auth";
+export * from "./role";
 export type { LocalizedString } from "./i18n";
 
 export interface FormErrors {

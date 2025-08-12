@@ -17,7 +17,7 @@ import {
   Checkbox,
 } from "@southern-syntax/ui";
 
-import type { UserItem } from "@/types/user";
+import type { UserItem } from "@southern-syntax/types";
 
 import UserActionsDropdown from "./_components/UserActionsDropdown";
 
@@ -26,14 +26,14 @@ interface UserTableProps {
   selectedIds: Set<string>;
   currentUserId?: string;
   areAllSelectableSelected: boolean;
-  onToggleSelectAll: () => void;
-  onToggleSelectRow: (id: string, checked: boolean) => void;
-  onEditUser: (user: UserItem) => void;
-  onDeleteUser: (user: UserItem) => void;
-  onActivateUser: (user: UserItem) => void;
+  onToggleSelectAllAction: () => void;
+  onToggleSelectRowAction: (id: string, checked: boolean) => void;
+  onEditUserAction: (user: UserItem) => void;
+  onDeleteUserAction: (user: UserItem) => void;
+  onActivateUserAction: (user: UserItem) => void;
   sortBy: UserSortableField | null;
   sortOrder: string | null;
-  onSort: (field: UserSortableField) => void;
+  onSortAction: (field: UserSortableField) => void;
 }
 
 export default function UserTable({
@@ -41,14 +41,14 @@ export default function UserTable({
   selectedIds,
   currentUserId,
   areAllSelectableSelected,
-  onToggleSelectAll,
-  onToggleSelectRow,
-  onEditUser,
-  onDeleteUser,
-  onActivateUser,
+  onToggleSelectAllAction,
+  onToggleSelectRowAction,
+  onEditUserAction,
+  onDeleteUserAction,
+  onActivateUserAction,
   sortBy,
   sortOrder,
-  onSort,
+  onSortAction,
 }: UserTableProps) {
   const t = useTranslations("admin_users");
   const tCommon = useTranslations("common");
@@ -69,23 +69,23 @@ export default function UserTable({
             <TableHead className="w-[50px]">
               <Checkbox
                 checked={areAllSelectableSelected}
-                onCheckedChange={onToggleSelectAll}
+                onCheckedChange={onToggleSelectAllAction}
               />
             </TableHead>
             <TableHead>
-              <Button variant="ghost" onClick={() => onSort("name")}>
+              <Button variant="ghost" onClick={() => onSortAction("name")}>
                 {t("table.header_name")}
                 {renderSortArrow("name")}
               </Button>
             </TableHead>
             <TableHead>
-              <Button variant="ghost" onClick={() => onSort("email")}>
+              <Button variant="ghost" onClick={() => onSortAction("email")}>
                 {t("table.header_email")}
                 {renderSortArrow("email")}
               </Button>
             </TableHead>
             <TableHead>
-              <Button variant="ghost" onClick={() => onSort("role")}>
+              <Button variant="ghost" onClick={() => onSortAction("role")}>
                 {t("table.header_role")}
                 {renderSortArrow("role")}
               </Button>
@@ -93,7 +93,7 @@ export default function UserTable({
 
             {/* ทำให้หัวตาราง Status คลิกได้ */}
             <TableHead>
-              <Button variant="ghost" onClick={() => onSort("isActive")}>
+              <Button variant="ghost" onClick={() => onSortAction("isActive")}>
                 {t("table.header_status")}
                 {renderSortArrow("isActive")}
               </Button>
@@ -114,7 +114,7 @@ export default function UserTable({
                 <Checkbox
                   checked={selectedIds.has(user.id)}
                   onCheckedChange={(checked) =>
-                    onToggleSelectRow(user.id, !!checked)
+                    onToggleSelectRowAction(user.id, !!checked)
                   }
                   disabled={user.id === currentUserId}
                 />
@@ -142,9 +142,9 @@ export default function UserTable({
               </TableCell>
               <TableCell className="text-right">
                 <UserActionsDropdown
-                  onEdit={() => onEditUser(user)}
-                  onDelete={() => onDeleteUser(user)}
-                  onActivate={() => onActivateUser(user)}
+                  onEdit={() => onEditUserAction(user)}
+                  onDelete={() => onDeleteUserAction(user)}
+                  onActivate={() => onActivateUserAction(user)}
                   canDelete={user.id !== currentUserId}
                   isActive={user.isActive}
                 />

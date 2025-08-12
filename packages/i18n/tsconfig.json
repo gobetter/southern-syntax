@@ -1,12 +1,11 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
-  // "compilerOptions": {
-  //   "baseUrl": ".",
-  //   "paths": {
-  //     "@southern-syntax/*": ["../*"]
-  //   },
-  //   "resolveJsonModule": true
-  // },
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM"],
+    "types": ["node"],
+    "target": "ES2020",
+    "module": "esnext"
+  },
   "include": ["**/*.ts", "**/*.d.ts"],
   "exclude": ["node_modules"]
 }

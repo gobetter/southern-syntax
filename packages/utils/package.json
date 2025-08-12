@@ -12,15 +12,17 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@southern-syntax/i18n": "workspace:*",
+    "@supabase/supabase-js": "^2.50.0",
     "busboy": "^1.6.0",
     "slugify": "^1.6.6",
-    "zod": "^3.25.64",
-    "@southern-syntax/i18n": "workspace:*",
-    "@supabase/supabase-js": "^2.50.0"
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
     "@types/busboy": "^1.5.4",
-    "typescript": "^5.8.3"
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.1"
   }
 }

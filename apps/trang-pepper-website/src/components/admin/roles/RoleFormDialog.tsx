@@ -8,7 +8,7 @@ import { AlertCircle } from "lucide-react";
 import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/auth";
 
 import { useRoleForm } from "@/hooks/useRoleForm";
-import type { Role, Permission } from "@/types/role";
+import type { Role, Permission } from "@southern-syntax/types";
 
 import {
   Button,
@@ -33,14 +33,14 @@ import FormFieldError from "@/components/common/FormFieldError";
 
 interface RoleFormDialogProps {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
   editingRole: Role | null;
   permissions: Permission[];
 }
 
 export default function RoleFormDialog({
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
   editingRole,
   permissions,
 }: RoleFormDialogProps) {
@@ -50,7 +50,7 @@ export default function RoleFormDialog({
 
   const { formMethods, onSubmit, isLoading } = useRoleForm({
     editingRole,
-    onSuccess: () => onOpenChange(false), // เมื่อสำเร็จ ให้ปิด Dialog
+    onSuccessAction: () => onOpenChangeAction(false), // เมื่อสำเร็จ ให้ปิด Dialog
   });
 
   const {
@@ -95,7 +95,7 @@ export default function RoleFormDialog({
     isSystemRole && !isEditingSuperAdmin && !currentUserIsSuperAdmin;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChangeAction}>
       <DialogContent
         onInteractOutside={(e) => e.preventDefault()}
         className="sm:max-w-2xl"
@@ -234,7 +234,7 @@ export default function RoleFormDialog({
                 <Button
                   type="button"
                   variant="secondary"
-                  onClick={() => onOpenChange(false)}
+                  onClick={() => onOpenChangeAction(false)}
                 >
                   {t("dialog_shared.cancel")}
                 </Button>

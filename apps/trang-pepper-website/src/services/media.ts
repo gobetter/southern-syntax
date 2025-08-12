@@ -1,4 +1,3 @@
-import { getEnv } from "@/config/env";
 import type { Prisma } from "@prisma/client";
 
 import {
@@ -7,6 +6,7 @@ import {
   type MediaUploadInput,
 } from "@southern-syntax/schemas/media";
 import { LocalizedString } from "@southern-syntax/types";
+import { getEnv } from "@southern-syntax/config";
 import prisma from "@southern-syntax/db";
 import {
   extractStoragePaths,

@@ -10,6 +10,8 @@
     "inlineSources": false,
     "isolatedModules": true,
     "moduleResolution": "node",
+    "module": "ESNext",
+    "target": "ES2021",
     "baseUrl": ".",
     "paths": {
       "@southern-syntax/*": ["../*"]
@@ -19,7 +21,9 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": ["ES2021", "DOM"],
+    "types": ["node"]
   },
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,11 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM"],
+    "types": ["node"],
+    "target": "ES2020",
+    "module": "esnext"
+  },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

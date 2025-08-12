@@ -13,3 +13,22 @@ export const USER_STATUS_VIEWS = ["all", "active", "inactive"] as const;
 export type UserStatusFilter = (typeof VALID_USER_STATUSES)[number]; // จะได้เป็น 'active' | 'inactive'
 export type UserStatusView = (typeof USER_STATUS_VIEWS)[number]; // จะได้เป็น 'all' | 'active' | 'inactive'
 export type UserSortableField = (typeof USER_SORTABLE_FIELDS)[number];
+
+import type { LocalizedString } from "./i18n";
+
+export interface UserItem {
+  id: string;
+  email: string;
+  name: LocalizedString | null;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  role: {
+    id: string;
+    key: string;
+    name: LocalizedString | null;
+    description?: string | null;
+    isSystem?: boolean;
+    isSelectableOnRegistration?: boolean;
+  } | null;
+}

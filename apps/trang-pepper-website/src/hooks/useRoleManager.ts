@@ -15,7 +15,7 @@ import { useToast } from "@southern-syntax/hooks";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
-import type { Role, Permission } from "@/types/role";
+import type { Role, Permission } from "@southern-syntax/types";
 
 import { RoleFormInput, RoleFormOutput, roleFormSchema } from "./useRoleForm";
 

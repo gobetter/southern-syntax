@@ -7,7 +7,7 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@southern-syntax/ui";
 
 import { useRoleManager } from "@/hooks/useRoleManager";
-import { Role } from "@/types/role";
+import type { Role } from "@southern-syntax/types";
 
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";
@@ -75,11 +75,15 @@ export default function RoleManagerClient() {
     <>
       <AdminPageHeader title={t("title")} actionButton={actionButton} />
 
-      <RoleTable roles={roles} onEdit={handleEdit} onDelete={setDeletingRole} />
+      <RoleTable
+        roles={roles}
+        onEditAction={handleEdit}
+        onDeleteAction={setDeletingRole}
+      />
 
       <RoleFormDialog
         isOpen={isFormOpen}
-        onOpenChange={setFormOpen}
+        onOpenChangeAction={setFormOpen}
         editingRole={editingRole}
         permissions={permissions}
       />

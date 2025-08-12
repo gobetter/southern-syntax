@@ -9,10 +9,10 @@ import type { TRPCClientErrorLike } from "@trpc/client";
 
 import { roleSchema } from "@southern-syntax/auth";
 import { LocalizedString } from "@southern-syntax/types";
+import type { Role } from "@southern-syntax/types";
 import { useToast } from "@southern-syntax/hooks";
 
 import { trpc } from "@/lib/trpc-client";
-import { Role } from "@/types/role";
 import type { AppRouter } from "@/server/routers/_app";
 
 export const roleFormSchema = roleSchema.extend({
@@ -23,10 +23,13 @@ export type RoleFormInput = z.input<typeof roleFormSchema>;
 
 interface UseRoleFormProps {
   editingRole: Role | null;
-  onSuccess: () => void;
+  onSuccessAction: () => void;
 }
 
-export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
+export function useRoleForm({
+  editingRole,
+  onSuccessAction,
+}: UseRoleFormProps) {
   const utils = trpc.useUtils();
   const toast = useToast();
   const t_toasts = useTranslations("admin_rbac.toasts");
@@ -70,7 +73,7 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
     onSuccess: () => {
       toast.success(t_toasts("create_success"));
       utils.role.getAll.invalidate();
-      onSuccess();
+      onSuccessAction();
     },
     onError: handleMutationError,
   });
@@ -79,7 +82,7 @@ export function useRoleForm({ editingRole, onSuccess }: UseRoleFormProps) {
     onSuccess: () => {
       toast.success(t_toasts("update_success"));
       utils.role.getAll.invalidate();
-      onSuccess();
+      onSuccessAction();
     },
     onError: handleMutationError,
   });

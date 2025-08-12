@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@southern-syntax/ui";
 
-import type { UserItem } from "@/types/user";
+import type { UserItem } from "@southern-syntax/types";
 import { useEditUserForm } from "@/hooks/useEditUserForm";
 import Spinner from "@/components/common/Spinner";
 import FormFieldError from "@/components/common/FormFieldError";
@@ -34,13 +34,13 @@ import FormFieldError from "@/components/common/FormFieldError";
 interface EditUserDialogProps {
   user: UserItem | null;
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export default function EditUserDialog({
   user,
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
 }: EditUserDialogProps) {
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
@@ -59,14 +59,14 @@ export default function EditUserDialog({
     isLoading,
   } = useEditUserForm({
     user,
-    onSuccess: () => onOpenChange(false),
+    onSuccessAction: () => onOpenChangeAction(false),
   });
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       reset();
     }
-    onOpenChange(open);
+    onOpenChangeAction(open);
   };
 
   const isActiveValue = useWatch({
@@ -215,7 +215,7 @@ export default function EditUserDialog({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => onOpenChange(false)}
+            onClick={() => onOpenChangeAction(false)}
           >
             {t_dialog_edit("cancel_button")}
           </Button>

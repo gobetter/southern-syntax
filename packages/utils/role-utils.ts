@@ -1,25 +1,14 @@
 import { mapToSelectOptions } from "./select-options";
-import type { LocalizedString } from "@southern-syntax/types";
+import type { Role, SelectOption } from "@southern-syntax/types";
 
-export interface RoleOption {
-  id: string;
-  label: string;
-}
-
-interface RoleLike {
-  id: string;
-  key: string;
-  name: LocalizedString;
-}
-
-export function mapRoleOptions<T extends RoleLike>(
+export function mapRoleOptions<T extends Pick<Role, "id" | "key" | "name">>(
   roles: T[] | undefined,
   locale: string
-): RoleOption[] {
+): SelectOption[] {
   return mapToSelectOptions(
     roles,
     locale,
     (role) => role.name,
     (role) => role.key
-  ) as RoleOption[];
+  );
 }

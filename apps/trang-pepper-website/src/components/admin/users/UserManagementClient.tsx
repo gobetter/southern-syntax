@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlusCircle, Search, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import type { UserItem } from "@/types/user";
+import type { UserItem } from "@southern-syntax/types";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 
@@ -176,14 +176,14 @@ export default function UserManagementClient() {
               selectedIds={selectedIds}
               currentUserId={currentUserId}
               areAllSelectableSelected={areAllSelected}
-              onToggleSelectAll={handleToggleSelectAll}
-              onToggleSelectRow={toggleSelection}
-              onEditUser={setEditingUser}
-              onDeleteUser={setDeactivatingUser}
-              onActivateUser={handleActivateUser}
+              onToggleSelectAllAction={handleToggleSelectAll}
+              onToggleSelectRowAction={toggleSelection}
+              onEditUserAction={setEditingUser}
+              onDeleteUserAction={setDeactivatingUser}
+              onActivateUserAction={handleActivateUser}
               sortBy={sortBy}
               sortOrder={sortOrder}
-              onSort={handleSort}
+              onSortAction={handleSort}
             />
 
             <DataTablePagination
@@ -213,12 +213,12 @@ export default function UserManagementClient() {
 
         <AddUserDialog
           isOpen={isAddUserDialogOpen}
-          onOpenChange={setAddUserDialogOpen}
+          onOpenChangeAction={setAddUserDialogOpen}
         />
         <EditUserDialog
           user={editingUser}
           isOpen={!!editingUser}
-          onOpenChange={() => setEditingUser(null)}
+          onOpenChangeAction={() => setEditingUser(null)}
         />
 
         <ConfirmationDialog

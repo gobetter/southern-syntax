@@ -14,17 +14,21 @@ import {
 } from "@southern-syntax/ui";
 import { ROLE_NAMES } from "@southern-syntax/auth";
 
-import type { Role } from "@/types/role";
+import type { Role } from "@southern-syntax/types";
 
 import RoleActionsDropdown from "./_components/RoleActionsDropdown";
 
 interface RoleTableProps {
   roles: Role[];
-  onEdit: (role: Role) => void;
-  onDelete: (role: Role) => void;
+  onEditAction: (role: Role) => void;
+  onDeleteAction: (role: Role) => void;
 }
 
-export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
+export default function RoleTable({
+  roles,
+  onEditAction,
+  onDeleteAction,
+}: RoleTableProps) {
   const t = useTranslations("admin_rbac.table");
   const locale = useLocale();
   const { data: session } = useSession();
@@ -52,8 +56,8 @@ export default function RoleTable({ roles, onEdit, onDelete }: RoleTableProps) {
               <TableCell>{role._count.permissions}</TableCell>
               <TableCell className="text-right">
                 <RoleActionsDropdown
-                  onEdit={() => onEdit(role)}
-                  onDelete={() => onDelete(role)}
+                  onEdit={() => onEditAction(role)}
+                  onDelete={() => onDeleteAction(role)}
                   // เพิ่มเงื่อนไขการตรวจสอบ
                   //    - ปุ่มจะ disable ก็ต่อเมื่อ:
                   //    - 1. Role นั้นเป็น isSystem และ

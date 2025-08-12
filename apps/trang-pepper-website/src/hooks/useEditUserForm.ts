@@ -16,7 +16,7 @@ import { useToast } from "@southern-syntax/hooks";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
 
-import type { UserItem } from "@/types/user";
+import type { UserItem } from "@southern-syntax/types";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
@@ -34,10 +34,13 @@ function userToFormValues(user: UserItem): UserUpdateInput {
 
 interface UseEditUserFormProps {
   user: UserItem | null;
-  onSuccess: () => void;
+  onSuccessAction: () => void;
 }
 
-export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
+export function useEditUserForm({
+  user,
+  onSuccessAction,
+}: UseEditUserFormProps) {
   const t_toasts = useTranslations("admin_users.toasts");
   const t_error_codes = useTranslations("common.error_codes");
   const locale = useLocale();
@@ -98,7 +101,7 @@ export function useEditUserForm({ user, onSuccess }: UseEditUserFormProps) {
             } as Session);
           }
 
-          onSuccess();
+          onSuccessAction();
         },
         onError: (error: TRPCClientErrorLike<AppRouter>) => {
           if (error.message === "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE") {

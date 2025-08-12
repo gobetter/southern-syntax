@@ -22,7 +22,7 @@ import {
 import { useUpdateQuery, useDebounce, useToast } from "@southern-syntax/hooks";
 
 import { trpc } from "@/lib/trpc-client";
-import type { UserItem } from "@/types/user";
+import type { UserItem } from "@southern-syntax/types";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import type { SortOrder } from "@/constants/common";

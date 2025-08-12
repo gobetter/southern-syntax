@@ -1,7 +1,4 @@
-import {
-  DuplicateFileError,
-  TranslatedUploadError,
-} from "@southern-syntax/utils";
+import { DuplicateFileError, TranslatedUploadError } from "../errors";
 
 export async function uploadMediaFile(file: File): Promise<string> {
   const formData = new FormData();
@@ -13,21 +10,20 @@ export async function uploadMediaFile(file: File): Promise<string> {
   });
 
   if (!response.ok) {
-    // 1. อ่าน JSON response จาก server
-    const errorData = await response.json().catch(() => ({
+    const errorData = (await response.json().catch(() => ({
       error: "unexpected_api_error", // Key สำรองกรณี parse JSON ไม่ได้
       context: { filename: file.name },
-    }));
+    }))) as { error: string; context?: Record<string, string | number> };
 
     const messageKey = errorData.error;
-    const context = errorData.context || { filename: file.name };
+    const context: Record<string, string | number> = errorData.context || {
+      filename: file.name,
+    };
 
-    // 2. ตรวจสอบ messageKey เพื่อสร้าง Error Class ที่ถูกต้อง
     if (messageKey === "error.duplicate_file") {
       throw new DuplicateFileError(context);
     }
 
-    // 3. สำหรับ Error อื่นๆ ให้โยน TranslatedUploadError ทั่วไป
     throw new TranslatedUploadError(messageKey, context);
   }
 

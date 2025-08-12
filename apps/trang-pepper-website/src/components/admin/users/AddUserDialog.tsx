@@ -38,12 +38,12 @@ import FormFieldError from "@/components/common/FormFieldError";
 
 interface AddUserDialogProps {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export default function AddUserDialog({
   isOpen,
-  onOpenChange,
+  onOpenChangeAction,
 }: AddUserDialogProps) {
   const t_form_labels = useTranslations("common.form_labels");
   const t_dialog_add = useTranslations("admin_users.dialog_add");
@@ -60,7 +60,7 @@ export default function AddUserDialog({
     roleOptions,
     isLoading,
   } = useAddUserForm({
-    onOpenChange,
+    onOpenChangeAction,
   });
 
   const handleOpenChange = (open: boolean) => {
@@ -68,7 +68,7 @@ export default function AddUserDialog({
       reset(); // เมื่อ dialog กำลังจะปิด ให้ reset ฟอร์ม
       setActiveTab("en"); // Reset กลับไปแท็บแรกเมื่อปิด
     }
-    onOpenChange(open);
+    onOpenChangeAction(open);
   };
 
   // สร้างฟังก์ชัน onError เพื่อบังคับเปิดแท็บ
@@ -213,7 +213,7 @@ export default function AddUserDialog({
           <Button
             type="button"
             variant="secondary"
-            onClick={() => onOpenChange(false)}
+            onClick={() => onOpenChangeAction(false)}
           >
             {t_dialog_add("cancel_button")}
           </Button>
