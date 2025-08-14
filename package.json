@@ -1,23 +1,29 @@
 {
   "name": "southern-syntax",
   "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "db:generate": "pnpm --filter @southern-syntax/db db:generate",
     "postinstall": "pnpm db:generate",
-    "build": "pnpm db:generate && turbo run build",
     "dev": "pnpm db:generate && turbo run dev",
+    "build": "pnpm db:generate && turbo run build",
     "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "check-types": "pnpm typecheck",
+    "test": "turbo run test --if-present",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm -w install --no-frozen-lockfile",
+    "release": "changeset version && pnpm install --no-frozen-lockfile && pnpm -w build"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.5",
+    "@types/node": "^24.2.1",
     "prettier": "^3.6.2",
     "turbo": "^2.5.5",
-    "typescript": "5.8.3",
-    "@types/node": "^24.2.1"
-  },
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=18"
+    "typescript": "5.8.3"
   }
 }

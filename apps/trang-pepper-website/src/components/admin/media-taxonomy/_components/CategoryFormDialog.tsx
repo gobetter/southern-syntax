@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useForm, type SubmitHandler, FormProvider } from "react-hook-form";
+import type { useForm} from "react-hook-form";
+import { type SubmitHandler, FormProvider } from "react-hook-form";
 
 import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 import {

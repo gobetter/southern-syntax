@@ -15,10 +15,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@southern-syntax/ui";
-import {
+import type {
   MediaCategoryInput,
+  MediaTagInput} from "@southern-syntax/schemas/media-taxonomy";
+import {
   mediaCategoryInputSchema,
-  MediaTagInput,
   mediaTagInputSchema,
 } from "@southern-syntax/schemas/media-taxonomy";
 import { Button } from "@southern-syntax/ui";

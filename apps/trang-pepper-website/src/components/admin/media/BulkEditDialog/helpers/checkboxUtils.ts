@@ -1,5 +1,5 @@
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 export type CheckboxState = "checked" | "indeterminate" | "unchecked";
 export type CheckboxStates = Record<string, CheckboxState>;

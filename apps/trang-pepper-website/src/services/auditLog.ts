@@ -84,3 +84,5 @@ export const auditLogService = {
   createLog,
   getAllLogs,
 };
+
+export type { CreateLogParams };

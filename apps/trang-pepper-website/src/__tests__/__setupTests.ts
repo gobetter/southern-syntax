@@ -1,6 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
-import '@testing-library/jest-dom';
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
+
+// ทำให้การ import "server-only" เงียบ ไม่โยน Error ในเทสต์
+vi.mock("server-only", () => ({}));
 
 /*
 import React from 'react';

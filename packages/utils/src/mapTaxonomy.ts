@@ -1,4 +1,4 @@
-import { LocalizedString } from "@southern-syntax/types";
+import type { LocalizedString } from "@southern-syntax/types";
 
 export interface TaxonomyBase {
   id: string;

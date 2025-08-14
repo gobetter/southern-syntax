@@ -2,21 +2,32 @@
   "name": "@southern-syntax/types",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
   "exports": {
-    ".": "./index.ts",
-    "./*": "./*.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./src/*.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
   },
-  "dependencies": {
-    "@southern-syntax/config": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
-  "@types/node": "^24.2.1",
-    "typescript": "^5.8.3",
-    "@southern-syntax/tsconfig": "workspace:*"
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3"
   }
 }

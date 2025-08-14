@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 import { cn } from "@southern-syntax/ui";
 import { CheckboxGroup } from "@/components/common/CheckboxGroup";

@@ -1,9 +1,10 @@
 "use client";
 
-import { FieldError } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
 import { useTranslations } from "next-intl";
 
-import { isValidErrorKey, FormErrorKey } from "@southern-syntax/utils";
+import type { FormErrorKey } from "@southern-syntax/utils";
+import { isValidErrorKey } from "@southern-syntax/utils";
 
 interface FormFieldErrorProps {
   error?: FieldError;

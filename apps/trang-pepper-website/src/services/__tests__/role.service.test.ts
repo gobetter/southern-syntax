@@ -2,29 +2,41 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, User, Role } from "@prisma/client";
 import { mockDeep, mockReset } from "vitest-mock-extended";
 
-import { ROLE_NAMES } from "@southern-syntax/auth";
-import { type RoleInput } from "@southern-syntax/auth";
+import { ROLE_NAMES, type RoleInput } from "@southern-syntax/auth";
+import type { CreateLogParams } from "../auditLog";
 
-// --- Type Definitions for Mocks ---
-// สร้าง Type ที่สมบูรณ์สำหรับ Mock ของเรา
 type RoleWithPermissions = Role & { permissions: { permissionId: string }[] };
 type UserWithRole = User & { role: { key: string } | null };
 
-// --- Mocking Setup ---
+type RoleService = {
+  updateRole: (
+    roleId: string,
+    input: RoleInput & { permissionIds: string[] },
+    actorUserId: string
+  ) => Promise<unknown>;
+  deleteRole: (roleId: string, actorUserId: string) => Promise<unknown>;
+};
+type AuditLogService = {
+  createLog: (params: CreateLogParams) => Promise<void>;
+  [k: string]: unknown;
+};
+
 const prismaMock = mockDeep<PrismaClient>();
 
+vi.mock("@southern-syntax/db", () => ({
+  default: prismaMock,
+  prisma: prismaMock,
+}));
 vi.mock("@/lib/prisma", () => ({ default: prismaMock }));
 vi.mock("../auditLog"); //  ✅ Mock auditLog service
 
 describe("Role Service", () => {
-  // ✅ 2. ใช้ Dynamic import() เพื่อ import `roleService` และ `auditLogService`
-  let roleService: typeof import("../role").roleService;
-  let auditLogService: typeof import("../auditLog").auditLogService;
+  let roleService: RoleService;
+  let auditLogService: AuditLogService;
 
   beforeEach(async () => {
     mockReset(prismaMock);
     vi.clearAllMocks();
-    // ✅ 3. ทำการ import จริงๆ ใน beforeEach
     roleService = (await import("../role")).roleService;
     auditLogService = (await import("../auditLog")).auditLogService;
   });

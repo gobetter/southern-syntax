@@ -2,17 +2,24 @@
   "name": "@southern-syntax/utils",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./index.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "build": "tsc -b",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@southern-syntax/i18n": "workspace:*",
+    "@southern-syntax/types": "workspace:*",
     "@supabase/supabase-js": "^2.50.0",
     "busboy": "^1.6.0",
     "slugify": "^1.6.6",

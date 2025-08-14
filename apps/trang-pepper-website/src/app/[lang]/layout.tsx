@@ -17,9 +17,7 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps) {
   const { lang } = await params;
-
-  // ✅ แก้ไขเป็น: ระบุ locale ที่ต้องการโดยตรง
-  const messages = await getMessages({ locale: lang });
+  const messages = await getMessages({ locale: lang }); // หรือจะใช้ getMessages() เฉย ๆ ก็ได้ใน segment [lang]
   const cookieStore = await cookies();
   const theme = cookieStore.get("theme")?.value ?? null;
 

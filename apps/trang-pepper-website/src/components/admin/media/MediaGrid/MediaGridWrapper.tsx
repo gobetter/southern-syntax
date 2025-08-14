@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { TRPCClientErrorLike } from "@trpc/client";
+import type { TRPCClientErrorLike } from "@trpc/client";
 
 import { useToast } from "@southern-syntax/hooks";
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
-import { AppRouter } from "@/server/routers/_app";
+import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";

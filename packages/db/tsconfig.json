@@ -1,12 +1,15 @@
 {
-  "extends": "@southern-syntax/tsconfig/base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist"
-    // "baseUrl": ".",
-    // "paths": {
-    //   "@southern-syntax/*": ["../*"]
-    // }
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": "."
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
-  "exclude": ["node_modules", "dist", "prisma/**"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "prisma/**"],
+  "references": []
 }

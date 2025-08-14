@@ -2,22 +2,38 @@
   "name": "@southern-syntax/config",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
   "exports": {
-    ".": "./index.ts",
-    "./constants": "./constants.ts",
-    "./env": "./env.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./src/env.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "zod": "^3.25.64"
   },
   "devDependencies": {
-  "@types/node": "^24.2.1",
-    "typescript": "^5.8.3",
-    "@southern-syntax/tsconfig": "workspace:*"
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3"
   }
 }

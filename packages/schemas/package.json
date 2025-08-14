@@ -2,23 +2,41 @@
   "name": "@southern-syntax/schemas",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
   "exports": {
-    "./*": "./*.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./src/*.ts"
+    },
+    "./language": {
+      "types": "./dist/language.d.ts",
+      "default": "./src/language.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "@southern-syntax/config": "workspace:*",
     "@southern-syntax/i18n": "workspace:*",
+    "@southern-syntax/types": "workspace:*",
     "zod": "^3.25.64"
   },
   "devDependencies": {
-  "@types/node": "^24.2.1",
-    "typescript": "^5.8.3",
-    "@southern-syntax/tsconfig": "workspace:*"
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3"
   }
 }

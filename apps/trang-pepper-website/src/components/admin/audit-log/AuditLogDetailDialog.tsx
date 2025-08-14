@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 
 // import type { AuditLogItem } from "@/types/trpc";
-import { AuditLogItem } from "@/types/trpc";
+import type { AuditLogItem } from "@/types/trpc";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 import {

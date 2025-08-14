@@ -1,4 +1,5 @@
 import prisma from "@southern-syntax/db";
+import type { Prisma } from "@southern-syntax/db";
 import {
   languageInputSchema,
   type LanguageInput,
@@ -30,6 +31,18 @@ async function getLanguageByCode(code: string) {
 
 async function updateLanguage(id: string, data: Partial<LanguageInput>) {
   const validatedData = languageInputSchema.partial().parse(data);
+
+  const patch: Prisma.LanguageUpdateInput = {
+    ...(validatedData.code !== undefined && { code: validatedData.code }),
+    ...(validatedData.name !== undefined && { name: validatedData.name }),
+    ...(validatedData.isDefault !== undefined && {
+      isDefault: validatedData.isDefault,
+    }),
+    ...(validatedData.isActive !== undefined && {
+      isActive: validatedData.isActive,
+    }),
+  };
+
   if (validatedData.isDefault === true) {
     await prisma.language.updateMany({
       where: { isDefault: true, id: { not: id } },
@@ -38,7 +51,8 @@ async function updateLanguage(id: string, data: Partial<LanguageInput>) {
   }
   const updatedLanguage = await prisma.language.update({
     where: { id },
-    data: validatedData,
+    // data: validatedData,
+    data: patch,
   });
   return updatedLanguage;
 }

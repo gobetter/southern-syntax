@@ -1,11 +1,20 @@
 {
-  "extends": "@southern-syntax/tsconfig/base.json",
-  // "compilerOptions": {
-  //   "baseUrl": ".",
-  //   "paths": {
-  //     "@southern-syntax/*": ["../*"]
-  //   }
-  // },
-  "include": ["**/*.ts", "next-auth.d.ts"],
-  "exclude": ["node_modules"]
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": "."
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../types" },
+    { "path": "../schemas" },
+    { "path": "../i18n" },
+    { "path": "../db" }
+  ]
 }

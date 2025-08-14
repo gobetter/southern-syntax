@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 import { getLocalizedString } from "@southern-syntax/i18n";
 import { parseVariantRecord } from "@southern-syntax/utils";

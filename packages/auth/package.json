@@ -2,16 +2,59 @@
   "name": "@southern-syntax/auth",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./src/server.ts"
+    },
+    "./service": {
+      "types": "./dist/service.d.ts",
+      "default": "./src/service.ts"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "default": "./src/schemas.ts"
+    },
+    "./permissions": {
+      "types": "./dist/permissions.d.ts",
+      "default": "./src/permissions.ts"
+    },
+    "./options": {
+      "types": "./dist/options.d.ts",
+      "default": "./src/options.ts"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "default": "./src/utils.ts"
+    },
+    "./next-auth": {
+      "types": "./dist/next-auth.d.ts",
+      "default": "./src/next-auth.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
+    "@southern-syntax/config": "workspace:*",
     "@southern-syntax/db": "workspace:*",
     "@southern-syntax/i18n": "workspace:*",
     "@southern-syntax/schemas": "workspace:*",
@@ -26,7 +69,6 @@
     "@southern-syntax/tsconfig": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^24.2.1",
-    "next": "15.3.3",
     "typescript": "^5.8.3"
   }
 }

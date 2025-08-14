@@ -1,37 +1,20 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  vi,
-  type MockInstance,
-} from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { Prisma, PrismaClient, Product } from "@prisma/client";
-import { productService } from "../product";
-import prisma from "@southern-syntax/db";
+import { mockDeep, mockReset } from "vitest-mock-extended";
 
-vi.mock("@/lib/prisma", () => {
-  const mock = {
-    product: {
-      create: vi.fn(),
-      findUnique: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-      findMany: vi.fn(),
-    },
-  } as unknown as PrismaClient;
-  return { default: mock };
-});
+// สร้าง prisma mock ก้อนเดียว ใช้ร่วมกัน
+const prismaMock = mockDeep<PrismaClient>();
 
-const prismaMock = prisma as unknown as {
-  product: {
-    create: MockInstance;
-    findUnique: MockInstance;
-    update: MockInstance;
-    delete: MockInstance;
-    findMany: MockInstance;
-  };
-};
+// สำคัญ: mock ทั้งสองเส้นทางที่ service อาจ import
+vi.mock("@/lib/prisma", () => ({ default: prismaMock, prisma: prismaMock }));
+vi.mock("@southern-syntax/db", () => ({
+  default: prismaMock,
+  prisma: prismaMock,
+}));
+
+// อย่า import service ไว้บนสุด ให้ import แบบ dynamic หลัง mock เสมอ
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+let productService: typeof import("../product").productService;
 
 const mockProduct: Product = {
   id: "1",
@@ -49,8 +32,10 @@ const mockProduct: Product = {
 };
 
 describe("productService", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    mockReset(prismaMock);
     vi.clearAllMocks();
+    productService = (await import("../product")).productService;
   });
 
   it("createProduct calls prisma.create with normalized title", async () => {
@@ -62,7 +47,9 @@ describe("productService", () => {
       isPublished: false,
     };
     prismaMock.product.create.mockResolvedValue(mockProduct);
+
     const result = await productService.createProduct(input);
+
     expect(prismaMock.product.create).toHaveBeenCalledWith({
       data: { ...input, titleEnNormalized: "p1" },
     });
@@ -71,7 +58,9 @@ describe("productService", () => {
 
   it("getProductById uses findUnique", async () => {
     prismaMock.product.findUnique.mockResolvedValue(mockProduct);
+
     const result = await productService.getProductById("1");
+
     expect(prismaMock.product.findUnique).toHaveBeenCalledWith({
       where: { id: "1" },
     });
@@ -83,9 +72,11 @@ describe("productService", () => {
       ...mockProduct,
       title: { en: "u" },
     });
+
     const result = await productService.updateProduct("1", {
       title: { en: "u" },
     });
+
     expect(prismaMock.product.update).toHaveBeenCalledWith({
       where: { id: "1" },
       data: { title: { en: "u" }, titleEnNormalized: "u" },
@@ -95,7 +86,9 @@ describe("productService", () => {
 
   it("deleteProduct calls prisma.delete", async () => {
     prismaMock.product.delete.mockResolvedValue(mockProduct);
+
     const result = await productService.deleteProduct("1");
+
     expect(prismaMock.product.delete).toHaveBeenCalledWith({
       where: { id: "1" },
     });
@@ -104,7 +97,9 @@ describe("productService", () => {
 
   it("getAllProducts orders by createdAt desc", async () => {
     prismaMock.product.findMany.mockResolvedValue([]);
+
     await productService.getAllProducts();
+
     expect(prismaMock.product.findMany).toHaveBeenCalledWith({
       orderBy: { createdAt: "desc" },
     });
@@ -112,7 +107,9 @@ describe("productService", () => {
 
   it("getPublishedProducts filters published", async () => {
     prismaMock.product.findMany.mockResolvedValue([]);
+
     await productService.getPublishedProducts();
+
     expect(prismaMock.product.findMany).toHaveBeenCalledWith({
       where: { isPublished: true },
       orderBy: { createdAt: "desc" },

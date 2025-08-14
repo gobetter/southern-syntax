@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
 import { roleSchema } from "@southern-syntax/auth";
-import { LocalizedString } from "@southern-syntax/types";
+import type { LocalizedString } from "@southern-syntax/types";
 import type { Role } from "@southern-syntax/types";
 import { useToast } from "@southern-syntax/hooks";
 

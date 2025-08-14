@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { sanitizeFilename } from "../string-utils";
+import { sanitizeFilename } from "@southern-syntax/utils";
 
 describe("sanitizeFilename", () => {
   it("keeps safe characters and lowercases extension", () => {

@@ -1,0 +1,18 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./apps/trang-pepper-website" },
+    { "path": "./packages/auth" },
+    { "path": "./packages/config" },
+    { "path": "./packages/db" },
+    { "path": "./packages/eslint-config-custom" },
+    { "path": "./packages/hooks" },
+    { "path": "./packages/i18n" },
+    { "path": "./packages/schemas" },
+    { "path": "./packages/services" },
+    { "path": "./packages/tsconfig" },
+    { "path": "./packages/types" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/utils" }
+  ]
+}

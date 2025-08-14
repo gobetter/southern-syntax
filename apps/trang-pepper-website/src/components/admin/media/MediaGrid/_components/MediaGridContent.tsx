@@ -3,7 +3,7 @@
 import { useLocale } from "next-intl";
 
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 import MediaCard from "../../MediaCard";
 

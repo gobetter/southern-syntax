@@ -17,7 +17,8 @@ import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import type { Role, Permission } from "@southern-syntax/types";
 
-import { RoleFormInput, RoleFormOutput, roleFormSchema } from "./useRoleForm";
+import type { RoleFormInput, RoleFormOutput} from "./useRoleForm";
+import { roleFormSchema } from "./useRoleForm";
 
 interface UseRoleManagerReturn {
   roles: Role[];

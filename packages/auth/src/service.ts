@@ -1,3 +1,13 @@
+import prisma, { Prisma } from "@southern-syntax/db";
+import type { PrismaTypes } from "@southern-syntax/db";
+import { defaultLocale } from "@southern-syntax/config";
+
+import type {
+  AuthenticatedUser,
+  LocalizedString,
+  RegisteredUser,
+} from "@southern-syntax/types";
+
 import {
   CredentialsInput,
   credentialsSchema,
@@ -6,9 +16,22 @@ import {
 } from "./schemas";
 import { verifyPassword, hashPassword } from "./utils";
 
-import prisma from "@southern-syntax/db";
-import { defaultLocale } from "@southern-syntax/config";
-import type { AuthenticatedUser } from "@southern-syntax/types";
+const isLocalizedString = (v: unknown): v is LocalizedString =>
+  typeof v === "object" &&
+  v !== null &&
+  !Array.isArray(v) &&
+  Object.values(v as Record<string, unknown>).every(
+    (x) => typeof x === "string"
+  );
+
+const toLocalizedOrString = (
+  v: PrismaTypes.JsonValue | null
+): LocalizedString | string | null => {
+  if (v == null) return null;
+  if (typeof v === "string") return v;
+  if (isLocalizedString(v)) return v;
+  return null; // เคร่งครัด: ถ้าเป็น number/boolean/array ให้ตัดทิ้ง
+};
 
 /**
  * Authenticates a user based on provided credentials.
@@ -75,9 +98,10 @@ export async function authenticateUser(
   // ควร return เฉพาะข้อมูลที่ปลอดภัยที่จะเปิดเผยใน JWT/Session
   return {
     id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role?.key,
+    // name: user.name,
+    name: toLocalizedOrString(user.name),
+    email: user.email ?? "",
+    role: user.role?.key ?? null,
     // ในอนาคต: เพิ่ม roleId หรือ role/permissions ถ้าคุณต้องการเก็บใน JWT/Session
   };
 }
@@ -86,29 +110,85 @@ export async function authenticateUser(
  * Registers a new user with hashed password.
  * ใช้การตรวจสอบข้อมูลด้วย Zod และจัดการ Error พื้นฐานให้ Route Handler
  */
-export async function registerUser(input: RegisterInput): Promise<any> {
+export async function registerUser(
+  input: RegisterInput
+): Promise<RegisteredUser> {
   const data = registerSchema.parse(input);
 
+  const email = data.email.trim().toLowerCase();
   const existing = await prisma.user.findUnique({
-    where: { email: data.email },
+    where: { email },
   });
   if (existing) {
     throw new Error("EMAIL_ALREADY_EXISTS");
   }
 
-  const hashedPassword = await hashPassword(data.password);
+  // const hashedPassword = await hashPassword(data.password);
 
   // ตอนจะสร้าง user ให้เลือกเฉพาะ field ที่มีใน DB เท่านั้น
   // และ 'ไม่' ส่ง id เข้าไป เพื่อให้ฐานข้อมูล generate ให้เอง
-  return prisma.user.create({
-    data: {
-      email: data.email,
-      // name: data.name,
-      name: {
-        [defaultLocale]: data.name, // ผลลัพธ์จะได้เป็น { "en": "ค่าที่ผู้ใช้กรอก" }
+  // return prisma.user.create({
+  //   data: {
+  //     email: data.email,
+  //     // name: data.name,
+  //     name: {
+  //       [defaultLocale]: data.name, // ผลลัพธ์จะได้เป็น { "en": "ค่าที่ผู้ใช้กรอก" }
+  //     },
+  //     roleId: data.roleId,
+  //     passwordHash: hashedPassword,
+  //   },
+  // });
+
+  // const created = await prisma.user.create({
+  //   data: {
+  //     email: data.email,
+  //     name: { [defaultLocale]: data.name },
+  //     roleId: data.roleId ?? null,
+  //     passwordHash: hashedPassword,
+  //   },
+  //   select: { id: true, email: true, name: true, roleId: true },
+  // });
+
+  // return {
+  //   id: created.id,
+  //   email: created.email,
+  //   name: created.name as unknown as LocalizedString | string | null,
+  //   roleId: created.roleId,
+  // };
+
+  try {
+    const created = await prisma.user.create({
+      data: {
+        email,
+        // ถ้ามีคอลัมน์ normalize แยก ให้ใส่ด้วย เช่น:
+        // emailNormalized: email,
+        name: { [defaultLocale]: data.name },
+        roleId: data.roleId ?? null,
+        passwordHash: await hashPassword(data.password),
       },
-      roleId: data.roleId,
-      passwordHash: hashedPassword,
-    },
-  });
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        roleId: true,
+        isActive: true,
+      },
+    });
+
+    return {
+      id: created.id,
+      email: created.email,
+      name: created.name as unknown as LocalizedString | string | null,
+      roleId: created.roleId,
+      isActive: created.isActive,
+    };
+  } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2002"
+    ) {
+      throw new Error("EMAIL_ALREADY_EXISTS");
+    }
+    throw e;
+  }
 }

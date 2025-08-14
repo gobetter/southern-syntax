@@ -2,23 +2,51 @@
   "name": "@southern-syntax/i18n",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
+  "sideEffects": false,
   "exports": {
-    ".": "./index.ts",
-    "./constants": "./constants.ts",
-    "./messages/common/en.json": "./messages/common/en.json"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./request": {
+      "types": "./dist/request.d.ts",
+      "default": "./src/request.ts"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "default": "./src/utils.ts"
+    },
+    "./messages/en": {
+      "types": "./dist/messages/en.d.ts",
+      "default": "./src/messages/en.ts"
+    },
+    "./messages/th": {
+      "types": "./dist/messages/th.d.ts",
+      "default": "./src/messages/th.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "@southern-syntax/config": "workspace:*",
-    "next-intl": "^4.1.0"
+    "@southern-syntax/types": "workspace:*"
+  },
+  "peerDependencies": {
+    "next-intl": ">=4"
   },
   "devDependencies": {
-  "@types/node": "^24.2.1",
-    "@southern-syntax/tsconfig": "workspace:*"
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3"
   }
 }

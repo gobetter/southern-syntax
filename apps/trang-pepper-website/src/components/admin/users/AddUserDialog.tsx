@@ -8,7 +8,7 @@ import {
   type FieldErrors,
 } from "react-hook-form";
 
-import { UserCreateInput } from "@southern-syntax/schemas/user";
+import type { UserCreateInput } from "@southern-syntax/schemas/user";
 
 import {
   Button,

@@ -8,7 +8,7 @@ import { useToast } from "@southern-syntax/hooks";
 import { type MediaCategoryInput } from "@southern-syntax/schemas/media-taxonomy";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapIdSlugName } from "@southern-syntax/utils";
-import { Category } from "@southern-syntax/types";
+import type { Category } from "@southern-syntax/types";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 

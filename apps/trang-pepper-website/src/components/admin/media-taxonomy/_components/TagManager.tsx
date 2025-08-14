@@ -25,7 +25,7 @@ import {
   AlertDialogTitle,
 } from "@southern-syntax/ui";
 
-import { useTagManager } from "@/hooks/useTagManager";
+import type { useTagManager } from "@/hooks/useTagManager";
 import Spinner from "@/components/common/Spinner";
 
 import { TagFormDialog } from "./TagFormDialog";

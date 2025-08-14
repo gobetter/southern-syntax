@@ -5,7 +5,7 @@ import {
   type MediaUpdateFormInput,
   type MediaUploadInput,
 } from "@southern-syntax/schemas/media";
-import { LocalizedString } from "@southern-syntax/types";
+import type { LocalizedString } from "@southern-syntax/types";
 import { getEnv } from "@southern-syntax/config";
 import prisma from "@southern-syntax/db";
 import {
@@ -16,7 +16,7 @@ import {
   supabase,
 } from "@southern-syntax/utils";
 
-import { MediaSortableField } from "@/constants/media";
+import type { MediaSortableField } from "@/constants/media";
 import type { SortOrder } from "@/constants/common";
 import { AUDIT_ACTIONS } from "@/constants/auditActions";
 

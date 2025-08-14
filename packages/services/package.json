@@ -2,14 +2,27 @@
   "name": "@southern-syntax/services",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "check-types": "tsc --noEmit"
-  },
+  "type": "module",
+  "sideEffects": false,
   "exports": {
-    ".": "./index.ts",
-    "./*": "./*.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./language": {
+      "types": "./dist/language.d.ts",
+      "default": "./src/language.ts"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@southern-syntax/db": "workspace:*",
@@ -19,5 +32,8 @@
     "@southern-syntax/tsconfig": "workspace:*",
     "@types/node": "^24.2.1",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

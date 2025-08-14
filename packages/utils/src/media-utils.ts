@@ -18,7 +18,7 @@ export function getCommonIds<T extends { id: string }>(
       const currentIds = new Set(current.map((i) => i.id));
       return new Set([...acc].filter((id) => currentIds.has(id)));
     },
-    new Set(items[0].map((i) => i.id))
+    new Set((items[0] ?? []).map((i) => i.id)) // <-- กันกรณี undefined ด้วย ?? []
   );
 }
 

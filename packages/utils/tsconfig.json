@@ -1,12 +1,22 @@
 {
   "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
-    "lib": ["ES2020", "DOM"],
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "types": ["node"],
-    "target": "ES2020",
-    "module": "esnext",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "verbatimModuleSyntax": true
+
+    /* สำคัญ: ไม่ต้อง override target/lib ที่นี่
+       จะไปใช้ค่าใน base.json ที่เป็น ES2022/ES2023 แทน */
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
-  "exclude": ["node_modules", "__tests__"]
+  "include": ["src"],
+  "exclude": ["node_modules", "__tests__", "dist"]
 }

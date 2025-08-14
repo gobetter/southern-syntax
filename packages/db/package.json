@@ -2,24 +2,35 @@
   "name": "@southern-syntax/db",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
   },
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "prisma"
+  ],
   "scripts": {
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "check-types": "tsc --noEmit"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
-  "@types/node": "^24.2.1",
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
     "prisma": "^5.22.0",
-    "typescript": "^5.8.3",
-    "@southern-syntax/tsconfig": "workspace:*"
+    "typescript": "^5.8.3"
   }
 }

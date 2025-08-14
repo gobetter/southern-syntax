@@ -5,7 +5,7 @@ import { trpc } from "@/lib/trpc-client";
 import { useSearchParams } from "next/navigation";
 
 // import type { AuditLogItem } from "@southern-syntax/types";
-import { AuditLogItem } from "@/types/trpc";
+import type { AuditLogItem } from "@/types/trpc";
 
 import Spinner from "@/components/common/Spinner";
 import ErrorDisplay from "@/components/common/ErrorDisplay";

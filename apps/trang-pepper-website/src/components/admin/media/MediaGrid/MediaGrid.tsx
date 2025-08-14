@@ -1,7 +1,7 @@
 "use client";
 
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 
 import MediaGridWrapper from "./MediaGridWrapper";
 

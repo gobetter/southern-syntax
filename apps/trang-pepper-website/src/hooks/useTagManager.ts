@@ -8,7 +8,7 @@ import { useToast } from "@southern-syntax/hooks";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapIdSlugName } from "@southern-syntax/utils";
-import { Tag } from "@southern-syntax/types";
+import type { Tag } from "@southern-syntax/types";
 
 import { trpc } from "@/lib/trpc-client";
 import type { TRPCClientErrorLike } from "@trpc/client";

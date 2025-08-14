@@ -1,6 +1,6 @@
 "use client";
 
-import { UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 import type { useTranslations } from "next-intl";
 
 import type { MediaUpdateFormInput } from "@southern-syntax/schemas/media";

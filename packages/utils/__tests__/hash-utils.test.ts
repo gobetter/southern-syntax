@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { createHash } from "crypto";
 
-import { calculateFileHash } from "../hash-utils";
+// import { calculateFileHash } from "../hash-utils";
+import { calculateFileHash } from "@southern-syntax/utils";
 
 describe("calculateFileHash", () => {
   it("returns sha256 hash of buffer", () => {

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 import prisma from "@southern-syntax/db";

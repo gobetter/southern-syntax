@@ -13,7 +13,7 @@ import {
 } from "@southern-syntax/ui";
 
 // import type { MediaItem } from "@southern-syntax/types";
-import { AuditLogItem } from "@/types/trpc";
+import type { AuditLogItem } from "@/types/trpc";
 
 interface AuditLogTableProps {
   logs: AuditLogItem[];

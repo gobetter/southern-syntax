@@ -73,10 +73,10 @@ export const authOptions: NextAuthOptions = {
         const permissions = await getUserPermissions(user.id);
 
         token.id = user.id;
-        token.name = user.name;
-        token.email = user.email;
-        token.role = user.role.key;
-        token.permissions = permissions;
+        token.name = user.name ?? null;
+        token.email = user.email ?? null;
+        token.role = user.role.key ?? null;
+        token.permissions = permissions ?? null;
       }
 
       // เมื่อมีการ update session
@@ -90,10 +90,10 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.role = token.role;
-        session.user.permissions = token.permissions;
+        session.user.name = token.name ?? null;
+        session.user.email = token.email ?? null;
+        session.user.role = token.role ?? null;
+        session.user.permissions = token.permissions ?? null;
       }
       return session;
     },

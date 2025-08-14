@@ -12,14 +12,15 @@ import { useTranslations } from "next-intl";
 
 import { useUpdateQuery, useDebounce } from "@southern-syntax/hooks";
 import { mapIdName } from "@southern-syntax/utils";
-import { MediaCategory, MediaTag } from "@southern-syntax/types";
+import type { MediaCategory, MediaTag } from "@southern-syntax/types";
 // import type { MediaItem } from "@southern-syntax/types";
-import { MediaItem } from "@/types/trpc";
+import type { MediaItem } from "@/types/trpc";
 import type { LocalizedString } from "@southern-syntax/types";
 
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
-import { MediaSortableField, MEDIA_SORT_OPTIONS } from "@/constants/media";
+import type { MediaSortableField} from "@/constants/media";
+import { MEDIA_SORT_OPTIONS } from "@/constants/media";
 import type { SortOrder } from "@/constants/common";
 import type { TRPCClientErrorLike } from "@trpc/client";
 

@@ -10,9 +10,10 @@ import {
   type UserCreateOutput,
   type UserUpdateOutput,
 } from "@southern-syntax/schemas/user";
-import {
+import type {
   UserSortableField,
-  UserStatusFilter,
+  UserStatusFilter} from "@southern-syntax/types";
+import {
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
 import { ROLE_NAMES } from "@southern-syntax/auth";

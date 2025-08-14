@@ -7,7 +7,7 @@ import { Trash2, X, CheckCircle2, MoreVertical } from "lucide-react";
 import { trpc } from "@/lib/trpc-client";
 
 import { mapToSelectOptions } from "@southern-syntax/utils";
-import { LocalizedString } from "@southern-syntax/types";
+import type { LocalizedString } from "@southern-syntax/types";
 import {
   Button,
   Select,

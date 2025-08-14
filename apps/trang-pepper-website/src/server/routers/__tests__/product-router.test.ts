@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { PrismaClient, Product, Prisma } from "@prisma/client";
+import type { PrismaClient, Product} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import type { Session } from "next-auth";
 
 vi.mock("@southern-syntax/auth/server", () => ({

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm -w install
+      - name: Prisma generate
+        run: pnpm db:generate
+      - name: Typecheck
+        run: pnpm -w typecheck
+      - name: Lint
+        run: pnpm -w lint
+      - name: Build
+        run: pnpm -w build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPERADMIN_EMAIL: ${{ secrets.SUPERADMIN_EMAIL }}
+          SUPERADMIN_PASSWORD: ${{ secrets.SUPERADMIN_PASSWORD }}
+          SUPERADMIN_NAME_EN: ${{ secrets.SUPERADMIN_NAME_EN }}
+          SUPERADMIN_NAME_TH: ${{ secrets.SUPERADMIN_NAME_TH }}

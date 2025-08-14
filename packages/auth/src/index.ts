@@ -1,4 +1,4 @@
-// import "./next-auth.d.ts";
+import "./next-auth.ts";
 
 export * from "./constants";
 export * from "./schemas";

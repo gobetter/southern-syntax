@@ -10,13 +10,20 @@ export async function uploadMediaFile(file: File): Promise<string> {
   });
 
   if (!response.ok) {
+    // ให้ fallback key เป็นรูปแบบที่ถูกต้องตั้งแต่ต้น
     const errorData = (await response.json().catch(() => ({
-      error: "unexpected_api_error", // Key สำรองกรณี parse JSON ไม่ได้
+      error: "error.unexpected_api_error", // ✅ ต้องขึ้นต้นด้วย "error."
       context: { filename: file.name },
     }))) as { error: string; context?: Record<string, string | number> };
 
-    const messageKey = errorData.error;
-    const context: Record<string, string | number> = errorData.context || {
+    // แคบชนิดให้เป็น `error.${string}` อย่างปลอดภัย
+    const messageKey: `error.${string}` =
+      typeof errorData.error === "string" &&
+      errorData.error.startsWith("error.")
+        ? (errorData.error as `error.${string}`)
+        : "error.unexpected_api_error";
+
+    const context: Record<string, string | number> = errorData.context ?? {
       filename: file.name,
     };
 

@@ -25,7 +25,7 @@ import {
   AlertDialogTitle,
 } from "@southern-syntax/ui";
 
-import { useCategoryManager } from "@/hooks/useCategoryManager";
+import type { useCategoryManager } from "@/hooks/useCategoryManager";
 import Spinner from "@/components/common/Spinner";
 
 import { CategoryFormDialog } from "./CategoryFormDialog";

@@ -4,7 +4,7 @@ import { authOptions } from "@southern-syntax/auth/server"; // server-side auth 
 import { can } from "@southern-syntax/auth"; // permission helper
 
 import prisma from "@southern-syntax/db"; // Prisma Client instance
-import {
+import type {
   PermissionActionType,
   PermissionResourceType,
 } from "@southern-syntax/auth"; // นำเข้า Type ที่ถูกต้อง

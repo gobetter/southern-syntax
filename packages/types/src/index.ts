@@ -6,7 +6,8 @@ export * from "./media";
 export * from "./user";
 export * from "./auth";
 export * from "./role";
-export type { LocalizedString } from "./i18n";
+export * from "./i18n";
+// export type { LocalizedString } from "./i18n";
 
 export interface FormErrors {
   error_field_is_required: string;

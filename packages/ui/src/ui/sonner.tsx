@@ -1,14 +1,30 @@
-"use client"
+"use client";
 
-import { useTheme } from "next-themes"
-import { Toaster as Sonner, ToasterProps } from "sonner"
+import { useTheme } from "next-themes";
+import { Toaster as Sonner } from "sonner";
+import type { ToasterProps } from "sonner";
+import * as React from "react";
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+type ThemeName = NonNullable<ToasterProps["theme"]>;
+const isValidTheme = (t: unknown): t is ThemeName =>
+  t === "light" || t === "dark" || t === "system";
+
+export function Toaster({ theme, ...props }: ToasterProps) {
+  const { theme: sysTheme } = useTheme();
+
+  // ถ้ามี theme จาก props และ valid ใช้ค่านั้น
+  // ไม่งั้นลองใช้ของระบบจาก next-themes
+  // ถ้ายังไม่ valid อีก ใช้ "system"
+  const resolvedTheme: ThemeName = isValidTheme(theme)
+    ? theme
+    : isValidTheme(sysTheme)
+      ? sysTheme
+      : "system";
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      {...props}
+      theme={resolvedTheme}
       className="toaster group"
       style={
         {
@@ -17,9 +33,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border)",
         } as React.CSSProperties
       }
-      {...props}
     />
-  )
+  );
 }
-
-export { Toaster }

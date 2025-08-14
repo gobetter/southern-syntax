@@ -1,30 +1,22 @@
 import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
 
-const withNextIntl = createNextIntlPlugin("../../packages/i18n/request.ts");
+// ✅ ใช้ config ของแอปเอง (ไฟล์ next-intl.config.ts ด้านล่าง)
+const withNextIntl = createNextIntlPlugin("./next-intl.config.ts");
 
 const nextConfig: NextConfig = {
-  // ระบุ packages ที่ต้องการให้ Next.js transpile จาก TypeScript ภายใน monorepo
   transpilePackages: [
+    "@southern-syntax/auth",
+    "@southern-syntax/config",
+    "@southern-syntax/db",
+    "@southern-syntax/hooks",
+    "@southern-syntax/i18n",
+    "@southern-syntax/schemas",
+    "@southern-syntax/services",
+    "@southern-syntax/types",
     "@southern-syntax/ui",
     "@southern-syntax/utils",
-    "@southern-syntax/schemas",
-    "@southern-syntax/types",
-    "@southern-syntax/auth",
-    "@southern-syntax/db",
-    "@southern-syntax/i18n",
   ],
-
-  // สามารถเพิ่มการตั้งค่า Next.js อื่นๆ ของคุณที่นี่
-  // reactStrictMode: true,
-  // swcMinify: true,
-  // compiler: {
-  //   removeConsole: process.env.NODE_ENV === 'production',
-  // },
-  // images: {
-  //   domains: ['your-supabase-storage-url.supabase.co'], // สำหรับ Supabase Storage URLs
-  // },
-  // output: 'standalone',
 };
 
 export default withNextIntl(nextConfig);

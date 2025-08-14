@@ -1,23 +1,25 @@
+// apps/trang-pepper-website/next-intl.config.ts
 import { getRequestConfig } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales } from "@southern-syntax/config";
 
-type Locale = (typeof locales)[number];
+// แผนที่ locale -> โมดูลข้อความ (literal imports เพื่อให้ bundler เก็บไฟล์ถูกต้อง)
+const loaders = {
+  en: () => import("@southern-syntax/i18n/messages/en"),
+  th: () => import("@southern-syntax/i18n/messages/th"),
+} as const;
 
-function isValidLocale(locale: string): locale is Locale {
-  return locales.includes(locale as Locale);
-}
+type Locale = keyof typeof loaders;
 
 export default getRequestConfig(async ({ locale }) => {
-  // 1. First, check if a locale is provided at all.
-  // 2. If it is, then validate it with our type guard.
-  // This two-step check ensures we never pass `undefined` to `isValidLocale`.
-  if (!locale || !isValidLocale(locale)) {
+  // ใช้ locales จาก config เพื่อตรวจสอบให้ชัวร์ว่าภาษาอยู่ใน allowlist
+  if (!locale || !locales.includes(locale as Locale)) {
     notFound();
   }
 
+  const l = locale as Locale;
   return {
-    locale, // At this point, TypeScript knows `locale` is of type `Locale`.
-    messages: (await import(`@southern-syntax/i18n/${locale}`)).default,
+    locale: l,
+    messages: (await loaders[l]()).default,
   };
 });
