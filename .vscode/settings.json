@@ -1,8 +1,12 @@
 {
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "files.watcherExclude": {
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/.turbo/**": true,
+    "**/node_modules/**": true
+  }
 }

@@ -7,7 +7,7 @@ type Props = {
 
 export function ErrorFallbackUI({
   title = "An error occurred",
-  message = "Something went wrong",
+  message = "Something went WRONG!",
 }: Props) {
   return (
     <div className="border-destructive/50 bg-destructive/10 flex h-full min-h-48 w-full items-center justify-center rounded-md border border-dashed p-4">

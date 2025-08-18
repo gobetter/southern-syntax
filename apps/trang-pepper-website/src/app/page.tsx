@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 // ไฟล์นี้ทำหน้าที่เป็น Root Page สำหรับ Path "/" (เช่น http://localhost:3000/)
 // วัตถุประสงค์หลักคือการ Redirect ผู้ใช้ไปยังภาษา Default ที่มี Locale Prefix (เช่น /en)
 

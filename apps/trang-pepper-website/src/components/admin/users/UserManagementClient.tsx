@@ -215,6 +215,7 @@ export default function UserManagementClient() {
           isOpen={isAddUserDialogOpen}
           onOpenChangeAction={setAddUserDialogOpen}
         />
+
         <EditUserDialog
           user={editingUser}
           isOpen={!!editingUser}

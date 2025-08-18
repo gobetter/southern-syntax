@@ -7,34 +7,49 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./request": {
       "types": "./dist/request.d.ts",
-      "default": "./src/request.ts"
+      "import": "./dist/request.js",
+      "require": "./dist/request.js",
+      "default": "./dist/request.js"
     },
     "./utils": {
       "types": "./dist/utils.d.ts",
-      "default": "./src/utils.ts"
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.js",
+      "default": "./dist/utils.js"
     },
     "./messages/en": {
       "types": "./dist/messages/en.d.ts",
-      "default": "./src/messages/en.ts"
+      "import": "./dist/messages/en.js",
+      "require": "./dist/messages/en.js",
+      "default": "./dist/messages/en.js"
     },
     "./messages/th": {
       "types": "./dist/messages/th.d.ts",
-      "default": "./src/messages/th.ts"
+      "import": "./dist/messages/th.js",
+      "require": "./dist/messages/th.js",
+      "default": "./dist/messages/th.js"
+    },
+    "./all-messages": {
+      "types": "./dist/all-messages.d.ts",
+      "import": "./dist/all-messages.js",
+      "require": "./dist/all-messages.js",
+      "default": "./dist/all-messages.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -p tsconfig.build.json && node ./scripts/copy-json.mjs",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
     "check-types": "pnpm typecheck"
   },
   "dependencies": {

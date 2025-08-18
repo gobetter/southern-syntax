@@ -1,3 +1,4 @@
+// ไม่ใช้ next-intl ในไฟล์นี้
 "use client";
 
 import { useEffect } from "react";

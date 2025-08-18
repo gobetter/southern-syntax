@@ -1,32 +1,43 @@
-"use client";
-
-import type { FieldError } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import enMessages from "@southern-syntax/i18n/messages/en";
 
-import type { FormErrorKey } from "@southern-syntax/utils";
-import { isValidErrorKey } from "@southern-syntax/utils";
+type FormErrorKey = keyof typeof enMessages.common.form_errors;
 
-interface FormFieldErrorProps {
-  error?: FieldError;
+type Props = {
+  error?: { message?: unknown } | null;
+};
+
+// type guard: ตรวจว่าคีย์ที่ส่งมารู้จักจริงใน resources EN
+function isKnownFormErrorKey(k: string): k is FormErrorKey {
+  return Object.prototype.hasOwnProperty.call(enMessages.common.form_errors, k);
 }
 
-export default function FormFieldError({ error }: FormFieldErrorProps) {
-  const t_form_errors = useTranslations("common.form_errors");
+export default function FormFieldError({ error }: Props) {
+  const tCommon = useTranslations("common");
+  const tFormErrors = useTranslations("common.form_errors");
 
-  // ถ้าไม่มี error หรือไม่มี message ก็ไม่ต้องแสดงผลอะไรเลย
-  if (!error?.message) {
-    return null;
+  if (!error?.message || typeof error.message !== "string") return null;
+
+  const rawKey = error.message;
+
+  if (isKnownFormErrorKey(rawKey)) {
+    try {
+      // แปลด้วย locale ปัจจุบัน
+      return <p className="mt-1 text-sm text-red-500">{tFormErrors(rawKey)}</p>;
+    } catch {
+      // ถ้า locale ปัจจุบันไม่มีคีย์ ให้ fallback เป็น EN
+      return (
+        <p className="mt-1 text-sm text-red-500">
+          {enMessages.common.form_errors[rawKey]}
+        </p>
+      );
+    }
   }
 
-  // ตรวจสอบว่า key ถูกต้องหรือไม่ก่อนที่จะแปล
-  if (isValidErrorKey(error.message)) {
-    return (
-      <p className="mt-1 text-sm text-red-500">
-        {t_form_errors(error.message as FormErrorKey)}
-      </p>
-    );
-  }
-
-  // Fallback กรณีที่ message ไม่ใช่ key (อาจจะเป็น error จากที่อื่น)
-  return <p className="mt-1 text-sm text-red-500">{error.message}</p>;
+  // คีย์ไม่รู้จัก -> fallback ข้อความทั่วไป
+  return (
+    <p className="mt-1 text-sm text-red-500">
+      {tCommon("errors.something_went_wrong")}
+    </p>
+  );
 }

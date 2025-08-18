@@ -1,7 +1,13 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+/* ✅ บอกให้ Tailwind v4 สแกนโค้ดจากแพ็กเกจนอกแอป */
+@source "../../packages/ui/src";
+@source "../../packages/auth/src";
+@source "../../packages/i18n/src";
+/* ถ้ามีแพ็กเกจอื่นที่มี JSX/TSX ใช้คลาสของ Tailwind ก็ใส่เพิ่มได้ */
 
 @theme inline {
   --color-background: var(--background);

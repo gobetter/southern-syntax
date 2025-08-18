@@ -1,25 +1,21 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-
 import Navbar from "@/components/common/Navbar";
-
 import "../globals.css";
 
-interface LocaleLayoutProps {
+interface Props {
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: LocaleLayoutProps) {
+export default async function LocaleLayout({ children, params }: Props) {
   const { lang } = await params;
-  const messages = await getMessages({ locale: lang }); // หรือจะใช้ getMessages() เฉย ๆ ก็ได้ใน segment [lang]
-  const cookieStore = await cookies();
-  const theme = cookieStore.get("theme")?.value ?? null;
+  const messages = await getMessages({ locale: lang });
+  const theme = (await cookies()).get("theme")?.value ?? null;
 
   return (
     <NextIntlClientProvider locale={lang} messages={messages}>

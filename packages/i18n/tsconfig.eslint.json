@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.build.json",
+  "include": [
+    "src/**/*",
+    "dist/**/*.d.ts", // เผื่อ type refs
+    "scripts/*.mjs" // รวมสคริปต์ mjs เข้ามาเพื่อให้ ESLint ไม่บ่น
+  ],
+  "exclude": ["node_modules", "dist/messages"]
+}

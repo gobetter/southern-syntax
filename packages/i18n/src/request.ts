@@ -1,13 +1,16 @@
-import { getRequestConfig } from "next-intl/server";
-import { locales, defaultLocale } from "@southern-syntax/config";
+export type SupportedLocale = "en" | "th";
+export const supportedLocales: SupportedLocale[] = ["en", "th"];
 
-export default getRequestConfig(async ({ locale }) => {
-  // ใช้ .find() เพื่อหา locale ที่ตรงกัน, ถ้าไม่เจอให้ใช้ defaultLocale
-  // วิธีนี้จะทำให้ TypeScript มั่นใจว่าผลลัพธ์เป็น string เสมอ
-  const safeLocale = locales.find((cur) => cur === locale) || defaultLocale;
+export async function loadMessages(locale: SupportedLocale) {
+  switch (locale) {
+    case "en":
+      return (await import("./messages/en")).default;
+    case "th":
+      return (await import("./messages/th")).default;
+    default:
+      throw new Error(`Unsupported locale: ${locale as string}`);
+  }
+}
 
-  return {
-    locale: safeLocale,
-    messages: (await import(`./messages/${safeLocale}.ts`)).default,
-  };
-});
+// เผื่อมีโค้ดฝั่งแอปที่อิงฟังก์ชันเดิม
+export const getMessages = loadMessages;

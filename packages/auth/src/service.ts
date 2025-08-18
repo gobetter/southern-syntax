@@ -16,6 +16,20 @@ import {
 } from "./schemas";
 import { verifyPassword, hashPassword } from "./utils";
 
+const isDebug: boolean =
+  process.env.NEXTAUTH_DEBUG === "true" ||
+  process.env.NODE_ENV !== "production";
+
+const log = (...args: unknown[]): void => {
+  if (isDebug) console.log("[auth:service]", ...args);
+};
+const logWarn = (...args: unknown[]): void => {
+  console.warn("[auth:service]", ...args);
+};
+const logError = (...args: unknown[]): void => {
+  console.error("[auth:service]", ...args);
+};
+
 const isLocalizedString = (v: unknown): v is LocalizedString =>
   typeof v === "object" &&
   v !== null &&
@@ -30,138 +44,96 @@ const toLocalizedOrString = (
   if (v == null) return null;
   if (typeof v === "string") return v;
   if (isLocalizedString(v)) return v;
-  return null; // เคร่งครัด: ถ้าเป็น number/boolean/array ให้ตัดทิ้ง
+  return null;
 };
-
-/**
- * Authenticates a user based on provided credentials.
- * This function performs runtime validation using Zod and verifies the password.
- * @param credentials The user's login credentials (email, password).
- * @returns The user object if authentication is successful, null otherwise.
- */
 
 export async function authenticateUser(
   credentials: CredentialsInput
 ): Promise<AuthenticatedUser | null> {
-  // 1. ตรวจสอบข้อมูล Credentials ด้วย Zod (Runtime Validation)
-  const validatedCredentials = credentialsSchema.safeParse(credentials);
+  log("[authenticateUser] input", { email: credentials?.email });
 
-  if (!validatedCredentials.success) {
-    // หากข้อมูลไม่ถูกต้อง, คุณสามารถโยน Error ที่มีรายละเอียดได้
-    // หรือ return null เพื่อให้ NextAuth.js จัดการ Error พื้นฐาน
-    // console.error('Invalid credentials:', validatedCredentials.error.flatten());
+  const validated = credentialsSchema.safeParse(credentials);
+  if (!validated.success) {
+    logWarn("[authenticateUser] invalid credentials schema", {
+      issues: validated.error.issues.length,
+    });
     return null;
   }
 
-  const { email, password } = validatedCredentials.data;
+  const { email, password } = validated.data;
+  const normalizedEmail = email.trim().toLowerCase();
 
-  // 2. ค้นหาผู้ใช้จากฐานข้อมูล
-  let user;
+  type UserWithRole = PrismaTypes.UserGetPayload<{ include: { role: true } }>;
+
+  let user: UserWithRole | null = null;
   try {
     user = await prisma.user.findUnique({
-      where: { email },
-      include: {
-        role: true, // บอกให้ Prisma ไปดึงข้อมูลจากตาราง Role มาด้วย
-      },
+      where: { email: normalizedEmail },
+      include: { role: true },
     });
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw new Error("Database connection error");
+    log("[authenticateUser] user fetched", {
+      exists: Boolean(user),
+      id: user?.id ?? null,
+      role: user?.role?.key ?? null,
+      isActive: user?.isActive ?? null,
+      hasHash: Boolean(user?.passwordHash),
+    });
+  } catch (error: unknown) {
+    logError("[authenticateUser] DB error", error);
+    throw new Error("DB_CONNECTION_ERROR");
   }
 
   if (!user) {
-    // หากไม่พบผู้ใช้, Return null
+    logWarn("[authenticateUser] user not found", { email: normalizedEmail });
     return null;
   }
 
-  // 3. ตรวจสอบว่าบัญชีผู้ใช้ Active หรือไม่
   if (!user.isActive) {
-    // ถ้าไม่ Active, return null เพื่อไม่ให้ล็อกอินผ่าน
-    // คุณอาจจะโยน Error ที่มีข้อความเฉพาะเจาะจงกว่านี้ก็ได้
-    // เช่น throw new Error('ACCOUNT_INACTIVE');
+    logWarn("[authenticateUser] inactive user", { id: user.id });
     return null;
   }
 
-  // 3. เปรียบเทียบรหัสผ่านที่ Hash ไว้
-  // ตรวจสอบว่า user มี passwordHash และทำการเปรียบเทียบ
   if (!user.passwordHash) {
-    return null; // ผู้ใช้ไม่มีรหัสผ่าน (อาจ Login ด้วย OAuth เท่านั้น)
+    logWarn("[authenticateUser] missing passwordHash", { id: user.id });
+    return null;
   }
 
-  const passwordMatches = await verifyPassword(password, user.passwordHash);
+  const ok = await verifyPassword(password, user.passwordHash);
+  log("[authenticateUser] password verify", { id: user.id, ok });
 
-  if (!passwordMatches) {
-    return null; // รหัสผ่านไม่ถูกต้อง
+  if (!ok) {
+    logWarn("[authenticateUser] wrong password", { id: user.id });
+    return null;
   }
 
-  // 4. หาก Login สำเร็จ, Return User object
-  // ควร return เฉพาะข้อมูลที่ปลอดภัยที่จะเปิดเผยใน JWT/Session
+  log("[authenticateUser] success", {
+    id: user.id,
+    role: user.role?.key ?? null,
+  });
   return {
     id: user.id,
-    // name: user.name,
     name: toLocalizedOrString(user.name),
     email: user.email ?? "",
     role: user.role?.key ?? null,
-    // ในอนาคต: เพิ่ม roleId หรือ role/permissions ถ้าคุณต้องการเก็บใน JWT/Session
   };
 }
 
-/**
- * Registers a new user with hashed password.
- * ใช้การตรวจสอบข้อมูลด้วย Zod และจัดการ Error พื้นฐานให้ Route Handler
- */
 export async function registerUser(
   input: RegisterInput
 ): Promise<RegisteredUser> {
   const data = registerSchema.parse(input);
-
   const email = data.email.trim().toLowerCase();
-  const existing = await prisma.user.findUnique({
-    where: { email },
-  });
+
+  const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
+    logWarn("[registerUser] email exists", { email });
     throw new Error("EMAIL_ALREADY_EXISTS");
   }
-
-  // const hashedPassword = await hashPassword(data.password);
-
-  // ตอนจะสร้าง user ให้เลือกเฉพาะ field ที่มีใน DB เท่านั้น
-  // และ 'ไม่' ส่ง id เข้าไป เพื่อให้ฐานข้อมูล generate ให้เอง
-  // return prisma.user.create({
-  //   data: {
-  //     email: data.email,
-  //     // name: data.name,
-  //     name: {
-  //       [defaultLocale]: data.name, // ผลลัพธ์จะได้เป็น { "en": "ค่าที่ผู้ใช้กรอก" }
-  //     },
-  //     roleId: data.roleId,
-  //     passwordHash: hashedPassword,
-  //   },
-  // });
-
-  // const created = await prisma.user.create({
-  //   data: {
-  //     email: data.email,
-  //     name: { [defaultLocale]: data.name },
-  //     roleId: data.roleId ?? null,
-  //     passwordHash: hashedPassword,
-  //   },
-  //   select: { id: true, email: true, name: true, roleId: true },
-  // });
-
-  // return {
-  //   id: created.id,
-  //   email: created.email,
-  //   name: created.name as unknown as LocalizedString | string | null,
-  //   roleId: created.roleId,
-  // };
 
   try {
     const created = await prisma.user.create({
       data: {
         email,
-        // ถ้ามีคอลัมน์ normalize แยก ให้ใส่ด้วย เช่น:
-        // emailNormalized: email,
         name: { [defaultLocale]: data.name },
         roleId: data.roleId ?? null,
         passwordHash: await hashPassword(data.password),
@@ -175,6 +147,7 @@ export async function registerUser(
       },
     });
 
+    log("[registerUser] created", { id: created.id, email: created.email });
     return {
       id: created.id,
       email: created.email,
@@ -182,13 +155,15 @@ export async function registerUser(
       roleId: created.roleId,
       isActive: created.isActive,
     };
-  } catch (e) {
+  } catch (e: unknown) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
       e.code === "P2002"
     ) {
+      logWarn("[registerUser] prisma unique constraint", { email });
       throw new Error("EMAIL_ALREADY_EXISTS");
     }
+    logError("[registerUser] error", e);
     throw e;
   }
 }

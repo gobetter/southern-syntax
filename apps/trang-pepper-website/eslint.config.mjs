@@ -9,6 +9,8 @@ export default [
       "node_modules/**",
       ".next/**",
       "dist/**",
+      "messages/**",
+      "scripts/**",
       "coverage/**",
       // ระบุไฟล์ config ที่ฟ้อง
       "eslint.config.*",
