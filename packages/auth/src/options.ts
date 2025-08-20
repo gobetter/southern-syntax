@@ -1,25 +1,26 @@
 import type { Adapter } from "next-auth/adapters";
-import type { NextAuthOptions, User } from "next-auth";
+import type { NextAuthOptions, User, SessionStrategy } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import prisma from "@southern-syntax/db";
 import { authenticateUser } from "./service";
-import { CredentialsInput } from "./schemas";
+import type { CredentialsInput } from "./schemas";
 import { getUserPermissions } from "./utils";
 import type { UserPermissions } from "./next-auth"; // จาก module augmentation ของคุณ
+import { getLogger } from "./logger";
 
-const isDebug: boolean =
-  process.env.NEXTAUTH_DEBUG === "true" ||
-  process.env.NODE_ENV !== "production";
+// const { log, logError } = getLogger("options");
+const { logError } = getLogger("options");
 
-const log = (...args: unknown[]): void => {
-  if (isDebug) console.log("[auth]", ...args);
-};
+// const sessionStrategy: SessionStrategy = (() => {
+//   // ถ้าไม่มี env หรือใส่ค่าแปลก ๆ ให้ fallback เป็น 'jwt'
+//   const v = process.env.NEXTAUTH_SESSION_STRATEGY;
+//   return v === "database" ? "database" : "jwt";
+// })();
 
-const logError = (...args: unknown[]): void => {
-  console.error("[auth]", ...args);
-};
+const sessionStrategy: SessionStrategy =
+  process.env.NEXTAUTH_SESSION_STRATEGY === "database" ? "database" : "jwt";
 
 type RoleKey = { key: string };
 type UserWithRole = User & { role?: RoleKey | null };
@@ -41,7 +42,9 @@ function isUserWithRole(u: unknown): u is UserWithRole {
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
-  session: { strategy: "jwt" },
+  // session: { strategy: "jwt" },
+  session: { strategy: sessionStrategy },
+  // session: { strategy: "jwt" as const },
 
   providers: [
     CredentialsProvider({
@@ -51,22 +54,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = (credentials?.email ?? "")
-          .toString()
-          .trim()
-          .toLowerCase();
-        log("[authorize] start", { email });
-
         try {
           const authenticated = await authenticateUser(
             credentials as CredentialsInput
           );
-
-          // log("[authorize] authenticateUser", {
-          //   ok: Boolean(authenticated),
-          //   userId: authenticated?.id ?? null,
-          //   role: authenticated?.role ?? null,
-          // });
 
           if (!authenticated) {
             throw new Error("INVALID_CREDENTIALS");
@@ -77,26 +68,14 @@ export const authOptions: NextAuthOptions = {
             include: { role: { select: { key: true } } },
           });
 
-          // log("[authorize] prisma.user.findUnique", {
-          //   exists: Boolean(userWithRole),
-          //   id: userWithRole?.id ?? null,
-          //   role: userWithRole?.role?.key ?? null,
-          //   isActive: userWithRole?.isActive ?? null,
-          // });
-
           if (userWithRole?.role) {
             const finalUser: User = {
               ...userWithRole,
               role: userWithRole.role,
             } as unknown as User; // cast ให้ตรง type NextAuth (ไม่ใช้ any)
-            // log("[authorize] success", {
-            //   id: userWithRole.id,
-            //   role: userWithRole.role.key,
-            // });
             return finalUser;
           }
 
-          // log("[authorize] fail: no role");
           return null;
         } catch (e: unknown) {
           logError("[authorize] error", e);
@@ -108,13 +87,6 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-      // log("[cb.jwt] enter", {
-      //   hasUser: Boolean(user),
-      //   trigger,
-      //   tokenRole: (token as { role?: string | null }).role ?? null,
-      //   tokenId: (token as { id?: string | null }).id ?? null,
-      // });
-
       if (isUserWithRole(user) && user.role) {
         try {
           const permissions: UserPermissions | null = await getUserPermissions(
@@ -125,14 +97,6 @@ export const authOptions: NextAuthOptions = {
           (token as TokenShape).email = user.email ?? null;
           (token as TokenShape).role = user.role.key ?? "";
           (token as TokenShape).permissions = permissions ?? {};
-
-          // log("[cb.jwt] set-from-user", {
-          //   tokenId: (token as { id?: string }).id ?? null,
-          //   tokenRole: (token as { role?: string | null }).role ?? null,
-          //   hasPerms: Boolean(
-          //     (token as { permissions?: UserPermissions | null }).permissions
-          //   ),
-          // });
         } catch (err: unknown) {
           logError("[cb.jwt] getUserPermissions error", err);
         }
@@ -140,9 +104,6 @@ export const authOptions: NextAuthOptions = {
 
       if (trigger === "update" && session?.user) {
         (token as { name: string | null }).name = session.user.name ?? null;
-        // log("[cb.jwt] trigger=update -> name updated", {
-        //   name: session.user.name ?? null,
-        // });
       }
 
       return token;
@@ -160,39 +121,9 @@ export const authOptions: NextAuthOptions = {
         session.user.permissions = t.permissions ?? {};
       }
 
-      // log("[cb.session] built session", {
-      //   id: session.user?.id ?? null,
-      //   role: session.user?.role ?? null,
-      //   hasPerms: Boolean(session.user?.permissions),
-      // });
       return session;
     },
   },
-
-  // events: {
-  //   async signOut() {
-  //     log("[events.signOut]");
-  //   },
-  //   async createUser(message) {
-  //     log("[events.createUser]", { hasUser: Boolean(message.user) });
-  //   },
-  //   async session(message) {
-  //     log("[events.session]", { hasSession: Boolean(message.session) });
-  //   },
-  // },
-
-  // ✅ ใช้ logger สำหรับจับ error/warn/debug แทน events.error
-  // logger: {
-  //   error(code, metadata) {
-  //     logError("[logger.error]", code, metadata);
-  //   },
-  //   warn(code) {
-  //     log("[logger.warn]", code);
-  //   },
-  //   debug(code, metadata) {
-  //     if (isDebug) log("[logger.debug]", code, metadata);
-  //   },
-  // },
 
   pages: { signIn: "/auth/signin" },
   debug: process.env.NEXTAUTH_DEBUG === "true",

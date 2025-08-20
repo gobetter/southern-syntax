@@ -3,7 +3,7 @@
 
 import bcrypt from "bcryptjs";
 import prisma from "@southern-syntax/db";
-import { PermissionActionType, PermissionResourceType } from "./constants";
+import type { PermissionActionType, PermissionResourceType } from "./constants";
 
 const SALT_ROUNDS = 10;
 

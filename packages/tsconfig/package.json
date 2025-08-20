@@ -10,5 +10,9 @@
     "./base.json": "./base.json",
     "./react-library.json": "./react-library.json",
     "./nextjs.json": "./nextjs.json"
-  }
+  },
+  "files": [
+    "*.json",
+    "README.md"
+  ]
 }

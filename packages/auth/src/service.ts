@@ -8,27 +8,12 @@ import type {
   RegisteredUser,
 } from "@southern-syntax/types";
 
-import {
-  CredentialsInput,
-  credentialsSchema,
-  registerSchema,
-  RegisterInput,
-} from "./schemas";
+import type { CredentialsInput, RegisterInput } from "./schemas";
+import { credentialsSchema, registerSchema } from "./schemas";
 import { verifyPassword, hashPassword } from "./utils";
+import { getLogger } from "./logger";
 
-const isDebug: boolean =
-  process.env.NEXTAUTH_DEBUG === "true" ||
-  process.env.NODE_ENV !== "production";
-
-const log = (...args: unknown[]): void => {
-  if (isDebug) console.log("[auth:service]", ...args);
-};
-const logWarn = (...args: unknown[]): void => {
-  console.warn("[auth:service]", ...args);
-};
-const logError = (...args: unknown[]): void => {
-  console.error("[auth:service]", ...args);
-};
+const { log, logWarn, logError } = getLogger("service");
 
 const isLocalizedString = (v: unknown): v is LocalizedString =>
   typeof v === "object" &&

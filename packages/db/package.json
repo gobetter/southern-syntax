@@ -6,12 +6,17 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist",
     "prisma"
   ],
@@ -21,7 +26,8 @@
     "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
     "typecheck": "tsc -b --pretty false",
     "build": "tsc -b",
-    "check-types": "pnpm typecheck"
+    "check-types": "pnpm typecheck",
+    "postinstall": "pnpm --filter @southern-syntax/db exec prisma --version >/dev/null 2>&1 && pnpm --filter @southern-syntax/db db:generate || echo \"[skip] prisma generate\""
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

@@ -2,12 +2,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
     "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": "."
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false, // ต้องเป็น false เพื่อมี .js ใน dist
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "verbatimModuleSyntax": true,
+    "jsx": "react-jsx"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],

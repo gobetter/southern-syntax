@@ -1,5 +1,5 @@
 import createIntlMiddleware from "next-intl/middleware";
-import type { NextRequest} from "next/server";
+import type { NextRequest } from "next/server";
 import { type NextFetchEvent } from "next/server";
 import {
   withAuth,

@@ -1,12 +1,17 @@
+/* 1) ชี้ที่มาซอร์สให้ Tailwind สแกน “ก่อน” โหลด Tailwind */
+/* @source "../../../../packages/ui/src";
+@source "../../../../packages/auth/src";
+@source "../../../../packages/i18n/src"; */
+@source "../../../../packages/{ui,auth,i18n}/src";
+
+/* 2) โหลด Tailwind และปลั๊กอิน */
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-@source "../../../../packages/ui/src";
-@source "../../../../packages/auth/src";
-@source "../../../../packages/i18n/src";
-
+/* 3) ตัวแปร variant สำหรับโหมดมืด (อย่าลบ) */
 @custom-variant dark (&:is(.dark *));
 
+/* 4) theme tokens + styles ของคุณต่อจากนี้ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

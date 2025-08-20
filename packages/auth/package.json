@@ -3,47 +3,56 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./constants": {
       "types": "./dist/constants.d.ts",
-      "default": "./src/constants.ts"
+      "import": "./dist/constants.js",
+      "default": "./dist/constants.js"
     },
     "./server": {
       "types": "./dist/server.d.ts",
-      "default": "./src/server.ts"
+      "import": "./dist/server.js",
+      "default": "./dist/server.js"
     },
     "./service": {
       "types": "./dist/service.d.ts",
-      "default": "./src/service.ts"
+      "imort": "./dist/service.js",
+      "default": "./dist/service.js"
     },
     "./schemas": {
       "types": "./dist/schemas.d.ts",
-      "default": "./src/schemas.ts"
+      "import": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
     },
     "./permissions": {
       "types": "./dist/permissions.d.ts",
-      "default": "./src/permissions.ts"
+      "import": "./dist/permissions.js",
+      "default": "./dist/permissions.js"
     },
     "./options": {
       "types": "./dist/options.d.ts",
-      "default": "./src/options.ts"
+      "import": "./dist/options.js",
+      "default": "./dist/options.js"
     },
     "./utils": {
       "types": "./dist/utils.d.ts",
-      "default": "./src/utils.ts"
-    },
-    "./next-auth": {
-      "types": "./dist/next-auth.d.ts",
-      "default": "./src/next-auth.ts"
+      "import": "./dist/utils.js",
+      "default": "./dist/utils.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {

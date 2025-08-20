@@ -38,15 +38,11 @@ export default function SignInForm() {
   const onSubmit: SubmitHandler<CredentialsInput> = async (data) => {
     setServerError(null);
 
-    console.log(">>> data: ", data);
-
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
-
-    console.log(">>> result: ", result);
 
     if (result?.error) {
       // ตรวจสอบ "คีย์" ที่ได้จาก result.error

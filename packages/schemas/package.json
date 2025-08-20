@@ -3,23 +3,39 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./*": {
       "types": "./dist/*.d.ts",
-      "default": "./src/*.ts"
+      "import": "./dist/*.js",
+      "require": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./language": {
       "types": "./dist/language.d.ts",
-      "default": "./src/language.ts"
+      "import": "./dist/language.js",
+      "require": "./dist/language.js",
+      "default": "./dist/language.js"
+    },
+    "./media": {
+      "types": "./dist/media.d.ts",
+      "import": "./dist/media.js",
+      "default": "./dist/media.js"
+    },
+    "./media-taxonomy": {
+      "types": "./dist/media-taxonomy.d.ts",
+      "import": "./dist/media-taxonomy.js",
+      "default": "./dist/media-taxonomy.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {

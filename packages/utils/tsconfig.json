@@ -4,19 +4,16 @@
     "composite": true,
     "rootDir": "src",
     "outDir": "dist",
-    "emitDeclarationOnly": true,
     "declaration": true,
     "declarationMap": true,
-
+    "emitDeclarationOnly": false,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": ["node"],
     "downlevelIteration": true,
     "verbatimModuleSyntax": true
-
-    /* สำคัญ: ไม่ต้อง override target/lib ที่นี่
-       จะไปใช้ค่าใน base.json ที่เป็น ES2022/ES2023 แทน */
   },
   "include": ["src"],
-  "exclude": ["node_modules", "__tests__", "dist"]
+  "exclude": ["node_modules", "__tests__", "dist"],
+  "references": [{ "path": "../types" }, { "path": "../config" }]
 }

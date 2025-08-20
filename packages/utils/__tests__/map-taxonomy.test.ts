@@ -1,5 +1,4 @@
 import { describe, it, expect } from "vitest";
-// import { mapTaxonomy, mapIdName, mapIdSlugName } from "../mapTaxonomy";
 import { mapTaxonomy, mapIdName, mapIdSlugName } from "@southern-syntax/utils";
 
 describe("mapTaxonomy", () => {

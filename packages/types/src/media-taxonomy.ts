@@ -1,4 +1,4 @@
-import { LocalizedString } from './i18n';
+import type { LocalizedString } from "./i18n";
 
 export interface Category {
   id: string;

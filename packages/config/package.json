@@ -3,23 +3,35 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./constants": {
       "types": "./dist/constants.d.ts",
-      "default": "./src/constants.ts"
+      "import": "./dist/constants.js",
+      "require": "./dist/constants.js",
+      "default": "./dist/constants.js"
     },
     "./env": {
       "types": "./dist/env.d.ts",
-      "default": "./src/env.ts"
+      "import": "./dist/env.js",
+      "require": "./dist/env.js",
+      "default": "./dist/env.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {

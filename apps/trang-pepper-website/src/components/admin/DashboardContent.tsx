@@ -1,4 +1,3 @@
-// apps/trang-pepper-website/src/components/admin/DashboardContent.tsx
 "use client";
 
 import Link from "next/link";

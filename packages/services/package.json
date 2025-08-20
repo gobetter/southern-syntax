@@ -7,16 +7,22 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./language": {
       "types": "./dist/language.d.ts",
-      "default": "./src/language.ts"
+      "import": "./dist/language.js",
+      "default": "./dist/language.js"
     }
   },
   "types": "dist/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
