@@ -1,6 +1,14 @@
 import type { Adapter } from "next-auth/adapters";
 import type { NextAuthOptions, User, SessionStrategy } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProviderPkg from "next-auth/providers/credentials";
+
+const CredentialsProvider: typeof CredentialsProviderPkg =
+  (
+    CredentialsProviderPkg as typeof CredentialsProviderPkg & {
+      default?: typeof CredentialsProviderPkg;
+    }
+  ).default ?? CredentialsProviderPkg;
+
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import prisma from "@southern-syntax/db";
@@ -55,6 +63,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        // async authorize(credentials: CredentialsInput) {
         try {
           const authenticated = await authenticateUser(
             credentials as CredentialsInput

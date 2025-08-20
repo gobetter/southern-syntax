@@ -1,5 +1,6 @@
 {
-  "extends": "@southern-syntax/tsconfig/base.json",
+  // "extends": "@southern-syntax/tsconfig/base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",
@@ -16,8 +17,14 @@
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@southern-syntax/types": ["../types/dist/index.d.ts"],
+      "@southern-syntax/types/*": ["../types/dist/*.d.ts"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.json"],
-  "exclude": ["dist", "node_modules", "scripts"]
+  "exclude": ["dist", "node_modules", "scripts"],
+  "references": [{ "path": "../types" }]
 }

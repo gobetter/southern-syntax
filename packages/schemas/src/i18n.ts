@@ -12,7 +12,10 @@ import { locales } from "@southern-syntax/config";
 // Schema พื้นฐาน: object ที่มี key เป็นภาษาที่เรารองรับ และ value เป็น string
 export const LocalizedStringSchema = z
   .object(
-    Object.fromEntries(locales.map((locale) => [locale, z.string()])) as {
+    // Object.fromEntries(locales.map((locale) => [locale, z.string()])) as {
+    Object.fromEntries(
+      locales.map((locale: (typeof locales)[number]) => [locale, z.string()])
+    ) as {
       [key in (typeof locales)[number]]: z.ZodString;
     }
   )

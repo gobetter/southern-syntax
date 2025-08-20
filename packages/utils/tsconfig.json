@@ -15,5 +15,10 @@
   },
   "include": ["src"],
   "exclude": ["node_modules", "__tests__", "dist"],
-  "references": [{ "path": "../types" }, { "path": "../config" }]
+  // "references": [{ "path": "../types" }, { "path": "../config" }]
+  "references": [
+    { "path": "../types" },
+    { "path": "../config" },
+    { "path": "../i18n" }
+  ]
 }
