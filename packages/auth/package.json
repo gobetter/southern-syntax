@@ -27,7 +27,7 @@
     },
     "./service": {
       "types": "./dist/service.d.ts",
-      "imort": "./dist/service.js",
+      "import": "./dist/service.js",
       "default": "./dist/service.js"
     },
     "./schemas": {

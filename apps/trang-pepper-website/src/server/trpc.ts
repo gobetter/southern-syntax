@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
-import { authOptions } from "@southern-syntax/auth/server"; // server-side auth options
+// import { getServerSession } from "next-auth"; // สำหรับดึง Session ใน context
+// import { authOptions } from "@southern-syntax/auth/server"; // server-side auth options
+import { getServerAuthSession } from "@southern-syntax/auth/server"; // server-side session helper
 import { can } from "@southern-syntax/auth"; // permission helper
 
 import prisma from "@southern-syntax/db"; // Prisma Client instance
@@ -12,7 +13,8 @@ import type {
 // สร้าง Context สำหรับ tRPC
 // Context จะมีข้อมูลที่เข้าถึงได้ในทุก tRPC procedure (เช่น session, prisma client)
 export const createTRPCContext = async () => {
-  const session = await getServerSession(authOptions); // ดึง NextAuth.js session
+  // const session = await getServerSession(authOptions); // ดึง NextAuth.js session
+  const session = await getServerAuthSession(); // ดึง NextAuth.js session
   return {
     session, // ส่ง session เข้าไปใน context
     prisma, // ส่ง prisma client เข้าไปใน context

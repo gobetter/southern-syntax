@@ -33,7 +33,7 @@ importers:
   apps/trang-pepper-website:
     dependencies:
       '@auth/prisma-adapter':
-        specifier: ^2.9.1
+        specifier: ^2.10.0
         version: 2.10.0(@prisma/client@5.22.0(prisma@5.22.0))
       '@hookform/resolvers':
         specifier: ^5.1.1

@@ -1,9 +1,10 @@
 import { Suspense } from "react";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 
 import DashboardContent from "@/components/admin/DashboardContent";
 import UserInfo from "@/components/user/UserInfo";
@@ -16,7 +17,8 @@ export default async function DashboardPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session) {
     redirect(`/${lang}/auth/signin`);

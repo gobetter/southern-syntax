@@ -1,5 +1,5 @@
-import { getServerSession } from "next-auth";
-import type { NextRequest} from "next/server";
+// import { getServerSession } from "next-auth";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import prisma from "@southern-syntax/db";
@@ -8,10 +8,15 @@ import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
-import { authOptions, hashPassword } from "@southern-syntax/auth/server";
+// import { authOptions, hashPassword } from "@southern-syntax/auth/server";
+import {
+  getServerAuthSession,
+  hashPassword,
+} from "@southern-syntax/auth/server";
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

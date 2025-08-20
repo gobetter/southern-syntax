@@ -1,7 +1,8 @@
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 import {
   can,
   type PermissionActionType,
@@ -25,7 +26,8 @@ export default async function ProtectedPage({
   callbackUrl,
   children,
 }: ProtectedPageProps) {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session) {
     return redirect(`/${lang}/auth/signin?callbackUrl=${callbackUrl}`);

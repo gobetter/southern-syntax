@@ -6,8 +6,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "rootDir": "src",
-    "outDir": "dist",
-    "baseUrl": "."
+    "outDir": "dist"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],

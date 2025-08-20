@@ -1,9 +1,10 @@
 import React from "react";
 import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import type { Session } from "next-auth";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 import { Toaster } from "@southern-syntax/ui";
 
 import TRPCProvider from "@/lib/trpc-provider";
@@ -20,10 +21,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getServerSession(authOptions);
+  // const session = await getServerAuthSession();
   let session: Session | null = null;
   try {
-    session = await getServerSession(authOptions);
+    // session = await getServerSession(authOptions);
+    session = await getServerAuthSession();
   } catch (error) {
     console.error("Failed to retrieve session", error);
   }

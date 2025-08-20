@@ -1,8 +1,9 @@
 import { Suspense } from "react";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 import {
   can,
   PERMISSION_ACTIONS,
@@ -24,7 +25,8 @@ export default async function AdminLayout({
 }) {
   // const resolvedParams = await params;
   const { lang } = await params;
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   // 1. ✅ ตรวจสอบ Session ที่ Layout Level
   if (!session) {

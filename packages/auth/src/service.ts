@@ -106,7 +106,8 @@ export async function authenticateUser(
 export async function registerUser(
   input: RegisterInput
 ): Promise<RegisteredUser> {
-  const data = registerSchema.parse(input);
+  // const data = registerSchema.parse(input);
+  const data: RegisterInput = registerSchema.parse(input);
   const email = data.email.trim().toLowerCase();
 
   const existing = await prisma.user.findUnique({ where: { email } });
@@ -143,7 +144,8 @@ export async function registerUser(
   } catch (e: unknown) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code === "P2002"
+      // e.code === "P2002"
+      (e as Prisma.PrismaClientKnownRequestError).code === "P2002"
     ) {
       logWarn("[registerUser] prisma unique constraint", { email });
       throw new Error("EMAIL_ALREADY_EXISTS");

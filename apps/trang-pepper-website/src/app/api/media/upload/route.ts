@@ -1,8 +1,9 @@
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 import {
   can,
   PERMISSION_ACTIONS,
@@ -14,7 +15,8 @@ import { mediaService } from "@/services/media";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
+    const session = await getServerAuthSession();
 
     if (
       !session?.user?.id ||

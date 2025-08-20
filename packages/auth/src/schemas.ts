@@ -6,6 +6,7 @@ import {
   LocalizedStringSchema,
 } from "@southern-syntax/schemas";
 import { defaultLocale } from "@southern-syntax/config";
+import type { LocalizedString } from "@southern-syntax/types";
 
 const requiredInDefaultLang = "error_field_is_required_in_default_lang";
 
@@ -33,10 +34,18 @@ export const registerSchema = z
     roleId: z.string().uuid({ message: "error_role_required" }),
     confirmPassword: z.string().min(1, "error_field_is_required"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "error_passwords_do_not_match",
-    path: ["confirmPassword"],
-  });
+  // .refine((data) => data.password === data.confirmPassword, {
+  //   message: "error_passwords_do_not_match",
+  //   path: ["confirmPassword"],
+  // });
+  .refine(
+    (data: { password: string; confirmPassword: string }) =>
+      data.password === data.confirmPassword,
+    {
+      message: "error_passwords_do_not_match",
+      path: ["confirmPassword"],
+    }
+  );
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 
@@ -50,7 +59,9 @@ export const roleSchema = z.object({
 
   // เปลี่ยน name ให้ใช้ LocalizedStringSchema และบังคับภาษาหลัก
   name: LocalizedStringSchema.refine(
-    (data) => data?.[defaultLocale] && data[defaultLocale]!.trim().length > 0,
+    // (data) => data?.[defaultLocale] && data[defaultLocale]!.trim().length > 0,
+    (data: Record<string, string | undefined>) =>
+      data?.[defaultLocale] && data[defaultLocale]!.trim().length > 0,
     {
       message: requiredInDefaultLang,
       path: [defaultLocale],

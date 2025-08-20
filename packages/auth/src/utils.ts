@@ -104,5 +104,6 @@ export async function invalidatePermissionsByRole(roleId: string) {
     where: { roleId },
     select: { id: true },
   });
-  users.forEach((u) => invalidateUserPermissions(u.id));
+  // users.forEach((u) => invalidateUserPermissions(u.id));
+  users.forEach((u: { id: string }) => invalidateUserPermissions(u.id));
 }

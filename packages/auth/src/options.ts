@@ -40,7 +40,8 @@ function isUserWithRole(u: unknown): u is UserWithRole {
   );
 }
 
-export const authOptions: NextAuthOptions = {
+// export const authOptions: NextAuthOptions = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   // session: { strategy: "jwt" },
   session: { strategy: sessionStrategy },
@@ -127,4 +128,5 @@ export const authOptions: NextAuthOptions = {
 
   pages: { signIn: "/auth/signin" },
   debug: process.env.NEXTAUTH_DEBUG === "true",
-};
+  // };
+} satisfies NextAuthOptions;

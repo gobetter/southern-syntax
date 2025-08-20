@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 
-import { authOptions } from "@southern-syntax/auth/server";
+// import { authOptions } from "@southern-syntax/auth/server";
+import { getServerAuthSession } from "@southern-syntax/auth/server";
 import {
   can,
   PERMISSION_ACTIONS,
@@ -22,7 +23,8 @@ export default async function AuditLogPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session) {
     redirect(`/${lang}/auth/signin?callbackUrl=/admin/audit-log`);
