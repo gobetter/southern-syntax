@@ -6,7 +6,6 @@ import {
   LocalizedStringSchema,
 } from "@southern-syntax/schemas";
 import { defaultLocale } from "@southern-syntax/config";
-import type { LocalizedString } from "@southern-syntax/types";
 
 const requiredInDefaultLang = "error_field_is_required_in_default_lang";
 

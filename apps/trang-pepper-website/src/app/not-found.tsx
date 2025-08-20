@@ -2,6 +2,9 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { TriangleAlert } from "lucide-react";
 
+// ✅ ระบุให้เป็น dynamic เพื่ออนุญาตให้ใช้ headers/cookies ในหน้านี้
+export const dynamic = "force-dynamic";
+
 export default async function NotFound() {
   const lang = await getLocale();
   const t = await getTranslations({ locale: lang, namespace: "common" });
