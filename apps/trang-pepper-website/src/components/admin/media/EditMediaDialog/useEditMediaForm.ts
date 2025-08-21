@@ -14,7 +14,7 @@ import {
 } from "@southern-syntax/schemas/media";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapToSelectOptions } from "@southern-syntax/utils";
-import { useToast } from "@southern-syntax/hooks-next";
+import { useToast } from "@southern-syntax/hooks-next/use-toast";
 
 import { mediaToFormValues } from "./mediaToFormValues";
 

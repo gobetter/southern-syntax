@@ -9,6 +9,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./use-toast": {
+      "types": "./dist/useToast.d.ts",
+      "import": "./dist/useToast.js",
+      "default": "./dist/useToast.js"
+    },
+    "./use-update-query": {
+      "types": "./dist/useUpdateQuery.d.ts",
+      "import": "./dist/useUpdateQuery.js",
+      "default": "./dist/useUpdateQuery.js"
+    },
+    "./use-upload-media": {
+      "types": "./dist/useUploadMedia.d.ts",
+      "import": "./dist/useUploadMedia.js",
+      "default": "./dist/useUploadMedia.js"
     }
   },
   "types": "dist/index.d.ts",
@@ -21,6 +36,7 @@
   },
   "peerDependencies": {
     "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
     "next": ">=14",
     "next-intl": ">=4",
     "sonner": ">=2"

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
-import { useToast } from "@southern-syntax/hooks-next";
+import { useToast } from "@southern-syntax/hooks-next/use-toast";
 
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";

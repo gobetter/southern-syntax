@@ -9,7 +9,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
-import { useUpdateQuery } from "@southern-syntax/hooks-next";
+import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
 import {
   Button,
   Pagination,

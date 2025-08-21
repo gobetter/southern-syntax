@@ -10,7 +10,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { LocalizedString } from "@southern-syntax/types";
-import { useToast } from "@southern-syntax/hooks-next";
+import { useToast } from "@southern-syntax/hooks-next/use-toast";
 
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";

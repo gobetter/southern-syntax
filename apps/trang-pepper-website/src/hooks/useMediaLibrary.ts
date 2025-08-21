@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { useDebounce } from "@southern-syntax/hooks";
-import { useUpdateQuery } from "@southern-syntax/hooks-next";
+import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
 import { mapIdName } from "@southern-syntax/utils";
 import type { MediaCategory, MediaTag } from "@southern-syntax/types";
 import type { MediaItem } from "@/types/trpc";

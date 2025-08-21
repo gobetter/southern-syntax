@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 
-import { useUpdateQuery } from "@southern-syntax/hooks-next";
+import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
 import {

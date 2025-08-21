@@ -2,10 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
-import { useToast } from "@southern-syntax/hooks-next";
+import { useToast } from "@southern-syntax/hooks-next/use-toast";
 import { Button } from "@southern-syntax/ui";
 
-// import type { MediaItem } from "@southern-syntax/types";
 import type { MediaItem } from "@/types/trpc";
 
 export default function UrlsSection({ media }: { media: MediaItem }) {

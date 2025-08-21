@@ -13,7 +13,8 @@ import {
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
 import { useDebounce } from "@southern-syntax/hooks";
-import { useUpdateQuery, useToast } from "@southern-syntax/hooks-next";
+import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
+import { useToast } from "@southern-syntax/hooks-next/use-toast";
 
 import { trpc } from "@/lib/trpc-client";
 import type { UserItem } from "@southern-syntax/types";
