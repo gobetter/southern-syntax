@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import prisma from "@southern-syntax/db";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 
-import { AUDIT_ACTIONS } from "@/constants/auditActions";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
 
 import { auditLogService } from "./auditLog";
 

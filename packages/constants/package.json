@@ -1,0 +1,36 @@
+{
+  "name": "@southern-syntax/constants",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b",
+    "check-types": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@southern-syntax/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.8.3"
+  }
+}

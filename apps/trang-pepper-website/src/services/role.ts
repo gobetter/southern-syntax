@@ -5,7 +5,7 @@ import prisma from "@southern-syntax/db";
 import type { RoleInput } from "@southern-syntax/auth";
 import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
 
-import { AUDIT_ACTIONS } from "@/constants/auditActions";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
 
 import { auditLogService } from "./auditLog";
 

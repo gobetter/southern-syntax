@@ -16,12 +16,12 @@ import { mapIdName } from "@southern-syntax/utils";
 import type { MediaCategory, MediaTag } from "@southern-syntax/types";
 import type { MediaItem } from "@/types/trpc";
 import type { LocalizedString } from "@southern-syntax/types";
+import { MEDIA_SORT_OPTIONS } from "@southern-syntax/constants/media";
+import type { MediaSortableField } from "@southern-syntax/constants/media";
+import type { SortOrder } from "@southern-syntax/types";
 
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
-import type { MediaSortableField } from "@/constants/media";
-import { MEDIA_SORT_OPTIONS } from "@/constants/media";
-import type { SortOrder } from "@/constants/common";
 import type { TRPCClientErrorLike } from "@trpc/client";
 
 interface UseMediaLibraryReturn {

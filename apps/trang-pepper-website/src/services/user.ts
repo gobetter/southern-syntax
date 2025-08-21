@@ -12,15 +12,17 @@ import {
 } from "@southern-syntax/schemas/user";
 import type {
   UserSortableField,
-  UserStatusFilter} from "@southern-syntax/types";
-import {
-  VALID_USER_STATUSES,
+  UserStatusFilter,
 } from "@southern-syntax/types";
+import { VALID_USER_STATUSES } from "@southern-syntax/types";
 import { ROLE_NAMES } from "@southern-syntax/auth";
 import prisma from "@southern-syntax/db";
 
-import type { SortOrder } from "@/constants/common";
-import { AUDIT_ACTIONS, type AuditAction } from "@/constants/auditActions";
+import type { SortOrder } from "@southern-syntax/types";
+import {
+  AUDIT_ACTIONS,
+  type AuditAction,
+} from "@southern-syntax/constants/auditActions";
 
 import { auditLogService } from "./auditLog";
 

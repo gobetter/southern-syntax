@@ -15,7 +15,7 @@ import {
 } from "@southern-syntax/types";
 
 import { userService } from "@/services/user";
-import { SORT_ORDERS } from "@/constants/common";
+import { SORT_ORDERS } from "@southern-syntax/types";
 
 export const userRouter = router({
   /**

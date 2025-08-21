@@ -8,8 +8,8 @@ import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
 
 import { router, authorizedProcedure } from "@/server/trpc";
 import { mediaService } from "@/services/media";
-import { MEDIA_SORTABLE_FIELDS } from "@/constants/media";
-import { SORT_ORDERS } from "@/constants/common";
+import { MEDIA_SORTABLE_FIELDS } from "@southern-syntax/constants/media";
+import { SORT_ORDERS } from "@southern-syntax/types";
 
 export const mediaRouter = router({
   // ดึง media ทั้งหมดพร้อม pagination และ search

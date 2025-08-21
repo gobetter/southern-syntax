@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-import type { SortOrder } from "@/constants/common";
+import type { SortOrder } from "@southern-syntax/types";
 
 import {
   Button,

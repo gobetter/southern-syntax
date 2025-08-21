@@ -29,6 +29,7 @@
     "@radix-ui/react-tabs": "^1.1.12",
     "@southern-syntax/auth": "workspace:*",
     "@southern-syntax/config": "workspace:*",
+    "@southern-syntax/constants": "workspace:*",
     "@southern-syntax/db": "workspace:*",
     "@southern-syntax/hooks": "workspace:*",
     "@southern-syntax/hooks-next": "workspace:*",

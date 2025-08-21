@@ -4,6 +4,7 @@
     { "path": "./apps/trang-pepper-website" },
     { "path": "./packages/auth" },
     { "path": "./packages/config" },
+    { "path": "./packages/constants" },
     { "path": "./packages/db" },
     { "path": "./packages/eslint-config-custom" },
     { "path": "./packages/hooks" },

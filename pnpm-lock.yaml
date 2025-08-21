@@ -80,6 +80,9 @@ importers:
       '@southern-syntax/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@southern-syntax/constants':
+        specifier: workspace:*
+        version: link:../../packages/constants
       '@southern-syntax/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -292,6 +295,22 @@ importers:
       zod:
         specifier: ^3.25.64
         version: 3.25.76
+    devDependencies:
+      '@southern-syntax/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: ^24.2.1
+        version: 24.3.0
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/constants:
+    dependencies:
+      '@southern-syntax/types':
+        specifier: workspace:*
+        version: link:../types
     devDependencies:
       '@southern-syntax/tsconfig':
         specifier: workspace:*

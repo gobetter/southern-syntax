@@ -16,9 +16,9 @@ import {
   supabase,
 } from "@southern-syntax/utils";
 
-import type { MediaSortableField } from "@/constants/media";
-import type { SortOrder } from "@/constants/common";
-import { AUDIT_ACTIONS } from "@/constants/auditActions";
+import type { MediaSortableField } from "@southern-syntax/constants/media";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
+import type { SortOrder } from "@southern-syntax/types";
 
 import { auditLogService } from "./auditLog";
 import { processImage } from "./image-processing";
