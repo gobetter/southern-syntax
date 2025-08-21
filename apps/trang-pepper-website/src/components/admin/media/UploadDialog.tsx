@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import FileUploadDialog from "@/components/common/FileUploadDialog";
-import { useUploadMedia } from "@/hooks/useUploadMedia";
+import { useUploadMedia } from "@southern-syntax/hooks-next";
 
 interface UploadDialogProps {
   isOpen: boolean;

@@ -8,10 +8,13 @@ interface UploadErrorItem {
   message: string;
 }
 
-export function useUploadMedia(onSuccess: () => void) {
+export function useUploadMedia(
+  onSuccess: () => void,
+  namespace = "admin_media.upload_dialog"
+) {
   const [isUploading, setIsUploading] = useState(false);
   const [errors, setErrors] = useState<UploadErrorItem[]>([]);
-  const t = useTranslations("admin_media.upload_dialog");
+  const t = useTranslations(namespace);
 
   const upload = async (files: File[]) => {
     setIsUploading(true);
@@ -24,14 +27,12 @@ export function useUploadMedia(onSuccess: () => void) {
         await uploadMediaFile(file);
       } catch (err) {
         if (err instanceof TranslatedUploadError) {
-          // ถ้าเป็น Error ที่เราสร้างไว้ จัดการแบบ Type-safe
           const filename = (err.context?.filename as string) ?? file.name;
           errorItems.push({
-            filename: filename,
+            filename,
             message: t(err.messageKey, err.context),
           });
         } else {
-          // จัดการ Error ทั่วไปที่ไม่คาดคิด
           errorItems.push({
             filename: file.name,
             message: t("unexpected", { filename: file.name }),

@@ -26,7 +26,8 @@
     "sonner": ">=2"
   },
   "dependencies": {
-    "@southern-syntax/types": "workspace:*"
+    "@southern-syntax/types": "workspace:*",
+    "@southern-syntax/utils": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "19.1.0",

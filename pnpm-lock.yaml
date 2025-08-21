@@ -389,6 +389,9 @@ importers:
       '@southern-syntax/types':
         specifier: workspace:*
         version: link:../types
+      '@southern-syntax/utils':
+        specifier: workspace:*
+        version: link:../utils
       next:
         specifier: '>=14'
         version: 15.3.3(@babel/core@7.28.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
