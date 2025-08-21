@@ -1,12 +1,11 @@
 import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import type { TRPCClientErrorLike } from "@trpc/client";
-// import type { MediaItem } from "@southern-syntax/types";
 import type { MediaItem } from "@/types/trpc";
 
 import { useSelectionSet } from "./useSelectionSet";

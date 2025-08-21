@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     "@southern-syntax/config",
     "@southern-syntax/db",
     "@southern-syntax/hooks",
+    "@southern-syntax/hooks-next",
     "@southern-syntax/i18n",
     "@southern-syntax/schemas",
     "@southern-syntax/services",

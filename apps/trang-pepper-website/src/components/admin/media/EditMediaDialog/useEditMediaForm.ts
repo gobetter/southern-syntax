@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { trpc } from "@/lib/trpc-client";
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
-// import type { MediaItem } from "@southern-syntax/types";
 import type { MediaItem } from "@/types/trpc";
 
 import {
@@ -15,7 +14,7 @@ import {
 } from "@southern-syntax/schemas/media";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapToSelectOptions } from "@southern-syntax/utils";
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 
 import { mediaToFormValues } from "./mediaToFormValues";
 

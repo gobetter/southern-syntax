@@ -31,6 +31,7 @@
     "@southern-syntax/config": "workspace:*",
     "@southern-syntax/db": "workspace:*",
     "@southern-syntax/hooks": "workspace:*",
+    "@southern-syntax/hooks-next": "workspace:*",
     "@southern-syntax/i18n": "workspace:*",
     "@southern-syntax/schemas": "workspace:*",
     "@southern-syntax/services": "workspace:*",

@@ -1,5 +1,5 @@
 {
-  "name": "@southern-syntax/hooks",
+  "name": "@southern-syntax/hooks-next",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -17,15 +17,20 @@
   ],
   "scripts": {
     "build": "tsc -b",
-    "typecheck": "tsc -b --pretty false",
-    "lint": "eslint . --max-warnings 0"
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "react": "^18 || ^19",
+    "next": ">=14",
+    "next-intl": ">=4",
+    "sonner": ">=2"
+  },
+  "dependencies": {
+    "@southern-syntax/types": "workspace:*"
   },
   "devDependencies": {
-    "@southern-syntax/tsconfig": "workspace:*",
     "@types/react": "19.1.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "sonner": "^2.0.7"
   }
 }

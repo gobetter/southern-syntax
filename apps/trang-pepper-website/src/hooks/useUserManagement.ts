@@ -1,15 +1,7 @@
 "use client";
 
-import type {
-  Dispatch,
-  SetStateAction,
-  RefObject} from "react";
-import {
-  useState,
-  useEffect,
-  useMemo,
-  useRef
-} from "react";
+import type { Dispatch, SetStateAction, RefObject } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -20,7 +12,8 @@ import {
   type UserSortableField,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
-import { useUpdateQuery, useDebounce, useToast } from "@southern-syntax/hooks";
+import { useDebounce } from "@southern-syntax/hooks";
+import { useUpdateQuery, useToast } from "@southern-syntax/hooks-next";
 
 import { trpc } from "@/lib/trpc-client";
 import type { UserItem } from "@southern-syntax/types";

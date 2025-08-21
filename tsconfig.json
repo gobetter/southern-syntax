@@ -7,6 +7,7 @@
     { "path": "./packages/db" },
     { "path": "./packages/eslint-config-custom" },
     { "path": "./packages/hooks" },
+    { "path": "./packages/hooks-next" },
     { "path": "./packages/i18n" },
     { "path": "./packages/schemas" },
     { "path": "./packages/services" },

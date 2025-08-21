@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 import { Button } from "@southern-syntax/ui";
 
 // import type { MediaItem } from "@southern-syntax/types";

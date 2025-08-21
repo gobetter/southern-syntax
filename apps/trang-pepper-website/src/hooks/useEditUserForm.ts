@@ -12,7 +12,7 @@ import {
   type UserUpdateInput,
   type UserUpdateOutput,
 } from "@southern-syntax/schemas/user";
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 import { mapToSelectOptions } from "@southern-syntax/utils";
 import type { LocalizedString } from "@southern-syntax/types";
 

@@ -10,14 +10,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { LocalizedString } from "@southern-syntax/types";
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 
 import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@/server/routers/_app";
 import { trpc } from "@/lib/trpc-client";
 import type { Role, Permission } from "@southern-syntax/types";
 
-import type { RoleFormInput, RoleFormOutput} from "./useRoleForm";
+import type { RoleFormInput, RoleFormOutput } from "./useRoleForm";
 import { roleFormSchema } from "./useRoleForm";
 
 interface UseRoleManagerReturn {

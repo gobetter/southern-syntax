@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { type SubmitHandler, type UseFormReturn } from "react-hook-form";
 import { useTranslations } from "next-intl";
 
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 import type { LocalizedString } from "@southern-syntax/types";
 import { mapIdSlugName } from "@southern-syntax/utils";

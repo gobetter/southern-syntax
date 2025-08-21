@@ -10,7 +10,7 @@ import type { TRPCClientErrorLike } from "@trpc/client";
 import { roleSchema } from "@southern-syntax/auth";
 import type { LocalizedString } from "@southern-syntax/types";
 import type { Role } from "@southern-syntax/types";
-import { useToast } from "@southern-syntax/hooks";
+import { useToast } from "@southern-syntax/hooks-next";
 
 import { trpc } from "@/lib/trpc-client";
 import type { AppRouter } from "@/server/routers/_app";
