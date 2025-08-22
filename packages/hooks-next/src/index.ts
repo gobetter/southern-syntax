@@ -1,3 +1,3 @@
-export * from "./useUpdateQuery";
-export * from "./useToast";
-export * from "./useUploadMedia";
+export * from "./use-update-query";
+export * from "./use-toast";
+export * from "./use-upload-media";

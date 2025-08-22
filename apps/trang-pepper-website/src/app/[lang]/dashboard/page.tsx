@@ -6,10 +6,10 @@ import { getTranslations } from "next-intl/server";
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
 
-import DashboardContent from "@/components/admin/DashboardContent";
-import UserInfo from "@/components/user/UserInfo";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import Spinner from "@/components/common/Spinner";
+import DashboardContent from "@/components/admin/dashboard-content";
+import UserInfo from "@/components/user/user-info";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Spinner from "@/components/common/spinner";
 
 export default async function DashboardPage({
   params,

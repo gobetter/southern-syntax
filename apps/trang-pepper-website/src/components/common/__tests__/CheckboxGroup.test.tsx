@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 
-import { CheckboxGroup } from "../CheckboxGroup";
+import { CheckboxGroup } from "../checkbox-group";
 
 const options = [
   { id: "a", label: "Option A" },

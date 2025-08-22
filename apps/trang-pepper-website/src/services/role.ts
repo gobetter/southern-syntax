@@ -5,9 +5,9 @@ import prisma from "@southern-syntax/db";
 import type { RoleInput } from "@southern-syntax/auth";
 import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
 
-import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/audit-actions";
 
-import { auditLogService } from "./auditLog";
+import { auditLogService } from "./audit-log";
 
 async function getAllRoles() {
   return prisma.role.findMany({

@@ -3,7 +3,7 @@
 import React from "react";
 import { useTranslations, useLocale } from "next-intl";
 
-import HomePageContent from "@/components/common/HomePageContent";
+import HomePageContent from "@/components/common/home-page-content";
 
 export default function HomePage() {
   const t = useTranslations("common");

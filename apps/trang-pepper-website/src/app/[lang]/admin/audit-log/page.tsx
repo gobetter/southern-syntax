@@ -12,10 +12,10 @@ import {
   ROLE_NAMES,
 } from "@southern-syntax/auth";
 
-import AuditLogClient from "@/components/admin/audit-log/AuditLogClient";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import Spinner from "@/components/common/Spinner";
-import AccessDenied from "@/components/auth/AccessDenied";
+import AuditLogClient from "@/components/admin/audit-log/audit-log-client";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Spinner from "@/components/common/spinner";
+import AccessDenied from "@/components/auth/access-denied";
 
 export default async function AuditLogPage({
   params,

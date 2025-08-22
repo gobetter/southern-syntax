@@ -2,10 +2,10 @@ import { Suspense } from "react";
 
 import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
-import MediaLibraryClient from "@/components/admin/media/MediaLibraryClient";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import Spinner from "@/components/common/Spinner";
-import ProtectedPage from "@/components/auth/ProtectedPage";
+import MediaLibraryClient from "@/components/admin/media/media-library-client";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Spinner from "@/components/common/spinner";
+import ProtectedPage from "@/components/auth/protected-page";
 
 export default async function MediaLibraryPage({
   params,

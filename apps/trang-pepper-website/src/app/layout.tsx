@@ -9,10 +9,10 @@ import { Toaster } from "@southern-syntax/ui";
 
 import TRPCProvider from "@/lib/trpc-provider";
 
-import SuspenseErrorBoundary from "@/components/common/SuspenseErrorBoundary";
-import { ThemeProvider } from "@/components/common/ThemeProvider";
+import SuspenseErrorBoundary from "@/components/common/suspense-error-boundary";
+import { ThemeProvider } from "@/components/common/theme-provider";
 
-import SessionProviderWrapper from "./SessionProviderWrapper";
+import SessionProviderWrapper from "./session-provider-wrapper";
 // import "@southern-syntax/ui/styles.css"; // ถ้ามีไฟล์นี้ในแพ็กเกจ
 import "./globals.css";
 

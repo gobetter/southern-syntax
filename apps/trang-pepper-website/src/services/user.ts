@@ -22,9 +22,9 @@ import type { SortOrder } from "@southern-syntax/types";
 import {
   AUDIT_ACTIONS,
   type AuditAction,
-} from "@southern-syntax/constants/auditActions";
+} from "@southern-syntax/constants/audit-actions";
 
-import { auditLogService } from "./auditLog";
+import { auditLogService } from "./audit-log";
 
 /**
  * ดึงผู้ใช้ทั้งหมดพร้อมการแบ่งหน้า, ค้นหา, และเรียงลำดับ

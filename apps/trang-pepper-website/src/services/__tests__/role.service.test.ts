@@ -3,7 +3,7 @@ import type { PrismaClient, User, Role } from "@prisma/client";
 import { mockDeep, mockReset } from "vitest-mock-extended";
 
 import { ROLE_NAMES, type RoleInput } from "@southern-syntax/auth";
-import type { CreateLogParams } from "../auditLog";
+import type { CreateLogParams } from "../audit-log";
 
 type RoleWithPermissions = Role & { permissions: { permissionId: string }[] };
 type UserWithRole = User & { role: { key: string } | null };
@@ -28,7 +28,7 @@ vi.mock("@southern-syntax/db", () => ({
   prisma: prismaMock,
 }));
 vi.mock("@/lib/prisma", () => ({ default: prismaMock }));
-vi.mock("../auditLog"); //  ✅ Mock auditLog service
+vi.mock("../audit-log"); //  ✅ Mock auditLog service
 
 describe("Role Service", () => {
   let roleService: RoleService;
@@ -38,7 +38,7 @@ describe("Role Service", () => {
     mockReset(prismaMock);
     vi.clearAllMocks();
     roleService = (await import("../role")).roleService;
-    auditLogService = (await import("../auditLog")).auditLogService;
+    auditLogService = (await import("../audit-log")).auditLogService;
   });
 
   const superAdminActor = {

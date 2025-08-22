@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ErrorFallbackUI } from "@/components/common/ErrorFallbackUI";
+import { ErrorFallbackUI } from "@/components/common/error-fallback-ui";
 
 export default function GlobalError({
   error,

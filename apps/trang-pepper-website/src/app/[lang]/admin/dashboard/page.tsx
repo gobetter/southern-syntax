@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 
-import DashboardContent from "@/components/admin/DashboardContent";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import Spinner from "@/components/common/Spinner";
+import DashboardContent from "@/components/admin/dashboard-content";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Spinner from "@/components/common/spinner";
 
 export default async function AdminDashboardPage({
   params,

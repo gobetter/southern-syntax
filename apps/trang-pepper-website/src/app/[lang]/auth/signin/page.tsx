@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
 
-import SignInForm from "@/components/auth/SignInForm";
+import SignInForm from "@/components/auth/sign-in-form";
 
 export default async function SignInPage({
   params,

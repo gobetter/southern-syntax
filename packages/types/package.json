@@ -28,7 +28,6 @@
   "dependencies": {},
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
-    "@types/node": "^24.2.1",
     "typescript": "^5.8.3"
   }
 }

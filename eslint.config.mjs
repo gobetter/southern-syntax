@@ -1,5 +1,5 @@
-// eslint.config.mjs (root)
 import base from "@southern-syntax/eslint-config-custom/base";
+import unicorn from "eslint-plugin-unicorn";
 
 export default [
   // 1) ignore ให้ครอบคลุม
@@ -33,4 +33,33 @@ export default [
 
   // 3) ตามด้วย base config ของคุณ
   ...base,
+
+  // 4) ✨ เพิ่มกฎ kebab-case ให้ทุกแพ็กเกจ (เฉพาะ TS/TSX)
+  {
+    files: ["packages/**/*.ts", "packages/**/*.tsx"],
+    plugins: { unicorn },
+    rules: {
+      "unicorn/filename-case": ["error", { case: "kebabCase" }],
+    },
+  },
+
+  // 5) ✨ เพิ่มกฎ kebab-case ให้แอป (Next.js)
+  {
+    files: ["apps/**/*.{ts,tsx,js,jsx}"],
+    plugins: { unicorn },
+    rules: {
+      "unicorn/filename-case": ["error", { case: "kebabCase" }],
+    },
+  },
+
+  // 6) ❗️ผ่อนปรนให้ config-only packages (ไม่ตรวจกฎนี้)
+  {
+    files: [
+      "packages/tsconfig/**/*.{js,mjs,cjs,json}",
+      "packages/eslint-config-custom/**/*.{js,mjs,cjs,json}",
+    ],
+    rules: {
+      "unicorn/filename-case": "off",
+    },
+  },
 ];

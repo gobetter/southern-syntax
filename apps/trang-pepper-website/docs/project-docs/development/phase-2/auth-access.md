@@ -175,7 +175,7 @@ export default function SessionProviderWrapper({
 ```tsx
 // src/app/layout.tsx
 import "./globals.css";
-import SessionProviderWrapper from "./SessionProviderWrapper"; // Import Wrapper Component
+import SessionProviderWrapper from "./session-provider-wrapper"; // Import Wrapper Component
 import React from "react";
 
 export default function RootLayout({
