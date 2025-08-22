@@ -13,7 +13,7 @@ import { mediaCategoryRouter } from "./content/media-category";
 import { mediaTagRouter } from "./content/media-tag";
 import { roleRouter } from "./content/role";
 import { permissionRouter } from "./content/permission";
-import { auditLogRouter } from "./content/auditLog";
+import { auditLogRouter } from "./content/audit-log";
 
 // จัดกลุ่ม Routers ที่เกี่ยวข้องกัน
 const contentRouter = router({

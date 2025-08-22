@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ErrorFallbackUI } from "@/components/common/ErrorFallbackUI";
+import { ErrorFallbackUI } from "@/components/common/error-fallback-ui";
 
 export default function LocaleError({
   reset,

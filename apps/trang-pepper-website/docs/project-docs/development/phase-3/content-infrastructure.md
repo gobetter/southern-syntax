@@ -244,7 +244,7 @@ export default function TRPCProvider({ children }: TRPCProviderProps) {
 ```sh
 // src/app/layout.tsx (ส่วนที่แก้ไข)
 import './globals.css';
-import SessionProviderWrapper from './SessionProviderWrapper';
+import SessionProviderWrapper from './session-provider-wrapper';
 import TRPCProvider from '@/lib/trpc-provider'; // Import TRPCProvider
 import React from 'react';
 
@@ -660,7 +660,7 @@ export default function TRPCProvider({ children }: { children: ReactNode }) {
 ```ts
 // src/app/layout.tsx (ส่วนที่แก้ไข)
 import './globals.css';
-import SessionProviderWrapper from './SessionProviderWrapper';
+import SessionProviderWrapper from './session-provider-wrapper';
 import TRPCProvider from '@/lib/trpc-provider'; // Import TRPCProvider
 import React from 'react';
 

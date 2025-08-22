@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
     "composite": true,
     "incremental": true,
@@ -9,11 +9,8 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "noEmit": false,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["node"],
-    "downlevelIteration": true,
     "verbatimModuleSyntax": true
   },
   "include": ["src"],

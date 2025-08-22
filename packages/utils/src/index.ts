@@ -8,6 +8,6 @@ export * from "./role-utils";
 export * from "./select-options";
 export * from "./string-utils";
 export * from "./supabase-client";
-export * from "./upload/uploadMediaFile";
+export * from "./upload/upload-media-file";
 export * from "./type-guards";
 export * from "./validation-utils";

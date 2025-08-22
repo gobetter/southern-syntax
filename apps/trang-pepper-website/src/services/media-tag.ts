@@ -4,9 +4,9 @@ import { TRPCError } from "@trpc/server";
 import prisma from "@southern-syntax/db";
 import { type MediaTagInput } from "@southern-syntax/schemas/media-taxonomy";
 
-import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/audit-actions";
 
-import { auditLogService } from "./auditLog";
+import { auditLogService } from "./audit-log";
 
 async function getAll() {
   return prisma.mediaTag.findMany({

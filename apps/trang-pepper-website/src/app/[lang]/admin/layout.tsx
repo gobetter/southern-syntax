@@ -10,10 +10,10 @@ import {
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
 
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import Breadcrumbs from "@/components/admin/Breadcrumbs";
-import AccessDenied from "@/components/auth/AccessDenied";
-import Spinner from "@/components/common/Spinner";
+import AdminSidebar from "@/components/admin/admin-sidebar";
+import Breadcrumbs from "@/components/admin/breadcrumbs";
+import AccessDenied from "@/components/auth/access-denied";
+import Spinner from "@/components/common/spinner";
 
 export default async function AdminLayout({
   children,

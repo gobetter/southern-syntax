@@ -2,10 +2,10 @@ import { Suspense } from "react";
 
 import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
-import MediaTaxonomyClient from "@/components/admin/media-taxonomy/MediaTaxonomyClient";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import ProtectedPage from "@/components/auth/ProtectedPage";
-import Spinner from "@/components/common/Spinner";
+import MediaTaxonomyClient from "@/components/admin/media-taxonomy/media-taxonomy-client";
+import ErrorBoundary from "@/components/common/error-boundary";
+import ProtectedPage from "@/components/auth/protected-page";
+import Spinner from "@/components/common/spinner";
 
 export default async function MediaTaxonomyPage({
   params,

@@ -10,25 +10,34 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
-    "./auditActions": {
-      "types": "./dist/auditActions.d.ts",
-      "import": "./dist/auditActions.js",
-      "default": "./dist/auditActions.js"
+    "./audit-actions": {
+      "types": "./dist/audit-actions.d.ts",
+      "import": "./dist/audit-actions.js",
+      "default": "./dist/audit-actions.js"
     },
     "./media": {
       "types": "./dist/media.d.ts",
       "import": "./dist/media.js",
       "default": "./dist/media.js"
+    },
+    "./auditActions": {
+      "types": "./dist/audit-actions.d.ts",
+      "import": "./dist/audit-actions.js",
+      "default": "./dist/audit-actions.js"
     }
   },
   "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc -b --pretty false",
+    "clean": "rimraf dist",
     "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "prepack": "pnpm build",
     "check-types": "pnpm typecheck"
   },
   "dependencies": {
@@ -36,7 +45,6 @@
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
-    "@types/node": "^24.2.1",
     "typescript": "^5.8.3"
   }
 }

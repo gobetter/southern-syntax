@@ -3,41 +3,36 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "default": "./dist/*.js"
     },
     "./constants": {
       "types": "./dist/constants.d.ts",
       "import": "./dist/constants.js",
-      "require": "./dist/constants.js",
       "default": "./dist/constants.js"
     },
     "./env": {
       "types": "./dist/env.d.ts",
       "import": "./dist/env.js",
-      "require": "./dist/env.js",
       "default": "./dist/env.js"
     }
   },
   "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc -b --pretty false",
+    "clean": "rimraf dist",
     "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "prepack": "pnpm build",
     "check-types": "pnpm typecheck"
   },
   "dependencies": {
@@ -45,7 +40,6 @@
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
-    "@types/node": "^24.2.1",
     "typescript": "^5.8.3"
   }
 }

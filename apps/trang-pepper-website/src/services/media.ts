@@ -17,10 +17,10 @@ import {
 } from "@southern-syntax/utils";
 
 import type { MediaSortableField } from "@southern-syntax/constants/media";
-import { AUDIT_ACTIONS } from "@southern-syntax/constants/auditActions";
+import { AUDIT_ACTIONS } from "@southern-syntax/constants/audit-actions";
 import type { SortOrder } from "@southern-syntax/types";
 
-import { auditLogService } from "./auditLog";
+import { auditLogService } from "./audit-log";
 import { processImage } from "./image-processing";
 
 const BUCKET_NAME = getEnv().SUPABASE_BUCKET_NAME;

@@ -4,7 +4,7 @@ import React from "react";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import Navbar from "@/components/common/Navbar";
+import Navbar from "@/components/common/navbar";
 import "../globals.css";
 
 interface Props {

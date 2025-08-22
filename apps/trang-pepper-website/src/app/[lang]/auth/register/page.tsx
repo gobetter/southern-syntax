@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
 
-import RegisterForm from "@/components/auth/RegisterForm";
+import RegisterForm from "@/components/auth/register-form";
 
 export default async function RegisterPage({
   params,

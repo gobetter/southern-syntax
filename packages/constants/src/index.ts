@@ -1,2 +1,2 @@
-export * from "./auditActions";
+export * from "./audit-actions";
 export * from "./media";

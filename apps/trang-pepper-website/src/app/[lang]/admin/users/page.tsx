@@ -2,10 +2,10 @@ import { Suspense } from "react";
 
 import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
 
-import UserManagementClient from "@/components/admin/users/UserManagementClient";
-import ProtectedPage from "@/components/auth/ProtectedPage";
-import ErrorBoundary from "@/components/common/ErrorBoundary";
-import Spinner from "@/components/common/Spinner";
+import UserManagementClient from "@/components/admin/users/user-management-client";
+import ProtectedPage from "@/components/auth/protected-page";
+import ErrorBoundary from "@/components/common/error-boundary";
+import Spinner from "@/components/common/spinner";
 
 export default async function UserManagementPage({
   params,
