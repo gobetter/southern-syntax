@@ -11,7 +11,7 @@ const CredentialsProvider: typeof CredentialsProviderPkg =
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import { authenticateUser } from "./service";
 import type { CredentialsInput } from "./schemas";
 import { getUserPermissions } from "./utils";

@@ -1,4 +1,4 @@
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 
 async function getAllPermissions() {
   return prisma.permission.findMany({

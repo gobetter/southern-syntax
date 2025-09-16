@@ -27,11 +27,11 @@ export default class ErrorBoundary extends Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("ErrorBoundary caught an error:", error, errorInfo);
   }
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       // ถ้ามี props.fallback ก็ใช้ตัวนั้น แต่ถ้าไม่มี ให้ใช้ ErrorFallbackUI ของเรา
       return this.props.fallback || <ErrorFallbackUI />;

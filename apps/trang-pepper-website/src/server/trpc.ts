@@ -4,7 +4,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server"; // server-side session helper
 import { can } from "@southern-syntax/auth"; // permission helper
 
-import prisma from "@southern-syntax/db"; // Prisma Client instance
+// import { prisma } from  "@southern-syntax/db"; // Prisma Client instance
+import { prisma } from "@southern-syntax/db"; // Prisma Client instance
 import type {
   PermissionActionType,
   PermissionResourceType,

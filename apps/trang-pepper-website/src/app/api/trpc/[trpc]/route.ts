@@ -1,26 +1,24 @@
-// นี่คือ Next.js Route Handler สำหรับ tRPC API
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { appRouter } from "@/server/routers/_app"; // Import Root tRPC Router
-import { createTRPCContext } from "@/server/trpc"; // Import tRPC Context creator
+import { appRouter } from "@/server/routers/_app";
+import { createTRPCContext } from "@/server/trpc";
 
-// Handler สำหรับทั้ง GET และ POST requests
+export const runtime = "nodejs";
+
 const handler = (req: Request) =>
   fetchRequestHandler({
-    endpoint: "/api/trpc", // URL ของ API endpoint ที่ Frontend จะเรียกใช้
-    req, // Request object
-    router: appRouter, // Root tRPC Router ของเรา
-    createContext: createTRPCContext, // ฟังก์ชันสำหรับสร้าง context
-    // onError: สำหรับ Production Logging และ Debugging ใน Development
-    onError:
-      process.env.NODE_ENV === "development"
-        ? ({ path, error }) => {
-            // ใน Development, แสดง Error บน Console
+    endpoint: "/api/trpc",
+    req,
+    router: appRouter,
+    createContext: createTRPCContext,
+    ...(process.env.NODE_ENV === "development"
+      ? {
+          onError: ({ path, error }) => {
             console.error(
               `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
             );
-          }
-        : undefined, // ใน Production, อาจจะใช้บริการ Logging อื่นๆ
+          },
+        }
+      : {}), // ← production ไม่ใส่ key onError เลย
   });
 
-// Export handlers สำหรับ Next.js App Router
 export { handler as GET, handler as POST };

@@ -28,9 +28,27 @@ export const mediaRouter = router({
         sortOrder: z.enum(SORT_ORDERS).optional(),
       })
     )
+    // .query(async ({ input }) => {
+    //   // ส่ง searchQuery ไปให้ service
+    //   return mediaService.getAllMedia(input);
+    // }),
+
     .query(async ({ input }) => {
-      // ส่ง searchQuery ไปให้ service
-      return mediaService.getAllMedia(input);
+      return mediaService.getAllMedia({
+        page: input.page,
+        pageSize: input.pageSize,
+        ...(input.searchQuery !== undefined
+          ? { searchQuery: input.searchQuery }
+          : {}),
+        ...(input.categoryId !== undefined
+          ? { categoryId: input.categoryId }
+          : {}),
+        ...(input.tagId !== undefined ? { tagId: input.tagId } : {}),
+        ...(input.sortBy !== undefined ? { sortBy: input.sortBy } : {}),
+        ...(input.sortOrder !== undefined
+          ? { sortOrder: input.sortOrder }
+          : {}),
+      });
     }),
 
   // อัปเดต metadata ของ media
@@ -86,7 +104,20 @@ export const mediaRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      return mediaService.updateMediaCategories(input);
+      // return mediaService.updateMediaCategories(input);
+
+      // return mediaService.updateMediaCategories({
+      //   mediaIds: input.mediaIds,
+      //   ...(input.addIds ? { addIds: input.addIds } : {}),
+      //   ...(input.removeIds ? { removeIds: input.removeIds } : {}),
+      // });
+
+      const { mediaIds, addIds, removeIds } = input;
+      return mediaService.updateMediaCategories({
+        mediaIds,
+        ...(addIds !== undefined ? { addIds } : {}),
+        ...(removeIds !== undefined ? { removeIds } : {}),
+      });
     }),
 
   setCategories: authorizedProcedure(
@@ -115,7 +146,20 @@ export const mediaRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      return mediaService.updateMediaTags(input);
+      // return mediaService.updateMediaTags(input);
+
+      // return mediaService.updateMediaTags({
+      //   mediaIds: input.mediaIds,
+      //   ...(input.addIds ? { addIds: input.addIds } : {}),
+      //   ...(input.removeIds ? { removeIds: input.removeIds } : {}),
+      // });
+
+      const { mediaIds, addIds, removeIds } = input;
+      return mediaService.updateMediaTags({
+        mediaIds,
+        ...(addIds !== undefined ? { addIds } : {}),
+        ...(removeIds !== undefined ? { removeIds } : {}),
+      });
     }),
 
   setTags: authorizedProcedure(

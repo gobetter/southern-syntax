@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
     "composite": true,
     "incremental": true,
@@ -8,12 +8,13 @@
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": false, // ต้องเป็น false เพื่อมี .js ใน dist
+    "emitDeclarationOnly": false,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "verbatimModuleSyntax": true,
     "jsx": "react-jsx"
   },
   "include": ["src"],
+  "exclude": ["node_modules", "dist"],
   "references": [{ "path": "../types" }, { "path": "../utils" }]
 }

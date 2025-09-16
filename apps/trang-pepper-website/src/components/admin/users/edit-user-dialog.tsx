@@ -165,8 +165,10 @@ export default function EditUserDialog({
                   control={control}
                   render={({ field }) => (
                     <Select
+                      // defaultValue={field.value}
+                      // value={field.value ?? undefined}
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      {...(field.value ? { value: field.value } : {})}
                     >
                       <SelectTrigger>
                         <SelectValue
@@ -192,10 +194,17 @@ export default function EditUserDialog({
                   name="isActive"
                   control={control}
                   render={({ field }) => (
+                    // <Switch
+                    //   id="isActive"
+                    //   checked={field.value}
+                    //   onCheckedChange={field.onChange}
+                    //   disabled={user?.id === currentUserId}
+                    // />
+
                     <Switch
                       id="isActive"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
+                      checked={Boolean(field.value)}   // ป้องกัน undefined
+                      onCheckedChange={field.onChange} // RHF จะได้ค่าบูลีนกลับมา
                       disabled={user?.id === currentUserId}
                     />
                   )}

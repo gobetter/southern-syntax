@@ -11,28 +11,33 @@
       "default": "./dist/index.js"
     },
     "./use-toast": {
-      "types": "./dist/useToast.d.ts",
-      "import": "./dist/useToast.js",
-      "default": "./dist/useToast.js"
+      "types": "./dist/use-toast.d.ts",
+      "import": "./dist/use-toast.js",
+      "default": "./dist/use-toast.js"
     },
     "./use-update-query": {
-      "types": "./dist/useUpdateQuery.d.ts",
-      "import": "./dist/useUpdateQuery.js",
-      "default": "./dist/useUpdateQuery.js"
+      "types": "./dist/use-update-query.d.ts",
+      "import": "./dist/use-update-query.js",
+      "default": "./dist/use-update-query.js"
     },
     "./use-upload-media": {
-      "types": "./dist/useUploadMedia.d.ts",
-      "import": "./dist/useUploadMedia.js",
-      "default": "./dist/useUploadMedia.js"
+      "types": "./dist/use-upload-media.d.ts",
+      "import": "./dist/use-upload-media.js",
+      "default": "./dist/use-upload-media.js"
     }
   },
   "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b",
-    "typecheck": "tsc --noEmit"
+    "clean": "rimraf dist",
+    "build": "pnpm clean && tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "prepack": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
@@ -46,8 +51,8 @@
     "@southern-syntax/utils": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "19.1.0",
-    "typescript": "^5.8.3",
-    "sonner": "^2.0.7"
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.8.3"
   }
 }

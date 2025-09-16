@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "composite": true,
+    "composite": false,
     "noEmit": true,
-    "allowJs": true
+    "allowJs": true,
+    "skipLibCheck": true
   },
-  "include": ["*.js", "*.d.ts"]
+  "include": ["*.js", "*.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

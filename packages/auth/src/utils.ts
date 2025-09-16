@@ -2,7 +2,7 @@
 // และ Authorization (RBAC Permission Checker) ที่ต้องทำงานบน server
 
 import bcrypt from "bcryptjs";
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import type { PermissionActionType, PermissionResourceType } from "./constants";
 
 const SALT_ROUNDS = 10;

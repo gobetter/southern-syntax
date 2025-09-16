@@ -55,9 +55,19 @@ export const postTagRouter = router({
         data: postTagInputSchema.partial(),
       })
     )
+    // .mutation(async ({ input }) => {
+    //   // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
+    //   return postTagService.updatePostTag(input.id, input.data);
+    // }),
     .mutation(async ({ input }) => {
-      // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return postTagService.updatePostTag(input.id, input.data);
+      const data = {
+        ...(input.data.name !== undefined ? { name: input.data.name } : {}),
+        ...(input.data.slug !== undefined ? { slug: input.data.slug } : {}),
+        // ...(input.data. !== undefined
+        //   ? { description: input.data.description }
+        //   : {}),
+      };
+      return postTagService.updatePostTag(input.id, data);
     }),
 
   // ลบแท็กบทความ

@@ -1,13 +1,24 @@
 import { useTranslations } from "next-intl";
+import type { FieldError } from "react-hook-form";
 import enMessages from "@southern-syntax/i18n/messages/en";
 
 type FormErrorKey = keyof typeof enMessages.common.form_errors;
 
+type WithMessage = { message?: unknown };
+
 type Props = {
-  error?: { message?: unknown } | null;
+  // error?: { message?: unknown } | null;
+  // รองรับทั้ง FieldError ของ RHF และรูปแบบเดิมของคุณ
+  // error?: FieldError | { message?: unknown } | null;
+  error: FieldError | WithMessage | null | undefined;
 };
 
-// type guard: ตรวจว่าคีย์ที่ส่งมารู้จักจริงใน resources EN
+// type guard: มี key 'message' จริง ๆ
+function hasMessage(x: unknown): x is WithMessage {
+  return typeof x === "object" && x !== null && "message" in x;
+}
+
+// type guard: ตรวจ key ที่รู้จักใน resource EN
 function isKnownFormErrorKey(k: string): k is FormErrorKey {
   return Object.prototype.hasOwnProperty.call(enMessages.common.form_errors, k);
 }
@@ -16,9 +27,18 @@ export default function FormFieldError({ error }: Props) {
   const tCommon = useTranslations("common");
   const tFormErrors = useTranslations("common.form_errors");
 
-  if (!error?.message || typeof error.message !== "string") return null;
+  // if (!error?.message || typeof error.message !== "string") return null;
 
-  const rawKey = error.message;
+  // ดึง message ออกมาแบบปลอดภัย
+  const rawMessage: unknown =
+    (error as FieldError | undefined)?.message ??
+    (hasMessage(error) ? error.message : undefined);
+
+  if (typeof rawMessage !== "string" || rawMessage.length === 0) {
+    return null;
+  }
+
+  const rawKey = rawMessage;
 
   if (isKnownFormErrorKey(rawKey)) {
     try {

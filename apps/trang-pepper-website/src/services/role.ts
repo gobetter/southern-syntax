@@ -1,7 +1,7 @@
 import { type Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import type { RoleInput } from "@southern-syntax/auth";
 import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
 

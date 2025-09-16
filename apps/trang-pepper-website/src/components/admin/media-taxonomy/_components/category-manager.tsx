@@ -109,8 +109,8 @@ export function CategoryManager({
 
       <CategoryFormDialog
         isOpen={isDialogOpen}
-        onOpenChange={setDialogOpen}
-        onSubmit={onSubmit}
+        onOpenChangeAction={setDialogOpen}
+        onSubmitAction={onSubmit}
         isEditing={!!editingCategory?.id}
         isMutating={isMutating}
         formMethods={formMethods}

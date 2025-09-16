@@ -1,13 +1,17 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@southern-syntax/tsconfig/base.json",
   "compilerOptions": {
     "composite": true,
+    "incremental": true,
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
     "rootDir": "src",
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "baseUrl": "."
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "verbatimModuleSyntax": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "prisma/**"],

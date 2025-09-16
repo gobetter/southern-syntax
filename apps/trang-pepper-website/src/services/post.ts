@@ -1,4 +1,4 @@
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 export { postInputSchema } from "@southern-syntax/schemas/post";
 import { postInputSchema, type PostInput } from "@southern-syntax/schemas/post";
 

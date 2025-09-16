@@ -113,7 +113,8 @@ export default function UserManagementClient() {
         currentStatus={status}
         onStatusChange={handleStatusChange}
       />
-      <UserRoleFilter currentRoleId={roleId} />
+      <UserRoleFilter currentRoleId={roleId ?? null} />
+
       <div className="relative">
         <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
         <Input
@@ -174,7 +175,7 @@ export default function UserManagementClient() {
             <UserTable
               users={users}
               selectedIds={selectedIds}
-              currentUserId={currentUserId}
+              currentUserId={currentUserId ?? ""}
               areAllSelectableSelected={areAllSelected}
               onToggleSelectAllAction={handleToggleSelectAll}
               onToggleSelectRowAction={toggleSelection}
@@ -234,7 +235,7 @@ export default function UserManagementClient() {
               <span className="font-bold text-red-600">
                 {deactivatingUser
                   ? getLocalizedString(deactivatingUser.name, "en") ||
-                    deactivatingUser.email
+                  deactivatingUser.email
                   : ""}
               </span>
               ?

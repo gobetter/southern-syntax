@@ -65,9 +65,22 @@ export const languageRouter = router({
         data: languageInputSchema.partial(),
       })
     )
+    // .mutation(async ({ input }) => {
+    //   // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
+    //   return languageService.updateLanguage(input.id, input.data);
+    // }),
     .mutation(async ({ input }) => {
-      // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return languageService.updateLanguage(input.id, input.data);
+      const data = {
+        ...(input.data.name !== undefined ? { name: input.data.name } : {}),
+        ...(input.data.code !== undefined ? { slug: input.data.code } : {}),
+        ...(input.data.isActive !== undefined
+          ? { description: input.data.isActive }
+          : {}),
+        ...(input.data.isDefault !== undefined
+          ? { description: input.data.isDefault }
+          : {}),
+      };
+      return languageService.updateLanguage(input.id, data);
     }),
 
   // ลบภาษา

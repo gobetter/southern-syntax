@@ -2,7 +2,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import {
   can,
   PERMISSION_RESOURCES,

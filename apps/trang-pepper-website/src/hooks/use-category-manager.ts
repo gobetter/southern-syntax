@@ -90,9 +90,12 @@ export function useCategoryManager({ formMethods }: UseCategoryManagerProps) {
   };
 
   const handleEdit = (category: Category) => {
+    const en = (category.name?.en ?? "").toString();
+    const th = (category.name?.th ?? "").toString();
+
     reset({
       slug: category.slug,
-      name: category.name,
+      name: { en, th },
     });
     setEditingCategory(category);
     setDialogOpen(true);
@@ -110,12 +113,12 @@ export function useCategoryManager({ formMethods }: UseCategoryManagerProps) {
   };
 
   const onSubmit: SubmitHandler<MediaCategoryInput> = (data) => {
-    const trimmedData = {
-      ...data,
-      name: {
-        en: data.name.en?.trim(),
-        th: data.name.th?.trim(),
-      },
+    const en = (data.name.en ?? "").toString().trim();
+    const th = (data.name.th ?? "").toString().trim();
+
+    const trimmedData: MediaCategoryInput = {
+      slug: data.slug,
+      name: { en, th },
     };
 
     if (editingCategory?.id) {

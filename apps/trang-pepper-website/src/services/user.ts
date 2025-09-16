@@ -16,7 +16,7 @@ import type {
 } from "@southern-syntax/types";
 import { VALID_USER_STATUSES } from "@southern-syntax/types";
 import { ROLE_NAMES } from "@southern-syntax/auth";
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 
 import type { SortOrder } from "@southern-syntax/types";
 import {

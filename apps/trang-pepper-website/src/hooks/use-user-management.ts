@@ -12,7 +12,7 @@ import {
   type UserSortableField,
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
-import { useDebounce } from "@southern-syntax/hooks";
+import { useDebounce } from "@southern-syntax/hooks/use-debounce";
 import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
 import { useToast } from "@southern-syntax/hooks-next/use-toast";
 
@@ -286,7 +286,7 @@ export function useUserManagement(): UseUserManagementReturn {
     isReactivatingMany: reactivateManyMutation.isPending,
     isChangingRoleMany: changeRoleManyMutation.isPending,
     isUpdatingUser,
-    currentUserId,
+    currentUserId: currentUserId ?? "",
     areAllSelected,
   };
 }

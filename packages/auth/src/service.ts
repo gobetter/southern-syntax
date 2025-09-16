@@ -1,5 +1,4 @@
-import prisma, { Prisma } from "@southern-syntax/db";
-import type { PrismaTypes } from "@southern-syntax/db";
+import { prisma, Prisma, isUniqueViolation } from "@southern-syntax/db";
 import { defaultLocale } from "@southern-syntax/config";
 
 import type {
@@ -15,6 +14,7 @@ import { getLogger } from "./logger";
 
 const { log, logWarn, logError } = getLogger("service");
 
+/** type guard สำหรับค่า JSON ที่เราเก็บชื่อแบบ i18n */
 const isLocalizedString = (v: unknown): v is LocalizedString =>
   typeof v === "object" &&
   v !== null &&
@@ -23,8 +23,9 @@ const isLocalizedString = (v: unknown): v is LocalizedString =>
     (x) => typeof x === "string"
   );
 
+/** แปลงค่า Prisma.JsonValue → LocalizedString | string | null อย่างปลอดภัย */
 const toLocalizedOrString = (
-  v: PrismaTypes.JsonValue | null
+  v: Prisma.JsonValue | null
 ): LocalizedString | string | null => {
   if (v == null) return null;
   if (typeof v === "string") return v;
@@ -32,6 +33,7 @@ const toLocalizedOrString = (
   return null;
 };
 
+/** ล็อกอินด้วยอีเมล/รหัสผ่าน */
 export async function authenticateUser(
   credentials: CredentialsInput
 ): Promise<AuthenticatedUser | null> {
@@ -48,7 +50,7 @@ export async function authenticateUser(
   const { email, password } = validated.data;
   const normalizedEmail = email.trim().toLowerCase();
 
-  type UserWithRole = PrismaTypes.UserGetPayload<{ include: { role: true } }>;
+  type UserWithRole = Prisma.UserGetPayload<{ include: { role: true } }>;
 
   let user: UserWithRole | null = null;
   try {
@@ -95,6 +97,7 @@ export async function authenticateUser(
     id: user.id,
     role: user.role?.key ?? null,
   });
+
   return {
     id: user.id,
     name: toLocalizedOrString(user.name),
@@ -103,11 +106,11 @@ export async function authenticateUser(
   };
 }
 
+/** ลงทะเบียนผู้ใช้ใหม่ */
 export async function registerUser(
   input: RegisterInput
 ): Promise<RegisteredUser> {
-  // const data = registerSchema.parse(input);
-  const data: RegisterInput = registerSchema.parse(input);
+  const data = registerSchema.parse(input);
   const email = data.email.trim().toLowerCase();
 
   const existing = await prisma.user.findUnique({ where: { email } });
@@ -134,19 +137,17 @@ export async function registerUser(
     });
 
     log("[registerUser] created", { id: created.id, email: created.email });
+
     return {
       id: created.id,
       email: created.email,
-      name: created.name as unknown as LocalizedString | string | null,
+      name: toLocalizedOrString(created.name),
       roleId: created.roleId,
       isActive: created.isActive,
     };
   } catch (e: unknown) {
-    if (
-      e instanceof Prisma.PrismaClientKnownRequestError &&
-      // e.code === "P2002"
-      (e as Prisma.PrismaClientKnownRequestError).code === "P2002"
-    ) {
+    if (isUniqueViolation(e)) {
+      // Prisma.PrismaClientKnownRequestError with code === "P2002"
       logWarn("[registerUser] prisma unique constraint", { email });
       throw new Error("EMAIL_ALREADY_EXISTS");
     }

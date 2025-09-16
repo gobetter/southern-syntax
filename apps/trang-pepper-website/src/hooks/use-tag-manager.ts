@@ -116,8 +116,17 @@ export function useTagManager({ formMethods }: UseTagManagerProps) {
       },
     };
 
+    const payload = {
+      name: {
+        en: data.name.en ?? "",
+        th: data.name.th ?? "",
+      },
+      slug: data.slug,
+    };
+
     if (editingTag?.id) {
-      updateMutation.mutate({ id: editingTag.id, data: trimmedData });
+      // updateMutation.mutate({ id: editingTag.id, data: trimmedData });
+      updateMutation.mutate(payload);
     } else {
       createMutation.mutate(trimmedData);
     }

@@ -48,7 +48,8 @@ export function DataTablePagination({
     // ถ้าค่า pageSize ที่ใช้อยู่ปัจจุบันไม่มีอยู่ในรายการ options ที่ถูกต้อง
     if (!options.includes(pageSize)) {
       // ให้สั่งอัปเดต URL โดยใช้ค่าแรกของ options เป็นค่าใหม่
-      updateQuery({ pageSize: options[0] });
+      // updateQuery({ pageSize: options[0] });
+      updateQuery({ pageSize: options[0] ?? null });
     }
     // เราใส่ options ใน dependency array ไม่ได้ตรงๆ เพราะเป็น object
     // แต่การใช้ useMemo ข้างบนช่วยแก้ปัญหานี้แล้ว

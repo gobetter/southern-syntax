@@ -1,4 +1,4 @@
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import type { Prisma } from "@southern-syntax/db";
 import {
   languageInputSchema,

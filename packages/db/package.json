@@ -3,19 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "default": "./dist/*.js"
     }
   },
   "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist",
     "prisma"
@@ -24,16 +22,19 @@
     "schema": "prisma/schema.prisma"
   },
   "scripts": {
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
-    "typecheck": "tsc -b --pretty false",
+    "clean": "rimraf dist",
     "build": "tsc -b",
-    "check-types": "pnpm typecheck",
-    "postinstall": "pnpm --filter @southern-syntax/db exec prisma --version >/dev/null 2>&1 && pnpm --filter @southern-syntax/db db:generate || echo \"[skip] prisma generate\""
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "db:generate": "prisma generate --schema prisma/schema.prisma",
+    "db:push": "prisma db push --schema prisma/schema.prisma",
+    "prepack": "pnpm db:generate && pnpm build",
+    "check-types": "pnpm typecheck"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^5.22.0"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

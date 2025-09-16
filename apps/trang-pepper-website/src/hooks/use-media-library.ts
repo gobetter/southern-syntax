@@ -10,7 +10,7 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { useDebounce } from "@southern-syntax/hooks";
+import { useDebounce } from "@southern-syntax/hooks/use-debounce";
 import { useUpdateQuery } from "@southern-syntax/hooks-next/use-update-query";
 import { mapIdName } from "@southern-syntax/utils";
 import type { MediaCategory, MediaTag } from "@southern-syntax/types";
@@ -163,8 +163,8 @@ export function useMediaLibrary(): UseMediaLibraryReturn {
     pageSize,
     sortBy,
     sortOrder,
-    categoryId,
-    tagId,
+    categoryId: categoryId ?? "",
+    tagId: tagId ?? "",
     isLoading,
     isError,
     error,

@@ -19,11 +19,6 @@
       "types": "./dist/media.d.ts",
       "import": "./dist/media.js",
       "default": "./dist/media.js"
-    },
-    "./auditActions": {
-      "types": "./dist/audit-actions.d.ts",
-      "import": "./dist/audit-actions.js",
-      "default": "./dist/audit-actions.js"
     }
   },
   "types": "dist/index.d.ts",

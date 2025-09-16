@@ -7,7 +7,7 @@ import {
 } from "@southern-syntax/schemas/media";
 import type { LocalizedString } from "@southern-syntax/types";
 import { getEnv } from "@southern-syntax/config";
-import prisma from "@southern-syntax/db";
+import { prisma } from "@southern-syntax/db";
 import {
   extractStoragePaths,
   sanitizeFilename,
@@ -37,6 +37,25 @@ function createSearchText(data: {
     ...Object.values(data.caption || {}),
   ];
   return searchableValues.join(" ");
+}
+
+// function toLocalized(input?: Record<string, unknown> | null): LocalizedString {
+//   // กรองเฉพาะค่าที่เป็น string
+//   const pairs = Object.entries(input ?? {}).filter(
+//     ([_k, v]): v is string => typeof v === "string"
+//   );
+//   return Object.fromEntries(pairs);
+// }
+
+function toLocalized(input?: Record<string, unknown> | null): LocalizedString {
+  if (!input) return {};
+  const out: Record<string, string> = {};
+  for (const [key, val] of Object.entries(input)) {
+    if (typeof val === "string") {
+      out[key] = val;
+    }
+  }
+  return out; // <- ตรงชนิด LocalizedString (Record<string, string>) เป๊ะ
 }
 
 type MediaRelation = "categories" | "tags";
@@ -154,7 +173,21 @@ async function uploadMedia(
   );
 
   // สร้าง searchText
-  const searchText = createSearchText({ title, altText, caption });
+  // const searchText = createSearchText({ title, altText, caption });
+  const searchText = createSearchText({
+    ...(title ? { title: toLocalized(title as Record<string, unknown>) } : {}),
+    ...(altText
+      ? { altText: toLocalized(altText as Record<string, unknown>) }
+      : {}),
+    ...(caption
+      ? { caption: toLocalized(caption as Record<string, unknown>) }
+      : {}),
+  });
+
+  const originalUrl = variantUrls["original"];
+  if (!originalUrl) {
+    throw new Error("Original variant missing after processing.");
+  }
 
   // ดึงค่า title ภาษาอังกฤษ (หรือภาษาหลักของคุณ) มาเป็นค่าสำหรับ sort
   const titleSort =
@@ -165,21 +198,21 @@ async function uploadMedia(
     data: {
       originalFilename: decodedFilename,
       filename: safeFilename,
-      originalUrl: variantUrls["original"],
+      originalUrl, // ผ่านแล้ว
       mimeType,
       fileSize,
       fileHash,
-      title: title || {},
-      altText: altText || {},
-      caption: caption || {},
+      title: title ? toLocalized(title as Record<string, unknown>) : {},
+      altText: altText ? toLocalized(altText as Record<string, unknown>) : {},
+      caption: caption ? toLocalized(caption as Record<string, unknown>) : {},
       variants: variantUrls,
-      searchText: searchText, // บันทึก searchText
-      titleSort: titleSort,
-      categories: categoryId ? { connect: { id: categoryId } } : undefined,
-      tags:
-        tagIds && tagIds.length > 0
-          ? { connect: tagIds.map((id) => ({ id })) }
-          : undefined,
+      searchText,
+      titleSort,
+      // ✅ สำคัญ: ใส่เฉพาะตอนมีค่า — ห้ามส่ง `{ categories: undefined }`
+      ...(categoryId ? { categories: { connect: [{ id: categoryId }] } } : {}),
+      ...(tagIds && tagIds.length
+        ? { tags: { connect: tagIds.map((id) => ({ id })) } }
+        : {}),
     },
   });
 
@@ -278,22 +311,48 @@ async function updateMedia(
   const { title, altText, caption, categoryIds, tagIds } = validatedData;
 
   // สร้าง searchText สำหรับข้อมูลใหม่
-  const searchText = createSearchText(validatedData);
-  const titleSort = (title as LocalizedString)?.["en"] || undefined;
+  // const searchText = createSearchText(validatedData);
+  // const titleSort = (title as LocalizedString)?.["en"] || undefined;
+  const searchText = createSearchText({
+    ...(validatedData.title ? { title: toLocalized(validatedData.title) } : {}),
+    ...(validatedData.altText
+      ? { altText: toLocalized(validatedData.altText) }
+      : {}),
+    ...(validatedData.caption
+      ? { caption: toLocalized(validatedData.caption) }
+      : {}),
+  });
 
   const updatedMedia = await prisma.media.update({
     where: { id },
+    // data: {
+    //   title,
+    //   altText,
+    //   caption,
+    //   searchText: searchText, // อัปเดต searchText ด้วย
+    //   titleSort: titleSort, // อัปเดต titleSort ด้วย
+    //   // ใช้ `set` operation เพื่อกำหนดความสัมพันธ์ใหม่ทั้งหมด
+    //   categories: { set: categoryIds ? categoryIds.map((id) => ({ id })) : [] },
+    //   tags: tagIds
+    //     ? { set: tagIds.map((tagId) => ({ id: tagId })) }
+    //     : undefined,
+    // },
     data: {
-      title,
-      altText,
-      caption,
-      searchText: searchText, // อัปเดต searchText ด้วย
-      titleSort: titleSort, // อัปเดต titleSort ด้วย
-      // ใช้ `set` operation เพื่อกำหนดความสัมพันธ์ใหม่ทั้งหมด
-      categories: { set: categoryIds ? categoryIds.map((id) => ({ id })) : [] },
-      tags: tagIds
-        ? { set: tagIds.map((tagId) => ({ id: tagId })) }
-        : undefined,
+      ...(title !== undefined ? { title } : {}),
+      ...(altText !== undefined ? { altText } : {}),
+      ...(caption !== undefined ? { caption } : {}),
+      searchText, // ✅ เป็น string เสมอ
+      ...(title !== undefined
+        ? { titleSort: (title as LocalizedString)?.["en"] ?? "" }
+        : {}),
+
+      // ความสัมพันธ์
+      ...(categoryIds !== undefined
+        ? { categories: { set: categoryIds.map((id) => ({ id })) } }
+        : {}),
+      ...(tagIds !== undefined
+        ? { tags: { set: tagIds.map((id) => ({ id })) } }
+        : {}),
     },
     include: { categories: true, tags: true },
   });

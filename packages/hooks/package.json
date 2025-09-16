@@ -9,23 +9,37 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./use-debounce": {
+      "types": "./dist/use-debounce.d.ts",
+      "import": "./dist/use-debounce.js",
+      "default": "./dist/use-debounce.js"
+    },
+    "./use-debounced-callback": {
+      "types": "./dist/use-debounced-callback.d.ts",
+      "import": "./dist/use-debounced-callback.js",
+      "default": "./dist/use-debounced-callback.js"
     }
   },
   "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -b",
+    "clean": "rimraf dist",
+    "build": "pnpm clean && tsc -b",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings=0",
+    "prepack": "pnpm build"
   },
   "peerDependencies": {
     "react": ">=18"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
-    "@types/react": "19.1.0",
+    "@types/react": "^19.0.0",
     "typescript": "^5.8.3"
   }
 }
