@@ -21,5 +21,5 @@ export const productInputSchema = z.object({
 
 export type ProductInput = z.infer<typeof productInputSchema> & {
   title: LocalizedString;
-  description?: LocalizedString;
+  description?: LocalizedString | undefined;
 };

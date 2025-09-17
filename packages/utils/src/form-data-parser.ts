@@ -1,5 +1,5 @@
-// packages/utils/src/form-data-parser.ts
 import Busboy from "busboy";
+import type { ReadableStream } from "stream/web";
 import type { File } from "@southern-syntax/types";
 import type { IncomingHttpHeaders } from "http";
 
@@ -91,15 +91,29 @@ export async function parseMultipartFormData(
     });
 
     async function pipeToBusboy() {
-      if (!req.body) return busboy.end();
-      const reader = req.body.getReader();
-      // อ่านเป็นชิ้นๆ แล้วส่งเข้า busboy
-      // แปลง Uint8Array -> Buffer ให้ชัดเจน
+      // กำหนดชนิดให้ body ชัดเจน (ReadableStream ของ Uint8Array) แล้วเลี่ยง destructuring
+      const body = req.body as ReadableStream<Uint8Array> | null;
 
+      if (!body) {
+        busboy.end();
+        return;
+      }
+
+      const reader = body.getReader();
+
+      // อ่านทีละชิ้นแบบ type-safe
+      // - ไม่ destructure (เลี่ยง no-unsafe-assignment)
+      // - ตรวจ null/undefined ก่อนแปลง Buffer
+      // - value เป็น Uint8Array เมื่อ done === false
+      //   (ในบาง env types อาจเป็น union จึงเช็คก่อน)
       while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        busboy.write(Buffer.from(value)); // ✅ ชัดเจนว่าคือ Buffer
+        const readResult = await reader.read(); // ReadableStreamReadResult<Uint8Array>
+        if (readResult.done) break;
+
+        const chunk: Uint8Array | undefined = readResult.value;
+        if (chunk && chunk.byteLength > 0) {
+          busboy.write(Buffer.from(chunk));
+        }
       }
       busboy.end();
     }

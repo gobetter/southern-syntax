@@ -108,25 +108,16 @@ export function useTagManager({ formMethods }: UseTagManagerProps) {
   };
 
   const onSubmit: SubmitHandler<MediaTagInput> = (data) => {
-    const trimmedData = {
-      ...data,
+    const trimmedData: MediaTagInput = {
+      slug: data.slug.trim(),
       name: {
-        en: data.name.en?.trim(),
-        th: data.name.th?.trim(),
+        en: data.name.en?.trim() ?? "",
+        th: data.name.th?.trim() ?? "",
       },
-    };
-
-    const payload = {
-      name: {
-        en: data.name.en ?? "",
-        th: data.name.th ?? "",
-      },
-      slug: data.slug,
     };
 
     if (editingTag?.id) {
-      // updateMutation.mutate({ id: editingTag.id, data: trimmedData });
-      updateMutation.mutate(payload);
+      updateMutation.mutate({ id: editingTag.id, data: trimmedData });
     } else {
       createMutation.mutate(trimmedData);
     }

@@ -12,6 +12,13 @@ import {
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth"; // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
+import type { ProductCategoryInput } from "@southern-syntax/schemas/product-category";
+
+function omitUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value !== undefined)
+  ) as Partial<T>;
+}
 
 export const productCategoryRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลหมวดหมู่สินค้า
@@ -50,7 +57,8 @@ export const productCategoryRouter = router({
     .input(productCategoryInputSchema)
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return productCategoryService.createProductCategory(input);
+      const sanitizedInput = omitUndefined(input) as ProductCategoryInput;
+      return productCategoryService.createProductCategory(sanitizedInput);
     }),
 
   // อัปเดตข้อมูลหมวดหมู่สินค้า
@@ -66,7 +74,13 @@ export const productCategoryRouter = router({
     )
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return productCategoryService.updateProductCategory(input.id, input.data);
+      const sanitizedData = omitUndefined(
+        input.data
+      ) as Partial<ProductCategoryInput>;
+      return productCategoryService.updateProductCategory(
+        input.id,
+        sanitizedData
+      );
     }),
 
   // ลบหมวดหมู่สินค้า

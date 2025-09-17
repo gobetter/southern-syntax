@@ -30,13 +30,13 @@ import { auditLogService } from "./audit-log";
  * ดึงผู้ใช้ทั้งหมดพร้อมการแบ่งหน้า, ค้นหา, และเรียงลำดับ
  */
 async function getAllUsers(params: {
-  page?: number;
-  pageSize?: number;
-  searchQuery?: string;
-  status?: UserStatusFilter;
-  sortBy?: UserSortableField;
-  sortOrder?: SortOrder;
-  roleId?: string;
+  page?: number | undefined;
+  pageSize?: number | undefined;
+  searchQuery?: string | undefined;
+  status?: UserStatusFilter | undefined;
+  sortBy?: UserSortableField | undefined;
+  sortOrder?: SortOrder | undefined;
+  roleId?: string | undefined;
 }) {
   const {
     page = 1,

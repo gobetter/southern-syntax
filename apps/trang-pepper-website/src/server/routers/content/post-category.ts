@@ -11,6 +11,12 @@ import {
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth"; // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
+import type { PostCategoryInput } from "@southern-syntax/schemas/post-category";
+function omitUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value !== undefined)
+  ) as Partial<T>;
+}
 
 export const postCategoryRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลหมวดหมู่บทความ
@@ -44,7 +50,8 @@ export const postCategoryRouter = router({
     .input(postCategoryInputSchema)
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return postCategoryService.createPostCategory(input);
+      const sanitizedInput = omitUndefined(input) as PostCategoryInput;
+      return postCategoryService.createPostCategory(sanitizedInput);
     }),
 
   // อัปเดตข้อมูลหมวดหมู่บทความ
@@ -60,7 +67,10 @@ export const postCategoryRouter = router({
     )
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return postCategoryService.updatePostCategory(input.id, input.data);
+      const sanitizedData = omitUndefined(
+        input.data
+      ) as Partial<PostCategoryInput>;
+      return postCategoryService.updatePostCategory(input.id, sanitizedData);
     }),
 
   // ลบหมวดหมู่บทความ

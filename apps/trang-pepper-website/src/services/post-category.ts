@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@southern-syntax/db";
 import {
   postCategoryInputSchema,
@@ -9,8 +10,17 @@ export { postCategoryInputSchema } from "@southern-syntax/schemas/post-category"
 async function createPostCategory(data: PostCategoryInput) {
   const validated = postCategoryInputSchema.parse(data);
   const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
+  const { description, ...rest } = validated;
+
+  const createData: Prisma.PostCategoryCreateInput = {
+    slug: rest.slug,
+    name: rest.name as Prisma.JsonObject,
+    nameEnNormalized,
+    ...(description ? { description: description as Prisma.JsonObject } : {}),
+  };
+
   return prisma.postCategory.create({
-    data: { ...validated, nameEnNormalized },
+    data: createData,
   });
 }
 
@@ -24,12 +34,21 @@ async function updatePostCategory(
 ) {
   const validated = postCategoryInputSchema.partial().parse(data);
   const nameEnNormalized = validated.name?.en?.trim().toLowerCase();
+
+  const updateData: Prisma.PostCategoryUpdateInput = {
+    ...(validated.slug !== undefined ? { slug: validated.slug } : {}),
+    ...(validated.name !== undefined
+      ? { name: validated.name as Prisma.JsonObject }
+      : {}),
+    ...(validated.description !== undefined
+      ? { description: validated.description as Prisma.JsonObject }
+      : {}),
+    ...(nameEnNormalized !== undefined ? { nameEnNormalized } : {}),
+  };
+
   return prisma.postCategory.update({
     where: { id },
-    data: {
-      ...validated,
-      ...(nameEnNormalized ? { nameEnNormalized } : {}),
-    },
+    data: updateData,
   });
 }
 

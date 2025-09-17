@@ -8,5 +8,6 @@
     "**/dist/**": true,
     "**/.turbo/**": true,
     "**/node_modules/**": true
-  }
+  },
+  "chatgpt.openOnStartup": true
 }

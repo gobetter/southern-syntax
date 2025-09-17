@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@southern-syntax/db";
 import {
   postTagInputSchema,
@@ -12,8 +13,15 @@ const postTagUpdateSchema = postTagInputSchema.partial();
 async function createPostTag(data: PostTagInput) {
   const validated = postTagInputSchema.parse(data);
   const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
+
+  const createData: Prisma.PostTagCreateInput = {
+    slug: validated.slug,
+    name: validated.name as Prisma.JsonObject,
+    nameEnNormalized,
+  };
+
   return prisma.postTag.create({
-    data: { ...validated, nameEnNormalized },
+    data: createData,
   });
 }
 
@@ -24,12 +32,18 @@ async function getPostTagById(id: string) {
 async function updatePostTag(id: string, data: Partial<PostTagInput>) {
   const validated = postTagUpdateSchema.parse(data);
   const nameEnNormalized = validated.name?.en?.trim().toLowerCase();
+
+  const updateData: Prisma.PostTagUpdateInput = {
+    ...(validated.slug !== undefined ? { slug: validated.slug } : {}),
+    ...(validated.name !== undefined
+      ? { name: validated.name as Prisma.JsonObject }
+      : {}),
+    ...(nameEnNormalized !== undefined ? { nameEnNormalized } : {}),
+  };
+
   return prisma.postTag.update({
     where: { id },
-    data: {
-      ...validated,
-      ...(nameEnNormalized ? { nameEnNormalized } : {}),
-    },
+    data: updateData,
   });
 }
 

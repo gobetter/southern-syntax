@@ -34,7 +34,7 @@ interface UseMediaLibraryReturn {
   isLoading: boolean;
   isError: boolean;
   error: TRPCClientErrorLike<AppRouter> | null;
-  mediaItems?: MediaItem[];
+  mediaItems: MediaItem[];
   totalCount: number;
   categoryOptions: MediaCategory[];
   tagOptions: MediaTag[];
@@ -168,7 +168,7 @@ export function useMediaLibrary(): UseMediaLibraryReturn {
     isLoading,
     isError,
     error,
-    mediaItems,
+    mediaItems: mediaItems ?? [],
     totalCount,
     categoryOptions,
     tagOptions,

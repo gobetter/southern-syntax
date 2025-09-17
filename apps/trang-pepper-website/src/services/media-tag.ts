@@ -72,13 +72,15 @@ async function update(id: string, input: MediaTagInput, actorId: string) {
     }
   }
 
+  const updateData: Prisma.MediaTagUpdateInput = {
+    name: input.name as Prisma.JsonObject,
+    slug: input.slug,
+    ...(nameEnNormalized !== undefined ? { nameEnNormalized } : {}),
+  };
+
   const updatedTag = await prisma.mediaTag.update({
     where: { id },
-    data: {
-      name: input.name as Prisma.JsonObject,
-      slug: input.slug,
-      nameEnNormalized: nameEnNormalized,
-    },
+    data: updateData,
   });
 
   await auditLogService.createLog({

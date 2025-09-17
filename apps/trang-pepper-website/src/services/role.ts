@@ -74,20 +74,20 @@ async function createRole(
       throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
-
-  const newRole = await prisma.role.create({
-    data: {
-      key,
-      name: name as Prisma.JsonObject,
-      description,
-      isSystem,
-      nameEnNormalized: nameEnNormalized || "", // ต้องมีค่าเสมอ
-      permissions: {
-        create: permissionIds.map((permissionId) => ({
-          permission: { connect: { id: permissionId } },
-        })),
-      },
+  const roleData: Prisma.RoleCreateInput = {
+    key,
+    name: name as Prisma.JsonObject,
+    description: description ?? null,
+    isSystem,
+    nameEnNormalized: nameEnNormalized || "", // ต้องมีค่าเสมอ
+    permissions: {
+      create: permissionIds.map((permissionId) => ({
+        permission: { connect: { id: permissionId } },
+      })),
     },
+  };
+  const newRole = await prisma.role.create({
+    data: roleData,
   });
 
   await auditLogService.createLog({
@@ -140,21 +140,26 @@ async function updateRole(
     }
   }
 
+  const updateData: Prisma.RoleUpdateInput = {
+    key,
+    name: name as Prisma.JsonObject,
+    permissions: {
+      deleteMany: {},
+      create: permissionIds.map((permissionId) => ({
+        permission: { connect: { id: permissionId } },
+      })),
+    },
+  };
+  if (description !== undefined) {
+    updateData.description = description ?? null;
+  }
+  if (nameEnNormalized !== undefined) {
+    updateData.nameEnNormalized = nameEnNormalized;
+  }
+
   const updatedRole = await prisma.role.update({
     where: { id },
-    data: {
-      key,
-      name: name as Prisma.JsonObject,
-      description,
-      nameEnNormalized: nameEnNormalized,
-      permissions: {
-        // ลบ permission เก่าทั้งหมด แล้วสร้างใหม่
-        deleteMany: {},
-        create: permissionIds.map((permissionId) => ({
-          permission: { connect: { id: permissionId } },
-        })),
-      },
-    },
+    data: updateData,
   });
 
   await auditLogService.createLog({

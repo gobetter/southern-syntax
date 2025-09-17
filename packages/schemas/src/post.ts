@@ -27,5 +27,5 @@ export const postInputSchema = z.object({
 export type PostInput = z.infer<typeof postInputSchema> & {
   title: LocalizedString;
   content: LocalizedString;
-  excerpt?: LocalizedString;
+  excerpt?: LocalizedString | undefined;
 };

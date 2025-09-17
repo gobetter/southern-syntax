@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@southern-syntax/db";
 import {
   productCategoryInputSchema,
@@ -10,8 +11,18 @@ export { productCategoryInputSchema } from "@southern-syntax/schemas/product-cat
 async function createProductCategory(data: ProductCategoryInput) {
   const validated = productCategoryInputSchema.parse(data);
   const nameEnNormalized = validated.name.en?.trim().toLowerCase() || "";
+
+  const { description, parentId, ...rest } = validated;
+  const createData: Prisma.ProductCategoryUncheckedCreateInput = {
+    slug: rest.slug,
+    name: rest.name as Prisma.JsonObject,
+    nameEnNormalized,
+    ...(description ? { description: description as Prisma.JsonObject } : {}),
+    ...(parentId !== undefined ? { parentId } : {}),
+  };
+
   return prisma.productCategory.create({
-    data: { ...validated, nameEnNormalized },
+    data: createData,
   });
 }
 
@@ -25,12 +36,24 @@ async function updateProductCategory(
 ) {
   const validated = productCategoryInputSchema.partial().parse(data);
   const nameEnNormalized = validated.name?.en?.trim().toLowerCase();
+
+  const updateData: Prisma.ProductCategoryUncheckedUpdateInput = {
+    ...(validated.slug !== undefined ? { slug: validated.slug } : {}),
+    ...(validated.name !== undefined
+      ? { name: validated.name as Prisma.JsonObject }
+      : {}),
+    ...(validated.description !== undefined
+      ? { description: validated.description as Prisma.JsonObject }
+      : {}),
+    ...(validated.parentId !== undefined
+      ? { parentId: validated.parentId }
+      : {}),
+    ...(nameEnNormalized !== undefined ? { nameEnNormalized } : {}),
+  };
+
   return prisma.productCategory.update({
     where: { id },
-    data: {
-      ...validated,
-      ...(nameEnNormalized ? { nameEnNormalized } : {}),
-    },
+    data: updateData,
   });
 }
 

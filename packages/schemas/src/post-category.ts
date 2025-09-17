@@ -14,5 +14,5 @@ export const postCategoryInputSchema = z.object({
 
 export type PostCategoryInput = z.infer<typeof postCategoryInputSchema> & {
   name: LocalizedString;
-  description?: LocalizedString;
+  description?: LocalizedString | undefined;
 };

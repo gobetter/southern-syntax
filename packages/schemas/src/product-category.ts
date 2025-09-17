@@ -17,5 +17,5 @@ export type ProductCategoryInput = z.infer<
   typeof productCategoryInputSchema
 > & {
   name: LocalizedString;
-  description?: LocalizedString;
+  description?: LocalizedString | undefined;
 };

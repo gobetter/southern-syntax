@@ -5,6 +5,13 @@ import {
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth"; // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Input Validation
+import type { ProductInput } from "@southern-syntax/schemas/product";
+
+function omitUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value !== undefined)
+  ) as Partial<T>;
+}
 
 export const productRouter = router({
   // publicProcedure: สำหรับ API ที่ใครก็เรียกได้ (เช่น การแสดงสินค้าใน Frontend Public Site)
@@ -37,7 +44,8 @@ export const productRouter = router({
       // <-- ลบ ctx ออก เพราะ authorizedProcedure จัดการ session แล้ว
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
       // ไม่จำเป็นต้องเขียน const hasPermission = await can(...) อีก
-      return productService.createProduct(input);
+      const sanitizedInput = omitUndefined(input) as ProductInput;
+      return productService.createProduct(sanitizedInput);
     }),
 
   // อัปเดตข้อมูลสินค้า
@@ -52,7 +60,8 @@ export const productRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      return productService.updateProduct(input.id, input.data);
+      const sanitizedData = omitUndefined(input.data) as Partial<ProductInput>;
+      return productService.updateProduct(input.id, sanitizedData);
     }),
 
   // ลบสินค้า

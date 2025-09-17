@@ -8,6 +8,13 @@ import {
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth"; // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
+import type { PostInput } from "@southern-syntax/schemas/post";
+
+function omitUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value !== undefined)
+  ) as Partial<T>;
+}
 
 export const postRouter = router({
   // 1. Procedure สำหรับดึงข้อมูลบทความ
@@ -41,7 +48,8 @@ export const postRouter = router({
     .input(postInputSchema) // ใช้ Zod Schema สำหรับ Validation Input
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return postService.createPost(input);
+      const sanitizedInput = omitUndefined(input) as PostInput;
+      return postService.createPost(sanitizedInput);
     }),
 
   // อัปเดตข้อมูลบทความ
@@ -57,7 +65,8 @@ export const postRouter = router({
     ) // Schema สำหรับ Partial Update
     .mutation(async ({ input }) => {
       // สิทธิ์ถูกตรวจสอบโดย authorizedProcedure middleware แล้ว
-      return postService.updatePost(input.id, input.data);
+      const sanitizedData = omitUndefined(input.data) as Partial<PostInput>;
+      return postService.updatePost(input.id, sanitizedData);
     }),
 
   // ลบบทความ
