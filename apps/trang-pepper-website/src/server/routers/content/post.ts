@@ -2,7 +2,7 @@
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลบทความ/บล็อก
 
 import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
-import { postInputSchema, postService } from "@/services/post"; // Post Service และ Zod Schema
+import { postInputSchema, postService } from "@southern-syntax/domain-admin/post"; // Post Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,

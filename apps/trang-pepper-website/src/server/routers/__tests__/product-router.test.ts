@@ -16,7 +16,7 @@ vi.mock("@southern-syntax/auth", async (importOriginal) => {
 vi.mock("@southern-syntax/db", () => ({ default: {} }));
 
 import { productRouter } from "../content/product";
-import { productService } from "@/services/product";
+import { productService } from "@southern-syntax/domain-admin/product";
 
 const mockProduct: Product = {
   id: "p1",

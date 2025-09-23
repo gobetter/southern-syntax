@@ -6,7 +6,7 @@ import {
   ROLE_NAMES,
 } from "@southern-syntax/auth";
 
-import { auditLogService } from "@/services/audit-log";
+import { auditLogService } from "@southern-syntax/domain-admin/audit-log";
 import { TRPCError } from "@trpc/server";
 import { router, authorizedProcedure } from "@/server/trpc";
 

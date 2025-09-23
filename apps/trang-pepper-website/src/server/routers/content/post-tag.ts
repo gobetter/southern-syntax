@@ -2,7 +2,7 @@
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลแท็กบทความ
 
 import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
-import { postTagInputSchema, postTagService } from "@/services/post-tag"; // PostTag Service และ Zod Schema
+import { postTagInputSchema, postTagService } from "@southern-syntax/domain-admin/post-tag"; // PostTag Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,

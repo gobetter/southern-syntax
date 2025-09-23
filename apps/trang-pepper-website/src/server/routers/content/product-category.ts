@@ -6,7 +6,7 @@ import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; //
 import {
   productCategoryInputSchema,
   productCategoryService,
-} from "@/services/product-category"; // ProductCategory Service และ Zod Schema
+} from "@southern-syntax/domain-admin/product-category"; // ProductCategory Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,
   PERMISSION_ACTIONS,

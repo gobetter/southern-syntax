@@ -27,7 +27,6 @@ vi.mock("@southern-syntax/db", () => ({
   default: prismaMock,
   prisma: prismaMock,
 }));
-vi.mock("@/lib/prisma", () => ({ default: prismaMock }));
 vi.mock("../audit-log"); //  ✅ Mock auditLog service
 
 describe("Role Service", () => {

@@ -1,0 +1,109 @@
+{
+  "name": "@southern-syntax/domain-admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./audit-log": {
+      "types": "./dist/audit-log.d.ts",
+      "import": "./dist/audit-log.js",
+      "default": "./dist/audit-log.js"
+    },
+    "./image-processing": {
+      "types": "./dist/image-processing.d.ts",
+      "import": "./dist/image-processing.js",
+      "default": "./dist/image-processing.js"
+    },
+    "./media": {
+      "types": "./dist/media.d.ts",
+      "import": "./dist/media.js",
+      "default": "./dist/media.js"
+    },
+    "./media-category": {
+      "types": "./dist/media-category.d.ts",
+      "import": "./dist/media-category.js",
+      "default": "./dist/media-category.js"
+    },
+    "./media-tag": {
+      "types": "./dist/media-tag.d.ts",
+      "import": "./dist/media-tag.js",
+      "default": "./dist/media-tag.js"
+    },
+    "./permission": {
+      "types": "./dist/permission.d.ts",
+      "import": "./dist/permission.js",
+      "default": "./dist/permission.js"
+    },
+    "./post": {
+      "types": "./dist/post.d.ts",
+      "import": "./dist/post.js",
+      "default": "./dist/post.js"
+    },
+    "./post-category": {
+      "types": "./dist/post-category.d.ts",
+      "import": "./dist/post-category.js",
+      "default": "./dist/post-category.js"
+    },
+    "./post-tag": {
+      "types": "./dist/post-tag.d.ts",
+      "import": "./dist/post-tag.js",
+      "default": "./dist/post-tag.js"
+    },
+    "./product": {
+      "types": "./dist/product.d.ts",
+      "import": "./dist/product.js",
+      "default": "./dist/product.js"
+    },
+    "./product-category": {
+      "types": "./dist/product-category.d.ts",
+      "import": "./dist/product-category.js",
+      "default": "./dist/product-category.js"
+    },
+    "./role": {
+      "types": "./dist/role.d.ts",
+      "import": "./dist/role.js",
+      "default": "./dist/role.js"
+    },
+    "./user": {
+      "types": "./dist/user.d.ts",
+      "import": "./dist/user.js",
+      "default": "./dist/user.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "check-types": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@southern-syntax/auth": "workspace:*",
+    "@southern-syntax/config": "workspace:*",
+    "@southern-syntax/constants": "workspace:*",
+    "@southern-syntax/db": "workspace:*",
+    "@southern-syntax/schemas": "workspace:*",
+    "@southern-syntax/types": "workspace:*",
+    "@southern-syntax/utils": "workspace:*",
+    "@southern-syntax/utils-server": "workspace:*",
+    "@trpc/server": "^11.4.1",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "@southern-syntax/tsconfig": "workspace:*",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.1",
+    "vitest-mock-extended": "^3.1.0"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^5.22.0"
+  }
+}

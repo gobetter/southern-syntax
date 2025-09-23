@@ -6,14 +6,12 @@ import { mockDeep, mockReset } from "vitest-mock-extended";
 const prismaMock = mockDeep<PrismaClient>();
 
 // สำคัญ: mock ทั้งสองเส้นทางที่ service อาจ import
-vi.mock("@/lib/prisma", () => ({ default: prismaMock, prisma: prismaMock }));
 vi.mock("@southern-syntax/db", () => ({
   default: prismaMock,
   prisma: prismaMock,
 }));
 
 // อย่า import service ไว้บนสุด ให้ import แบบ dynamic หลัง mock เสมอ
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 let productService: typeof import("../product").productService;
 
 const mockProduct: Product = {

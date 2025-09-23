@@ -6,7 +6,7 @@ import {
 } from "@southern-syntax/auth";
 import { mediaCategoryInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
-import { mediaCategoryService } from "@/services/media-category";
+import { mediaCategoryService } from "@southern-syntax/domain-admin/media-category";
 import { router, authorizedProcedure } from "@/server/trpc";
 
 export const mediaCategoryRouter = router({

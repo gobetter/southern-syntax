@@ -12,7 +12,7 @@ import {
 import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils-server";
 import type { Buffer } from "node:buffer";
 
-import { mediaService } from "@/services/media";
+import { mediaService } from "@southern-syntax/domain-admin/media";
 
 type LocalizedTitle = { en?: string; th?: string };
 

@@ -4,7 +4,7 @@ import {
 } from "@southern-syntax/auth";
 
 import { router, authorizedProcedure } from "@/server/trpc";
-import { permissionService } from "@/services/permission";
+import { permissionService } from "@southern-syntax/domain-admin/permission";
 
 export const permissionRouter = router({
   getAll: authorizedProcedure(

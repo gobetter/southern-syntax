@@ -14,7 +14,7 @@ import {
   VALID_USER_STATUSES,
 } from "@southern-syntax/types";
 
-import { userService } from "@/services/user";
+import { userService } from "@southern-syntax/domain-admin/user";
 import { SORT_ORDERS } from "@southern-syntax/types";
 
 export const userRouter = router({

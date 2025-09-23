@@ -4,15 +4,13 @@ import { mockDeep, mockReset } from "vitest-mock-extended";
 
 const prismaMock = mockDeep<PrismaClient>();
 
-vi.mock("@/lib/prisma", () => ({ default: prismaMock, prisma: prismaMock }));
 vi.mock("@southern-syntax/db", () => ({
   default: prismaMock,
   prisma: prismaMock,
 }));
 
 // ถ้าจะทดสอบ service จากแพ็กเกจรวม ให้ import หลัง mock
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-let languageService: typeof import("@southern-syntax/services").languageService;
+let languageService: typeof import("../language").languageService;
 
 const mockLanguage: Language = {
   id: "1",
@@ -28,8 +26,7 @@ describe("languageService", () => {
   beforeEach(async () => {
     mockReset(prismaMock);
     vi.clearAllMocks();
-    languageService = (await import("@southern-syntax/services"))
-      .languageService;
+    languageService = (await import("../language")).languageService;
   });
 
   it("createLanguage sets other defaults false when isDefault true", async () => {
