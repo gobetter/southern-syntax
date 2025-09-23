@@ -19,6 +19,11 @@ packages can be shared with additional apps in the future.
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
+## Conventions
+
+- See [`docs/package-conventions.md`](docs/package-conventions.md) for the shared folder layout and required npm scripts across apps and packages.
+
+
 ## Utilities
 
 This Turborepo has some additional tools already setup for you:

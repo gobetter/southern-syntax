@@ -7,10 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --max-warnings=0 --no-error-on-unmatched-pattern",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b --pretty false",
     "check-types": "pnpm typecheck",
-    "test": "vitest run"
+    "test": "vitest run",
+    "clean": "rimraf .next dist build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

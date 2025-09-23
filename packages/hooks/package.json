@@ -32,7 +32,8 @@
     "build": "pnpm clean && tsc -b",
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint . --max-warnings=0",
-    "prepack": "pnpm build"
+    "prepack": "pnpm build",
+    "check-types": "pnpm typecheck"
   },
   "peerDependencies": {
     "react": ">=18"

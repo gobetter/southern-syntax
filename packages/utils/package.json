@@ -23,8 +23,10 @@
   ],
   "scripts": {
     "build": "tsc -b",
-    "check-types": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0"
+    "check-types": "pnpm typecheck",
+    "lint": "eslint . --max-warnings=0",
+    "clean": "rimraf dist",
+    "typecheck": "tsc -b --pretty false"
   },
   "dependencies": {
     "@southern-syntax/i18n": "workspace:*",

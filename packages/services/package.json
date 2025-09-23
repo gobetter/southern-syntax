@@ -28,7 +28,9 @@
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings=0",
+    "clean": "rimraf dist",
+    "check-types": "pnpm typecheck"
   },
   "dependencies": {
     "@southern-syntax/db": "workspace:*",

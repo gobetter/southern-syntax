@@ -50,7 +50,8 @@
     "build": "tsc -p tsconfig.build.json && node ./scripts/copy-json.mjs",
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
-    "check-types": "pnpm typecheck"
+    "check-types": "pnpm typecheck",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@southern-syntax/config": "workspace:*",

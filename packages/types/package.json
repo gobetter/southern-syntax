@@ -23,7 +23,8 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b --pretty false",
     "build": "tsc -b",
-    "check-types": "pnpm typecheck"
+    "check-types": "pnpm typecheck",
+    "clean": "rimraf dist"
   },
   "dependencies": {},
   "devDependencies": {

@@ -8,17 +8,19 @@ const loaders = {
   th: () => import("@southern-syntax/i18n/messages/th"),
 } as const;
 type Locale = keyof typeof loaders;
+type SupportedLocale = (typeof locales)[number];
+const supportedLocales = new Set<SupportedLocale>(locales);
 
 export default getRequestConfig(async ({ locale }) => {
   // หลีกเลี่ยง notFound() ใน config — ใช้ fallback แทน
-  const l =
-    locale && (["en", "th"] as string[]).includes(locale)
+  const normalizedLocale =
+    locale && supportedLocales.has(locale as SupportedLocale)
       ? (locale as Locale)
       : (defaultLocale as Locale);
 
-  const mod = await loaders[l]();
+  const mod = await loaders[normalizedLocale]();
   return {
-    locale: l,
+    locale: normalizedLocale,
     messages: mod.default,
   };
 });
