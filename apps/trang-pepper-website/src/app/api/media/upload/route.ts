@@ -9,7 +9,7 @@ import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
 } from "@southern-syntax/auth";
-import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils";
+import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils-server";
 import type { Buffer } from "node:buffer";
 
 import { mediaService } from "@/services/media";

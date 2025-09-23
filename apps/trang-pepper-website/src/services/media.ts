@@ -11,10 +11,9 @@ import { prisma } from "@southern-syntax/db";
 import {
   extractStoragePaths,
   sanitizeFilename,
-  calculateFileHash,
   DuplicateFileError,
-  supabase,
 } from "@southern-syntax/utils";
+import { calculateFileHash, supabase } from "@southern-syntax/utils-server";
 
 import type { MediaSortableField } from "@southern-syntax/constants/media";
 import { AUDIT_ACTIONS } from "@southern-syntax/constants/audit-actions";

@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 
-import { TranslatedUploadError } from "./errors";
+import { TranslatedUploadError } from "@southern-syntax/utils";
 
 function jsonResponse(body: unknown, init: ResponseInit) {
   return new Response(JSON.stringify(body), {

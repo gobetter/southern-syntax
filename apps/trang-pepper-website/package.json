@@ -40,12 +40,10 @@
     "@southern-syntax/types": "workspace:*",
     "@southern-syntax/ui": "workspace:*",
     "@southern-syntax/utils": "workspace:*",
-    "@supabase/supabase-js": "^2.50.0",
     "@tanstack/react-query": "^5.80.7",
     "@trpc/client": "^11.4.1",
     "@trpc/react-query": "^11.4.1",
     "@trpc/server": "^11.4.1",
-    "busboy": "^1.6.0",
     "lucide-react": "^0.514.0",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
@@ -56,7 +54,8 @@
     "react-hook-form": "^7.58.1",
     "sharp": "^0.34.2",
     "slugify": "^1.6.6",
-    "zod": "^3.25.64"
+    "zod": "^3.25.64",
+    "@southern-syntax/utils-server": "workspace:*"
   },
   "devDependencies": {
     "@prisma/client": "^5.22.0",
@@ -65,7 +64,6 @@
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
-    "@types/busboy": "^1.5.4",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.0",
     "@vitejs/plugin-react": "^4.6.0",

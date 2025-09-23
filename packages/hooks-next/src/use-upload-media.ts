@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { uploadMediaFile, TranslatedUploadError } from "@southern-syntax/utils";
+import { uploadMediaFile } from "@southern-syntax/utils-client";
+import { TranslatedUploadError } from "@southern-syntax/utils";
 
 interface UploadErrorItem {
   filename: string;

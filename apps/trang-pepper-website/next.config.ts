@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
     "@southern-syntax/types",
     "@southern-syntax/ui",
     "@southern-syntax/utils",
+    "@southern-syntax/utils-server",
+    "@southern-syntax/utils-client",
   ],
 };
 

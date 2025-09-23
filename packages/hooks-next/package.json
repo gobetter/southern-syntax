@@ -49,7 +49,8 @@
   },
   "dependencies": {
     "@southern-syntax/types": "workspace:*",
-    "@southern-syntax/utils": "workspace:*"
+    "@southern-syntax/utils": "workspace:*",
+    "@southern-syntax/utils-client": "workspace:*"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",

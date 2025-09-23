@@ -14,6 +14,8 @@ packages can be shared with additional apps in the future.
 - `@southern-syntax/types`: shared TypeScript types
 - `@southern-syntax/ui`: React UI components
 - `@southern-syntax/utils`: general utilities
+- `@southern-syntax/utils-server`: server runtime utilities (busboy, Supabase, hashing)
+- `@southern-syntax/utils-client`: browser runtime utilities
 - `@southern-syntax/eslint-config-custom`: shared ESLint configuration
 - `@southern-syntax/tsconfig`: base TypeScript configurations
 

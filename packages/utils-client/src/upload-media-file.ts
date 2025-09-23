@@ -1,4 +1,4 @@
-import { DuplicateFileError, TranslatedUploadError } from "../errors";
+import { DuplicateFileError, TranslatedUploadError } from "@southern-syntax/utils";
 
 export async function uploadMediaFile(file: File): Promise<string> {
   const formData = new FormData();

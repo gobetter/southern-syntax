@@ -1,0 +1,57 @@
+{
+  "name": "@southern-syntax/utils-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./api-error-handler": {
+      "types": "./dist/api-error-handler.d.ts",
+      "import": "./dist/api-error-handler.js",
+      "default": "./dist/api-error-handler.js"
+    },
+    "./form-data-parser": {
+      "types": "./dist/form-data-parser.d.ts",
+      "import": "./dist/form-data-parser.js",
+      "default": "./dist/form-data-parser.js"
+    },
+    "./hash-utils": {
+      "types": "./dist/hash-utils.d.ts",
+      "import": "./dist/hash-utils.js",
+      "default": "./dist/hash-utils.js"
+    },
+    "./supabase-client": {
+      "types": "./dist/supabase-client.d.ts",
+      "import": "./dist/supabase-client.js",
+      "default": "./dist/supabase-client.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "check-types": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@southern-syntax/types": "workspace:*",
+    "@southern-syntax/utils": "workspace:*",
+    "@supabase/supabase-js": "^2.50.0",
+    "busboy": "^1.6.0",
+    "zod": "^3.25.64"
+  },
+  "devDependencies": {
+    "@southern-syntax/tsconfig": "workspace:*",
+    "@types/busboy": "^1.5.4",
+    "typescript": "^5.8.3"
+  }
+}
