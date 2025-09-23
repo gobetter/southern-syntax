@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
     "@southern-syntax/utils-server",
     "@southern-syntax/utils-client",
     "@southern-syntax/domain-admin",
+    "@southern-syntax/trpc",
   ],
 };
 

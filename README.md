@@ -17,6 +17,7 @@ packages can be shared with additional apps in the future.
 - `@southern-syntax/utils-server`: server runtime utilities (busboy, Supabase, hashing)
 - `@southern-syntax/utils-client`: browser runtime utilities
 - `@southern-syntax/domain-admin`: admin domain services (media, products, roles, users, etc.)
+- `@southern-syntax/trpc`: shared tRPC context & middleware helpers
 - `@southern-syntax/eslint-config-custom`: shared ESLint configuration
 - `@southern-syntax/tsconfig`: base TypeScript configurations
 

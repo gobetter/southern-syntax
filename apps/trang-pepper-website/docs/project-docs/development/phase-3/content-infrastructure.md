@@ -143,7 +143,7 @@ export type AppRouter = typeof appRouter;
 // src/app/api/trpc/[trpc]/route.ts
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { appRouter } from '@/server/routers/_app'; // Import Root tRPC Router
-import { createTRPCContext } from '@/server/trpc'; // Import tRPC Context creator
+import { createTRPCContext } from '@southern-syntax/trpc'; // Import tRPC Context creator
 
 // Handler สำหรับทั้ง GET และ POST requests
 const handler = (req: Request) =>
@@ -517,7 +517,7 @@ export const productService = {
 
 ```ts
 // src/server/routers/content/product.ts
-import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@/server/trpc';
+import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@southern-syntax/trpc';
 import { productInputSchema, productService } from '@/services/product'; // หรือ '@/lib/product-service'
 import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
 import { z } from 'zod';
@@ -983,7 +983,7 @@ export * from './constants';
 
 ```ts
 // src/server/routers/content/media.ts
-import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@/server/trpc';
+import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@southern-syntax/trpc';
 import { mediaService, MediaUploadInput, MediaUpdateInput } from '@/services/media'; // หรือ '@/lib/media-service'
 import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
 import { z } from 'zod';

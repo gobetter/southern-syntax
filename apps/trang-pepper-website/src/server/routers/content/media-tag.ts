@@ -5,7 +5,7 @@ import {
 } from "@southern-syntax/auth";
 import { mediaTagInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import { mediaTagService } from "@southern-syntax/domain-admin/media-tag";
 
 export const mediaTagRouter = router({

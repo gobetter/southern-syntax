@@ -7,7 +7,7 @@ import {
 import { roleSchema } from "@southern-syntax/auth";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import { roleService } from "@southern-syntax/domain-admin/role";
 
 export const roleRouter = router({

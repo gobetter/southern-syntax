@@ -1,0 +1,34 @@
+{
+  "name": "@southern-syntax/trpc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings=0",
+    "check-types": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@southern-syntax/auth": "workspace:*",
+    "@southern-syntax/db": "workspace:*",
+    "@trpc/server": "^11.4.1"
+  },
+  "devDependencies": {
+    "@southern-syntax/tsconfig": "workspace:*",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,

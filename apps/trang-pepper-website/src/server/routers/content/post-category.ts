@@ -1,7 +1,7 @@
 // tRPC Router สำหรับ PostCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่บทความ
 
-import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
 import {
   postCategoryInputSchema,
   postCategoryService,

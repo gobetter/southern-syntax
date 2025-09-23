@@ -1,7 +1,7 @@
 // tRPC Router สำหรับ Post Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลบทความ/บล็อก
 
-import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
 import { postInputSchema, postService } from "@southern-syntax/domain-admin/post"; // Post Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,

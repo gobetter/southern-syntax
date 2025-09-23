@@ -1,7 +1,7 @@
 // tRPC Router สำหรับ PostTag Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลแท็กบทความ
 
-import { router, publicProcedure, authorizedProcedure } from "@/server/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
 import { postTagInputSchema, postTagService } from "@southern-syntax/domain-admin/post-tag"; // PostTag Service และ Zod Schema
 import {
   PERMISSION_RESOURCES,

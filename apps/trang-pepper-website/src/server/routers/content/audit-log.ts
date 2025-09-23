@@ -8,7 +8,7 @@ import {
 
 import { auditLogService } from "@southern-syntax/domain-admin/audit-log";
 import { TRPCError } from "@trpc/server";
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 
 export const auditLogRouter = router({
   getAll: authorizedProcedure(

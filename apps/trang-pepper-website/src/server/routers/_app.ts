@@ -1,4 +1,4 @@
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure } from "@southern-syntax/trpc";
 
 // Import routers ของแต่ละโมดูล
 import { userRouter } from "./content/user";

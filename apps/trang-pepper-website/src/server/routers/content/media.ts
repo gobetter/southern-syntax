@@ -6,7 +6,7 @@ import {
 } from "@southern-syntax/auth";
 import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
 
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import { mediaService } from "@southern-syntax/domain-admin/media";
 import { MEDIA_SORTABLE_FIELDS } from "@southern-syntax/constants/media";
 import { SORT_ORDERS } from "@southern-syntax/types";

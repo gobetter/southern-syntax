@@ -3,7 +3,7 @@ import {
   PERMISSION_ACTIONS,
 } from "@southern-syntax/auth";
 
-import { router, authorizedProcedure } from "@/server/trpc";
+import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import { permissionService } from "@southern-syntax/domain-admin/permission";
 
 export const permissionRouter = router({

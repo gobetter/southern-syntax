@@ -117,6 +117,9 @@ importers:
       '@southern-syntax/services':
         specifier: workspace:*
         version: link:../../packages/services
+      '@southern-syntax/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@southern-syntax/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -546,6 +549,25 @@ importers:
       vitest-mock-extended:
         specifier: ^3.1.0
         version: 3.1.0(typescript@5.8.3)(vitest@1.6.1(@types/node@24.3.0)(jsdom@24.1.3)(lightningcss@1.30.1))
+
+  packages/trpc:
+    dependencies:
+      '@southern-syntax/auth':
+        specifier: workspace:*
+        version: link:../auth
+      '@southern-syntax/db':
+        specifier: workspace:*
+        version: link:../db
+      '@trpc/server':
+        specifier: ^11.4.1
+        version: 11.4.4(typescript@5.8.3)
+    devDependencies:
+      '@southern-syntax/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
 
   packages/tsconfig: {}
 

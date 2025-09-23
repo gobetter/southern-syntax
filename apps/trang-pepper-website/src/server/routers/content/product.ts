@@ -1,4 +1,4 @@
-import { router, publicProcedure, authorizedProcedure } from "@/server/trpc";
+import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc";
 import { productInputSchema, productService } from "@southern-syntax/domain-admin/product"; // Import Product Service
 import {
   PERMISSION_RESOURCES,
