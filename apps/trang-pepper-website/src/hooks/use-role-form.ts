@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { TRPCClientErrorLike } from "@trpc/client";
-
 import { roleSchema } from "@southern-syntax/auth";
 import type { LocalizedString } from "@southern-syntax/types";
 import type { Role } from "@southern-syntax/types";

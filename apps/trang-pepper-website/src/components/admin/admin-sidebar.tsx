@@ -12,13 +12,12 @@ import {
   ShieldCheck,
   Shield,
 } from "lucide-react";
-
 import { can } from "@southern-syntax/auth";
 import { cn } from "@southern-syntax/ui";
 import {
   PERMISSION_ACTIONS,
   PERMISSION_RESOURCES,
-} from "@southern-syntax/auth/constants";
+} from "@southern-syntax/rbac";
 
 const sidebarNavItems = [
   {

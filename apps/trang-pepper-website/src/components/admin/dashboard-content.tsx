@@ -1,4 +1,5 @@
 "use client";
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
@@ -6,12 +7,7 @@ import { useSession } from "next-auth/react";
 
 import { Card, CardTitle, CardContent } from "@southern-syntax/ui";
 import { getLocalizedString } from "@southern-syntax/i18n";
-import {
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-  can,
-} from "@southern-syntax/auth";
-
+import { can } from "@southern-syntax/auth";
 import {
   Users,
   Shield,

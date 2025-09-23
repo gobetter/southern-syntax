@@ -1,5 +1,5 @@
 {
-  "name": "@southern-syntax/db",
+  "name": "@southern-syntax/rbac",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,35 +12,18 @@
     }
   },
   "types": "dist/index.d.ts",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "files": [
-    "dist",
-    "prisma"
+    "dist"
   ],
-  "prisma": {
-    "schema": "prisma/schema.prisma"
-  },
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc -b",
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint . --max-warnings=0",
-    "db:generate": "prisma generate --schema prisma/schema.prisma",
-    "db:push": "prisma db push --schema prisma/schema.prisma",
-    "prepack": "pnpm db:generate && pnpm build",
     "check-types": "pnpm typecheck"
-  },
-  "peerDependencies": {
-    "@prisma/client": "^5.22.0"
-  },
-  "dependencies": {
-    "server-only": "^0.0.1",
-    "@southern-syntax/rbac": "workspace:*"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",
-    "prisma": "^5.22.0",
     "typescript": "^5.8.3"
   }
 }

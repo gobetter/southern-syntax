@@ -36,7 +36,7 @@
   - `src/lib/auth/schemas.ts`: Zod Schemas สำหรับ Validation ของข้อมูลที่เกี่ยวข้องกับ Auth/AuthZ (เช่น Credentials, Role, Permission).
   - `src/lib/auth/service.ts`: Business Logic สำหรับการ Authentication (เช่น `authenticateUser`).
   - `src/lib/auth/utils.ts`: Utility Functions ที่เกี่ยวข้องกับ Auth/AuthZ (เช่น `hashPassword`, `verifyPassword`, `getUserPermissions`, `can`).
-  - `src/lib/auth/constants.ts`: `const` objects และ Type aliases สำหรับค่าคงที่ของ Roles และ Permissions (เช่น `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES`).
+  - `@southern-syntax/rbac`: `const` objects และ Type aliases สำหรับค่าคงที่ของ Roles และ Permissions (เช่น `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES`).
 - `src/lib/prisma.ts`: Prisma Client Instance ที่ถูกตั้งค่าแบบ Global เพื่อให้ Application สามารถโต้ตอบกับฐานข้อมูลได้อย่าง Type-safe และมีประสิทธิภาพ.
 - `src/lib/utils.ts`: (ถ้ามี) ฟังก์ชัน Utility ทั่วไปที่ไม่เกี่ยวข้องกับหมวดหมู่อื่นๆ เช่น `cn` function สำหรับรวม Tailwind CSS classes หรือฟังก์ชัน helpers ทั่วไป.
 

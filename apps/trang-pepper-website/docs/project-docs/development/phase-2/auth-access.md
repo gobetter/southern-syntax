@@ -397,8 +397,8 @@ export async function getUserPermissions(
  * Checks if a user has a specific permission based on their session.
  * This function is designed to run on the server side.
  * @param session The NextAuth.js session object.
- * @param resource The resource to check (e.g., "PRODUCT", "USER"). Use constants from src/lib/auth/constants.ts.
- * @param action The action to check (e.g., "CREATE", "READ", "UPDATE", "DELETE"). Use constants from src/lib/auth/constants.ts.
+ * @param resource The resource to check (e.g., "PRODUCT", "USER"). Use constants from @southern-syntax/rbac.
+ * @param action The action to check (e.g., "CREATE", "READ", "UPDATE", "DELETE"). Use constants from @southern-syntax/rbac.
  * @returns True if the user has the permission, false otherwise.
  */
 export async function can(
@@ -632,8 +632,8 @@ export async function getUserPermissions(
  * Checks if a user has a specific permission based on their session.
  * This function is designed to run on the server side.
  * @param session The NextAuth.js session object.
- * @param resource The resource to check (e.g., "PRODUCT", "USER"). Use constants from src/lib/auth/constants.ts.
- * @param action The action to check (e.g., "CREATE", "READ", "UPDATE", "DELETE"). Use constants from src/lib/auth/constants.ts.
+ * @param resource The resource to check (e.g., "PRODUCT", "USER"). Use constants from @southern-syntax/rbac.
+ * @param action The action to check (e.g., "CREATE", "READ", "UPDATE", "DELETE"). Use constants from @southern-syntax/rbac.
  * @returns True if the user has the permission, false otherwise.
  */
 export async function can(
@@ -665,7 +665,7 @@ export async function can(
 // src/app/admin/dashboard/page.tsx (หรือหน้า Admin อื่นๆ)
 import { getServerSession } from "next-auth";
 import { authOptions, can } from "@/lib/auth"; // Import authOptions และ can
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from "@/lib/auth/constants"; // Import constants
+import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from "@southern-syntax/rbac"; // Import constants
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
@@ -707,7 +707,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions, can, hashPassword } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from "@/lib/auth/constants"; // Import constants
+import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from "@southern-syntax/rbac"; // Import constants
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);

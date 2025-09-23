@@ -1,3 +1,4 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ ProductCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่สินค้า
 
@@ -7,10 +8,7 @@ import {
   productCategoryInputSchema,
   productCategoryService,
 } from "@southern-syntax/domain-admin/product-category"; // ProductCategory Service และ Zod Schema
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
+// Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 import type { ProductCategoryInput } from "@southern-syntax/schemas/product-category";
 

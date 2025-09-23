@@ -1,7 +1,5 @@
+import { PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { Suspense } from "react";
-
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
-
 import UserManagementClient from "@/components/admin/users/user-management-client";
 import ProtectedPage from "@/components/auth/protected-page";
 import ErrorBoundary from "@/components/common/error-boundary";

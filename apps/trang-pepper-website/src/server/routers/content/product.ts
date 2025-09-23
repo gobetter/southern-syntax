@@ -1,9 +1,7 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc";
 import { productInputSchema, productService } from "@southern-syntax/domain-admin/product"; // Import Product Service
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
+// Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Input Validation
 import type { ProductInput } from "@southern-syntax/schemas/product";
 

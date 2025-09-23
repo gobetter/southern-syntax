@@ -42,7 +42,7 @@
     - [x] เปลี่ยนชื่อไฟล์หลัก `src/lib/auth/auth.ts` เป็น `src/lib/auth/index.ts` เพื่อให้ Import Path ดูสะอาดตา (`import { ... } from '@/lib/auth';`).
     - [x] ปรับปรุง `import` paths ทั้งหมดที่เกี่ยวข้องให้ถูกต้องตามโครงสร้างใหม่.
   - [x] **Type Augmentation:** สร้างไฟล์ `src/types/next-auth.d.ts` เพื่อขยาย Type ของ Session และ JWT สำหรับ NextAuth.js (รองรับ `string | null | undefined` สำหรับ `email`/`name` และเพิ่ม `id`).
-  - [x] **สร้าง `src/lib/auth/constants.ts`:** กำหนด `const` objects สำหรับ `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES` และ Type aliases เพื่อ Type Safety และ Runtime Validation (ด้วย Zod).
+  - [x] **สร้าง `@southern-syntax/rbac`:** กำหนด `const` objects สำหรับ `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES` และ Type aliases เพื่อ Type Safety และ Runtime Validation (ด้วย Zod).
 
 - **1.6. การทดสอบการตั้งค่าเบื้องต้น (Initial Setup Testing)**
   - [x] **สถานะ: สำเร็จ:**

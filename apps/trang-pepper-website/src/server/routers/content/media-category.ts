@@ -1,9 +1,5 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { idParamSchema } from "@southern-syntax/schemas/common";
-
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth";
 import { mediaCategoryInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
 import { mediaCategoryService } from "@southern-syntax/domain-admin/media-category";

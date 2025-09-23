@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, User, Role } from "@prisma/client";
 import { mockDeep, mockReset } from "vitest-mock-extended";
 
-import { ROLE_NAMES, type RoleInput } from "@southern-syntax/auth";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
+import type { RoleInput } from "@southern-syntax/auth";
 import type { CreateLogParams } from "../audit-log";
 
 type RoleWithPermissions = Role & { permissions: { permissionId: string }[] };

@@ -1,7 +1,5 @@
+import { PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { Suspense } from "react";
-
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
-
 import MediaLibraryClient from "@/components/admin/media/media-library-client";
 import ErrorBoundary from "@/components/common/error-boundary";
 import Spinner from "@/components/common/spinner";

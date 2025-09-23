@@ -1,4 +1,5 @@
 "use client";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSession } from "next-auth/react";
@@ -12,8 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@southern-syntax/ui";
-import { ROLE_NAMES } from "@southern-syntax/auth";
-
 import type { Role } from "@southern-syntax/types";
 
 import RoleActionsDropdown from "./_components/role-actions-dropdown";

@@ -1,8 +1,5 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { idParamSchema } from "@southern-syntax/schemas/common";
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth";
 import { mediaTagInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
 import { router, authorizedProcedure } from "@southern-syntax/trpc";

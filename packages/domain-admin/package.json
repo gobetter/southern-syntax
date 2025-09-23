@@ -77,7 +77,9 @@
     }
   },
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc -b",
@@ -95,7 +97,8 @@
     "@southern-syntax/utils": "workspace:*",
     "@southern-syntax/utils-server": "workspace:*",
     "@trpc/server": "^11.4.1",
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.2",
+    "@southern-syntax/rbac": "workspace:*"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",

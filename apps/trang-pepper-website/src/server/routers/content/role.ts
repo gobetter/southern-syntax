@@ -1,9 +1,5 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { z } from "zod";
-
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth";
 import { roleSchema } from "@southern-syntax/auth";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 

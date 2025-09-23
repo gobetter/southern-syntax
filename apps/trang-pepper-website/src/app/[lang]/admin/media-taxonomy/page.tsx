@@ -1,7 +1,5 @@
+import { PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { Suspense } from "react";
-
-import { PERMISSION_RESOURCES } from "@southern-syntax/auth";
-
 import MediaTaxonomyClient from "@/components/admin/media-taxonomy/media-taxonomy-client";
 import ErrorBoundary from "@/components/common/error-boundary";
 import ProtectedPage from "@/components/auth/protected-page";

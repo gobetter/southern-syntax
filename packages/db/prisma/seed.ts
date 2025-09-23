@@ -1,10 +1,6 @@
 import { PrismaClient, type Prisma } from "@prisma/client";
 import { hashPassword } from "../src/lib/auth/utils";
-import {
-  ROLE_NAMES,
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-} from "../src/lib/auth/constants";
+import { ROLE_NAMES, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 
 const prisma = new PrismaClient();
 

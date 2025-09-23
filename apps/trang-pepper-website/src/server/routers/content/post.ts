@@ -1,12 +1,10 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ Post Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลบทความ/บล็อก
 
 import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
 import { postInputSchema, postService } from "@southern-syntax/domain-admin/post"; // Post Service และ Zod Schema
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
+// Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 import type { PostInput } from "@southern-syntax/schemas/post";
 

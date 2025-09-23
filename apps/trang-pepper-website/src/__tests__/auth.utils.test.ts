@@ -1,16 +1,11 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
 import { describe, it, expect, vi } from "vitest";
 
 // mock prisma to avoid loading the real client during tests
 vi.mock("@southern-syntax/db", () => ({
   default: {},
 }));
-
 import { can } from "@southern-syntax/auth";
-import {
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-  ROLE_NAMES,
-} from "@southern-syntax/auth";
 import type { Session } from "next-auth";
 
 function createSession(

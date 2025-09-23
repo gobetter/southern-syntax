@@ -1,12 +1,10 @@
 "use client";
+import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
 
 import { useTranslations } from "next-intl";
 import { FormProvider, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { AlertCircle } from "lucide-react";
-
-import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/auth";
-
 import { useRoleForm } from "@/hooks/use-role-form";
 import type { Role, Permission } from "@southern-syntax/types";
 

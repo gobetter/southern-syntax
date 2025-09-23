@@ -1,3 +1,4 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ Language Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลภาษา
 
@@ -6,10 +7,7 @@ import {
   languageInputSchema,
   languageService,
 } from "@southern-syntax/services"; // Language Service และ Zod Schema
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
+// Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 
 export const languageRouter = router({

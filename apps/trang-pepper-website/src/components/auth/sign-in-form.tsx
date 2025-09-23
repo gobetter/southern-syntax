@@ -1,4 +1,5 @@
 "use client";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
 
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -7,12 +8,7 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { AlertCircle } from "lucide-react";
-
-import {
-  ROLE_NAMES,
-  credentialsSchema,
-  type CredentialsInput,
-} from "@southern-syntax/auth";
+import { credentialsSchema, type CredentialsInput } from "@southern-syntax/auth";
 import { Alert, AlertDescription, Button, Input } from "@southern-syntax/ui";
 
 import FormFieldError from "@/components/common/form-field-error";

@@ -6,7 +6,6 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useTranslations, useLocale } from "next-intl";
 import { AlertCircle } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { registerSchema, type RegisterInput } from "@southern-syntax/auth";
 import { Button, Input, Alert, AlertDescription } from "@southern-syntax/ui";
 

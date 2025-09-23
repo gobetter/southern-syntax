@@ -113,7 +113,7 @@ Export to Sheets
 
   - **การตัดสินใจ:** ใช้ Zod (`credentialsSchema`, `roleSchema`, `permissionSchema`) ใน `src/lib/auth/schemas.ts`
 
-  - **การใช้ **`const`** objects:** สร้าง `const` objects สำหรับ `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES` ใน `src/lib/auth/constants.ts` และใช้ `as const` เพื่อสร้าง Literal Type และใช้ `typeof SOME_CONST_OBJECT[keyof typeof SOME_CONST_OBJECT]` เพื่อ Infer Type
+  - **การใช้ **`const`** objects:** สร้าง `const` objects สำหรับ `ROLE_NAMES`, `PERMISSION_ACTIONS`, `PERMISSION_RESOURCES` ใน `@southern-syntax/rbac` และใช้ `as const` เพื่อสร้าง Literal Type และใช้ `typeof SOME_CONST_OBJECT[keyof typeof SOME_CONST_OBJECT]` เพื่อ Infer Type
 
   - **การแก้ไขปัญหาที่พบเจอ:** แก้ไข Type Error ที่เกิดจากการพยายามใช้ Dot Notation กับ `readonly` arrays โดยการเปลี่ยน `const` array เป็น `const` object
 

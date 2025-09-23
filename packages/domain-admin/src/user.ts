@@ -15,7 +15,7 @@ import type {
   UserStatusFilter,
 } from "@southern-syntax/types";
 import { VALID_USER_STATUSES } from "@southern-syntax/types";
-import { ROLE_NAMES } from "@southern-syntax/auth";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
 import { prisma } from "@southern-syntax/db";
 
 import type { SortOrder } from "@southern-syntax/types";

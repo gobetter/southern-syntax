@@ -25,7 +25,8 @@
   "dependencies": {
     "@southern-syntax/auth": "workspace:*",
     "@southern-syntax/db": "workspace:*",
-    "@trpc/server": "^11.4.1"
+    "@trpc/server": "^11.4.1",
+    "@southern-syntax/rbac": "workspace:*"
   },
   "devDependencies": {
     "@southern-syntax/tsconfig": "workspace:*",

@@ -1,9 +1,5 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { z } from "zod";
-
-import {
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-} from "@southern-syntax/auth";
 import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
 
 import { router, authorizedProcedure } from "@southern-syntax/trpc";

@@ -1,8 +1,4 @@
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth";
-
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { router, authorizedProcedure } from "@southern-syntax/trpc";
 import { permissionService } from "@southern-syntax/domain-admin/permission";
 

@@ -39,7 +39,7 @@ import { initTRPC } from '@trpc/server';
 import { getServerSession } from 'next-auth'; // เพื่อใช้ใน context ของ tRPC
 import { authOptions, can } from '@/lib/auth'; // authOptions และ can function
 import prisma from '@/lib/prisma'; // Prisma Client instance
-import { PermissionActionType, PermissionResourceType } from '@/lib/auth/constants'; // นำเข้า Type ที่ถูกต้อง
+import { PermissionActionType, PermissionResourceType } from '@southern-syntax/rbac'; // นำเข้า Type ที่ถูกต้อง
 
 // สร้าง Context สำหรับ tRPC
 // Context จะมีข้อมูลที่เข้าถึงได้ในทุก tRPC procedure (เช่น session, prisma client)
@@ -519,7 +519,7 @@ export const productService = {
 // src/server/routers/content/product.ts
 import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@southern-syntax/trpc';
 import { productInputSchema, productService } from '@/services/product'; // หรือ '@/lib/product-service'
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
+import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@southern-syntax/rbac';
 import { z } from 'zod';
 import { LocalizedString } from '@/types/i18n'; // Import LocalizedString type
 
@@ -985,7 +985,7 @@ export * from './constants';
 // src/server/routers/content/media.ts
 import { router, publicProcedure, protectedProcedure, authorizedProcedure } from '@southern-syntax/trpc';
 import { mediaService, MediaUploadInput, MediaUpdateInput } from '@/services/media'; // หรือ '@/lib/media-service'
-import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@/lib/auth/constants';
+import { PERMISSION_RESOURCES, PERMISSION_ACTIONS } from '@southern-syntax/rbac';
 import { z } from 'zod';
 import { LocalizedString } from '@/types/i18n'; // Import LocalizedString type
 

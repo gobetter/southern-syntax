@@ -1,3 +1,4 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 // import { getServerSession } from "next-auth";
@@ -5,13 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
-import {
-  can,
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-  ROLE_NAMES,
-} from "@southern-syntax/auth";
-
+import { can } from "@southern-syntax/auth";
 import AuditLogClient from "@/components/admin/audit-log/audit-log-client";
 import ErrorBoundary from "@/components/common/error-boundary";
 import Spinner from "@/components/common/spinner";

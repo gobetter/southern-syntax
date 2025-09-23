@@ -1,0 +1,37 @@
+export const ROLE_NAMES = {
+  SUPERADMIN: "SUPERADMIN",
+} as const;
+
+export type RoleNameType = (typeof ROLE_NAMES)[keyof typeof ROLE_NAMES];
+
+export const PERMISSION_ACTIONS = {
+  CREATE: "CREATE",
+  READ: "READ",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
+  ASSIGN: "ASSIGN",
+} as const;
+
+export type PermissionActionType =
+  (typeof PERMISSION_ACTIONS)[keyof typeof PERMISSION_ACTIONS];
+
+export const PERMISSION_RESOURCES = {
+  ADMIN_DASHBOARD: "ADMIN_DASHBOARD",
+  SETTINGS: "SETTINGS",
+  AUDIT_LOG: "AUDIT_LOG",
+  LANGUAGE: "LANGUAGE",
+  USER: "USER",
+  ROLE: "ROLE",
+  ADMIN_ACCESS: "ADMIN_ACCESS",
+  POST: "POST",
+  POST_CATEGORY: "POST_CATEGORY",
+  POST_TAG: "POST_TAG",
+  PRODUCT: "PRODUCT",
+  PRODUCT_CATEGORY: "PRODUCT_CATEGORY",
+  PRODUCT_TAG: "PRODUCT_TAG",
+  MEDIA: "MEDIA",
+  MEDIA_TAXONOMY: "MEDIA_TAXONOMY",
+} as const;
+
+export type PermissionResourceType =
+  (typeof PERMISSION_RESOURCES)[keyof typeof PERMISSION_RESOURCES];

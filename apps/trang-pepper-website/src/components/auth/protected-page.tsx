@@ -3,12 +3,8 @@ import { redirect } from "next/navigation";
 
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
-import {
-  can,
-  type PermissionActionType,
-  type PermissionResourceType,
-} from "@southern-syntax/auth";
-
+import { can } from "@southern-syntax/auth";
+import type { PermissionActionType, PermissionResourceType } from "@southern-syntax/rbac";
 import AccessDenied from "./access-denied";
 
 interface ProtectedPageProps {

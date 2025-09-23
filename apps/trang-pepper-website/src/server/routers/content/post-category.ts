@@ -1,3 +1,4 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ PostCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่บทความ
 
@@ -6,10 +7,7 @@ import {
   postCategoryInputSchema,
   postCategoryService,
 } from "@southern-syntax/domain-admin/post-category"; // PostCategory Service และ Zod Schema
-import {
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth"; // Constants สำหรับ RBAC
+// Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure
 import type { PostCategoryInput } from "@southern-syntax/schemas/post-category";
 function omitUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {

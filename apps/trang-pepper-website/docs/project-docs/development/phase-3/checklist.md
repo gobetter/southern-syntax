@@ -63,7 +63,7 @@
 ### 3.3 การสร้าง API สำหรับ Media (tRPC Router)
 
 - [ ] สร้าง Service สำหรับ Media File Upload/Management (`src/services/media.ts`).
-- [ ] ปรับปรุง `src/lib/auth/constants.ts` เพื่อเพิ่ม `MEDIA` ใน `PERMISSION_RESOURCES`.
+- [ ] ปรับปรุง `@southern-syntax/rbac` เพื่อเพิ่ม `MEDIA` ใน `PERMISSION_RESOURCES`.
 - [ ] สร้าง tRPC Router สำหรับ Media (`src/server/routers/content/media.ts`).
 - [ ] ปรับปรุง `src/server/routers/_app.ts` เพื่อรวม Media Router.
 

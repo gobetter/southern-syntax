@@ -1,10 +1,7 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { z } from "zod";
 
 import { router, authorizedProcedure } from "@southern-syntax/trpc";
-import {
-  PERMISSION_ACTIONS,
-  PERMISSION_RESOURCES,
-} from "@southern-syntax/auth";
 import {
   userCreateSchema,
   userUpdateSchema,

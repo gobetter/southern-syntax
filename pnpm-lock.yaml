@@ -111,6 +111,9 @@ importers:
       '@southern-syntax/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@southern-syntax/rbac':
+        specifier: workspace:*
+        version: link:../../packages/rbac
       '@southern-syntax/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
@@ -265,6 +268,9 @@ importers:
       '@southern-syntax/i18n':
         specifier: workspace:*
         version: link:../i18n
+      '@southern-syntax/rbac':
+        specifier: workspace:*
+        version: link:../rbac
       '@southern-syntax/schemas':
         specifier: workspace:*
         version: link:../schemas
@@ -328,6 +334,9 @@ importers:
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
+      '@southern-syntax/rbac':
+        specifier: workspace:*
+        version: link:../rbac
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -359,6 +368,9 @@ importers:
       '@southern-syntax/db':
         specifier: workspace:*
         version: link:../db
+      '@southern-syntax/rbac':
+        specifier: workspace:*
+        version: link:../rbac
       '@southern-syntax/schemas':
         specifier: workspace:*
         version: link:../schemas
@@ -506,6 +518,15 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
+  packages/rbac:
+    devDependencies:
+      '@southern-syntax/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
   packages/schemas:
     dependencies:
       '@southern-syntax/config':
@@ -558,6 +579,9 @@ importers:
       '@southern-syntax/db':
         specifier: workspace:*
         version: link:../db
+      '@southern-syntax/rbac':
+        specifier: workspace:*
+        version: link:../rbac
       '@trpc/server':
         specifier: ^11.4.1
         version: 11.4.4(typescript@5.8.3)

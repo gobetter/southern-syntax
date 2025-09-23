@@ -1,13 +1,10 @@
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // import { getServerSession } from "next-auth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { prisma } from "@southern-syntax/db";
-import {
-  can,
-  PERMISSION_RESOURCES,
-  PERMISSION_ACTIONS,
-} from "@southern-syntax/auth";
+import { can } from "@southern-syntax/auth";
 // import { authOptions, hashPassword } from "@southern-syntax/auth/server";
 import {
   getServerAuthSession,

@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 
-import { can, type PermissionActionType, type PermissionResourceType } from "@southern-syntax/auth";
+import { can } from "@southern-syntax/auth";
+import { type PermissionActionType, type PermissionResourceType } from "@southern-syntax/rbac";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
 import { prisma } from "@southern-syntax/db";
 
