@@ -14,6 +14,7 @@
     "typecheck": "turbo run typecheck",
     "check-types": "pnpm typecheck",
     "test": "turbo run test",
+    "test:rbac": "pnpm vitest --config scripts/vitest.config.ts run",
     "report:permissions": "pnpm tsx --tsconfig scripts/tsconfig.json scripts/report-permissions.mts",
     "scaffold:locale": "pnpm tsx --tsconfig scripts/tsconfig.json scripts/scaffold-locale.mts",
     "verify:rbac": "pnpm tsx --tsconfig scripts/tsconfig.json scripts/verify-rbac.mts",
@@ -33,7 +34,8 @@
     "turbo": "^2.5.5",
     "tsx": "^4.19.2",
     "typescript": "5.8.3",
-    "typescript-eslint": "^8.39.0"
+    "typescript-eslint": "^8.39.0",
+    "vitest": "^1.6.1"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0"

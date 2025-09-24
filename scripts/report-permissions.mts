@@ -1,11 +1,48 @@
 #!/usr/bin/env tsx
-import { listAllPermissions, ROLE_DEFINITIONS, ROLE_NAMES, getDefaultPermissionsForRole, sortPermissionActions } from "@southern-syntax/rbac";
+import {
+  listAllPermissions,
+  ROLE_DEFINITIONS,
+  ROLE_NAMES,
+  getDefaultPermissionsForRole,
+  sortPermissionActions,
+} from "@southern-syntax/rbac";
+import { listResourceKeys } from "./lib/rbac-validation.mts";
+
+process.stdout.on("error", (error) => {
+  if ((error as NodeJS.ErrnoException).code === "EPIPE") {
+    process.exit(0);
+  }
+  throw error;
+});
 
 function printPermissions() {
   console.log("Permissions\n===========\n");
   const descriptors = listAllPermissions();
-  descriptors.forEach(({ resource, action, superAdminOnly }) => {
-    console.log(`${resource}:${action}${superAdminOnly ? " (super-admin only)" : ""}`);
+  const descriptorsByResource = new Map<string, typeof descriptors>();
+
+  descriptors.forEach((descriptor) => {
+    const current = descriptorsByResource.get(descriptor.resource) ?? [];
+    current.push(descriptor);
+    descriptorsByResource.set(descriptor.resource, current);
+  });
+
+  listResourceKeys().forEach((resource) => {
+    const entries = descriptorsByResource.get(resource) ?? [];
+    const ordering = new Map(
+      sortPermissionActions(entries.map(({ action }) => action)).map(
+        (action, index) => [action, index] as const
+      )
+    );
+
+    entries.sort((a, b) => {
+      const indexA = ordering.get(a.action) ?? Number.MAX_SAFE_INTEGER;
+      const indexB = ordering.get(b.action) ?? Number.MAX_SAFE_INTEGER;
+      return indexA - indexB;
+    });
+
+    entries.forEach(({ action, superAdminOnly }) => {
+      console.log(`${resource}:${action}${superAdminOnly ? " (super-admin only)" : ""}`);
+    });
   });
 }
 

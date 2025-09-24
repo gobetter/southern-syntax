@@ -30,6 +30,8 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 - [`docs/rbac-guide.md`](docs/rbac-guide.md) — step-by-step guide for updating
   permissions, roles, and locale translations while keeping the database and
   caches aligned.
+- [`docs/permissions-cache-adapters.md`](docs/permissions-cache-adapters.md) —
+  template and guidance for swapping the permissions cache adapter (e.g. Redis).
 
 ## RBAC & Localisation Workflow
 
@@ -44,6 +46,8 @@ resources/roles:
 3. Regenerate caches in the running app by calling `configurePermissionsCache`
    if you changed TTL or adapter behaviour.
 4. Audit the final permissions with `pnpm report:permissions`.
+5. Add `pnpm verify:rbac` (and optionally `pnpm test:rbac`) to your CI pipeline
+   so the checks run automatically on every pull request.
 
 See the [RBAC guide](docs/rbac-guide.md) for detailed steps.
 
@@ -183,3 +187,5 @@ Learn more about the power of Turborepo:
   default role presets for auditing or documentation.
 - `pnpm verify:rbac` — validates that RBAC resources, translations, and role
   presets stay in sync.
+- `pnpm test:rbac` — runs the RBAC integration tests (Vitest) that exercise the
+  shared validation helpers.

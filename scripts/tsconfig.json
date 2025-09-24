@@ -5,6 +5,6 @@
     "types": ["node"],
     "baseUrl": ".."
   },
-  "include": ["*.mts"],
+  "include": ["**/*.ts", "**/*.mts"],
   "exclude": ["../node_modules", "../dist"]
 }
