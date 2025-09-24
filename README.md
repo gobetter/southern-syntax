@@ -32,6 +32,8 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
   caches aligned.
 - [`docs/permissions-cache-adapters.md`](docs/permissions-cache-adapters.md) —
   template and guidance for swapping the permissions cache adapter (e.g. Redis).
+- [`docs/apps/`](docs/apps/) & [`docs/packages/`](docs/packages/) — overview of
+  each application/package, including responsibilities and usage notes.
 
 ## RBAC & Localisation Workflow
 
