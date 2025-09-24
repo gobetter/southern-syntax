@@ -15,6 +15,7 @@
     { "path": "./packages/tsconfig" },
     { "path": "./packages/types" },
     { "path": "./packages/ui" },
-    { "path": "./packages/utils" }
+    { "path": "./packages/utils" },
+    { "path": "./scripts" }
   ]
 }

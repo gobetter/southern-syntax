@@ -181,3 +181,5 @@ Learn more about the power of Turborepo:
 
 - `pnpm report:permissions` — prints the complete list of RBAC permissions and
   default role presets for auditing or documentation.
+- `pnpm verify:rbac` — validates that RBAC resources, translations, and role
+  presets stay in sync.
