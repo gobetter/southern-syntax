@@ -1,8 +1,7 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
 import { z } from "zod";
 import { auditLogService } from "@southern-syntax/domain-admin/audit-log";
 import { TRPCError } from "@trpc/server";
-import { router, authorizedProcedure } from "@southern-syntax/trpc";
+import { router, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/trpc";
 
 export const auditLogRouter = router({
   getAll: authorizedProcedure(

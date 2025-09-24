@@ -1,8 +1,7 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ Language Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลภาษา
 
-import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc"; // tRPC core setup
 import {
   languageInputSchema,
   languageService,

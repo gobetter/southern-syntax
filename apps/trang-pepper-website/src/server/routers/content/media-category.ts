@@ -1,9 +1,8 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 import { mediaCategoryInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
 import { mediaCategoryService } from "@southern-syntax/domain-admin/media-category";
-import { router, authorizedProcedure } from "@southern-syntax/trpc";
+import { router, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc";
 
 export const mediaCategoryRouter = router({
   getAll: authorizedProcedure(

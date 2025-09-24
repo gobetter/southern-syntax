@@ -1,8 +1,7 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ PostTag Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลแท็กบทความ
 
-import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc"; // tRPC core setup
 import { postTagInputSchema, postTagService } from "@southern-syntax/domain-admin/post-tag"; // PostTag Service และ Zod Schema
 // Constants สำหรับ RBAC
 import { z } from "zod"; // Zod สำหรับ Validation Input ของ Procedure

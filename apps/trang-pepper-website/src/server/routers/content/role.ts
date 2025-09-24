@@ -1,9 +1,8 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { z } from "zod";
 import { roleSchema } from "@southern-syntax/auth";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 
-import { router, authorizedProcedure } from "@southern-syntax/trpc";
+import { router, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc";
 import { roleService } from "@southern-syntax/domain-admin/role";
 
 export const roleRouter = router({

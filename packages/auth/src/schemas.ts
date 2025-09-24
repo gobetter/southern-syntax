@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "./constants";
+import { PermissionActionSchema, PermissionResourceSchema } from "./constants";
 import {
   passwordPolicySchema,
   LocalizedStringSchema,
@@ -77,17 +77,9 @@ export type RoleInput = z.infer<typeof roleSchema>;
 export const permissionSchema = z.object({
   id: z.string().optional(), // ID จะถูกสร้างโดย DB/Prisma
   key: z.string().min(1, "Permission key ต้องไม่ว่างเปล่า"),
-  action: z.enum([
-    PERMISSION_ACTIONS.CREATE,
-    PERMISSION_ACTIONS.READ,
-    PERMISSION_ACTIONS.UPDATE,
-    PERMISSION_ACTIONS.DELETE,
-    // สามารถใส่ค่าอื่น ๆ จาก PERMISSION_ACTIONS ถ้ามี
-  ]),
+  action: PermissionActionSchema,
 
-  resource: z.enum(
-    Object.values(PERMISSION_RESOURCES) as [string, ...string[]]
-  ),
+  resource: PermissionResourceSchema,
   description: z.string().optional(),
   isSystem: z.boolean().default(false),
 });

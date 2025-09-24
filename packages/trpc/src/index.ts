@@ -1,7 +1,11 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 
-import { can } from "@southern-syntax/auth";
+import { can as checkPermission } from "@southern-syntax/auth";
 import { type PermissionActionType, type PermissionResourceType } from "@southern-syntax/rbac";
+
+export { can } from "@southern-syntax/auth";
+export { PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES, PermissionActionSchema, PermissionResourceSchema, isPermissionAction, isPermissionResource } from "@southern-syntax/rbac";
+export type { PermissionActionType, PermissionResourceType, RoleNameType } from "@southern-syntax/rbac";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
 import { prisma } from "@southern-syntax/db";
 
@@ -37,7 +41,7 @@ export function authorizedProcedure(
 ) {
   return protectedProcedure.use(
     t.middleware(async ({ ctx, next }) => {
-      const hasPermission = await can(ctx.session, resource, action);
+      const hasPermission = await checkPermission(ctx.session, resource, action);
 
       if (!hasPermission) {
         throw new TRPCError({ code: "FORBIDDEN" });

@@ -1,11 +1,10 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, can } from "@southern-syntax/trpc";
 // import { getServerSession } from "next-auth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
-import { can } from "@southern-syntax/auth";
 import { handleApiError, parseMultipartFormData } from "@southern-syntax/utils-server";
 import type { Buffer } from "node:buffer";
 

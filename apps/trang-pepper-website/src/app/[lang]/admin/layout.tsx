@@ -1,11 +1,10 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
+import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, can } from "@southern-syntax/trpc";
 import { Suspense } from "react";
 // import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 // import { authOptions } from "@southern-syntax/auth/server";
 import { getServerAuthSession } from "@southern-syntax/auth/server";
-import { can } from "@southern-syntax/auth";
 import AdminSidebar from "@/components/admin/admin-sidebar";
 import Breadcrumbs from "@/components/admin/breadcrumbs";
 import AccessDenied from "@/components/auth/access-denied";

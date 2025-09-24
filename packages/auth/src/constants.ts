@@ -5,4 +5,8 @@ export {
   type PermissionActionType,
   PERMISSION_RESOURCES,
   type PermissionResourceType,
+  PermissionActionSchema,
+  PermissionResourceSchema,
+  isPermissionAction,
+  isPermissionResource,
 } from "@southern-syntax/rbac";

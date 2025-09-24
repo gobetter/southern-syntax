@@ -1,8 +1,7 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { idParamSchema } from "@southern-syntax/schemas/common";
 import { mediaTagInputSchema } from "@southern-syntax/schemas/media-taxonomy";
 
-import { router, authorizedProcedure } from "@southern-syntax/trpc";
+import { router, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc";
 import { mediaTagService } from "@southern-syntax/domain-admin/media-tag";
 
 export const mediaTagRouter = router({

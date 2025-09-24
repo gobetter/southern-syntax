@@ -1,7 +1,8 @@
+import { z } from "zod";
+
 export const ROLE_NAMES = {
   SUPERADMIN: "SUPERADMIN",
 } as const;
-
 export type RoleNameType = (typeof ROLE_NAMES)[keyof typeof ROLE_NAMES];
 
 export const PERMISSION_ACTIONS = {
@@ -11,7 +12,6 @@ export const PERMISSION_ACTIONS = {
   DELETE: "DELETE",
   ASSIGN: "ASSIGN",
 } as const;
-
 export type PermissionActionType =
   (typeof PERMISSION_ACTIONS)[keyof typeof PERMISSION_ACTIONS];
 
@@ -32,6 +32,28 @@ export const PERMISSION_RESOURCES = {
   MEDIA: "MEDIA",
   MEDIA_TAXONOMY: "MEDIA_TAXONOMY",
 } as const;
-
 export type PermissionResourceType =
   (typeof PERMISSION_RESOURCES)[keyof typeof PERMISSION_RESOURCES];
+
+const permissionActionValues = Object.values(PERMISSION_ACTIONS) as [
+  PermissionActionType,
+  ...PermissionActionType[],
+];
+const permissionResourceValues = Object.values(PERMISSION_RESOURCES) as [
+  PermissionResourceType,
+  ...PermissionResourceType[],
+];
+
+export const PermissionActionSchema = z.enum(permissionActionValues);
+export const PermissionResourceSchema = z.enum(permissionResourceValues);
+
+export function isPermissionAction(value: unknown): value is PermissionActionType {
+  return typeof value === "string" && permissionActionValues.includes(value as PermissionActionType);
+}
+
+export function isPermissionResource(value: unknown): value is PermissionResourceType {
+  return (
+    typeof value === "string" &&
+    permissionResourceValues.includes(value as PermissionResourceType)
+  );
+}

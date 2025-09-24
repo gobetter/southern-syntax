@@ -1,8 +1,7 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 import { z } from "zod";
 import { mediaUpdateFormInputSchema } from "@southern-syntax/schemas/media";
 
-import { router, authorizedProcedure } from "@southern-syntax/trpc";
+import { router, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc";
 import { mediaService } from "@southern-syntax/domain-admin/media";
 import { MEDIA_SORTABLE_FIELDS } from "@southern-syntax/constants/media";
 import { SORT_ORDERS } from "@southern-syntax/types";

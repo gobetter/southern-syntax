@@ -1,9 +1,8 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
 // tRPC Router สำหรับ ProductCategory Module
 // ทำหน้าที่เป็น API Endpoints สำหรับการจัดการข้อมูลหมวดหมู่สินค้า
 
 // ลบ protectedProcedure ออกจาก import เพราะไม่ได้ใช้โดยตรง
-import { router, publicProcedure, authorizedProcedure } from "@southern-syntax/trpc"; // tRPC core setup
+import { router, publicProcedure, authorizedProcedure, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/trpc"; // tRPC core setup
 import {
   productCategoryInputSchema,
   productCategoryService,
