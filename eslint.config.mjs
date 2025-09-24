@@ -1,5 +1,6 @@
 import base from "@southern-syntax/eslint-config-custom/base";
 import unicorn from "eslint-plugin-unicorn";
+import globals from "globals";
 
 export default [
   // 1) ignore ให้ครอบคลุม
@@ -13,7 +14,6 @@ export default [
       "**/*.config.*",
       "**/eslint.config.*",
       "**/.eslintrc.*",
-      "**/scripts/**",
       "apps/trang-pepper-website/.eslintrc.*",
       "packages/eslint-config-custom/react-internal.js",
       // 'packages/eslint-config-custom/**', // ถ้าจะเมินทั้งแพ็กเกจ config
@@ -33,6 +33,17 @@ export default [
 
   // 3) ตามด้วย base config ของคุณ
   ...base,
+
+  {
+    files: ["scripts/**/*.{ts,mts}"],
+    languageOptions: {
+      globals: globals.node,
+    },
+    plugins: { unicorn },
+    rules: {
+      "unicorn/filename-case": ["error", { case: "kebabCase" }],
+    },
+  },
 
   // 4) ✨ เพิ่มกฎ kebab-case ให้ทุกแพ็กเกจ (เฉพาะ TS/TSX)
   {
