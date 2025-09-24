@@ -6,4 +6,6 @@ export {
   setPermissionsCacheAdapter,
   resetPermissionsCacheAdapter,
   InMemoryPermissionsCache,
+  configurePermissionsCache,
+  DEFAULT_CACHE_TTL_MS,
 } from "./permissions-cache";

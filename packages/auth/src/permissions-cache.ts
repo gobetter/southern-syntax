@@ -8,6 +8,9 @@ export interface PermissionsCacheAdapter {
     ttlMs?: number
   ): Promise<void> | void;
   delete(userId: string): Promise<void> | void;
+  deleteMany?(userIds: string[]): Promise<void> | void;
+  clear?(): Promise<void> | void;
+  dispose?(): Promise<void> | void;
 }
 
 class InMemoryPermissionsCache implements PermissionsCacheAdapter {
@@ -44,6 +47,10 @@ class InMemoryPermissionsCache implements PermissionsCacheAdapter {
     this.store.delete(userId);
   }
 
+  async deleteMany(userIds: string[]) {
+    userIds.forEach((id) => this.store.delete(id));
+  }
+
   clear() {
     this.store.clear();
   }
@@ -51,8 +58,36 @@ class InMemoryPermissionsCache implements PermissionsCacheAdapter {
 
 const DEFAULT_CACHE_TTL_MS = 1000 * 60 * 5;
 
-const defaultAdapter = new InMemoryPermissionsCache();
-let cacheAdapter: PermissionsCacheAdapter = defaultAdapter;
+export type CacheConfig = {
+  adapter?: PermissionsCacheAdapter;
+  defaultTtlMs?: number;
+};
+
+let defaultTtlMs = DEFAULT_CACHE_TTL_MS;
+
+if (typeof process !== "undefined") {
+  const envTtlValue = Number(process.env.PERMISSIONS_CACHE_TTL_MS);
+  if (Number.isFinite(envTtlValue) && envTtlValue > 0) {
+    defaultTtlMs = envTtlValue;
+  }
+}
+
+let inMemoryDefault = new InMemoryPermissionsCache(defaultTtlMs);
+let cacheAdapter: PermissionsCacheAdapter = inMemoryDefault;
+
+export function configurePermissionsCache(config: CacheConfig = {}) {
+  if (typeof config.defaultTtlMs === "number" && config.defaultTtlMs > 0) {
+    defaultTtlMs = config.defaultTtlMs;
+    if (cacheAdapter instanceof InMemoryPermissionsCache) {
+      inMemoryDefault = new InMemoryPermissionsCache(defaultTtlMs);
+      cacheAdapter = inMemoryDefault;
+    }
+  }
+
+  if (config.adapter) {
+    cacheAdapter = config.adapter;
+  }
+}
 
 export function setPermissionsCacheAdapter(adapter: PermissionsCacheAdapter) {
   cacheAdapter = adapter;
@@ -63,8 +98,11 @@ export function getPermissionsCacheAdapter(): PermissionsCacheAdapter {
 }
 
 export function resetPermissionsCacheAdapter() {
-  defaultAdapter.clear();
-  cacheAdapter = defaultAdapter;
+  if (cacheAdapter.dispose) {
+    void cacheAdapter.dispose();
+  }
+  inMemoryDefault = new InMemoryPermissionsCache(defaultTtlMs);
+  cacheAdapter = inMemoryDefault;
 }
 
 export { InMemoryPermissionsCache, DEFAULT_CACHE_TTL_MS };

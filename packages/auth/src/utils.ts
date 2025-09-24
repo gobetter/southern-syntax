@@ -91,5 +91,14 @@ export async function invalidatePermissionsByRole(roleId: string) {
     select: { id: true },
   });
   const cache = getPermissionsCacheAdapter();
-  await Promise.all(users.map((u) => cache.delete(u.id)));
+  if (users.length === 0) {
+    return;
+  }
+
+  const userIds = users.map((user) => user.id);
+  if (cache.deleteMany) {
+    await cache.deleteMany(userIds);
+  } else {
+    await Promise.all(userIds.map((id) => cache.delete(id)));
+  }
 }

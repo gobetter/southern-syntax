@@ -14,7 +14,8 @@
     "SUPERADMIN_EMAIL",
     "SUPERADMIN_PASSWORD",
     "SUPERADMIN_NAME_EN",
-    "SUPERADMIN_NAME_TH"
+    "SUPERADMIN_NAME_TH",
+    "PERMISSIONS_CACHE_TTL_MS"
   ],
   "tasks": {
     "build": {

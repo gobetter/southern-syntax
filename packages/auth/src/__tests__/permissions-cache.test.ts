@@ -5,11 +5,16 @@ import type { PrismaClient } from "@prisma/client";
 import {
   getUserPermissions,
   invalidateUserPermissions,
+  invalidatePermissionsByRole,
 } from "../utils";
 import {
   InMemoryPermissionsCache,
   setPermissionsCacheAdapter,
   resetPermissionsCacheAdapter,
+  configurePermissionsCache,
+  getPermissionsCacheAdapter,
+  DEFAULT_CACHE_TTL_MS,
+  type PermissionsCacheAdapter,
 } from "../permissions-cache";
 
 const prismaMock = mockDeep<PrismaClient>();
@@ -37,10 +42,12 @@ describe("permissions cache", () => {
   beforeEach(() => {
     mockReset(prismaMock);
     resetPermissionsCacheAdapter();
+    configurePermissionsCache({ defaultTtlMs: DEFAULT_CACHE_TTL_MS });
   });
 
   afterEach(() => {
     resetPermissionsCacheAdapter();
+    configurePermissionsCache({ defaultTtlMs: DEFAULT_CACHE_TTL_MS });
   });
 
   it("caches permissions using the configured adapter", async () => {
@@ -81,5 +88,44 @@ describe("permissions cache", () => {
     expect(afterExpiry).toBeNull();
 
     vi.useRealTimers();
+  });
+
+  it("supports configuring default TTL for the in-memory cache", async () => {
+    vi.useFakeTimers();
+
+    configurePermissionsCache({ defaultTtlMs: 20 });
+    resetPermissionsCacheAdapter();
+    const cache = getPermissionsCacheAdapter();
+
+    await cache.set("ttl-user", { USER: { READ: true } });
+    vi.advanceTimersByTime(15);
+    expect(await cache.get("ttl-user")).toEqual({ USER: { READ: true } });
+
+    vi.advanceTimersByTime(10);
+    expect(await cache.get("ttl-user")).toBeNull();
+
+    vi.useRealTimers();
+  });
+
+  it("uses bulk deletion when the adapter supports deleteMany", async () => {
+    const deleteMany = vi.fn();
+    const adapter: PermissionsCacheAdapter = {
+      get: vi.fn(),
+      set: vi.fn(),
+      delete: vi.fn(),
+      deleteMany,
+    };
+
+    setPermissionsCacheAdapter(adapter);
+
+    prismaMock.user.findMany.mockResolvedValue([
+      { id: "user-a" },
+      { id: "user-b" },
+    ] as never);
+
+    await invalidatePermissionsByRole("role-a");
+
+    expect(deleteMany).toHaveBeenCalledTimes(1);
+    expect(deleteMany).toHaveBeenCalledWith(["user-a", "user-b"]);
   });
 });

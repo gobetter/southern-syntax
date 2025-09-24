@@ -5,6 +5,7 @@ import { mockDeep, mockReset } from "vitest-mock-extended";
 import { ROLE_NAMES } from "@southern-syntax/rbac";
 import type { RoleInput } from "@southern-syntax/auth";
 import type { CreateLogParams } from "../audit-log";
+import { invalidatePermissionsByRole as invalidatePermissionsByRoleMock } from "@southern-syntax/auth/utils";
 
 type RoleWithPermissions = Role & { permissions: { permissionId: string }[] };
 type UserWithRole = User & { role: { key: string } | null };
@@ -15,7 +16,11 @@ type RoleService = {
     input: RoleInput & { permissionIds: string[] },
     actorUserId: string
   ) => Promise<unknown>;
-  deleteRole: (roleId: string, actorUserId: string) => Promise<unknown>;
+  deleteRole: (
+    roleId: string,
+    actorUserId: string,
+    options?: { fallbackRoleId?: string }
+  ) => Promise<unknown>;
 };
 type AuditLogService = {
   createLog: (params: CreateLogParams) => Promise<void>;
@@ -36,6 +41,8 @@ vi.mock("../audit-log"); //  ✅ Mock auditLog service
 describe("Role Service", () => {
   let roleService: RoleService;
   let auditLogService: AuditLogService;
+  const invalidatePermissionsSpy =
+    invalidatePermissionsByRoleMock as unknown as ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     mockReset(prismaMock);
@@ -81,6 +88,48 @@ describe("Role Service", () => {
 
   // --- Tests for updateRole ---
   describe("updateRole", () => {
+    it("rejects when supplied permissions are missing", async () => {
+      prismaMock.role.findUnique.mockResolvedValue(customRole as Role);
+      prismaMock.user.findUnique.mockResolvedValue(superAdminActor as UserWithRole);
+      prismaMock.permission.findMany.mockResolvedValue([]);
+
+      const input: RoleInput & { permissionIds: string[] } = {
+        key: "CUSTOM",
+        name: { en: "Custom", th: "" },
+        description: "",
+        permissionIds: ["missing-perm"],
+        isSystem: false,
+      };
+
+      await expect(
+        roleService.updateRole(customRole.id, input, superAdminActor.id)
+      ).rejects.toThrow("INVALID_PERMISSION_SELECTION");
+    });
+
+    it("forbids assigning super-admin only permissions to non super-admin", async () => {
+      prismaMock.role.findUnique.mockResolvedValue(customRole as Role);
+      prismaMock.user.findUnique.mockResolvedValue(adminActor as UserWithRole);
+      prismaMock.permission.findMany.mockResolvedValue([
+        {
+          id: "perm-1",
+          resource: "ADMIN_DASHBOARD",
+          action: "READ",
+        },
+      ] as Array<{ id: string; resource: string; action: string }>);
+
+      const input: RoleInput & { permissionIds: string[] } = {
+        key: "CUSTOM",
+        name: { en: "Custom", th: "" },
+        description: "",
+        permissionIds: ["perm-1"],
+        isSystem: false,
+      };
+
+      await expect(
+        roleService.updateRole(customRole.id, input, adminActor.id!)
+      ).rejects.toThrow("PERMISSION_NOT_ALLOWED");
+    });
+
     it("should allow Super Admin to update a system role", async () => {
       prismaMock.role.findUnique.mockResolvedValue(systemRole as Role);
       prismaMock.user.findUnique.mockResolvedValue(
@@ -109,6 +158,7 @@ describe("Role Service", () => {
       ).resolves.toBeDefined();
 
       expect(auditLogService.createLog).toHaveBeenCalled();
+      expect(invalidatePermissionsSpy).toHaveBeenCalledWith(systemRole.id);
     });
 
     it("should FORBID an Admin from updating a system role", async () => {
@@ -143,6 +193,23 @@ describe("Role Service", () => {
       ).rejects.toThrow("CANNOT_DELETE_SYSTEM_ROLE");
     });
 
+    it("should block deletion when fallback is superadmin and actor is not", async () => {
+      prismaMock.role.findUnique
+        .mockResolvedValueOnce(customRole)
+        .mockResolvedValueOnce({ id: "super-role", key: ROLE_NAMES.SUPERADMIN } as Role);
+
+      prismaMock.user.findUnique.mockResolvedValue(adminActor as UserWithRole);
+      prismaMock.user.findMany.mockResolvedValue([
+        { id: "user-1", email: "user1@example.com" } as User,
+      ]);
+
+      await expect(
+        roleService.deleteRole(customRole.id, adminActor.id!, {
+          fallbackRoleId: "super-role",
+        })
+      ).rejects.toThrow("PERMISSION_NOT_ALLOWED");
+    });
+
     it("reassigns users to fallback role before deletion", async () => {
       prismaMock.role.findUnique
         .mockResolvedValueOnce(customRole)
@@ -172,6 +239,8 @@ describe("Role Service", () => {
       expect(prismaMock.role.delete).toHaveBeenCalledWith({
         where: { id: customRole.id },
       });
+      expect(invalidatePermissionsSpy).toHaveBeenCalledWith("viewer-role-id");
+      expect(invalidatePermissionsSpy).toHaveBeenCalledWith(customRole.id);
     });
   });
 });
