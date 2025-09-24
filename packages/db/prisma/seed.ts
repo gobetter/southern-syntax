@@ -109,6 +109,15 @@ async function main() {
     skipDuplicates: true,
   });
 
+  const permissionKeys = permissionDescriptors.map(({ key }) => key);
+  await prisma.permission.deleteMany({
+    where: {
+      key: {
+        notIn: permissionKeys,
+      },
+    },
+  });
+
   console.log(`✅ ${permissionsToCreate.length} permissions created/updated.`);
 
   // --- 5. ผูก Permissions เข้ากับ Roles ---

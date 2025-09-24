@@ -30,6 +30,23 @@ export function isPermissionAction(
   );
 }
 
+const ACTION_SET_READ: PermissionActionType[] = [PERMISSION_ACTIONS.READ];
+const ACTION_SET_CRU: PermissionActionType[] = [
+  PERMISSION_ACTIONS.CREATE,
+  PERMISSION_ACTIONS.READ,
+  PERMISSION_ACTIONS.UPDATE,
+];
+const ACTION_SET_CRUD: PermissionActionType[] = [
+  PERMISSION_ACTIONS.CREATE,
+  PERMISSION_ACTIONS.READ,
+  PERMISSION_ACTIONS.UPDATE,
+  PERMISSION_ACTIONS.DELETE,
+];
+
+function cloneActions(actions: PermissionActionType[]): PermissionActionType[] {
+  return [...actions];
+}
+
 export type PermissionResourceDefinition = {
   /** Actions that can be granted for the resource */
   actions: PermissionActionType[];
@@ -43,104 +60,84 @@ export type PermissionResourceDefinition = {
 
 export const PERMISSION_RESOURCE_DEFINITIONS = {
   ADMIN_DASHBOARD: {
-    actions: [PERMISSION_ACTIONS.READ],
+    actions: cloneActions(ACTION_SET_READ),
     superAdminOnly: true,
+    labelKey: "permissions.resources.admin_dashboard.label",
+    descriptionKey: "permissions.resources.admin_dashboard.description",
   },
   SETTINGS: {
-    actions: [PERMISSION_ACTIONS.READ],
+    actions: cloneActions(ACTION_SET_READ),
     superAdminOnly: true,
+    labelKey: "permissions.resources.settings.label",
+    descriptionKey: "permissions.resources.settings.description",
   },
   AUDIT_LOG: {
-    actions: [PERMISSION_ACTIONS.READ],
+    actions: cloneActions(ACTION_SET_READ),
     superAdminOnly: true,
+    labelKey: "permissions.resources.audit_log.label",
+    descriptionKey: "permissions.resources.audit_log.description",
   },
   LANGUAGE: {
-    actions: [PERMISSION_ACTIONS.CREATE, PERMISSION_ACTIONS.READ, PERMISSION_ACTIONS.UPDATE],
+    actions: cloneActions(ACTION_SET_CRU),
+    labelKey: "permissions.resources.language.label",
+    descriptionKey: "permissions.resources.language.description",
   },
   USER: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.user.label",
+    descriptionKey: "permissions.resources.user.description",
   },
   ROLE: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
     superAdminOnly: true,
+    labelKey: "permissions.resources.role.label",
+    descriptionKey: "permissions.resources.role.description",
   },
   ADMIN_ACCESS: {
     actions: [PERMISSION_ACTIONS.ASSIGN],
     superAdminOnly: true,
+    labelKey: "permissions.resources.admin_access.label",
+    descriptionKey: "permissions.resources.admin_access.description",
   },
   POST: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.post.label",
+    descriptionKey: "permissions.resources.post.description",
   },
   POST_CATEGORY: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.post_category.label",
+    descriptionKey: "permissions.resources.post_category.description",
   },
   POST_TAG: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.post_tag.label",
+    descriptionKey: "permissions.resources.post_tag.description",
   },
   PRODUCT: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.product.label",
+    descriptionKey: "permissions.resources.product.description",
   },
   PRODUCT_CATEGORY: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.product_category.label",
+    descriptionKey: "permissions.resources.product_category.description",
   },
   PRODUCT_TAG: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.product_tag.label",
+    descriptionKey: "permissions.resources.product_tag.description",
   },
   MEDIA: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.media.label",
+    descriptionKey: "permissions.resources.media.description",
   },
   MEDIA_TAXONOMY: {
-    actions: [
-      PERMISSION_ACTIONS.CREATE,
-      PERMISSION_ACTIONS.READ,
-      PERMISSION_ACTIONS.UPDATE,
-      PERMISSION_ACTIONS.DELETE,
-    ],
+    actions: cloneActions(ACTION_SET_CRUD),
+    labelKey: "permissions.resources.media_taxonomy.label",
+    descriptionKey: "permissions.resources.media_taxonomy.description",
   },
 } as const satisfies Record<string, PermissionResourceDefinition>;
 
@@ -185,7 +182,7 @@ export function isPermissionResource(
 
 export type PermissionKey = `${PermissionResourceType}:${PermissionActionType}`;
 
-function getPermissionResourceDefinition(
+export function getPermissionResourceDefinition(
   resource: PermissionResourceType
 ): PermissionResourceDefinition {
   return PERMISSION_RESOURCE_DEFINITIONS[resource] as PermissionResourceDefinition;
@@ -233,6 +230,20 @@ type RolePermissionMap = Partial<
 
 export type RolePermissionPreset = "ALL" | RolePermissionMap;
 
+type RolePermissionEntry = [
+  PermissionResourceType,
+  PermissionActionType[] | "ALL"
+];
+
+function buildRolePermissionMap(
+  entries: RolePermissionEntry[]
+): RolePermissionMap {
+  return entries.reduce((acc, [resource, actions]) => {
+    acc[resource] = actions === "ALL" ? "ALL" : cloneActions(actions);
+    return acc;
+  }, {} as RolePermissionMap);
+}
+
 type RoleDefinition = {
   displayName: Record<string, string>;
   isSystem: boolean;
@@ -261,141 +272,52 @@ export const ROLE_DEFINITIONS = {
     displayName: { en: "Administrator", th: "ผู้ดูแลระบบ" },
     isSystem: true,
     isAssignable: true,
-    defaultPermissions: {
-      ADMIN_DASHBOARD: [PERMISSION_ACTIONS.READ],
-      USER: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      MEDIA: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      MEDIA_TAXONOMY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      LANGUAGE: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-      ],
-      SETTINGS: [PERMISSION_ACTIONS.READ],
-      POST: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      POST_CATEGORY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      POST_TAG: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT_CATEGORY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT_TAG: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-    },
+    defaultPermissions: buildRolePermissionMap([
+      [PERMISSION_RESOURCES.ADMIN_DASHBOARD, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.USER, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.MEDIA, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.MEDIA_TAXONOMY, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.LANGUAGE, ACTION_SET_CRU],
+      [PERMISSION_RESOURCES.SETTINGS, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.POST, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.POST_CATEGORY, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.POST_TAG, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT_CATEGORY, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT_TAG, ACTION_SET_CRUD],
+    ]),
     isElevated: true,
   },
   EDITOR: {
     displayName: { en: "Editor", th: "ผู้แก้ไขเนื้อหา" },
     isSystem: true,
     isAssignable: true,
-    defaultPermissions: {
-      POST: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      POST_CATEGORY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      POST_TAG: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT_CATEGORY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      PRODUCT_TAG: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      MEDIA: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-      MEDIA_TAXONOMY: [
-        PERMISSION_ACTIONS.CREATE,
-        PERMISSION_ACTIONS.READ,
-        PERMISSION_ACTIONS.UPDATE,
-        PERMISSION_ACTIONS.DELETE,
-      ],
-    },
+    defaultPermissions: buildRolePermissionMap([
+      [PERMISSION_RESOURCES.POST, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.POST_CATEGORY, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.POST_TAG, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT_CATEGORY, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.PRODUCT_TAG, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.MEDIA, ACTION_SET_CRUD],
+      [PERMISSION_RESOURCES.MEDIA_TAXONOMY, ACTION_SET_CRUD],
+    ]),
   },
   VIEWER: {
     displayName: { en: "Viewer", th: "ผู้เข้าชม" },
     isSystem: true,
     isAssignable: true,
     isSelectableOnRegistration: true,
-    defaultPermissions: {
-      POST: [PERMISSION_ACTIONS.READ],
-      POST_CATEGORY: [PERMISSION_ACTIONS.READ],
-      POST_TAG: [PERMISSION_ACTIONS.READ],
-      PRODUCT: [PERMISSION_ACTIONS.READ],
-      PRODUCT_CATEGORY: [PERMISSION_ACTIONS.READ],
-      PRODUCT_TAG: [PERMISSION_ACTIONS.READ],
-      MEDIA: [PERMISSION_ACTIONS.READ],
-      MEDIA_TAXONOMY: [PERMISSION_ACTIONS.READ],
-    },
+    defaultPermissions: buildRolePermissionMap([
+      [PERMISSION_RESOURCES.POST, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.POST_CATEGORY, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.POST_TAG, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.PRODUCT, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.PRODUCT_CATEGORY, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.PRODUCT_TAG, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.MEDIA, ACTION_SET_READ],
+      [PERMISSION_RESOURCES.MEDIA_TAXONOMY, ACTION_SET_READ],
+    ]),
   },
 } as const satisfies Record<string, RoleDefinition>;
 
@@ -543,3 +465,17 @@ export const PERMISSION_ACTION_ORDER: PermissionActionType[] = [
   PERMISSION_ACTIONS.DELETE,
   PERMISSION_ACTIONS.ASSIGN,
 ];
+
+export function sortPermissionActions(
+  actions: Iterable<PermissionActionType>
+): PermissionActionType[] {
+  const order = new Map(
+    PERMISSION_ACTION_ORDER.map((action, index) => [action, index] as const)
+  );
+
+  return [...actions].sort((a, b) => {
+    const indexA = order.get(a) ?? Number.MAX_SAFE_INTEGER;
+    const indexB = order.get(b) ?? Number.MAX_SAFE_INTEGER;
+    return indexA - indexB;
+  });
+}

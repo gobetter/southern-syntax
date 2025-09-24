@@ -12,6 +12,8 @@ export {
   type PermissionDescriptor,
   getActionsForResource,
   isSuperAdminOnlyResource,
+  getPermissionResourceDefinition,
+  sortPermissionActions,
   isPermissionAction,
   isPermissionResource,
   ensureActionAllowed,

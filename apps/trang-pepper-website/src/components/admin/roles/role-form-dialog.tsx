@@ -4,7 +4,8 @@ import {
   ROLE_NAMES,
   type PermissionResourceType,
   getActionsForResource,
-  PERMISSION_ACTION_ORDER,
+  getPermissionResourceDefinition,
+  sortPermissionActions,
   isSuperAdminOnlyResource,
 } from "@southern-syntax/rbac";
 
@@ -83,16 +84,13 @@ export default function RoleFormDialog({
 
   const resourceSections = resourceOrder
     .map((resource) => {
-      const allowedActions = getActionsForResource(resource);
+      const resourceDefinition = getPermissionResourceDefinition(resource);
+      const allowedActions = sortPermissionActions(
+        getActionsForResource(resource)
+      );
       const availablePermissions = permissionsByResource[resource] ?? [];
 
       const sortedPermissions = allowedActions
-        .slice()
-        .sort(
-          (a, b) =>
-            PERMISSION_ACTION_ORDER.indexOf(a) -
-            PERMISSION_ACTION_ORDER.indexOf(b)
-        )
         .map((action) =>
           availablePermissions.find((permission) => permission.action === action)
         )
@@ -104,13 +102,18 @@ export default function RoleFormDialog({
 
       return {
         resource,
+        definition: resourceDefinition,
         permissions: sortedPermissions,
       };
     })
     .filter(
       (
         section
-      ): section is { resource: PermissionResourceType; permissions: Permission[] } =>
+      ): section is {
+        resource: PermissionResourceType;
+        definition: ReturnType<typeof getPermissionResourceDefinition>;
+        permissions: Permission[];
+      } =>
         Boolean(section)
     );
 
@@ -207,18 +210,30 @@ export default function RoleFormDialog({
                     control={control}
                     render={({ field }) => (
                       <div className="mt-2 space-y-4">
-                        {resourceSections.map(({ resource, permissions: resourcePermissions }) => {
-                          const resourceLabel = resource
-                            .toLowerCase()
-                            .replace(/_/g, " ");
-                          const resourceIsSuperAdminOnly =
-                            isSuperAdminOnlyResource(resource);
+                        {resourceSections.map(
+                          ({ resource, definition, permissions: resourcePermissions }) => {
+                            const fallbackLabel = resource
+                              .toLowerCase()
+                              .replace(/_/g, " ");
+                            const resourceLabel = definition.labelKey
+                              ? t_common(definition.labelKey)
+                              : fallbackLabel;
+                            const resourceDescription = definition.descriptionKey
+                              ? t_common(definition.descriptionKey)
+                              : undefined;
+                            const resourceIsSuperAdminOnly =
+                              isSuperAdminOnlyResource(resource);
 
-                          return (
-                            <div key={resource} className="rounded-md border p-4">
-                              <h4 className="mb-2 font-semibold capitalize">
-                                {resourceLabel}
-                              </h4>
+                            return (
+                              <div key={resource} className="rounded-md border p-4">
+                                <h4 className="mb-1 font-semibold capitalize">
+                                  {resourceLabel}
+                                </h4>
+                                {resourceDescription && (
+                                  <p className="mb-3 text-sm text-muted-foreground">
+                                    {resourceDescription}
+                                  </p>
+                                )}
                               <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                                 {resourcePermissions.map((perm) => {
                                   const checked = field.value?.includes(perm.id);

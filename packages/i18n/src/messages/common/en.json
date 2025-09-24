@@ -124,5 +124,69 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "try_again": "Try Again"
+  },
+  "permissions": {
+    "resources": {
+      "admin_dashboard": {
+        "label": "Admin dashboard",
+        "description": "Access the administrative overview and widgets."
+      },
+      "settings": {
+        "label": "System settings",
+        "description": "View configuration and environment settings."
+      },
+      "audit_log": {
+        "label": "Audit log",
+        "description": "Review security and activity audit trails."
+      },
+      "language": {
+        "label": "Languages",
+        "description": "Manage supported languages and localization settings."
+      },
+      "user": {
+        "label": "Users",
+        "description": "Create, update, or remove user accounts."
+      },
+      "role": {
+        "label": "Roles",
+        "description": "Define roles and assign permissions."
+      },
+      "admin_access": {
+        "label": "Admin access control",
+        "description": "Assign elevated administrator privileges."
+      },
+      "post": {
+        "label": "Posts",
+        "description": "Publish and manage content posts."
+      },
+      "post_category": {
+        "label": "Post categories",
+        "description": "Organize posts into meaningful categories."
+      },
+      "post_tag": {
+        "label": "Post tags",
+        "description": "Manage tags for posts."
+      },
+      "product": {
+        "label": "Products",
+        "description": "Manage product listings and details."
+      },
+      "product_category": {
+        "label": "Product categories",
+        "description": "Group products into categories."
+      },
+      "product_tag": {
+        "label": "Product tags",
+        "description": "Manage tags used for products."
+      },
+      "media": {
+        "label": "Media library",
+        "description": "Upload and manage media assets."
+      },
+      "media_taxonomy": {
+        "label": "Media taxonomies",
+        "description": "Organize media categories and tags."
+      }
+    }
   }
 }

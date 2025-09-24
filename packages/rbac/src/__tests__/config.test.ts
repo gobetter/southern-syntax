@@ -9,6 +9,8 @@ import {
   ALL_PERMISSION_KEYS,
   ensureActionAllowed,
   PERMISSION_ACTIONS,
+  getPermissionResourceDefinition,
+  sortPermissionActions,
 } from "../index";
 
 describe("RBAC configuration", () => {
@@ -36,5 +38,29 @@ describe("RBAC configuration", () => {
         PERMISSION_ACTIONS.ASSIGN
       )
     ).toThrow();
+  });
+
+  it("exposes resource metadata", () => {
+    const definition = getPermissionResourceDefinition(
+      PERMISSION_RESOURCES.ADMIN_DASHBOARD
+    );
+    expect(definition.labelKey).toBeDefined();
+    expect(definition.actions).toContain(PERMISSION_ACTIONS.READ);
+  });
+
+  it("sorts permission actions using the configured order", () => {
+    const shuffled = [
+      PERMISSION_ACTIONS.DELETE,
+      PERMISSION_ACTIONS.CREATE,
+      PERMISSION_ACTIONS.UPDATE,
+      PERMISSION_ACTIONS.READ,
+    ];
+    const sorted = sortPermissionActions(shuffled);
+    expect(sorted).toEqual([
+      PERMISSION_ACTIONS.CREATE,
+      PERMISSION_ACTIONS.READ,
+      PERMISSION_ACTIONS.UPDATE,
+      PERMISSION_ACTIONS.DELETE,
+    ]);
   });
 });
