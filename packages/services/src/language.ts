@@ -1,3 +1,4 @@
+import { isSupportedLocale } from "@southern-syntax/i18n";
 import { prisma } from "@southern-syntax/db";
 import type { Prisma } from "@southern-syntax/db";
 import {
@@ -9,6 +10,10 @@ export { languageInputSchema } from "@southern-syntax/schemas/language";
 // --- Language Service ---
 async function createLanguage(data: LanguageInput) {
   const validatedData = languageInputSchema.parse(data);
+
+  if (!isSupportedLocale(validatedData.code)) {
+    throw new Error(`Unsupported locale code "${validatedData.code}". Add the locale to @southern-syntax/config before creating it.`);
+  }
 
   if (validatedData.isDefault) {
     await prisma.language.updateMany({
@@ -31,6 +36,10 @@ async function getLanguageByCode(code: string) {
 
 async function updateLanguage(id: string, data: Partial<LanguageInput>) {
   const validatedData = languageInputSchema.partial().parse(data);
+
+  if (validatedData.code !== undefined && !isSupportedLocale(validatedData.code)) {
+    throw new Error(`Unsupported locale code "${validatedData.code}". Add the locale to @southern-syntax/config before creating it.`);
+  }
 
   const patch: Prisma.LanguageUpdateInput = {
     ...(validatedData.code !== undefined && { code: validatedData.code }),

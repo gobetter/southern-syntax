@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, Language } from "@prisma/client";
 import { mockDeep, mockReset } from "vitest-mock-extended";
+import type { LanguageInput } from "@southern-syntax/schemas/language";
 
 const prismaMock = mockDeep<PrismaClient>();
 
@@ -32,7 +33,7 @@ describe("languageService", () => {
   it("createLanguage sets other defaults false when isDefault true", async () => {
     prismaMock.language.create.mockResolvedValue(mockLanguage);
 
-    const input = {
+    const input: LanguageInput = {
       code: "en",
       name: "English",
       isDefault: true,
