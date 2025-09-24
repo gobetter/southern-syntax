@@ -1,4 +1,9 @@
-import { isSupportedLocale } from "@southern-syntax/i18n";
+import {
+  isSupportedLocale,
+  supportedLocales,
+  defaultLocale,
+  type SupportedLocale,
+} from "@southern-syntax/i18n";
 import { prisma } from "@southern-syntax/db";
 import type { Prisma } from "@southern-syntax/db";
 import {
@@ -37,7 +42,10 @@ async function getLanguageByCode(code: string) {
 async function updateLanguage(id: string, data: Partial<LanguageInput>) {
   const validatedData = languageInputSchema.partial().parse(data);
 
-  if (validatedData.code !== undefined && !isSupportedLocale(validatedData.code)) {
+  if (
+    validatedData.code !== undefined &&
+    !isSupportedLocale(validatedData.code)
+  ) {
     throw new Error(`Unsupported locale code "${validatedData.code}". Add the locale to @southern-syntax/config before creating it.`);
   }
 
@@ -86,6 +94,58 @@ async function getActiveLanguages() {
   });
 }
 
+type LanguageConfigurationAudit = {
+  missingInDatabase: SupportedLocale[];
+  invalidDatabaseLocales: string[];
+  duplicateDefaultLocales: string[];
+  defaultLocaleInSync: boolean;
+  defaultLocaleIsActive: boolean;
+};
+
+async function auditLanguageConfiguration(): Promise<LanguageConfigurationAudit> {
+  const languages = await prisma.language.findMany({
+    select: {
+      id: true,
+      code: true,
+      isDefault: true,
+      isActive: true,
+    },
+  });
+
+  const databaseCodes = new Set(languages.map((lang) => lang.code));
+
+  const missingInDatabase = supportedLocales.filter(
+    (locale) => !databaseCodes.has(locale)
+  );
+
+  const invalidDatabaseLocales = languages
+    .filter((lang) => !isSupportedLocale(lang.code))
+    .map((lang) => lang.code);
+
+  const defaultLocales = languages.filter((lang) => lang.isDefault);
+  const duplicateDefaultLocales = defaultLocales
+    .filter((lang) => lang.code !== defaultLocale)
+    .map((lang) => lang.code);
+
+  const configDefaultEntry = languages.find(
+    (lang) => lang.code === defaultLocale
+  );
+
+  const defaultLocaleInSync = Boolean(
+    configDefaultEntry && configDefaultEntry.isDefault
+  );
+
+  return {
+    missingInDatabase,
+    invalidDatabaseLocales,
+    duplicateDefaultLocales,
+    defaultLocaleInSync,
+    defaultLocaleIsActive: Boolean(
+      configDefaultEntry && configDefaultEntry.isActive
+    ),
+  };
+}
+
 export const languageService = {
   createLanguage,
   getLanguageById,
@@ -94,4 +154,7 @@ export const languageService = {
   deleteLanguage,
   getAllLanguages,
   getActiveLanguages,
+  auditLanguageConfiguration,
 };
+
+export type { LanguageConfigurationAudit };

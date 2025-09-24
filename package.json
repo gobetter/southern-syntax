@@ -14,6 +14,7 @@
     "typecheck": "turbo run typecheck",
     "check-types": "pnpm typecheck",
     "test": "turbo run test",
+    "scaffold:locale": "pnpm tsx scripts/scaffold-locale.mts",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm -w install --no-frozen-lockfile",
@@ -28,6 +29,7 @@
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
     "turbo": "^2.5.5",
+    "tsx": "^4.19.2",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.39.0"
   },

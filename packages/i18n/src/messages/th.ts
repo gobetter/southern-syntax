@@ -1,3 +1,6 @@
+import type { MessageCatalog } from "./en";
+import { type CommonMessages } from "@southern-syntax/types";
+
 import admin_dashboard from "./admin_dashboard/th.json";
 import admin_media from "./admin_media/th.json";
 import admin_media_taxonomy from "./admin_media_taxonomy/th.json";
@@ -9,7 +12,7 @@ import auth from "./auth/th.json";
 import common from "./common/th.json";
 import roles from "./roles/th.json";
 
-export default {
+const messages = {
   admin_audit_log,
   admin_dashboard,
   admin_media,
@@ -18,6 +21,8 @@ export default {
   admin_users,
   admin_rbac,
   auth,
-  common,
+  common: common as CommonMessages,
   roles,
-};
+} satisfies MessageCatalog;
+
+export default messages;

@@ -11,7 +11,7 @@ import auth from "./auth/en.json";
 import common from "./common/en.json";
 import roles from "./roles/en.json";
 
-export default {
+const messages = {
   admin_audit_log,
   admin_dashboard,
   admin_media,
@@ -20,7 +20,10 @@ export default {
   admin_navigation,
   admin_rbac,
   auth,
-  // common,
   common: common as CommonMessages,
   roles,
-};
+} as const;
+
+export type MessageCatalog = typeof messages;
+
+export default messages;

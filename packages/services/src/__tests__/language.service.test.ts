@@ -85,4 +85,31 @@ describe("languageService", () => {
       "Cannot delete default language."
     );
   });
+
+  it("auditLanguageConfiguration reports sync issues", async () => {
+    prismaMock.language.findMany.mockResolvedValue([
+      {
+        ...mockLanguage,
+        id: "th",
+        code: "th",
+        isDefault: true,
+        isActive: false,
+      },
+      {
+        ...mockLanguage,
+        id: "fr",
+        code: "fr",
+        isDefault: true,
+        isActive: true,
+      },
+    ]);
+
+    const report = await languageService.auditLanguageConfiguration();
+
+    expect(report.missingInDatabase).toContain("en");
+    expect(report.invalidDatabaseLocales).toContain("fr");
+    expect(report.duplicateDefaultLocales).toContain("fr");
+    expect(report.defaultLocaleInSync).toBe(true);
+    expect(report.defaultLocaleIsActive).toBe(false);
+  });
 });
