@@ -14,6 +14,7 @@
     "typecheck": "turbo run typecheck",
     "check-types": "pnpm typecheck",
     "test": "turbo run test",
+    "report:permissions": "pnpm tsx scripts/report-permissions.mts",
     "scaffold:locale": "pnpm tsx scripts/scaffold-locale.mts",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",

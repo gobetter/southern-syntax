@@ -23,10 +23,49 @@ packages can be shared with additional apps in the future.
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-## Conventions
+## Conventions & Docs
 
-- See [`docs/package-conventions.md`](docs/package-conventions.md) for the shared folder layout and required npm scripts across apps and packages.
+- [`docs/package-conventions.md`](docs/package-conventions.md) — shared folder
+  layout and required npm scripts across apps and packages.
+- [`docs/rbac-guide.md`](docs/rbac-guide.md) — step-by-step guide for updating
+  permissions, roles, and locale translations while keeping the database and
+  caches aligned.
 
+## RBAC & Localisation Workflow
+
+RBAC is centralised inside `packages/rbac/src/config.ts` and mirrored in the
+translations located under `packages/i18n/src/messages`. When you add or modify
+resources/roles:
+
+1. Update the RBAC config (labels, descriptions, role presets) and refresh
+   translations.
+2. Rerun the Prisma seed (`pnpm --filter @southern-syntax/db db:seed`) to
+   reconcile permission records.
+3. Regenerate caches in the running app by calling `configurePermissionsCache`
+   if you changed TTL or adapter behaviour.
+4. Audit the final permissions with `pnpm report:permissions`.
+
+See the [RBAC guide](docs/rbac-guide.md) for detailed steps.
+
+### Permissions cache
+
+The authentication package exposes a configurable permissions cache:
+
+```ts
+import {
+  configurePermissionsCache,
+  InMemoryPermissionsCache,
+} from "@southern-syntax/auth";
+
+configurePermissionsCache({
+  defaultTtlMs: 60_000,
+  adapter: new InMemoryPermissionsCache(),
+});
+```
+
+- Set `PERMISSIONS_CACHE_TTL_MS` to override the default TTL (5 minutes).
+- Provide your own adapter (e.g. Redis) that implements the
+  `PermissionsCacheAdapter` contract.
 
 ## Utilities
 
@@ -137,3 +176,8 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
 - [Configuration Options](https://turborepo.com/docs/reference/configuration)
 - [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+
+## Useful scripts
+
+- `pnpm report:permissions` — prints the complete list of RBAC permissions and
+  default role presets for auditing or documentation.
