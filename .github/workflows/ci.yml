@@ -20,8 +20,12 @@ jobs:
         run: pnpm db:generate
       - name: Typecheck
         run: pnpm -w typecheck
+      - name: Verify RBAC metadata
+        run: pnpm verify:rbac
       - name: Lint
         run: pnpm -w lint
+      - name: RBAC integration tests
+        run: pnpm test:rbac
       - name: Build
         run: pnpm -w build
         env:
