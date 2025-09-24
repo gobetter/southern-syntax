@@ -1,6 +1,13 @@
 import { PrismaClient, type Prisma } from "@prisma/client";
 import { hashPassword } from "../src/lib/auth/utils";
-import { ROLE_NAMES, PERMISSION_ACTIONS, PERMISSION_RESOURCES } from "@southern-syntax/rbac";
+import {
+  ROLE_NAMES,
+  ROLE_DEFINITIONS,
+  type RoleDefinition,
+  type RoleNameType,
+  listAllPermissions,
+  getDefaultPermissionsForRole,
+} from "@southern-syntax/rbac";
 
 const prisma = new PrismaClient();
 
@@ -9,29 +16,17 @@ async function main() {
 
   // --- 1. สร้าง Roles ---
   console.log("Seeding Roles...");
-  const rolesToSeed = [
-    {
-      key: "ADMIN",
-      name: { en: "Administrator", th: "ผู้ดูแลระบบ" },
-      isSystem: true,
-    },
-    {
-      key: "EDITOR",
-      name: { en: "Editor", th: "ผู้แก้ไขเนื้อหา" },
-      isSystem: true,
-    },
-    {
-      key: "VIEWER",
-      name: { en: "Viewer", th: "ผู้เข้าชม" },
-      isSystem: true,
-      isSelectableOnRegistration: true,
-    },
-    {
-      key: ROLE_NAMES.SUPERADMIN,
-      name: { en: "Super Administrator", th: "ผู้ดูแลระบบสูงสุด" },
-      isSystem: true,
-    },
-  ];
+  const roleEntries = Object.entries(ROLE_DEFINITIONS) as [
+    RoleNameType,
+    RoleDefinition,
+  ][];
+
+  const rolesToSeed = roleEntries.map(([key, definition]) => ({
+    key,
+    name: definition.displayName,
+    isSystem: definition.isSystem,
+    isSelectableOnRegistration: definition.isSelectableOnRegistration ?? false,
+  }));
   const roleMap = new Map<string, { id: string; key: string }>();
   for (const roleData of rolesToSeed) {
     const nameEnNormalized = roleData.name.en.trim().toLowerCase();
@@ -101,36 +96,14 @@ async function main() {
   // --- 4. สร้าง Permissions ทั้งหมดจาก constants ---
   console.log("Seeding Permissions...");
 
-  const permissionsToCreate: Prisma.PermissionCreateManyInput[] = [];
-
-  for (const resource of Object.values(PERMISSION_RESOURCES)) {
-    for (const action of Object.values(PERMISSION_ACTIONS)) {
-      // Logic การกรอง Permission ที่ไม่จำเป็น
-      if (
-        (resource === PERMISSION_RESOURCES.ADMIN_DASHBOARD ||
-          resource === PERMISSION_RESOURCES.AUDIT_LOG ||
-          resource === PERMISSION_RESOURCES.SETTINGS) &&
-        action !== PERMISSION_ACTIONS.READ
-      ) {
-        continue;
-      }
-
-      // ถ้าเป็น LANGUAGE ให้ข้าม DELETE action
-      if (
-        resource === PERMISSION_RESOURCES.LANGUAGE &&
-        action === PERMISSION_ACTIONS.DELETE
-      ) {
-        continue;
-      }
-
-      permissionsToCreate.push({
-        key: `${resource}:${action}`,
-        action,
-        resource,
-        isSystem: true,
-      });
-    }
-  }
+  const permissionDescriptors = listAllPermissions();
+  const permissionsToCreate: Prisma.PermissionCreateManyInput[] =
+    permissionDescriptors.map(({ key, action, resource }) => ({
+      key,
+      action,
+      resource,
+      isSystem: true,
+    }));
   await prisma.permission.createMany({
     data: permissionsToCreate,
     skipDuplicates: true,
@@ -144,89 +117,8 @@ async function main() {
     select: { id: true, key: true },
   });
 
-  // กำหนดสิทธิ์สำหรับแต่ละ Role ที่นี่ที่เดียว
-  const permissionsForRole: Record<string, string[]> = {
-    ADMIN: [
-      // Dashboard
-      "ADMIN_DASHBOARD:READ",
-      // User Management (CRUD)
-      "USER:CREATE",
-      "USER:READ",
-      "USER:UPDATE",
-      "USER:DELETE",
-      // Media
-      "MEDIA:CREATE",
-      "MEDIA:READ",
-      "MEDIA:UPDATE",
-      "MEDIA:DELETE",
-      // Media Taxonomy
-      "MEDIA_TAXONOMY:CREATE",
-      "MEDIA_TAXONOMY:READ",
-      "MEDIA_TAXONOMY:UPDATE",
-      "MEDIA_TAXONOMY:DELETE",
-      // Language (CRU)
-      "LANGUAGE:CREATE",
-      "LANGUAGE:READ",
-      "LANGUAGE:UPDATE",
-      // Settings (Read-only)
-      "SETTINGS:READ",
-      // ... (เพิ่มสิทธิ์สำหรับ Product, Post ฯลฯ ที่นี่)
-    ],
-
-    // EDITOR จัดการได้แค่ Content, Product, และ Media
-    EDITOR: [
-      "POST:CREATE",
-      "POST:READ",
-      "POST:UPDATE",
-      "POST:DELETE",
-      "POST_CATEGORY:CREATE",
-      "POST_CATEGORY:READ",
-      "POST_CATEGORY:UPDATE",
-      "POST_CATEGORY:DELETE",
-      "POST_TAG:CREATE",
-      "POST_TAG:READ",
-      "POST_TAG:UPDATE",
-      "POST_TAG:DELETE",
-      "PRODUCT:CREATE",
-      "PRODUCT:READ",
-      "PRODUCT:UPDATE",
-      "PRODUCT:DELETE",
-      "PRODUCT_CATEGORY:CREATE",
-      "PRODUCT_CATEGORY:READ",
-      "PRODUCT_CATEGORY:UPDATE",
-      "PRODUCT_CATEGORY:DELETE",
-      "PRODUCT_TAG:CREATE",
-      "PRODUCT_TAG:READ",
-      "PRODUCT_TAG:UPDATE",
-      "PRODUCT_TAG:DELETE",
-      "MEDIA:CREATE",
-      "MEDIA:READ",
-      "MEDIA:UPDATE",
-      "MEDIA:DELETE",
-      "MEDIA_TAXONOMY:CREATE",
-      "MEDIA_TAXONOMY:READ",
-      "MEDIA_TAXONOMY:UPDATE",
-      "MEDIA_TAXONOMY:DELETE",
-    ],
-
-    // VIEWER อ่านได้อย่างเดียว
-    VIEWER: [
-      "POST:READ",
-      "POST_CATEGORY:READ",
-      "POST_TAG:READ",
-      "PRODUCT:READ",
-      "PRODUCT_CATEGORY:READ",
-      "PRODUCT_TAG:READ",
-      "MEDIA:READ",
-      "MEDIA_TAXONOMY:READ",
-    ],
-  };
-
   for (const role of roleMap.values()) {
-    const permissionKeys =
-      role.key === ROLE_NAMES.SUPERADMIN
-        ? allPermissions.map((p) => p.key) // Super Admin ได้ทุกสิทธิ์เสมอ
-        : permissionsForRole[role.key];
+    const permissionKeys = getDefaultPermissionsForRole(role.key as RoleNameType);
 
     if (permissionKeys) {
       const permissionIds = allPermissions

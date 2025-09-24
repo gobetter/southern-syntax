@@ -56,7 +56,10 @@ export default function SignInForm() {
 
       const userRole = session?.user?.role;
 
-      if (userRole === "ADMIN" || userRole === ROLE_NAMES.SUPERADMIN) {
+      if (
+        userRole === ROLE_NAMES.ADMIN ||
+        userRole === ROLE_NAMES.SUPERADMIN
+      ) {
         // ถ้าเป็น Admin หรือ SuperAdmin ให้ไปที่ Admin Dashboard
         const callbackUrl =
           searchParams.get("callbackUrl") || `/${locale}/admin/dashboard`;

@@ -4,10 +4,62 @@ import { TRPCError } from "@trpc/server";
 import { prisma } from "@southern-syntax/db";
 import type { RoleInput } from "@southern-syntax/auth";
 import { invalidatePermissionsByRole } from "@southern-syntax/auth/utils";
+import {
+  ROLE_NAMES,
+  DEFAULT_FALLBACK_ROLE,
+  isSuperAdminOnlyResource,
+  ensureActionAllowed,
+  type PermissionResourceType,
+  type PermissionActionType,
+  type RoleNameType,
+} from "@southern-syntax/rbac";
 
 import { AUDIT_ACTIONS } from "@southern-syntax/constants/audit-actions";
 
 import { auditLogService } from "./audit-log";
+
+type PermissionRecord = {
+  id: string;
+  resource: string;
+  action: string;
+};
+
+async function validateAssignedPermissions(
+  permissionIds: string[],
+  actorIsSuperAdmin: boolean
+): Promise<PermissionRecord[]> {
+  if (permissionIds.length === 0) {
+    return [];
+  }
+
+  const uniquePermissionIds = Array.from(new Set(permissionIds));
+  const permissions = await prisma.permission.findMany({
+    where: { id: { in: uniquePermissionIds } },
+    select: { id: true, resource: true, action: true },
+  });
+
+  if (permissions.length !== uniquePermissionIds.length) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "INVALID_PERMISSION_SELECTION",
+    });
+  }
+
+  for (const permission of permissions) {
+    const resource = permission.resource as PermissionResourceType;
+    const action = permission.action as PermissionActionType;
+    ensureActionAllowed(resource, action);
+
+    if (!actorIsSuperAdmin && isSuperAdminOnlyResource(resource)) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "PERMISSION_NOT_ALLOWED",
+      });
+    }
+  }
+
+  return permissions;
+}
 
 async function getAllRoles() {
   return prisma.role.findMany({
@@ -66,6 +118,25 @@ async function createRole(
     throw new TRPCError({ code: "CONFLICT", message: "ROLE_KEY_EXISTS" });
   }
 
+  const actor = await prisma.user.findUnique({
+    where: { id: actorId },
+    include: { role: true },
+  });
+
+  if (!actor) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const actorRoleKey = actor.role?.key as RoleNameType | undefined;
+  const actorIsSuperAdmin = actorRoleKey === ROLE_NAMES.SUPERADMIN;
+
+  if (isSystem && !actorIsSuperAdmin) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "CANNOT_CREATE_SYSTEM_ROLE",
+    });
+  }
+
   if (nameEnNormalized) {
     const existingName = await prisma.role.findUnique({
       where: { nameEnNormalized },
@@ -74,6 +145,13 @@ async function createRole(
       throw new TRPCError({ code: "CONFLICT", message: "NAME_ALREADY_EXISTS" });
     }
   }
+  const validatedPermissions = await validateAssignedPermissions(
+    permissionIds,
+    actorIsSuperAdmin
+  );
+
+  const permissionIdsToAssign = validatedPermissions.map((p) => p.id);
+
   const roleData: Prisma.RoleCreateInput = {
     key,
     name: name as Prisma.JsonObject,
@@ -81,7 +159,7 @@ async function createRole(
     isSystem,
     nameEnNormalized: nameEnNormalized || "", // ต้องมีค่าเสมอ
     permissions: {
-      create: permissionIds.map((permissionId) => ({
+      create: permissionIdsToAssign.map((permissionId) => ({
         permission: { connect: { id: permissionId } },
       })),
     },
@@ -124,7 +202,14 @@ async function updateRole(
     throw new TRPCError({ code: "NOT_FOUND", message: "Role not found" });
   }
 
-  if (oldData.isSystem && actor?.role?.key !== "SUPERADMIN") {
+  if (!actor) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const actorRoleKey = actor?.role?.key as RoleNameType | undefined;
+  const actorIsSuperAdmin = actorRoleKey === ROLE_NAMES.SUPERADMIN;
+
+  if (oldData.isSystem && !actorIsSuperAdmin) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: "CANNOT_EDIT_SYSTEM_ROLE",
@@ -140,12 +225,19 @@ async function updateRole(
     }
   }
 
+  const validatedPermissions = await validateAssignedPermissions(
+    permissionIds,
+    actorIsSuperAdmin
+  );
+
+  const permissionIdsToAssign = validatedPermissions.map((p) => p.id);
+
   const updateData: Prisma.RoleUpdateInput = {
     key,
     name: name as Prisma.JsonObject,
     permissions: {
       deleteMany: {},
-      create: permissionIds.map((permissionId) => ({
+      create: permissionIdsToAssign.map((permissionId) => ({
         permission: { connect: { id: permissionId } },
       })),
     },
@@ -181,27 +273,89 @@ async function updateRole(
   return updatedRole;
 }
 
-async function deleteRole(id: string, actorId: string) {
+async function deleteRole(
+  id: string,
+  actorId: string,
+  options?: { fallbackRoleId?: string }
+) {
   const oldData = await prisma.role.findUnique({ where: { id } });
   if (!oldData) {
     throw new TRPCError({ code: "NOT_FOUND", message: "Role not found" });
   }
-  if (oldData.isSystem) {
+
+  const actor = await prisma.user.findUnique({
+    where: { id: actorId },
+    include: { role: true },
+  });
+
+  if (!actor) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const actorRoleKey = actor.role?.key as RoleNameType | undefined;
+  const actorIsSuperAdmin = actorRoleKey === ROLE_NAMES.SUPERADMIN;
+
+  if (oldData.isSystem && !actorIsSuperAdmin) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: "CANNOT_DELETE_SYSTEM_ROLE",
     });
   }
 
-  // ตรวจสอบว่ามีผู้ใช้ผูกอยู่กับ Role นี้หรือไม่
-  const userCount = await prisma.user.count({
+  const usersForRole = await prisma.user.findMany({
     where: { roleId: id },
+    select: { id: true, email: true },
   });
-  if (userCount > 0) {
-    throw new TRPCError({
-      code: "CONFLICT",
-      message: "ROLE_IN_USE",
+
+  let fallbackRoleRecord: { id: string; key: string } | null = null;
+  let reassignedUserIds: string[] = [];
+
+  if (usersForRole.length > 0) {
+    if (options?.fallbackRoleId) {
+      fallbackRoleRecord = await prisma.role.findUnique({
+        where: { id: options.fallbackRoleId },
+        select: { id: true, key: true },
+      });
+    } else {
+      fallbackRoleRecord = await prisma.role.findUnique({
+        where: { key: DEFAULT_FALLBACK_ROLE },
+        select: { id: true, key: true },
+      });
+    }
+
+    if (!fallbackRoleRecord) {
+      throw new TRPCError({
+        code: "CONFLICT",
+        message: "ROLE_FALLBACK_NOT_FOUND",
+      });
+    }
+
+    if (fallbackRoleRecord.id === id) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "ROLE_FALLBACK_INVALID",
+      });
+    }
+
+    const fallbackRoleKey = fallbackRoleRecord.key as RoleNameType;
+    if (
+      fallbackRoleKey === ROLE_NAMES.SUPERADMIN &&
+      !actorIsSuperAdmin
+    ) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "PERMISSION_NOT_ALLOWED",
+      });
+    }
+
+    await prisma.user.updateMany({
+      where: { id: { in: usersForRole.map((user) => user.id) } },
+      data: { roleId: fallbackRoleRecord.id },
     });
+
+    reassignedUserIds = usersForRole.map((user) => user.id);
+
+    await invalidatePermissionsByRole(fallbackRoleRecord.id);
   }
 
   const deletedRole = await prisma.role.delete({ where: { id } });
@@ -211,7 +365,11 @@ async function deleteRole(id: string, actorId: string) {
     action: AUDIT_ACTIONS.ROLE_DELETED,
     entityType: "ROLE",
     entityId: id,
-    details: { oldData },
+    details: {
+      oldData,
+      fallbackRoleId: fallbackRoleRecord?.id ?? null,
+      reassignedUserIds,
+    },
   });
 
   await invalidatePermissionsByRole(id);

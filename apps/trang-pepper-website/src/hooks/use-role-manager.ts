@@ -70,6 +70,12 @@ export function useRoleManager(): UseRoleManagerReturn {
   const handleCreateError = (error: TRPCClientErrorLike<AppRouter>) => {
     if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
+    } else if (error.message === "CANNOT_CREATE_SYSTEM_ROLE") {
+      toast.error(t_error_codes("CANNOT_CREATE_SYSTEM_ROLE"));
+    } else if (error.message === "PERMISSION_NOT_ALLOWED") {
+      toast.error(t_error_codes("PERMISSION_NOT_ALLOWED"));
+    } else if (error.message === "INVALID_PERMISSION_SELECTION") {
+      toast.error(t_error_codes("INVALID_PERMISSION_SELECTION"));
     } else {
       toast.error(t_toasts("create_error"));
     }
@@ -80,6 +86,10 @@ export function useRoleManager(): UseRoleManagerReturn {
       toast.error(t_error_codes("CANNOT_EDIT_SYSTEM_ROLE"));
     } else if (error.message === "ROLE_KEY_EXISTS") {
       toast.error(t_error_codes("ROLE_KEY_EXISTS"));
+    } else if (error.message === "PERMISSION_NOT_ALLOWED") {
+      toast.error(t_error_codes("PERMISSION_NOT_ALLOWED"));
+    } else if (error.message === "INVALID_PERMISSION_SELECTION") {
+      toast.error(t_error_codes("INVALID_PERMISSION_SELECTION"));
     } else {
       toast.error(t_toasts("update_error"));
     }
@@ -146,6 +156,12 @@ export function useRoleManager(): UseRoleManagerReturn {
           onError: (error) => {
             if (error.message === "CANNOT_DELETE_SYSTEM_ROLE") {
               toast.error(t_error_codes("CANNOT_DELETE_SYSTEM_ROLE"));
+            } else if (error.message === "ROLE_FALLBACK_NOT_FOUND") {
+              toast.error(t_error_codes("ROLE_FALLBACK_NOT_FOUND"));
+            } else if (error.message === "ROLE_FALLBACK_INVALID") {
+              toast.error(t_error_codes("ROLE_FALLBACK_INVALID"));
+            } else if (error.message === "PERMISSION_NOT_ALLOWED") {
+              toast.error(t_error_codes("PERMISSION_NOT_ALLOWED"));
             } else {
               toast.error(t_toasts("delete_error"));
             }

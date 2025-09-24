@@ -1,4 +1,9 @@
-import { PERMISSION_ACTIONS, PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
+import {
+  PERMISSION_ACTIONS,
+  PERMISSION_RESOURCES,
+  ROLE_NAMES,
+  type RoleNameType,
+} from "@southern-syntax/rbac";
 import { describe, it, expect, vi } from "vitest";
 
 // mock prisma to avoid loading the real client during tests
@@ -9,7 +14,7 @@ import { can } from "@southern-syntax/auth";
 import type { Session } from "next-auth";
 
 function createSession(
-  role: string,
+  role: RoleNameType,
   permissions: Record<string, Record<string, boolean>>
 ): Session {
   return {
@@ -36,7 +41,7 @@ describe("can function", () => {
   });
 
   it("denies when permission missing", () => {
-    const session = createSession("EDITOR", {});
+    const session = createSession(ROLE_NAMES.EDITOR, {});
     const result = can(
       session,
       PERMISSION_RESOURCES.USER,
@@ -51,7 +56,7 @@ describe("can function", () => {
         [PERMISSION_ACTIONS.CREATE]: true,
       },
     };
-    const session = createSession("EDITOR", perms);
+    const session = createSession(ROLE_NAMES.EDITOR, perms);
     const result = can(
       session,
       PERMISSION_RESOURCES.USER,

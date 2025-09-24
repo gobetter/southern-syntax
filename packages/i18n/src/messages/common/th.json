@@ -48,7 +48,12 @@
     "CANNOT_DELETE_SYSTEM_ROLE": "ไม่สามารถลบ Role หลักของระบบได้",
     "CANNOT_CHANGE_OWN_ROLE": "คุณไม่สามารถเปลี่ยน Role ของตัวเองได้",
     "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE": "คุณไม่มีสิทธิ์เพียงพอในการกำหนดบทบาทนี้",
-    "ROLE_IN_USE": "ไม่สามารถลบ Role นี้ได้ เนื่องจากกำลังถูกใช้งานโดยผู้ใช้อย่างน้อยหนึ่งคน"
+    "ROLE_IN_USE": "ไม่สามารถลบ Role นี้ได้ เนื่องจากกำลังถูกใช้งานโดยผู้ใช้อย่างน้อยหนึ่งคน",
+    "CANNOT_CREATE_SYSTEM_ROLE": "ต้องเป็นผู้ดูแลระบบสูงสุดเท่านั้นจึงจะสร้าง Role ระบบได้",
+    "PERMISSION_NOT_ALLOWED": "คุณไม่มีสิทธิ์กำหนดสิทธิ์ที่เลือก",
+    "INVALID_PERMISSION_SELECTION": "สิทธิ์ที่เลือกไม่ถูกต้องหรือถูกนำออกไปแล้ว",
+    "ROLE_FALLBACK_NOT_FOUND": "ไม่พบ Role สำรอง โปรดเลือก Role อื่นก่อนทำการลบ",
+    "ROLE_FALLBACK_INVALID": "Role สำรองต้องไม่ใช่ Role เดียวกับที่กำลังลบ"
   },
   "empty_states": {
     "users": {

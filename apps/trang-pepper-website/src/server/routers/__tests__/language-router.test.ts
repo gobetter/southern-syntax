@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { PrismaClient, Language } from "@prisma/client";
 import type { Session } from "next-auth";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
 
 vi.mock("@southern-syntax/auth/server", () => ({
   authOptions: {},
@@ -53,7 +54,7 @@ describe("languageRouter", () => {
         id: "u1",
         name: "Test User",
         email: "test@test.com",
-        role: "ADMIN",
+        role: ROLE_NAMES.ADMIN,
         permissions: {}, // ใส่ข้อมูล permission จำลองถ้าจำเป็น
       },
       expires: "some-date",

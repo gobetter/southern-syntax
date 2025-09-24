@@ -10,6 +10,7 @@ import DashboardContent from "@/components/admin/dashboard-content";
 import UserInfo from "@/components/user/user-info";
 import ErrorBoundary from "@/components/common/error-boundary";
 import Spinner from "@/components/common/spinner";
+import { ROLE_NAMES } from "@southern-syntax/rbac";
 
 export default async function DashboardPage({
   params,
@@ -33,8 +34,8 @@ export default async function DashboardPage({
       <UserInfo user={session.user!} />
 
       {/* เงื่อนไขนี้ควรจะตรวจสอบ Role ที่มีสิทธิ์เข้าถึง Admin Dashboard ไม่ใช่แค่ 'ADMIN' */}
-      {(session.user?.role === "ADMIN" ||
-        session.user?.role === "SUPERADMIN") && (
+      {(session.user?.role === ROLE_NAMES.ADMIN ||
+        session.user?.role === ROLE_NAMES.SUPERADMIN) && (
         <ErrorBoundary>
           <Suspense fallback={<Spinner />}>
             <DashboardContent />

@@ -1,5 +1,12 @@
 "use client";
-import { PERMISSION_RESOURCES, ROLE_NAMES } from "@southern-syntax/rbac";
+import {
+  PERMISSION_RESOURCES,
+  ROLE_NAMES,
+  type PermissionResourceType,
+  getActionsForResource,
+  PERMISSION_ACTION_ORDER,
+  isSuperAdminOnlyResource,
+} from "@southern-syntax/rbac";
 
 import { useTranslations } from "next-intl";
 import { FormProvider, Controller } from "react-hook-form";
@@ -58,26 +65,54 @@ export default function RoleFormDialog({
     formState: { errors },
   } = formMethods;
 
-  // จัดกลุ่ม Permissions ตาม Resource เพื่อให้แสดงผลง่ายขึ้น
-  const groupedPermissions = permissions.reduce(
+  const resourceOrder = Object.values(
+    PERMISSION_RESOURCES
+  ) as PermissionResourceType[];
+
+  const permissionsByResource = permissions.reduce(
     (acc, permission) => {
-      (acc[permission.action] = acc[permission.action] || []).push(permission);
+      const resource = permission.resource as PermissionResourceType;
+      if (!acc[resource]) {
+        acc[resource] = [];
+      }
+      acc[resource]?.push(permission);
       return acc;
     },
-    {} as Record<string, Permission[]>
+    {} as Record<PermissionResourceType, Permission[]>
   );
 
-  const actionOrder = ["CREATE", "READ", "UPDATE", "DELETE"];
-  const sortedGroupedPermissions: [string, Permission[]][] = Object.entries(
-    groupedPermissions
-  ).sort(([a], [b]) => actionOrder.indexOf(a) - actionOrder.indexOf(b));
+  const resourceSections = resourceOrder
+    .map((resource) => {
+      const allowedActions = getActionsForResource(resource);
+      const availablePermissions = permissionsByResource[resource] ?? [];
 
-  // สร้าง Array ของ Resource ที่สงวนไว้สำหรับ Super Admin
-  const SUPERADMIN_ONLY_RESOURCES: string[] = [
-    PERMISSION_RESOURCES.ROLE,
-    PERMISSION_RESOURCES.AUDIT_LOG,
-    // เพิ่ม Resource อื่นๆ ที่ต้องการสงวนไว้ในอนาคตที่นี่
-  ];
+      const sortedPermissions = allowedActions
+        .slice()
+        .sort(
+          (a, b) =>
+            PERMISSION_ACTION_ORDER.indexOf(a) -
+            PERMISSION_ACTION_ORDER.indexOf(b)
+        )
+        .map((action) =>
+          availablePermissions.find((permission) => permission.action === action)
+        )
+        .filter((permission): permission is Permission => Boolean(permission));
+
+      if (sortedPermissions.length === 0) {
+        return null;
+      }
+
+      return {
+        resource,
+        permissions: sortedPermissions,
+      };
+    })
+    .filter(
+      (
+        section
+      ): section is { resource: PermissionResourceType; permissions: Permission[] } =>
+        Boolean(section)
+    );
 
   const isEditingSuperAdmin = editingRole?.key === ROLE_NAMES.SUPERADMIN;
   const isSystemRole = editingRole?.isSystem ?? false;
@@ -172,57 +207,65 @@ export default function RoleFormDialog({
                     control={control}
                     render={({ field }) => (
                       <div className="mt-2 space-y-4">
-                        {/* ใช้ Array ที่จัดลำดับแล้ว */}
-                        {sortedGroupedPermissions.map(([action, perms]) => (
-                          <div key={action} className="rounded-md border p-4">
-                            <h4 className="mb-2 font-semibold capitalize">
-                              {action.toLowerCase()}
-                            </h4>
-                            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                              {perms.map((perm) => (
-                                <div
-                                  key={perm.id}
-                                  className="flex items-center space-x-2"
-                                >
-                                  <Checkbox
-                                    id={perm.id}
-                                    // ถ้ากำลังแก้ Super Admin ให้ติ๊กถูกและ disable เสมอ
-                                    checked={field.value?.includes(perm.id)}
-                                    disabled={SUPERADMIN_ONLY_RESOURCES.includes(
-                                      perm.resource
-                                    )}
-                                    onCheckedChange={(checked) => {
-                                      const newValue = checked
-                                        ? [...(field.value || []), perm.id]
-                                        : (field.value || []).filter(
-                                            (id) => id !== perm.id
-                                          );
-                                      field.onChange(newValue);
-                                    }}
-                                  />
-                                  <Label
-                                    htmlFor={perm.id}
-                                    className={cn(
-                                      "font-normal capitalize",
-                                      // (Optional) ทำให้ Label เป็นสีเทาด้วย
-                                      SUPERADMIN_ONLY_RESOURCES.includes(
-                                        perm.resource
-                                      ) &&
-                                        "text-muted-foreground cursor-not-allowed"
-                                    )}
-                                  >
-                                    {perm.resource
-                                      .toLowerCase()
-                                      .replace(/_/g, " ")}
-                                  </Label>
-                                </div>
-                              ))}
+                        {resourceSections.map(({ resource, permissions: resourcePermissions }) => {
+                          const resourceLabel = resource
+                            .toLowerCase()
+                            .replace(/_/g, " ");
+                          const resourceIsSuperAdminOnly =
+                            isSuperAdminOnlyResource(resource);
+
+                          return (
+                            <div key={resource} className="rounded-md border p-4">
+                              <h4 className="mb-2 font-semibold capitalize">
+                                {resourceLabel}
+                              </h4>
+                              <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                                {resourcePermissions.map((perm) => {
+                                  const checked = field.value?.includes(perm.id);
+                                  const disableCheckbox =
+                                    !currentUserIsSuperAdmin &&
+                                    resourceIsSuperAdminOnly;
+
+                                  return (
+                                    <div
+                                      key={perm.id}
+                                      className="flex items-center space-x-2"
+                                    >
+                                      <Checkbox
+                                        id={perm.id}
+                                        checked={checked}
+                                        disabled={disableCheckbox}
+                                        onCheckedChange={(isChecked) => {
+                                          const newValue = isChecked
+                                            ? [...(field.value || []), perm.id]
+                                            : (field.value || []).filter(
+                                                (id) => id !== perm.id
+                                              );
+                                          field.onChange(newValue);
+                                        }}
+                                      />
+                                      <Label
+                                        htmlFor={perm.id}
+                                        className={cn(
+                                          "text-sm capitalize",
+                                          !checked && "text-muted-foreground"
+                                        )}
+                                      >
+                                        {perm.action
+                                          .toLowerCase()
+                                          .replace(/_/g, " ")}
+                                      </Label>
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     )}
                   />
+                  <FormFieldError error={errors.permissionIds} />
                 </div>
               </fieldset>
             </ScrollArea>

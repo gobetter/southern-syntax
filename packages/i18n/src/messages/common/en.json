@@ -48,7 +48,12 @@
     "CANNOT_DELETE_SYSTEM_ROLE": "System roles cannot be deleted.",
     "CANNOT_CHANGE_OWN_ROLE": "You cannot change your own role.",
     "INSUFFICIENT_PERMISSIONS_TO_ASSIGN_ROLE": "You do not have sufficient permissions to assign this role.",
-    "ROLE_IN_USE": "This role cannot be deleted because it is currently assigned to one or more users."
+    "ROLE_IN_USE": "This role cannot be deleted because it is currently assigned to one or more users.",
+    "CANNOT_CREATE_SYSTEM_ROLE": "You must be a Super Admin to create system roles.",
+    "PERMISSION_NOT_ALLOWED": "You are not allowed to assign one or more selected permissions.",
+    "INVALID_PERMISSION_SELECTION": "One or more permissions are invalid or no longer available.",
+    "ROLE_FALLBACK_NOT_FOUND": "Fallback role not found. Please choose another role before deleting.",
+    "ROLE_FALLBACK_INVALID": "Fallback role cannot be the same as the role being removed."
   },
   "empty_states": {
     "users": {

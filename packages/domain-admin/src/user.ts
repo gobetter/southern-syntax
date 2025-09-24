@@ -15,7 +15,11 @@ import type {
   UserStatusFilter,
 } from "@southern-syntax/types";
 import { VALID_USER_STATUSES } from "@southern-syntax/types";
-import { ROLE_NAMES } from "@southern-syntax/rbac";
+import {
+  ROLE_NAMES,
+  ELEVATED_ROLE_KEYS,
+  type RoleNameType,
+} from "@southern-syntax/rbac";
 import { prisma } from "@southern-syntax/db";
 
 import type { SortOrder } from "@southern-syntax/types";
@@ -25,6 +29,10 @@ import {
 } from "@southern-syntax/constants/audit-actions";
 
 import { auditLogService } from "./audit-log";
+
+const elevatedRoleSet = new Set<RoleNameType>(ELEVATED_ROLE_KEYS);
+const isElevatedRoleKey = (key?: string | null): key is RoleNameType =>
+  Boolean(key && elevatedRoleSet.has(key as RoleNameType));
 
 /**
  * ดึงผู้ใช้ทั้งหมดพร้อมการแบ่งหน้า, ค้นหา, และเรียงลำดับ
@@ -98,9 +106,7 @@ async function createUser(input: UserCreateOutput, actorId: string) {
     where: { id: input.roleId },
   });
 
-  // ตรวจสอบว่า Role ที่จะสร้างเป็น Role ระดับสูงหรือไม่
-  const isAssigningHighLevelRole =
-    targetRole?.key === ROLE_NAMES.SUPERADMIN || targetRole?.key === "ADMIN";
+  const isAssigningHighLevelRole = isElevatedRoleKey(targetRole?.key);
 
   if (
     isAssigningHighLevelRole &&
@@ -188,8 +194,8 @@ async function updateUser(
     const targetRole = await prisma.role.findUnique({
       where: { id: input.roleId },
     });
-    const isAssigningHighLevelRole =
-      targetRole?.key === "ADMIN" || targetRole?.key === ROLE_NAMES.SUPERADMIN;
+
+    const isAssigningHighLevelRole = isElevatedRoleKey(targetRole?.key);
 
     if (
       isAssigningHighLevelRole &&

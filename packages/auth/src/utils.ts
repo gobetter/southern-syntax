@@ -4,6 +4,8 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "@southern-syntax/db";
 import type { PermissionActionType, PermissionResourceType } from "./constants";
+import type { UserPermissions } from "./next-auth";
+import { getPermissionsCacheAdapter } from "./permissions-cache";
 
 const SALT_ROUNDS = 10;
 
@@ -22,21 +24,6 @@ export async function verifyPassword(
 
 // --- Authorization Utilities (RBAC Permission Checker) ---
 
-interface UserPermissions {
-  [resource: string]: {
-    [action: string]: boolean;
-  };
-}
-
-// Simple in-memory cache for user permissions
-interface CachedPermissions {
-  permissions: UserPermissions;
-  expiresAt: number;
-}
-
-const permissionsCache = new Map<string, CachedPermissions>();
-const CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
-
 // กำหนด Type สำหรับ RolePermission ที่มี Permission รวมอยู่ด้วย
 // ใช้โครงสร้างแบบง่ายเพื่อหลีกเลี่ยงการอ้างอิง Prisma โดยตรงในการ build
 type RolePermissionWithPermission = {
@@ -52,9 +39,10 @@ type RolePermissionWithPermission = {
 export async function getUserPermissions(
   userId: string
 ): Promise<UserPermissions> {
-  const cached = permissionsCache.get(userId);
-  if (cached && cached.expiresAt > Date.now()) {
-    return cached.permissions;
+  const cache = getPermissionsCacheAdapter();
+  const cached = await cache.get(userId);
+  if (cached) {
+    return cached;
   }
 
   const user = await prisma.user.findUnique({
@@ -87,16 +75,14 @@ export async function getUserPermissions(
     permissions[resource][action] = true;
   });
 
-  permissionsCache.set(userId, {
-    permissions,
-    expiresAt: Date.now() + CACHE_TTL_MS,
-  });
+  await cache.set(userId, permissions);
 
   return permissions;
 }
 
 export function invalidateUserPermissions(userId: string) {
-  permissionsCache.delete(userId);
+  const cache = getPermissionsCacheAdapter();
+  void cache.delete(userId);
 }
 
 export async function invalidatePermissionsByRole(roleId: string) {
@@ -104,6 +90,6 @@ export async function invalidatePermissionsByRole(roleId: string) {
     where: { roleId },
     select: { id: true },
   });
-  // users.forEach((u) => invalidateUserPermissions(u.id));
-  users.forEach((u: { id: string }) => invalidateUserPermissions(u.id));
+  const cache = getPermissionsCacheAdapter();
+  await Promise.all(users.map((u) => cache.delete(u.id)));
 }

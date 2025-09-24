@@ -63,9 +63,17 @@ export const roleRouter = router({
     PERMISSION_RESOURCES.ROLE,
     PERMISSION_ACTIONS.DELETE
   )
-    .input(idParamSchema)
+    .input(
+      idParamSchema.extend({
+        fallbackRoleId: z.string().uuid().optional(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       const actorId = ctx.session.user.id;
-      return roleService.deleteRole(input.id, actorId);
+      const deletionOptions = input.fallbackRoleId
+        ? { fallbackRoleId: input.fallbackRoleId }
+        : undefined;
+
+      return roleService.deleteRole(input.id, actorId, deletionOptions);
     }),
 });

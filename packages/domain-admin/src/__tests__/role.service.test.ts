@@ -28,6 +28,9 @@ vi.mock("@southern-syntax/db", () => ({
   default: prismaMock,
   prisma: prismaMock,
 }));
+vi.mock("@southern-syntax/auth/utils", () => ({
+  invalidatePermissionsByRole: vi.fn(),
+}));
 vi.mock("../audit-log"); //  ✅ Mock auditLog service
 
 describe("Role Service", () => {
@@ -47,12 +50,12 @@ describe("Role Service", () => {
   };
   const adminActor: Partial<UserWithRole> = {
     id: "admin-user-id",
-    role: { key: "ADMIN" },
+    role: { key: ROLE_NAMES.ADMIN },
   };
 
   const systemRole: RoleWithPermissions = {
     id: "admin-role-id",
-    key: "ADMIN",
+    key: ROLE_NAMES.ADMIN,
     isSystem: true,
     permissions: [],
     name: { en: "Admin" },
@@ -94,7 +97,7 @@ describe("Role Service", () => {
       prismaMock.user.findMany.mockResolvedValue([]);
 
       const input: RoleInput & { permissionIds: string[] } = {
-        key: "ADMIN",
+        key: ROLE_NAMES.ADMIN,
         name: { en: "New Name", th: "" },
         description: "",
         isSystem: true,
@@ -113,7 +116,7 @@ describe("Role Service", () => {
       prismaMock.user.findUnique.mockResolvedValue(adminActor as UserWithRole);
 
       const input: RoleInput & { permissionIds: string[] } = {
-        key: "ADMIN",
+        key: ROLE_NAMES.ADMIN,
         name: { en: "New Name", th: "" },
         description: "",
         isSystem: true,
@@ -130,19 +133,45 @@ describe("Role Service", () => {
   describe("deleteRole", () => {
     it("should FORBID an Admin from deleting a system role", async () => {
       prismaMock.role.findUnique.mockResolvedValue(systemRole);
+      prismaMock.user.findUnique.mockResolvedValue(
+        adminActor as UserWithRole
+      );
+      prismaMock.user.findMany.mockResolvedValue([]);
 
       await expect(
         roleService.deleteRole(systemRole.id, adminActor.id!)
       ).rejects.toThrow("CANNOT_DELETE_SYSTEM_ROLE");
     });
 
-    it("should prevent deletion of a role with assigned users", async () => {
-      prismaMock.role.findUnique.mockResolvedValue(customRole);
-      prismaMock.user.count.mockResolvedValue(1);
+    it("reassigns users to fallback role before deletion", async () => {
+      prismaMock.role.findUnique
+        .mockResolvedValueOnce(customRole)
+        .mockResolvedValueOnce({
+          id: "viewer-role-id",
+          key: ROLE_NAMES.VIEWER,
+        } as Role);
+
+      prismaMock.user.findUnique.mockResolvedValue(
+        superAdminActor as UserWithRole
+      );
+      prismaMock.user.findMany.mockResolvedValue([
+        { id: "user-1", email: "user1@example.com" } as User,
+      ]);
+
+      prismaMock.user.updateMany.mockResolvedValue({ count: 1 });
+      prismaMock.role.delete.mockResolvedValue(customRole as Role);
 
       await expect(
         roleService.deleteRole(customRole.id, superAdminActor.id!)
-      ).rejects.toThrow("ROLE_IN_USE");
+      ).resolves.toBeDefined();
+
+      expect(prismaMock.user.updateMany).toHaveBeenCalledWith({
+        where: { id: { in: ["user-1"] } },
+        data: { roleId: "viewer-role-id" },
+      });
+      expect(prismaMock.role.delete).toHaveBeenCalledWith({
+        where: { id: customRole.id },
+      });
     });
   });
 });
